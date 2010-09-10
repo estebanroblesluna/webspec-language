@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.webspeclanguage</groupId>
+  <artifactId>main</artifactId>
+  <packaging>pom</packaging>
+  <version>0.1-SNAPSHOT</version>
+  <name>WebSpec</name>
+  <description>WebSpec - Parent project</description>
+  
+  <dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium.client-drivers</groupId>
+      <artifactId>selenium-java-client-driver</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webspeclanguage</groupId>
+      <artifactId>webspeclanguage-core</artifactId>
+      <version>${version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webspeclanguage</groupId>
+      <artifactId>webspeclanguage-selenium-extension</artifactId>
+      <version>${version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webspeclanguage</groupId>
+      <artifactId>webspeclanguage-test</artifactId>
+      <version>${version}</version>
+    </dependency>
+  </dependencies>
+  </dependencyManagement>
+  
+  <modules>
+    <module>modules/webspeclanguage-core</module>
+    <module>modules/webspeclanguage-simulation</module>
+    <module>modules/webspeclanguage-test</module>
+    <module>modules/webspeclanguage-test-selenium</module>
+    <module>modules/webspeclanguage-test-watir</module>
+    <module>modules/webspeclanguage-test-webdriver</module>
+    <module>modules/webspeclanguage-selenium-extension</module> 
+    <module>modules/webspeclanguage-webdiagrameditor</module>
+  </modules>
+
+</project>

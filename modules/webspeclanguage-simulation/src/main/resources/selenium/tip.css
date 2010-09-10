@@ -1,0 +1,29 @@
+#webSpecSimulationTip { 
+    display:none; 
+    background:transparent url(http://flowplayer.org/tools/img/tooltip/black_arrow.png); 
+    font-size:12px; 
+    height:70px; 
+    width:160px; 
+    padding:25px; 
+    color:#fff;     
+}
+
+#webSpecSimulationTip.top { 
+    background:transparent url(http://flowplayer.org/tools/img/tooltip/black_arrow.png); 
+}
+
+#webSpecSimulationTip.bottom { 
+    background:url(http://flowplayer.org/tools/img/tooltip/black_arrow_bottom.png);     
+    padding-top:40px; 
+    height:55px; 
+} 
+ 
+#webSpecSimulationTip.bottom { 
+    background:url(http://flowplayer.org/tools/img/tooltip/black_arrow_bottom.png); 
+}
+
+#webSpecSimulationTop {
+	position : fixed;
+	top : 0;
+	left : 120;
+}

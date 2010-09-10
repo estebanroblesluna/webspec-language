@@ -1,0 +1,123 @@
+Package org.webspeclanguage.expression.parser;
+
+Helpers
+
+letter = [['a' .. 'z'] + ['A' .. 'Z']];
+digit = ['0' .. '9'];
+whitespace = ' ';
+varh = '$';
+left_braceh = '{';
+right_braceh = '}';
+
+
+Tokens
+
+string_type = 'String';
+number_type = 'Number';
+boolean_type = 'Boolean';
+
+add = '+';
+sub = '-';
+mul = '*';
+div = '/';
+var = varh;
+left_brace = left_braceh;
+right_brace = right_braceh;
+greater   = '>';
+greater_equal  = '>=';
+not_equal  = '!=';
+equal   = '=';
+lower   = '<';
+lower_equal  = '<=';
+
+and = '&&';
+implies = '->';
+or  = '||';
+not = '!';
+
+concat = '&';
+
+left_paren = '(';
+right_paren = ')';
+number = (digit)+ ('.' (digit)+)?;
+array_index = (digit)+;
+true = 'true';
+false = 'false';
+whitespaces = (whitespace)+;
+identifier = (letter | '_' | digit)*;
+string = '"' ('@' | ':' | '/' | '.' | letter | digit | whitespace | left_braceh | varh | right_braceh)* '"';
+point = '.';
+semicolon = ';';
+comma = ',';
+assign = ':=';
+left_block = '[';
+right_block = ']';
+percent = '%';
+
+Ignored Tokens
+
+whitespaces;
+
+Productions
+
+actions = 
+       {singleaction} action 
+     | {manyactions} action semicolon actions;
+
+action =
+       {let} type? identifier assign [expr]:expr 
+     | {expr} expr ; 
+
+arguments = 
+       {onearg} expr 
+     | {manyargs} expr comma arguments;
+
+expr =
+       {and} [left]:expr and [right]:comp_expr
+     | {or}  [left]:expr or  [right]:comp_expr
+     | {implies}  [left]:expr implies  [right]:comp_expr
+     | {not} not [comp_expr]:comp_expr
+     | {comp_expr} comp_expr;
+
+comp_expr =
+       {greater}  [left]:comp_expr greater  [right]:num_expr
+     | {greater_equal} [left]:comp_expr greater_equal [right]:num_expr
+     | {not_equal} [left]:comp_expr not_equal [right]:num_expr
+     | {equal}  [left]:comp_expr equal  [right]:num_expr
+     | {lower}  [left]:comp_expr lower  [right]:num_expr
+     | {lower_equal} [left]:comp_expr lower_equal [right]:num_expr
+     | {num_expr} num_expr;
+
+num_expr = 
+       {add} [left]:num_expr add [right]:factor
+     | {sub} [left]:num_expr sub [right]:factor
+     | {factor} factor;
+
+factor =   
+          {mul} [left]:factor mul [right]:value
+        | {div} [left]:factor div [right]:value
+        | {concat} [left]:factor concat [right]:value
+        | {value} value;
+
+value = 
+        {number} number
+      | {string} string
+      | {boolean} boolean
+      | {functioncall} identifier left_paren arguments? right_paren 
+      | {widget_reference} [interaction]:identifier point [widget]:identifier
+      | {widget_property_reference} [interaction]:identifier [p1]:point [widget]:identifier [p2]:point [property]:identifier
+      | {variable} [left]:var left_brace [i]:identifier right_brace
+      | {array} left_block arguments right_block
+      | {generator} [left]:var identifier [right]:var 
+      | {parens} left_paren expr right_paren
+      | {array_access} value left_block number right_block
+      | {nativefunctioncall} percent identifier left_paren arguments? right_paren;
+
+boolean = 
+        {true} true
+      | {false} false;
+      
+type = 
+		  {string_type} string_type 
+		| {number_type} number_type 
+		| {boolean_type} boolean_type;
