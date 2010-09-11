@@ -11,11 +11,15 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.webspeclanguage</groupId>
   <artifactId>webspeclanguage-webdiagrameditor</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <version>0.1-SNAPSHOT</version>
   <name>WebSpec Language - Web diagram editor</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <webappName>webspec-diagram-editor</webappName>
+  </properties>
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -41,6 +45,22 @@
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>maven-jetty-plugin</artifactId>
+        <configuration>
+          <contextPath>/${webappName}</contextPath>
+          <webApp>${project.build.directory}/${webappName}.war</webApp>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <connectors>
+            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+              <port>8090</port>
+              <maxIdleTime>60000</maxIdleTime>
+            </connector>
+          </connectors>
         </configuration>
       </plugin>
     </plugins>
