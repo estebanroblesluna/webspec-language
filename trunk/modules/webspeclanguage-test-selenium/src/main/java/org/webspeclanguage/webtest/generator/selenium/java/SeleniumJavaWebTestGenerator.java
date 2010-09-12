@@ -29,6 +29,7 @@ import org.webspeclanguage.webtest.action.WebWaitPageToLoad;
 import org.webspeclanguage.webtest.assertion.WebAssertExpression;
 import org.webspeclanguage.webtest.assertion.WebAssertTitle;
 import org.webspeclanguage.webtest.base.SimpleWebTest;
+import org.webspeclanguage.webtest.base.WebTestGenerator;
 import org.webspeclanguage.webtest.base.WebTest;
 import org.webspeclanguage.webtest.base.WebTestItem;
 import org.webspeclanguage.webtest.base.WebTestItemVisitor;
@@ -41,7 +42,7 @@ import org.webspeclanguage.webtest.base.WebTestVisitor;
  * @author Esteban Robles Luna
  */
 @SuppressWarnings("unchecked")
-public class SeleniumJavaWebTestGenerator {
+public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
 
   private ClassBuilder classBuilder;
   private String packageName;
@@ -72,6 +73,13 @@ public class SeleniumJavaWebTestGenerator {
         "BigDecimal");
     this.getExpressionTypeToJavaMapping()
         .put(ExpressionType.BOOLEAN, "boolean");
+  }
+
+  /**
+   * {@inheritDoc}}
+   */
+  public String generateTest(WebTest webTest) {
+    return this.getClassCode(webTest);
   }
 
   public void generateTestFor(WebTest aWebTest, String filename)
