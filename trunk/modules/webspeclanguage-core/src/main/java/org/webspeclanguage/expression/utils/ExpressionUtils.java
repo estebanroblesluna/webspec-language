@@ -39,6 +39,10 @@ public class ExpressionUtils {
       return parser.parseFor(input, diagram);
     }
   }
+  
+  public static Expression getExpression(String input) {
+    return getExpression(input, null);
+  }
 
   public static boolean hasVariables(String string) {
     // find all occurences of ${ ... }

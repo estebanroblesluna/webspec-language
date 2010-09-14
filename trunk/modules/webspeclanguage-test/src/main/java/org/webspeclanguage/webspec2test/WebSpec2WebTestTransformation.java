@@ -32,9 +32,11 @@ import org.webspeclanguage.base.WebSpecTransition;
 import org.webspeclanguage.expression.base.BooleanConstant;
 import org.webspeclanguage.expression.base.ConstantExpression;
 import org.webspeclanguage.expression.base.Expression;
+import org.webspeclanguage.expression.base.ExpressionType;
 import org.webspeclanguage.expression.concretizer.ExpressionConcretizer;
 import org.webspeclanguage.expression.conjunctivenormalform.ExpressionConvertorToConjunctiveNormalForm;
 import org.webspeclanguage.expression.optimizer.ExpressionOptimizer;
+import org.webspeclanguage.expression.typechecker.ExpressionTypechecker;
 import org.webspeclanguage.generator.Generator;
 import org.webspeclanguage.webtest.action.WebAction;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
@@ -143,15 +145,15 @@ public class WebSpec2WebTestTransformation {
 
       @SuppressWarnings("unchecked")
       public Object visitLetVariable(LetVariable letVariable) {
-        Expression expression = makeConcreteAndOptimize(letVariable
-            .getExpression());
+        Expression expression = makeConcreteAndOptimize(letVariable.getExpression());
         if (expression.isConstant()) {
           getConcretizer().set(letVariable.getVariableName(), (ConstantExpression) expression);
           return null;
         } else {
           getConcretizer().removeConstantVariable(letVariable.getVariableName());
-          return new WebCreateVariableFromExpression(letVariable
-              .getVariableName(), expression, letVariable.getType());
+          ExpressionType type = letVariable.getType();
+          type = type == null ? typeOf(letVariable.getExpression()) : type;
+          return new WebCreateVariableFromExpression(letVariable.getVariableName(), expression, type);
         }
       }
     });
@@ -159,6 +161,11 @@ public class WebSpec2WebTestTransformation {
     return webAction;
   }
 
+  private ExpressionType typeOf(Expression expression) {
+    ExpressionTypechecker typechecker = new ExpressionTypechecker(this.currentDiagram);
+    return typechecker.typecheck(expression);
+  }
+  
   protected void createResult(WebSpecDiagram diagram) {
     this.result = new TestGenerationResult(diagram.getName());
   }

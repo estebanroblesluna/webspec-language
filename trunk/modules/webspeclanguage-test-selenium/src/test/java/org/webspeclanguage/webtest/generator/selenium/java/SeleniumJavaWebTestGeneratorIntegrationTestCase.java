@@ -12,6 +12,9 @@
  */
 package org.webspeclanguage.webtest.generator.selenium.java;
 
+import org.webspeclanguage.expression.base.ExpressionType;
+import org.webspeclanguage.expression.utils.ExpressionUtils;
+import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.base.SimpleWebTest;
 import org.webspeclanguage.webtest.base.WebTestGenerator;
 import org.webspeclanguage.webtest.test.WebTestGeneration;
@@ -39,6 +42,43 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
   public void testEmpty() {
     this.testGenerator.setPackageName("org.webspeclanguage.tests");
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
+    this.checkTestGeneration(webTest);
+  }
+  
+  @WebTestGeneration
+  public void testSetup() {
+    this.testGenerator.setPackageName("org.webspeclanguage.tests");
+    SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
+    webTest.addSetUpItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi\""), ExpressionType.STRING));
+    this.checkTestGeneration(webTest);
+  }
+  
+  @WebTestGeneration
+  public void testExpressions() {
+    this.testGenerator.setPackageName("org.webspeclanguage.tests");
+    SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
+
+    webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi\""), ExpressionType.STRING));
+    webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true"), ExpressionType.BOOLEAN));
+    webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("12305"), ExpressionType.NUMBER));
+    
+    webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 + 2"), ExpressionType.NUMBER));
+    webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 - 2"), ExpressionType.NUMBER));
+    webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 * 2"), ExpressionType.NUMBER));
+    webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 / 2"), ExpressionType.NUMBER));
+
+    //TODO add this test case
+    //webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 + ${money}"), ExpressionType.NUMBER));
+
+    webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("!true"), ExpressionType.BOOLEAN));
+    webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true && false"), ExpressionType.BOOLEAN));
+    webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true || false"), ExpressionType.BOOLEAN));
+    webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true -> false"), ExpressionType.BOOLEAN));
+    webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true && false && false"), ExpressionType.BOOLEAN));
+
+    webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi \" & \"esteban\""), ExpressionType.STRING));
+    webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("(\"hi \" & \"esteban\") & \" how are you\""), ExpressionType.STRING));
+
     this.checkTestGeneration(webTest);
   }
 }

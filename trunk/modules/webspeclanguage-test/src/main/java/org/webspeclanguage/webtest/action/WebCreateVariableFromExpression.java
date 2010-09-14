@@ -18,7 +18,7 @@ import org.webspeclanguage.expression.base.ExpressionType;
 import org.webspeclanguage.webtest.base.WebTestItemVisitor;
 
 /**
- * A variable declaration inside the test obtained from a
+ * A variable declaration inside the test obtained (generally) from a
  * non constant expression
  * 
  * @author Esteban Robles Luna
@@ -32,6 +32,7 @@ public class WebCreateVariableFromExpression implements WebAction {
   public WebCreateVariableFromExpression(String variableName, Expression expression, ExpressionType type) {
     Validate.notNull(variableName);
     Validate.notNull(expression);
+    Validate.notNull(type);
     
     this.variableName = variableName;
     this.expression = expression;

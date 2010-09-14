@@ -1,0 +1,29 @@
+package org.webspeclanguage.tests;
+
+import java.math.BigDecimal;
+import com.thoughtworks.selenium.SeleneseTestCase;
+
+public class HomeNavigationTestCase extends SeleneseTestCase {
+
+	public void setUp() throws Exception {
+		super.setUp();
+	}
+
+	public void testHomeNavigation() throws Exception {
+		String message = "hi";
+		boolean isQuery = true;
+		BigDecimal money = new BigDecimal("12305");
+		money = new BigDecimal("1").add(new BigDecimal("2"));
+		money = new BigDecimal("1").subtract(new BigDecimal("2"));
+		money = new BigDecimal("1").multiply(new BigDecimal("2"));
+		money = new BigDecimal("1").divide(new BigDecimal("2"));
+		isQuery = !true;
+		isQuery = true && false;
+		isQuery = true || false;
+		isQuery = (!true) || false;
+		isQuery = (true && false) && false;
+		message = "hi " + "esteban";
+		message = ("hi " + "esteban") + " how are you";
+	}
+
+}
