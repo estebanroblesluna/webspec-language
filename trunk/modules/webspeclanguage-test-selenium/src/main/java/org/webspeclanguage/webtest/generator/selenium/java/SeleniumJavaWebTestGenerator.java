@@ -18,10 +18,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.webspeclanguage.expression.base.ConstantExpression;
 import org.webspeclanguage.expression.base.Expression;
 import org.webspeclanguage.expression.base.ExpressionType;
-import org.webspeclanguage.expression.typechecker.ExpressionTypechecker;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;
@@ -41,7 +39,6 @@ import org.webspeclanguage.webtest.base.WebTestVisitor;
  * 
  * @author Esteban Robles Luna
  */
-@SuppressWarnings("unchecked")
 public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
 
   private ClassBuilder classBuilder;
@@ -49,35 +46,32 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
   private SeleniumJavaExpressionGenerator expressionGenerator;
 
   private Map<ExpressionType, String> expressionTypeToJavaMapping;
-  private SimpleWebTest simpleWebTest;
   private NavigationStopGenerationPolicy stopPolicy;
   private String baseClass;
-  private ExpressionTypechecker typechecker;
-  
+
   private Map<String, ExpressionType> alreadyDefinedVariables;
 
   public SeleniumJavaWebTestGenerator() {
     this.alreadyDefinedVariables = new HashMap<String, ExpressionType>();
-    this.setClassBuilder(new ClassBuilder());
-    this.setTypechecker(new ExpressionTypechecker(null));
+    this.classBuilder = new ClassBuilder();
+    this.expressionGenerator = new SeleniumJavaExpressionGenerator(this);
+    this.expressionTypeToJavaMapping = new HashMap<ExpressionType, String>();
+
     this.setPackageName("");
     this.setBaseClass("com.thoughtworks.selenium.SeleneseTestCase");
-    this.setExpressionGenerator(new SeleniumJavaExpressionGenerator(this));
-
-    this.setExpressionTypeToJavaMapping(new HashMap<ExpressionType, String>());
+    this.setStopPolicy(new ThreadSleepGenerationPolicy());
 
     this.configureExpressionTypeMapping();
-    this.setStopPolicy(new ThreadSleepGenerationPolicy());
   }
 
   private void configureExpressionTypeMapping() {
-    this.getExpressionTypeToJavaMapping().put(ExpressionType.STRING, "String");
-    this.getExpressionTypeToJavaMapping().put(ExpressionType.NUMBER, "BigDecimal");
-    this.getExpressionTypeToJavaMapping().put(ExpressionType.BOOLEAN, "boolean");
+    this.expressionTypeToJavaMapping.put(ExpressionType.STRING, "String");
+    this.expressionTypeToJavaMapping.put(ExpressionType.NUMBER, "BigDecimal");
+    this.expressionTypeToJavaMapping.put(ExpressionType.BOOLEAN, "boolean");
   }
 
   /**
-   * {@inheritDoc}}
+   * {@inheritDoc}
    */
   public String generateTest(WebTest webTest) {
     return this.getClassCode(webTest);
@@ -92,9 +86,8 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
   }
 
   public String getClassCode(WebTest aWebTest) {
-    this.alreadyDefinedVariables.clear();
-    
     aWebTest.accept(new WebTestVisitor() {
+
       public Object visitSimpleWebTest(SimpleWebTest simpleWebTest) {
         generateSimpleWebTest(simpleWebTest);
         return null;
@@ -105,17 +98,15 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
         return null;
       }
     });
-    return this.getClassBuilder().getClassCode();
+    return this.classBuilder.getClassCode();
   }
 
   public void generateSimpleWebTest(SimpleWebTest simpleWebTest) {
-    this.setSimpleWebTest(simpleWebTest);
     this.startClassFor(simpleWebTest);
     this.startMethodFor(simpleWebTest);
     this.computeMethodFor(simpleWebTest);
     this.endMethod();
     this.endClass();
-    this.setSimpleWebTest(null);
   }
 
   public void generateWebTestSuite(WebTestSuite webTestSuite) {
@@ -127,13 +118,14 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
   }
 
   private void basicGenerateTest(WebTest webTest) {
+    this.alreadyDefinedVariables.clear();
+
     webTest.accept(new WebTestVisitor() {
+
       public Object visitSimpleWebTest(SimpleWebTest simpleWebTest) {
-        setSimpleWebTest(simpleWebTest);
         startMethodFor(simpleWebTest);
         computeMethodFor(simpleWebTest);
         endMethod();
-        setSimpleWebTest(null);
         return null;
       }
 
@@ -153,29 +145,26 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
       importString += "import " + this.getBaseClass() + ";\n";
     }
 
-    this.getClassBuilder().startClass(this.getPackageName(), importString,
-        aWebTest.getName() + "TestCase",
-        "extends " + this.getSimpleNameOfBaseClass());
+    this.classBuilder.startClass(this.getPackageName(), importString, aWebTest.getName() + "TestCase", "extends " + this.getSimpleNameOfBaseClass());
 
-    this.getClassBuilder().startMethod("setUp", "Exception");
-    this.getClassBuilder().addStatementAndNewLine("super.setUp();");
+    this.classBuilder.startMethod("setUp", "Exception");
+    this.classBuilder.addStatementAndNewLine("super.setUp();");
     for (WebTestItem item : aWebTest.getSetUpItems()) {
       this.computeStatementsFor(item);
     }
-    this.getClassBuilder().endMethod();
+    this.classBuilder.endMethod();
   }
 
   private void startMethodFor(SimpleWebTest simpleWebTest) {
-    this.getClassBuilder().startMethod("test" + simpleWebTest.getName(),
-        "Exception");
+    this.classBuilder.startMethod("test" + simpleWebTest.getName(), "Exception");
   }
 
   private void endClass() {
-    this.getClassBuilder().endClass();
+    this.classBuilder.endClass();
   }
 
   private void endMethod() {
-    this.getClassBuilder().endMethod();
+    this.classBuilder.endMethod();
   }
 
   private void computeMethodFor(SimpleWebTest simpleWebTest) {
@@ -186,116 +175,66 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
 
   private void computeStatementsFor(WebTestItem item) {
     item.accept(new WebTestItemVisitor() {
+
       public Object visitWebAssertTitle(WebAssertTitle assertTitle) {
         String assertStatement = generateStatementFor(assertTitle.getTitle());
-        String statement = 
-          "assertEquals("
-            + assertStatement
-            + ", selenium.getTitle());";
-        getClassBuilder().addStatementAndNewLine(statement);
+        String statement = "assertEquals(" + assertStatement + ", selenium.getTitle());";
+        classBuilder.addStatementAndNewLine(statement);
         return null;
       }
 
       public Object visitWebAssertExpression(WebAssertExpression webAssertExpression) {
         String assertStatement = generateStatementFor(webAssertExpression.getExpression());
-        String statement = 
-          "assertTrue("
-            + assertStatement 
-            + ");";
-        getClassBuilder().addStatementAndNewLine(statement);
+        String statement = "assertTrue(" + assertStatement + ");";
+        classBuilder.addStatementAndNewLine(statement);
         return null;
       }
 
       public Object visitWebCreateVariableFromExpression(WebCreateVariableFromExpression webCreateVariableFromExpression) {
         ExpressionType expressionType = webCreateVariableFromExpression.getType();
-        String typeAsJavaString = getExpressionTypeToJavaMapping().get(expressionType);
+        String typeAsJavaString = expressionTypeToJavaMapping.get(expressionType);
         String expressionAsJavaString = generateStatementFor(webCreateVariableFromExpression.getExpression());
         String variableName = webCreateVariableFromExpression.getVariableName();
         String statement = null;
 
         if (alreadyDefinedVariables.containsKey(variableName)) {
           if (alreadyDefinedVariables.get(variableName).equals(expressionType)) {
-            statement = 
-              variableName
-              + " = "
-              + expressionAsJavaString
-              + ";";
+            statement = variableName + " = " + expressionAsJavaString + ";";
           } else {
-            throw new IllegalStateException("Variable " 
-                    + variableName
-                    + " is redefined with a different type");
+            throw new IllegalStateException("Variable " + variableName + " is redefined with a different type");
           }
-          
+
         } else {
-          statement = 
-            typeAsJavaString
-              + " "
-              + variableName
-              + " = "
-              + expressionAsJavaString
-              + ";";
+          statement = typeAsJavaString + " " + variableName + " = " + expressionAsJavaString + ";";
           alreadyDefinedVariables.put(variableName, expressionType);
         }
-        
-        getClassBuilder().addStatementAndNewLine(statement);
+
+        classBuilder.addStatementAndNewLine(statement);
         return null;
       }
 
       public Object visitWebOpenUrl(WebOpenUrl webOpenUrl) {
-        String statement = 
-          "selenium.open(" 
-            + "\"" 
-            + webOpenUrl.getUrl()
-            + "\""
-            + ");";
-        getClassBuilder().addStatementAndNewLine(statement);
+        String statement = "selenium.open(" + "\"" + webOpenUrl.getUrl() + "\"" + ");";
+        classBuilder.addStatementAndNewLine(statement);
         return null;
       }
 
       public Object visitWebExpression(WebExpression webExpression) {
-        String statement = 
-          generateStatementFor(webExpression.getExpression())
-            + ";";
-        getClassBuilder().addStatementAndNewLine(statement);
+        String statement = generateStatementFor(webExpression.getExpression()) + ";";
+        classBuilder.addStatementAndNewLine(statement);
         return null;
       }
 
       public Object visitWebWaitPageToLoad(WebWaitPageToLoad webWaitPageToLoad) {
-        String statement = getStopPolicy().generateStopStatement() + ";";
-        getClassBuilder().addStatementAndNewLine(statement);
+        String statement = stopPolicy.generateStopStatement() + ";";
+        classBuilder.addStatementAndNewLine(statement);
         return null;
       }
     });
   }
 
   protected String generateStatementFor(Expression expression) {
-    if (expression.isConstant()) {
-      ConstantExpression constant = (ConstantExpression) expression;
-      return stringValueOf(constant);
-    } else {
-      return getExpressionGenerator().generate(expression);
-    }
-  }
-
-  protected String stringValueOf(ConstantExpression constant) {
-    if (this.getTypechecker().typecheck(constant).equals(ExpressionType.STRING)) {
-      return "\"" + constant.getConstant() + "\"";
-    } else if (this.getTypechecker().typecheck(constant).equals(
-        ExpressionType.NUMBER)) {
-      return "new BigDecimal(\"" + constant.getConstant() + "\")";
-    } else if (this.getTypechecker().typecheck(constant).equals(
-        ExpressionType.BOOLEAN)) {
-      return constant.getConstant().toString();
-    }
-    return "";
-  }
-
-  private ClassBuilder getClassBuilder() {
-    return classBuilder;
-  }
-
-  private void setClassBuilder(ClassBuilder classBuilder) {
-    this.classBuilder = classBuilder;
+    return expressionGenerator.generate(expression);
   }
 
   public String getPackageName() {
@@ -304,31 +243,6 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
 
   public void setPackageName(String packageName) {
     this.packageName = packageName;
-  }
-
-  private Map<ExpressionType, String> getExpressionTypeToJavaMapping() {
-    return expressionTypeToJavaMapping;
-  }
-
-  private void setExpressionTypeToJavaMapping(
-      Map<ExpressionType, String> expressionTypeToJavaMapping) {
-    this.expressionTypeToJavaMapping = expressionTypeToJavaMapping;
-  }
-
-  private SeleniumJavaExpressionGenerator getExpressionGenerator() {
-    return expressionGenerator;
-  }
-
-  private SimpleWebTest getSimpleWebTest() {
-    return simpleWebTest;
-  }
-
-  private void setSimpleWebTest(SimpleWebTest simpleWebTest) {
-    this.simpleWebTest = simpleWebTest;
-  }
-
-  private NavigationStopGenerationPolicy getStopPolicy() {
-    return stopPolicy;
   }
 
   public void setStopPolicy(NavigationStopGenerationPolicy stopPolicy) {
@@ -342,8 +256,7 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
 
   public String getSimpleNameOfBaseClass() {
     int lastIndex = this.getBaseClass().lastIndexOf(".");
-    return this.getBaseClass().substring(lastIndex + 1,
-        this.getBaseClass().length());
+    return this.getBaseClass().substring(lastIndex + 1, this.getBaseClass().length());
   }
 
   public String getBaseClass() {
@@ -352,18 +265,5 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
 
   public void setBaseClass(String baseClass) {
     this.baseClass = baseClass;
-  }
-
-  ExpressionTypechecker getTypechecker() {
-    return typechecker;
-  }
-
-  private void setTypechecker(ExpressionTypechecker typechecker) {
-    this.typechecker = typechecker;
-  }
-
-  private void setExpressionGenerator(
-      SeleniumJavaExpressionGenerator expressionGenerator) {
-    this.expressionGenerator = expressionGenerator;
   }
 }

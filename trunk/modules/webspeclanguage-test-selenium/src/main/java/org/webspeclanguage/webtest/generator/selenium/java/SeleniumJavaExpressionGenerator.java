@@ -27,7 +27,6 @@ import org.webspeclanguage.expression.base.ConcatExpression;
 import org.webspeclanguage.expression.base.DivExpression;
 import org.webspeclanguage.expression.base.EqualsExpression;
 import org.webspeclanguage.expression.base.Expression;
-import org.webspeclanguage.expression.base.ExpressionType;
 import org.webspeclanguage.expression.base.ExpressionVisitor;
 import org.webspeclanguage.expression.base.FunctionCallExpression;
 import org.webspeclanguage.expression.base.GeneratorExpression;
@@ -89,25 +88,16 @@ public class SeleniumJavaExpressionGenerator {
         return op1 + " " + op + " " + op2;
       }
 
-      private String visitMessageSend(BinaryExpression binaryExpression,
-          String op) {
+      private String visitMessageSend(BinaryExpression binaryExpression, String op) {
         String op1 = generate(binaryExpression.getOp1());
         String op2 = generate(binaryExpression.getOp2());
 
         return op1 + "." + op + "(" + op2 + ")";
       }
 
-      private String visitNumberMessageSend(BinaryExpression binaryExpression,
-          String op) {
-        String genOp1 = generate(binaryExpression.getOp1());
-        String genOp2 = generate(binaryExpression.getOp2());
-
-        String op1 = getGenerator().getTypechecker().typecheck(
-            binaryExpression.getOp1()).equals(ExpressionType.NUMBER) ? genOp1
-            : "new BigDecimal(" + genOp1 + ")";
-        String op2 = getGenerator().getTypechecker().typecheck(
-            binaryExpression.getOp2()).equals(ExpressionType.NUMBER) ? genOp2
-            : "new BigDecimal(" + genOp2 + ")";
+      private String visitNumberMessageSend(BinaryExpression binaryExpression, String op) {
+        String op1 = generate(binaryExpression.getOp1());
+        String op2 = generate(binaryExpression.getOp2());
 
         return op1 + "." + op + "(" + op2 + ")";
       }

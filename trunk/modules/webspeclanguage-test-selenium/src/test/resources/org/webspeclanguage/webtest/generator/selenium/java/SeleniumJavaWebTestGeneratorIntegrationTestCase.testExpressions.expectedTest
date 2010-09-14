@@ -17,6 +17,7 @@ public class HomeNavigationTestCase extends SeleneseTestCase {
 		money = new BigDecimal("1").subtract(new BigDecimal("2"));
 		money = new BigDecimal("1").multiply(new BigDecimal("2"));
 		money = new BigDecimal("1").divide(new BigDecimal("2"));
+		money = new BigDecimal("1").add(money);
 		isQuery = !true;
 		isQuery = true && false;
 		isQuery = true || false;

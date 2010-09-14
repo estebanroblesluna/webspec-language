@@ -21,6 +21,10 @@ import java.math.BigDecimal;
  */
 public class NumberConstant extends ConstantExpression<BigDecimal> {
 
+  public NumberConstant(String numberAsString) {
+    this(new BigDecimal(numberAsString));
+  }
+  
   public NumberConstant(BigDecimal constant) {
     super(constant);
   }
