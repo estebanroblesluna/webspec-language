@@ -35,14 +35,12 @@ public class SeleniumJavaExpressionGeneratorTestCase extends TestCase {
     super.setUp();
 
     this.webTestGenerator = new SeleniumJavaWebTestGenerator();
-    this.expressionGenerator = new SeleniumJavaExpressionGenerator(
-        this.webTestGenerator);
+    this.expressionGenerator = new SeleniumJavaExpressionGenerator(this.webTestGenerator);
 
     this.parser = new ExpressionParser();
     this.diagram = new WebSpecDiagram("a");
 
-    WebSpecInteraction interaction = new WebSpecInteraction("Home",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("Home", this.diagram);
     this.diagram.addInteraction(interaction);
     Button button = interaction.createButtonWithLocation("loc");
     button.setName("register");
@@ -50,48 +48,36 @@ public class SeleniumJavaExpressionGeneratorTestCase extends TestCase {
   }
 
   public void testExpressions() {
-    this.basicTestExpression("new BigDecimal(1)", "1");
+    this.basicTestExpression("new BigDecimal(\"1\")", "1");
     this.basicTestExpression("true", "true");
     this.basicTestExpression("\"aaa\"", "\"aaa\"");
 
-    this.basicTestExpression("new BigDecimal(1).add(new BigDecimal(2))",
-        "1 + 2");
-    this.basicTestExpression("new BigDecimal(1).subtract(new BigDecimal(2))",
-        "1 - 2");
-    this.basicTestExpression("new BigDecimal(1).multiply(new BigDecimal(2))",
-        "1 * 2");
-    this.basicTestExpression("new BigDecimal(1).divide(new BigDecimal(2))",
-        "1 / 2");
+    this.basicTestExpression("new BigDecimal(\"1\").add(new BigDecimal(\"2\"))", "1 + 2");
+    this.basicTestExpression("new BigDecimal(\"1\").subtract(new BigDecimal(\"2\"))", "1 - 2");
+    this.basicTestExpression("new BigDecimal(\"1\").multiply(new BigDecimal(\"2\"))", "1 * 2");
+    this.basicTestExpression("new BigDecimal(\"1\").divide(new BigDecimal(\"2\"))", "1 / 2");
 
-    this.basicTestExpression("(true) && (false)", "true && false");
-    this.basicTestExpression("(true) || (false)", "true || false");
-    this.basicTestExpression("!(true)", "!true");
+    this.basicTestExpression("true && false", "true && false");
+    this.basicTestExpression("true || false", "true || false");
+    this.basicTestExpression("!true", "!true");
 
-    this.basicTestExpression("(\"a\") + (\"b\")", "\"a\" & \"b\"");
+    this.basicTestExpression("\"a\" + \"b\"", "\"a\" & \"b\"");
 
-    this.basicTestExpression("new BigDecimal(1).equals(new BigDecimal(2))",
-        "1 = 2");
-    this.basicTestExpression("!(new BigDecimal(1).equals(new BigDecimal(2)))",
-        "1 != 2");
-    this.basicTestExpression(
-        "new BigDecimal(1).compareTo(new BigDecimal(2)) >= 0", "1 >= 2");
-    this.basicTestExpression(
-        "new BigDecimal(1).compareTo(new BigDecimal(2)) > 0", "1 > 2");
-    this.basicTestExpression(
-        "new BigDecimal(1).compareTo(new BigDecimal(2)) < 0", "1 < 2");
-    this.basicTestExpression(
-        "new BigDecimal(1).compareTo(new BigDecimal(2)) <= 0", "1 <= 2");
+    this.basicTestExpression("new BigDecimal(\"1\").equals(new BigDecimal(\"2\"))", "1 = 2");
+    this.basicTestExpression("!(new BigDecimal(\"1\").equals(new BigDecimal(\"2\")))", "1 != 2");
+    this.basicTestExpression("new BigDecimal(\"1\").compareTo(new BigDecimal(\"2\")) >= 0", "1 >= 2");
+    this.basicTestExpression("new BigDecimal(\"1\").compareTo(new BigDecimal(\"2\")) > 0", "1 > 2");
+    this.basicTestExpression("new BigDecimal(\"1\").compareTo(new BigDecimal(\"2\")) < 0", "1 < 2");
+    this.basicTestExpression("new BigDecimal(\"1\").compareTo(new BigDecimal(\"2\")) <= 0", "1 <= 2");
 
     this.basicTestExpression("selenium.click(\"loc\")", "click(Home.register)");
 
     this.basicTestExpression("selenium.getText(\"loc\")", "Home.register");
-    this.basicTestExpression("selenium.getAttribute(\"loc@value\")",
-        "Home.register.value");
+    this.basicTestExpression("selenium.getAttribute(\"loc@value\")", "Home.register.value");
   }
 
   private void basicTestExpression(String javaCode, String expressionString) {
-    Expression expression = this.parser
-        .parseFor(expressionString, this.diagram);
+    Expression expression = this.parser.parseFor(expressionString, this.diagram);
     assertEquals(javaCode, this.expressionGenerator.generate(expression));
   }
 }

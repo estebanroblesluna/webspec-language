@@ -26,4 +26,10 @@ public class ImpliesExpression extends BinaryExpression {
   public Object accept(ExpressionVisitor visitor) {
     return visitor.visitImpliesExpression(this);
   }
+  
+  public OrExpression getEquivalentOrExpression() {
+    return new OrExpression(
+            new NotExpression(this.getOp1()), 
+            this.getOp2());
+  }
 }

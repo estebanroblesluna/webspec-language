@@ -79,16 +79,14 @@ public class SeleniumJavaExpressionGenerator {
 
   public String generate(Expression expression) {
     return (String) expression.accept(new ExpressionVisitor() {
-      private String visitBinaryExpression(BinaryExpression binaryExpression,
-          String op, boolean useParenthesis) {
+      private String visitBinaryExpression(BinaryExpression binaryExpression, String op) {
         String op1 = generate(binaryExpression.getOp1());
         String op2 = generate(binaryExpression.getOp2());
 
-        if (useParenthesis) {
-          return "(" + op1 + ") " + op + " (" + op2 + ")";
-        } else {
-          return op1 + " " + op + " ";
-        }
+        op1 = binaryExpression.getOp1().isConstant() ? op1 : "(" + op1 + ")";
+        op2 = binaryExpression.getOp2().isConstant() ? op2 : "(" + op2 + ")";
+
+        return op1 + " " + op + " " + op2;
       }
 
       private String visitMessageSend(BinaryExpression binaryExpression,
@@ -119,11 +117,11 @@ public class SeleniumJavaExpressionGenerator {
       }
 
       public Object visitAndExpression(AndExpression and) {
-        return this.visitBinaryExpression(and, "&&", true);
+        return this.visitBinaryExpression(and, "&&");
       }
 
       public Object visitConcatExpression(ConcatExpression concat) {
-        return this.visitBinaryExpression(concat, "+", true);
+        return this.visitBinaryExpression(concat, "+");
       }
 
       public Object visitBooleanConstant(BooleanConstant booleanConstant) {
@@ -165,16 +163,21 @@ public class SeleniumJavaExpressionGenerator {
 
       public Object visitNotExpression(NotExpression notExpression) {
         String op = generate(notExpression.getExpression());
-        return "!(" + op + ")";
+        
+        op = notExpression.getExpression().isConstant() ? op : "(" + op + ")";
+        
+        return "!" + op;
       }
 
       public Object visitNumberConstant(NumberConstant integerConstant) {
-        return "new BigDecimal(" + integerConstant.getConstant().toString()
-            + ")";
+        return 
+          "new BigDecimal(\"" 
+            + integerConstant.getConstant().toString()
+            + "\")";
       }
 
       public Object visitOrExpression(OrExpression expression) {
-        return this.visitBinaryExpression(expression, "||", true);
+        return this.visitBinaryExpression(expression, "||");
       }
 
       public Object visitStringConstant(StringConstant stringConstant) {
@@ -269,10 +272,7 @@ public class SeleniumJavaExpressionGenerator {
       }
 
       public Object visitImpliesExpression(ImpliesExpression impliesExpression) {
-        String op1 = generate(impliesExpression.getOp1());
-        String op2 = generate(impliesExpression.getOp2());
-
-        return "(!" + op1 + " || " + op2 + ")";
+        return this.visitOrExpression(impliesExpression.getEquivalentOrExpression());
       }
 
       public Object visitArrayExpression(ArrayExpression arrayExpression) {

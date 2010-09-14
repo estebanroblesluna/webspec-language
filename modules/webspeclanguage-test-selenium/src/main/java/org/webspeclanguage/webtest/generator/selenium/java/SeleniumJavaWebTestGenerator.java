@@ -53,8 +53,11 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
   private NavigationStopGenerationPolicy stopPolicy;
   private String baseClass;
   private ExpressionTypechecker typechecker;
+  
+  private Map<String, ExpressionType> alreadyDefinedVariables;
 
   public SeleniumJavaWebTestGenerator() {
+    this.alreadyDefinedVariables = new HashMap<String, ExpressionType>();
     this.setClassBuilder(new ClassBuilder());
     this.setTypechecker(new ExpressionTypechecker(null));
     this.setPackageName("");
@@ -69,10 +72,8 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
 
   private void configureExpressionTypeMapping() {
     this.getExpressionTypeToJavaMapping().put(ExpressionType.STRING, "String");
-    this.getExpressionTypeToJavaMapping().put(ExpressionType.NUMBER,
-        "BigDecimal");
-    this.getExpressionTypeToJavaMapping()
-        .put(ExpressionType.BOOLEAN, "boolean");
+    this.getExpressionTypeToJavaMapping().put(ExpressionType.NUMBER, "BigDecimal");
+    this.getExpressionTypeToJavaMapping().put(ExpressionType.BOOLEAN, "boolean");
   }
 
   /**
@@ -82,8 +83,7 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
     return this.getClassCode(webTest);
   }
 
-  public void generateTestFor(WebTest aWebTest, String filename)
-      throws IOException {
+  public void generateTestFor(WebTest aWebTest, String filename) throws IOException {
     String classCode = this.getClassCode(aWebTest);
     FileWriter fstream = new FileWriter(filename);
     BufferedWriter out = new BufferedWriter(fstream);
@@ -92,6 +92,8 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
   }
 
   public String getClassCode(WebTest aWebTest) {
+    this.alreadyDefinedVariables.clear();
+    
     aWebTest.accept(new WebTestVisitor() {
       public Object visitSimpleWebTest(SimpleWebTest simpleWebTest) {
         generateSimpleWebTest(simpleWebTest);
@@ -185,44 +187,74 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
   private void computeStatementsFor(WebTestItem item) {
     item.accept(new WebTestItemVisitor() {
       public Object visitWebAssertTitle(WebAssertTitle assertTitle) {
-        String statement = "assertEquals("
-            + generateStatementFor(assertTitle.getTitle())
+        String assertStatement = generateStatementFor(assertTitle.getTitle());
+        String statement = 
+          "assertEquals("
+            + assertStatement
             + ", selenium.getTitle());";
         getClassBuilder().addStatementAndNewLine(statement);
         return null;
       }
 
-      public Object visitWebAssertExpression(
-          WebAssertExpression webAssertExpression) {
-        String statement = "assertTrue("
-            + generateStatementFor(webAssertExpression.getExpression()) + ");";
+      public Object visitWebAssertExpression(WebAssertExpression webAssertExpression) {
+        String assertStatement = generateStatementFor(webAssertExpression.getExpression());
+        String statement = 
+          "assertTrue("
+            + assertStatement 
+            + ");";
         getClassBuilder().addStatementAndNewLine(statement);
         return null;
       }
 
-      public Object visitWebCreateVariableFromExpression(
-          WebCreateVariableFromExpression webCreateVariableFromExpression) {
-        String statement = getExpressionTypeToJavaMapping().get(
-            getTypechecker().typecheck(
-                webCreateVariableFromExpression.getExpression()))
-            + " "
-            + webCreateVariableFromExpression.getVariableName()
-            + " = "
-            + generateStatementFor(webCreateVariableFromExpression
-                .getExpression()) + ";";
+      public Object visitWebCreateVariableFromExpression(WebCreateVariableFromExpression webCreateVariableFromExpression) {
+        ExpressionType expressionType = webCreateVariableFromExpression.getType();
+        String typeAsJavaString = getExpressionTypeToJavaMapping().get(expressionType);
+        String expressionAsJavaString = generateStatementFor(webCreateVariableFromExpression.getExpression());
+        String variableName = webCreateVariableFromExpression.getVariableName();
+        String statement = null;
+
+        if (alreadyDefinedVariables.containsKey(variableName)) {
+          if (alreadyDefinedVariables.get(variableName).equals(expressionType)) {
+            statement = 
+              variableName
+              + " = "
+              + expressionAsJavaString
+              + ";";
+          } else {
+            throw new IllegalStateException("Variable " 
+                    + variableName
+                    + " is redefined with a different type");
+          }
+          
+        } else {
+          statement = 
+            typeAsJavaString
+              + " "
+              + variableName
+              + " = "
+              + expressionAsJavaString
+              + ";";
+          alreadyDefinedVariables.put(variableName, expressionType);
+        }
+        
         getClassBuilder().addStatementAndNewLine(statement);
         return null;
       }
 
       public Object visitWebOpenUrl(WebOpenUrl webOpenUrl) {
-        String statement = "selenium.open(" + "\"" + webOpenUrl.getUrl() + "\""
+        String statement = 
+          "selenium.open(" 
+            + "\"" 
+            + webOpenUrl.getUrl()
+            + "\""
             + ");";
         getClassBuilder().addStatementAndNewLine(statement);
         return null;
       }
 
       public Object visitWebExpression(WebExpression webExpression) {
-        String statement = generateStatementFor(webExpression.getExpression())
+        String statement = 
+          generateStatementFor(webExpression.getExpression())
             + ";";
         getClassBuilder().addStatementAndNewLine(statement);
         return null;
@@ -250,7 +282,7 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
       return "\"" + constant.getConstant() + "\"";
     } else if (this.getTypechecker().typecheck(constant).equals(
         ExpressionType.NUMBER)) {
-      return "new BigDecimal(" + constant.getConstant() + ")";
+      return "new BigDecimal(\"" + constant.getConstant() + "\")";
     } else if (this.getTypechecker().typecheck(constant).equals(
         ExpressionType.BOOLEAN)) {
       return constant.getConstant().toString();
