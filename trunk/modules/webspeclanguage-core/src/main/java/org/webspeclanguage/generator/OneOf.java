@@ -12,6 +12,7 @@
  */
 package org.webspeclanguage.generator;
 
+import org.apache.commons.lang.Validate;
 import org.webspeclanguage.expression.base.ConstantExpression;
 
 /**
@@ -42,6 +43,7 @@ public abstract class OneOf<T> implements Generator {
   }
 
   protected void setValues(T[] values) {
-    this.values = values;
+    Validate.notNull(values);
+    this.values = values.clone();
   }
 }

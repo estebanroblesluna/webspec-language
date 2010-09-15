@@ -31,8 +31,7 @@ public class ExpressionConvertorToConjunctiveNormalForm {
   public Expression convert(Expression expression) {
     Expression withoutImplies = this.removeImplies(expression);
     Expression notInwards = this.moveNotInwards(withoutImplies);
-    Expression distributeAndOverOrs = this.distributeAndOverOrs(notInwards);
-    return distributeAndOverOrs;
+    return this.distributeAndOverOrs(notInwards);
   }
   
   public List<Expression> convertAndObtainDisjunctions(Expression expression) {
@@ -53,38 +52,7 @@ public class ExpressionConvertorToConjunctiveNormalForm {
   }
 
   private Expression distributeAndOverOrs(Expression expression) {
-    return (new ClonerVisitor() {
-      @Override
-      public Object visitOrExpression(OrExpression expression) {
-        if (expression.getOp1() instanceof AndExpression) {
-          AndExpression innerExpression = (AndExpression) expression.getOp1();
-          return new AndExpression(
-              new OrExpression(
-                  this.clone(innerExpression.getOp1()),
-                  this.clone(expression.getOp2())
-              ),
-              new OrExpression(
-                  this.clone(innerExpression.getOp2()),
-                  this.clone(expression.getOp2())
-              )
-          );
-        } else if (expression.getOp2() instanceof AndExpression) {
-          AndExpression innerExpression = (AndExpression) expression.getOp2();
-          return new AndExpression(
-              new OrExpression(
-                  this.clone(expression.getOp1()),
-                  this.clone(innerExpression.getOp1())
-              ),
-              new OrExpression(
-                  this.clone(expression.getOp1()),
-                  this.clone(innerExpression.getOp2())
-              )
-          );
-        } else {
-          return super.visitOrExpression(expression);
-        }
-      }
-    }).clone(expression);
+    return (new AndOverOrsDistributor()).clone(expression);
   }
 
   private Expression moveNotInwards(Expression expression) {
@@ -120,5 +88,39 @@ public class ExpressionConvertorToConjunctiveNormalForm {
         );
       }
     }).clone(expression);
+  }
+  
+  private final class AndOverOrsDistributor extends ClonerVisitor {
+
+    @Override
+    public Object visitOrExpression(OrExpression expression) {
+      if (expression.getOp1() instanceof AndExpression) {
+        AndExpression innerExpression = (AndExpression) expression.getOp1();
+        return new AndExpression(
+            new OrExpression(
+                this.clone(innerExpression.getOp1()),
+                this.clone(expression.getOp2())
+            ),
+            new OrExpression(
+                this.clone(innerExpression.getOp2()),
+                this.clone(expression.getOp2())
+            )
+        );
+      } else if (expression.getOp2() instanceof AndExpression) {
+        AndExpression innerExpression = (AndExpression) expression.getOp2();
+        return new AndExpression(
+            new OrExpression(
+                this.clone(expression.getOp1()),
+                this.clone(innerExpression.getOp1())
+            ),
+            new OrExpression(
+                this.clone(expression.getOp1()),
+                this.clone(innerExpression.getOp2())
+            )
+        );
+      } else {
+        return super.visitOrExpression(expression);
+      }
+    }
   }
 }

@@ -35,7 +35,7 @@ public class NumberConstant extends ConstantExpression<BigDecimal> {
 
   @Override
   public BooleanConstant coerceToBoolean() {
-    if (this.equals(new NumberConstant(new BigDecimal("1")))) {
+    if (this.equals(new NumberConstant(BigDecimal.ONE))) {
       return BooleanConstant.TRUE;
     } else {
       return BooleanConstant.FALSE;

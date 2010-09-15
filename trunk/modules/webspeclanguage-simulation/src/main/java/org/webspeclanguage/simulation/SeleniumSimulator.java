@@ -30,7 +30,7 @@ import org.webspeclanguage.expression.base.WidgetReference;
  */
 public class SeleniumSimulator extends Simulator {
 
-	private SeleniumEvaluator evaluator;
+  private SeleniumEvaluator evaluator;
 	
 	public SeleniumSimulator(Simulation simulation, SeleniumEvaluator evaluator) {
 		super(simulation);
@@ -43,29 +43,7 @@ public class SeleniumSimulator extends Simulator {
 
 	@Override
 	protected void simulate(SimulationItem item) {
-		item.accept(new SimulationItemVisitor() {
-
-      public Object visitExecuteAction(ExecuteAction executeAction) {
-        evaluate(executeAction.getActionName(), toStrings(executeAction.getArguments()));
-        return null;
-      }
-
-      public Object visitOpenMockup(OpenMockup openMockup) {
-        evaluate("open", openMockup.getLocation());
-        evaluate("loadSimulation", "");
-        return null;
-      }
-
-      public Object visitShowGeneralDescription(ShowGeneralDescription showDescription) {
-        showDescription(showDescription.getDescription());
-        return null;
-      }
-
-      public Object visitShowDescriptionAt(ShowDescriptionAt showDescriptionAt) {
-        showDescriptionAt(showDescriptionAt.getDescription(), showDescriptionAt.getLocation());
-        return null;
-      }
-		});
+		item.accept(new SimulationItemSimulator());
 	}
 	
   private String[] toStrings(List<Expression> arguments) {
@@ -102,10 +80,30 @@ public class SeleniumSimulator extends Simulator {
 	}
 	
 	private void evaluate(String functionName, String... args) {
-		this.getEvaluator().evaluate(functionName, args);
+		this.evaluator.evaluate(functionName, args);
 	}
 
-	private SeleniumEvaluator getEvaluator() {
-		return evaluator;
-	}
+  private final class SimulationItemSimulator implements SimulationItemVisitor {
+
+    public Object visitExecuteAction(ExecuteAction executeAction) {
+      evaluate(executeAction.getActionName(), toStrings(executeAction.getArguments()));
+      return null;
+    }
+
+    public Object visitOpenMockup(OpenMockup openMockup) {
+      evaluate("open", openMockup.getLocation());
+      evaluate("loadSimulation", "");
+      return null;
+    }
+
+    public Object visitShowGeneralDescription(ShowGeneralDescription showDescription) {
+      showDescription(showDescription.getDescription());
+      return null;
+    }
+
+    public Object visitShowDescriptionAt(ShowDescriptionAt showDescriptionAt) {
+      showDescriptionAt(showDescriptionAt.getDescription(), showDescriptionAt.getLocation());
+      return null;
+    }
+  }
 }

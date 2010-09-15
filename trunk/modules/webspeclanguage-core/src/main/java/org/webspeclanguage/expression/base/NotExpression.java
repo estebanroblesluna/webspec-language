@@ -26,7 +26,7 @@ public class NotExpression extends AbstractExpression {
   private Expression expression;
 
   public NotExpression(Expression expression) {
-    this.setExpression(expression);
+    this.expression = expression;
   }
 
   public Object accept(ExpressionVisitor visitor) {

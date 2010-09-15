@@ -32,7 +32,7 @@ public abstract class Simulator {
 		this.simulationIndex = 0;
 		this.simulation = simulation;
 		this.running = false;
-    this.setDelay(1000);
+    this.delay = 1000;
 	}
 
 	public void simulate() {

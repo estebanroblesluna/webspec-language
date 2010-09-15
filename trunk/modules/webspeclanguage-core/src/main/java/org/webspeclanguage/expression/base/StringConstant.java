@@ -44,7 +44,7 @@ public class StringConstant extends ConstantExpression<String> {
       BigDecimal d = new BigDecimal(this.getConstant());
       return new NumberConstant(d);
     } catch (Exception e) {
-      return new NumberConstant(new BigDecimal(0));
+      return new NumberConstant(BigDecimal.ZERO);
     }
   }
 

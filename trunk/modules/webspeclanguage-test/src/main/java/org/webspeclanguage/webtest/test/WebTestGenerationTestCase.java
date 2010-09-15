@@ -29,7 +29,7 @@ import junit.framework.TestCase;
  */
 public abstract class WebTestGenerationTestCase extends TestCase {
 
-  protected String expectedTest;
+  private String expectedTest;
   
 	@Override
 	protected void setUp() throws Exception {

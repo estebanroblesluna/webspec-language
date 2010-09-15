@@ -28,7 +28,7 @@ public abstract class WebTest {
   private List<WebTestItem> setUpItems;
 
   protected WebTest(String name) {
-    this.setName(name);
+    this.name = name;
     this.setUpItems = new ArrayList<WebTestItem>();
   }
 

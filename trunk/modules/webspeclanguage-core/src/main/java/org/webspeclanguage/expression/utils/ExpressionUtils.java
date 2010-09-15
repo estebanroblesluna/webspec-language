@@ -32,6 +32,8 @@ public class ExpressionUtils {
   private static ExpressionParser parser = new ExpressionParser();
   private static Pattern pattern = Pattern.compile(".*\\$\\{[A-z]+\\}.*");
 
+  private ExpressionUtils() { }
+  
   public static Expression getExpression(String input, WebSpecDiagram diagram) {
     if (input == null || input.trim().equals("")) {
       return null;
@@ -58,7 +60,7 @@ public class ExpressionUtils {
     if (string != null) {
       int index = string.indexOf("${", 0);
       while (index != -1) {
-        int endIndex = string.indexOf("}", index + 1);
+        int endIndex = string.indexOf('}', index + 1);
         String var = string.substring(index, endIndex + 1);
         index = string.indexOf("${", index + 1);
         variables.add(var);
@@ -70,11 +72,11 @@ public class ExpressionUtils {
   public static List<String> strings(String string) {
     List<String> strings = new ArrayList<String>();
     if (string != null) {
-      int index = string.indexOf("\"", 0);
+      int index = string.indexOf('\"', 0);
       while (index != -1) {
-        int endIndex = string.indexOf("\"", index + 1);
+        int endIndex = string.indexOf('\"', index + 1);
         String s = string.substring(index + 1, endIndex);
-        index = string.indexOf("\"", endIndex + 1);
+        index = string.indexOf('\"', endIndex + 1);
         strings.add(s);
       }
     }
@@ -96,11 +98,11 @@ public class ExpressionUtils {
   public static List<String> arrayStrings(String string) {
     List<String> arrays = new ArrayList<String>();
     if (string != null) {
-      int index = string.indexOf("[", 0);
+      int index = string.indexOf('[', 0);
       while (index != -1) {
-        int endIndex = string.indexOf("]", index);
+        int endIndex = string.indexOf(']', index);
         String s = string.substring(index, endIndex + 1);
-        index = string.indexOf("[", endIndex + 1);
+        index = string.indexOf('[', endIndex + 1);
         arrays.add(s);
       }
     }

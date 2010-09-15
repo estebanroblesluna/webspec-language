@@ -27,8 +27,8 @@ public abstract class BinaryExpression extends AbstractExpression {
   private Expression op2;
 
   protected BinaryExpression(Expression op1, Expression op2) {
-    this.setOp1(op1);
-    this.setOp2(op2);
+    this.op1 = op1;
+    this.op2 = op2;
   }
 
   @Override

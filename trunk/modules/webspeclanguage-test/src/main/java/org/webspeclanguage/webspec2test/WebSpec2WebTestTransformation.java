@@ -79,8 +79,8 @@ public class WebSpec2WebTestTransformation {
     for (WebSpecPath path : paths) {
       try {
         this.initializeOptimizerAndConcretizer();
-        SimpleWebTest result = this.computeResult(path, diagram);
-        this.getResult().addTest(path, result);
+        SimpleWebTest simpleTest = this.computeSimpleTest(path, diagram);
+        this.getResult().addTest(path, simpleTest);
       } catch (UnsatisfiedPreconditionException e) {
       } catch (UnsatisfiedInvariantException e) {
       }
@@ -108,7 +108,7 @@ public class WebSpec2WebTestTransformation {
         .computePathsFor(diagram);
   }
 
-  public SimpleWebTest computeResult(WebSpecPath path, WebSpecDiagram diagram) {
+  public SimpleWebTest computeSimpleTest(WebSpecPath path, WebSpecDiagram diagram) {
     final SimpleWebTest aT = this.createTest(this.computeNameFor(path));
 
     this.preItemsIteration();
