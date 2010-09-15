@@ -95,34 +95,7 @@ public class WebSpecDiagram {
     for (WebSpecPathItem item : path.getItems()) {
       references.clear();
 
-      item.accept(new WebSpecPathItemVisitor() {
-        public Object visitWebSpecInteraction(WebSpecInteraction interaction) {
-          if (interaction.getInvariant() != null) {
-            interaction.getInvariant().getInstancesOfOn(VariableValue.class,
-                references);
-          }
-          return null;
-        }
-
-        public Object visitWebSpecNavigation(WebSpecNavigation navigation) {
-          return analyze(navigation);
-        }
-
-        public Object visitWebSpecRichBehavior(WebSpecRichBehavior richBehavior) {
-          return analyze(richBehavior);
-        }
-
-        private Object analyze(WebSpecTransition transition) {
-          if (transition.getPrecondition() != null) {
-            transition.getPrecondition().getInstancesOfOn(VariableValue.class,
-                references);
-          }
-          for (Action action : transition.getActions()) {
-            analyzeUndeclaredOn(declaredVariables, references, action);
-          }
-          return null;
-        }
-      });
+      item.accept(new UndeclareVariableAnalyzer(references, declaredVariables));
 
       for (Iterator iterator = references.iterator(); iterator.hasNext();) {
         VariableValue variableValue = (VariableValue) iterator.next();
@@ -246,5 +219,41 @@ public class WebSpecDiagram {
 
   public void setActionsSetup(String actions) {
     this.actionsSetup = ActionParser.getActions(actions, this);
+  }
+  
+  private final class UndeclareVariableAnalyzer implements WebSpecPathItemVisitor {
+
+    private final Set references;
+    private final Set<String> declaredVariables;
+
+    private UndeclareVariableAnalyzer(Set references, Set<String> declaredVariables) {
+      this.references = references;
+      this.declaredVariables = declaredVariables;
+    }
+    
+    public Object visitWebSpecInteraction(WebSpecInteraction interaction) {
+      if (interaction.getInvariant() != null) {
+        interaction.getInvariant().getInstancesOfOn(VariableValue.class, references);
+      }
+      return null;
+    }
+    
+    public Object visitWebSpecNavigation(WebSpecNavigation navigation) {
+      return analyze(navigation);
+    }
+    
+    public Object visitWebSpecRichBehavior(WebSpecRichBehavior richBehavior) {
+      return analyze(richBehavior);
+    }
+    
+    private Object analyze(WebSpecTransition transition) {
+      if (transition.getPrecondition() != null) {
+        transition.getPrecondition().getInstancesOfOn(VariableValue.class, references);
+      }
+      for (Action action : transition.getActions()) {
+        analyzeUndeclaredOn(declaredVariables, references, action);
+      }
+      return null;
+    }
   }
 }

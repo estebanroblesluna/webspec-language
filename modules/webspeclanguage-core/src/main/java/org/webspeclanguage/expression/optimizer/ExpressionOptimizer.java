@@ -110,8 +110,7 @@ public class ExpressionOptimizer implements ExpressionVisitor {
     if (op1C && op2C) {
       BooleanConstant constant1 = (BooleanConstant) expression.getOp1();
       BooleanConstant constant2 = (BooleanConstant) expression.getOp2();
-      return new BooleanConstant(constant1.getConstant()
-          && constant2.getConstant());
+      return new BooleanConstant(constant1.getConstant() && constant2.getConstant());
     } else {
       return expression;
     }

@@ -70,9 +70,9 @@ public class WebSpec2WebSimulationTransformation {
   private ExpressionPrettyPrinter prettyPrinter;
 
   public WebSpec2WebSimulationTransformation(String homePath) {
-    this.setHomePath(homePath);
-    this.setPrettyPrinter(new ExpressionPrettyPrinter());
-    this.setCnfConvertor(new ExpressionConvertorToConjunctiveNormalForm());
+    this.homePath = homePath;
+    this.prettyPrinter = new ExpressionPrettyPrinter();
+    this.cnfConvertor = new ExpressionConvertorToConjunctiveNormalForm();
     this.basicInitializeOptimizerAndConcretizer();
   }
 
@@ -85,8 +85,8 @@ public class WebSpec2WebSimulationTransformation {
     for (WebSpecPath path : paths) {
       try {
         this.initializeOptimizerAndConcretizer();
-        Simulation result = this.computeResult(path, diagram);
-        this.getResult().addSimulation(path, result);
+        Simulation simpleSimulation = this.computeSimpleSimulation(path, diagram);
+        this.getResult().addSimulation(path, simpleSimulation);
       } catch (UnsatisfiedPreconditionException e) {
         //ignore paths with unsatisfied preconditions
       } catch (UnsatisfiedInvariantException e) {
@@ -96,8 +96,7 @@ public class WebSpec2WebSimulationTransformation {
     return this.getResult();
   }
 
-  protected void generateItemsForTransition(WebSpecTransition transition,
-      Simulation simulation) {
+  protected void generateItemsForTransition(WebSpecTransition transition, Simulation simulation) {
     if (transition.getPrecondition() != null) {
       Expression expression = makeConcreteAndOptimize(transition.getPrecondition());
       if (expression.equals(BooleanConstant.FALSE)) {
@@ -114,115 +113,17 @@ public class WebSpec2WebSimulationTransformation {
   }
 
   private void generateSimulationsFor(Action action, final Simulation simulation) {
-    action.accept(new ActionVisitor() {
-      public Object visitExpressionAction(ExpressionAction expressionAction) {
-        Expression concreteExpression = makeConcreteAndOptimize(expressionAction.getExpression());
-        if (concreteExpression instanceof FunctionCallExpression) {
-          FunctionCallExpression functionCall = (FunctionCallExpression) concreteExpression;
-          
-          boolean hasWidget = false;
-          String widgetlocation = "";
-          String widgetName = "";
-          String widgetType = "";
-          for (Expression argument : functionCall.getArguments()) {
-            if (argument instanceof WidgetReference) {
-              hasWidget = true;
-              widgetlocation = ((WidgetReference) argument).getPreferedLocation();
-              widgetName = ((WidgetReference) argument).getWidget().getName();
-              widgetType = ((WidgetReference) argument).getWidget().getClass().getSimpleName();
-            } else if (argument instanceof WidgetPropertyReference) {
-              hasWidget = true;
-              widgetlocation = ((WidgetPropertyReference) argument).getPreferedLocation();
-              widgetName = ((WidgetPropertyReference) argument).getWidget().getName();
-              widgetType = ((WidgetPropertyReference) argument).getWidget().getClass().getSimpleName();
-            }          
-          }
-          
-          if (hasWidget) {
-            simulation.addItem(new ShowDescriptionAt(
-                widgetlocation,
-                "The user " 
-                + functionCall.getFunctionName()
-                + "s the " 
-                + widgetName
-                + " "
-                + widgetType));
-          } else {
-            simulation.addItem(new ShowGeneralDescription(
-                "The user " 
-                + functionCall.getFunctionName()
-                + "s"));
-          }
-
-          if (functionCall.getFunctionName().equals("type")) {
-            simulation.addItem(new ExecuteAction(functionCall.getFunctionName(), functionCall.getArguments()));
-          }
-        }
-        return null;
-      }
-
-      @SuppressWarnings("unchecked")
-      public Object visitLetVariable(LetVariable letVariable) {
-        Expression expression = makeConcreteAndOptimize(letVariable.getExpression());
-        if (expression.isConstant()) {
-          getConcretizer().set(letVariable.getVariableName(), (ConstantExpression) expression);
-        } else {
-          getConcretizer().removeConstantVariable(letVariable.getVariableName());
-
-          boolean hasWidget = false;
-          String widgetlocation = "";
-          
-          if (letVariable.getExpression() instanceof WidgetReference) {
-            hasWidget = true;
-            widgetlocation = ((WidgetReference) letVariable.getExpression()).getPreferedLocation();
-          } else if (letVariable.getExpression() instanceof WidgetPropertyReference) {
-            hasWidget = true;
-            widgetlocation = ((WidgetPropertyReference) letVariable.getExpression()).getPreferedLocation();
-          }
-          
-          ConstantExpression constantValue = new StringConstant("");
-          if (letVariable.getType().equals(ExpressionType.BOOLEAN)) {
-            constantValue = BooleanConstant.TRUE;
-          } else if (letVariable.getType().equals(ExpressionType.NUMBER)) {
-            constantValue = new NumberConstant(new BigDecimal("100"));
-          } else if (letVariable.getType().equals(ExpressionType.STRING)) {
-            constantValue = new StringConstant("3456");
-          }
-          
-          getConcretizer().set(letVariable.getVariableName(), constantValue);
-          String assumed = ". Assumed value " + readableVersionOf(constantValue);
-          
-          String readableExpression = readableVersionOf(expression);
-          if (hasWidget) {
-            simulation.addItem(new ShowDescriptionAt(
-                widgetlocation,
-                "Variable " 
-                + letVariable.getVariableName() 
-                + " will take the value: " 
-                + readableExpression
-                + assumed));
-          } else {
-            simulation.addItem(new ShowGeneralDescription(
-                "Variable " 
-                + letVariable.getVariableName() 
-                + " will take the value: " 
-                + readableExpression
-                + assumed));
-          }
-        }
-        return null;
-      }
-    });
+    action.accept(new ActionGenerator(simulation));
   }
   
   private String readableVersionOf(Expression expression) {
-    return this.getPrettyPrinter().prettyPrint(expression).replaceAll("\"", "'");
+    return this.prettyPrinter.prettyPrint(expression).replaceAll("\"", "'");
   }
 
   @SuppressWarnings("unchecked")
   protected void generateItemsFor(WebSpecInteraction interaction,  Simulation simulation) {
     simulation.addItem(new OpenMockup("file://" 
-        + this.getHomePath()
+        + this.homePath
         + interaction.getMockupFile()));
 
     if (interaction.getTitle() != null) {
@@ -238,7 +139,7 @@ public class WebSpec2WebSimulationTransformation {
       if (expression.equals(BooleanConstant.FALSE)) {
         throw new UnsatisfiedInvariantException(interaction, this.getConcretizer().getVariables());
       } else {
-        List<Expression> expressions = this.getCnfConvertor().convertAndObtainDisjunctions(expression);
+        List<Expression> expressions = this.cnfConvertor.convertAndObtainDisjunctions(expression);
         for (Expression exp : expressions) {
           String readableExpression = this.readableVersionOf(exp);
           
@@ -282,8 +183,8 @@ public class WebSpec2WebSimulationTransformation {
   }
 
   private void basicInitializeOptimizerAndConcretizer() {
-    this.setOptimizer(new ExpressionOptimizer());
-    this.setConcretizer(new ExpressionConcretizer());
+    this.optimizer = new ExpressionOptimizer();
+    this.concretizer = new ExpressionConcretizer();
   }
 
   public List<WebSpecPath> computePathsFor(WebSpecDiagram diagram) {
@@ -291,9 +192,8 @@ public class WebSpec2WebSimulationTransformation {
         .computePathsFor(diagram);
   }
 
-  public Simulation computeResult(WebSpecPath path, WebSpecDiagram diagram) {
-    final Simulation simulation = this.createSimulation(this
-        .computeNameFor(path));
+  public Simulation computeSimpleSimulation(WebSpecPath path, WebSpecDiagram diagram) {
+    final Simulation simulation = this.createSimulation(this.computeNameFor(path));
 
     for (WebSpecPathItem item : path.getItems()) {
       item.accept(new WebSpecPathItemVisitor() {
@@ -331,13 +231,11 @@ public class WebSpec2WebSimulationTransformation {
     return this.currentSimulation;
   }
 
-  protected void generateItemsFor(WebSpecRichBehavior richBehavior,
-      Simulation simulation) {
+  protected void generateItemsFor(WebSpecRichBehavior richBehavior, Simulation simulation) {
     generateItemsForTransition(richBehavior, simulation);
   }
 
-  protected void generateItemsFor(WebSpecNavigation navigation,
-      Simulation simulation) {
+  protected void generateItemsFor(WebSpecNavigation navigation, Simulation simulation) {
     generateItemsForTransition(navigation, simulation);
   }
 
@@ -347,7 +245,7 @@ public class WebSpec2WebSimulationTransformation {
 
   protected Expression makeConcreteAndOptimize(Expression expression) {
     Expression concrete = this.getConcretizer().makeConcrete(expression);
-    concrete = this.getOptimizer().optimize(concrete);
+    concrete = this.optimizer.optimize(concrete);
     return concrete;
   }
 
@@ -367,20 +265,8 @@ public class WebSpec2WebSimulationTransformation {
     return this.getCurrentDiagram().getCyclesAllowed();
   }
 
-  private ExpressionOptimizer getOptimizer() {
-    return optimizer;
-  }
-
-  private void setOptimizer(ExpressionOptimizer optimizer) {
-    this.optimizer = optimizer;
-  }
-
   protected ExpressionConcretizer getConcretizer() {
     return concretizer;
-  }
-
-  private void setConcretizer(ExpressionConcretizer concretizer) {
-    this.concretizer = concretizer;
   }
 
   protected WebSpecDiagram getCurrentDiagram() {
@@ -391,28 +277,110 @@ public class WebSpec2WebSimulationTransformation {
     this.currentDiagram = currentDiagram;
   }
 
-  private String getHomePath() {
-    return homePath;
-  }
+  private final class ActionGenerator implements ActionVisitor {
 
-  private void setHomePath(String homePath) {
-    this.homePath = homePath;
-  }
+    private final Simulation simulation;
 
-  private ExpressionPrettyPrinter getPrettyPrinter() {
-    return prettyPrinter;
-  }
+    private ActionGenerator(Simulation simulation) {
+      this.simulation = simulation;
+    }
+    
+    public Object visitExpressionAction(ExpressionAction expressionAction) {
+      Expression concreteExpression = makeConcreteAndOptimize(expressionAction.getExpression());
+      if (concreteExpression instanceof FunctionCallExpression) {
+        FunctionCallExpression functionCall = (FunctionCallExpression) concreteExpression;
+        
+        boolean hasWidget = false;
+        String widgetlocation = "";
+        String widgetName = "";
+        String widgetType = "";
+        for (Expression argument : functionCall.getArguments()) {
+          if (argument instanceof WidgetReference) {
+            hasWidget = true;
+            widgetlocation = ((WidgetReference) argument).getPreferedLocation();
+            widgetName = ((WidgetReference) argument).getWidget().getName();
+            widgetType = ((WidgetReference) argument).getWidget().getClass().getSimpleName();
+          } else if (argument instanceof WidgetPropertyReference) {
+            hasWidget = true;
+            widgetlocation = ((WidgetPropertyReference) argument).getPreferedLocation();
+            widgetName = ((WidgetPropertyReference) argument).getWidget().getName();
+            widgetType = ((WidgetPropertyReference) argument).getWidget().getClass().getSimpleName();
+          }          
+        }
+        
+        if (hasWidget) {
+          simulation.addItem(new ShowDescriptionAt(
+              widgetlocation,
+              "The user " 
+              + functionCall.getFunctionName()
+              + "s the " 
+              + widgetName
+              + " "
+              + widgetType));
+        } else {
+          simulation.addItem(new ShowGeneralDescription(
+              "The user " 
+              + functionCall.getFunctionName()
+              + "s"));
+        }
 
-  private void setPrettyPrinter(ExpressionPrettyPrinter prettyPrinter) {
-    this.prettyPrinter = prettyPrinter;
-  }
+        if (functionCall.getFunctionName().equals("type")) {
+          simulation.addItem(new ExecuteAction(functionCall.getFunctionName(), functionCall.getArguments()));
+        }
+      }
+      return null;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Object visitLetVariable(LetVariable letVariable) {
+      Expression expression = makeConcreteAndOptimize(letVariable.getExpression());
+      if (expression.isConstant()) {
+        getConcretizer().set(letVariable.getVariableName(), (ConstantExpression) expression);
+      } else {
+        getConcretizer().removeConstantVariable(letVariable.getVariableName());
 
-  private ExpressionConvertorToConjunctiveNormalForm getCnfConvertor() {
-    return cnfConvertor;
-  }
-
-  private void setCnfConvertor(
-      ExpressionConvertorToConjunctiveNormalForm cnfConvertor) {
-    this.cnfConvertor = cnfConvertor;
+        boolean hasWidget = false;
+        String widgetlocation = "";
+        
+        if (letVariable.getExpression() instanceof WidgetReference) {
+          hasWidget = true;
+          widgetlocation = ((WidgetReference) letVariable.getExpression()).getPreferedLocation();
+        } else if (letVariable.getExpression() instanceof WidgetPropertyReference) {
+          hasWidget = true;
+          widgetlocation = ((WidgetPropertyReference) letVariable.getExpression()).getPreferedLocation();
+        }
+        
+        ConstantExpression constantValue = new StringConstant("");
+        if (letVariable.getType().equals(ExpressionType.BOOLEAN)) {
+          constantValue = BooleanConstant.TRUE;
+        } else if (letVariable.getType().equals(ExpressionType.NUMBER)) {
+          constantValue = new NumberConstant(new BigDecimal("100"));
+        } else if (letVariable.getType().equals(ExpressionType.STRING)) {
+          constantValue = new StringConstant("3456");
+        }
+        
+        getConcretizer().set(letVariable.getVariableName(), constantValue);
+        String assumed = ". Assumed value " + readableVersionOf(constantValue);
+        
+        String readableExpression = readableVersionOf(expression);
+        if (hasWidget) {
+          simulation.addItem(new ShowDescriptionAt(
+              widgetlocation,
+              "Variable " 
+              + letVariable.getVariableName() 
+              + " will take the value: " 
+              + readableExpression
+              + assumed));
+        } else {
+          simulation.addItem(new ShowGeneralDescription(
+              "Variable " 
+              + letVariable.getVariableName() 
+              + " will take the value: " 
+              + readableExpression
+              + assumed));
+        }
+      }
+      return null;
+    }
   }
 }

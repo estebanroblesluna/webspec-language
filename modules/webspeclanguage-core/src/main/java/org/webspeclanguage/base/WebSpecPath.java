@@ -79,7 +79,7 @@ public class WebSpecPath {
     
     if (this.occurences.containsKey(item)) {
       this.occurences.put(item, this.occurences.get(item) + 1);
-      this.cyclesCount = Math.max(this.getCyclesCount(), this.occurrencesOf(item) - 1);
+      this.cyclesCount = Math.max(this.cyclesCount, this.occurrencesOf(item) - 1);
     } else {
       this.occurences.put(item, 1);
     }

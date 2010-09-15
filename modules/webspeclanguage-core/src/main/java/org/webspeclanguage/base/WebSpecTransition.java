@@ -51,8 +51,8 @@ public abstract class WebSpecTransition implements WebSpecPathItem {
   public void setActions(String actionsString) {
     Validate.notNull(actionsString);
     
-    List<Action> actions = ActionParser.getActions(actionsString, this.getDiagram());
-    for (Action action : actions) {
+    List<Action> parsedActions = ActionParser.getActions(actionsString, this.getDiagram());
+    for (Action action : parsedActions) {
       this.addAction(action);
     }
   }

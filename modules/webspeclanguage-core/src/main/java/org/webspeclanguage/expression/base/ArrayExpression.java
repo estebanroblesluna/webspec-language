@@ -17,8 +17,7 @@ package org.webspeclanguage.expression.base;
  * 
  * @author Esteban Robles Luna
  */
-public class ArrayExpression extends
-    ConstantExpression<ConstantExpression<?>[]> {
+public class ArrayExpression extends ConstantExpression<ConstantExpression<?>[]> {
 
   public ArrayExpression(ConstantExpression<?>[] exps) {
     super(exps);
@@ -29,8 +28,7 @@ public class ArrayExpression extends
   }
 
   public ConstantExpression<?> get(int index) {
-    ConstantExpression<?> constant = this.getConstant()[index];
-    return constant;
+    return this.getConstant()[index];
   }
 
   @Override

@@ -64,13 +64,12 @@ public class ActionParser {
     Lexer lexer = new Lexer(new PushbackReader(new StringReader(modifiedInput),
         1024));
 
-    Parser parser = new Parser(lexer);
+    Parser sableParser = new Parser(lexer);
 
     try {
-      Start ast = parser.parse();
+      Start ast = sableParser.parse();
       ExpressionTransformer transformer = new ExpressionTransformer(diagram);
-      List<Action> actions = transformer.transform(ast);
-      return actions;
+      return transformer.transform(ast);
     } catch (ParserException e) {
       throw new ParsingException(e);
     } catch (LexerException e) {

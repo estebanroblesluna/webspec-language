@@ -40,9 +40,9 @@ public class BooleanConstant extends ConstantExpression<Boolean> {
   @Override
   public NumberConstant coerceToNumber() {
     if (this.equals(BooleanConstant.TRUE)) {
-      return new NumberConstant(new BigDecimal("1"));
+      return new NumberConstant(BigDecimal.ONE);
     } else {
-      return new NumberConstant(new BigDecimal("0"));
+      return new NumberConstant(BigDecimal.ZERO);
     }
   }
 

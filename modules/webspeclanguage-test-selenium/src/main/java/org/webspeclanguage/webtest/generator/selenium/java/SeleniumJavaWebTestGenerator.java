@@ -57,9 +57,9 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
     this.expressionGenerator = new SeleniumJavaExpressionGenerator(this);
     this.expressionTypeToJavaMapping = new HashMap<ExpressionType, String>();
 
-    this.setPackageName("");
-    this.setBaseClass("com.thoughtworks.selenium.SeleneseTestCase");
-    this.setStopPolicy(new ThreadSleepGenerationPolicy());
+    this.packageName = "";
+    this.baseClass = "com.thoughtworks.selenium.SeleneseTestCase";
+    this.stopPolicy = new ThreadSleepGenerationPolicy();
 
     this.configureExpressionTypeMapping();
   }
@@ -174,63 +174,7 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
   }
 
   private void computeStatementsFor(WebTestItem item) {
-    item.accept(new WebTestItemVisitor() {
-
-      public Object visitWebAssertTitle(WebAssertTitle assertTitle) {
-        String assertStatement = generateStatementFor(assertTitle.getTitle());
-        String statement = "assertEquals(" + assertStatement + ", selenium.getTitle());";
-        classBuilder.addStatementAndNewLine(statement);
-        return null;
-      }
-
-      public Object visitWebAssertExpression(WebAssertExpression webAssertExpression) {
-        String assertStatement = generateStatementFor(webAssertExpression.getExpression());
-        String statement = "assertTrue(" + assertStatement + ");";
-        classBuilder.addStatementAndNewLine(statement);
-        return null;
-      }
-
-      public Object visitWebCreateVariableFromExpression(WebCreateVariableFromExpression webCreateVariableFromExpression) {
-        ExpressionType expressionType = webCreateVariableFromExpression.getType();
-        String typeAsJavaString = expressionTypeToJavaMapping.get(expressionType);
-        String expressionAsJavaString = generateStatementFor(webCreateVariableFromExpression.getExpression());
-        String variableName = webCreateVariableFromExpression.getVariableName();
-        String statement = null;
-
-        if (alreadyDefinedVariables.containsKey(variableName)) {
-          if (alreadyDefinedVariables.get(variableName).equals(expressionType)) {
-            statement = variableName + " = " + expressionAsJavaString + ";";
-          } else {
-            throw new IllegalStateException("Variable " + variableName + " is redefined with a different type");
-          }
-
-        } else {
-          statement = typeAsJavaString + " " + variableName + " = " + expressionAsJavaString + ";";
-          alreadyDefinedVariables.put(variableName, expressionType);
-        }
-
-        classBuilder.addStatementAndNewLine(statement);
-        return null;
-      }
-
-      public Object visitWebOpenUrl(WebOpenUrl webOpenUrl) {
-        String statement = "selenium.open(" + "\"" + webOpenUrl.getUrl() + "\"" + ");";
-        classBuilder.addStatementAndNewLine(statement);
-        return null;
-      }
-
-      public Object visitWebExpression(WebExpression webExpression) {
-        String statement = generateStatementFor(webExpression.getExpression()) + ";";
-        classBuilder.addStatementAndNewLine(statement);
-        return null;
-      }
-
-      public Object visitWebWaitPageToLoad(WebWaitPageToLoad webWaitPageToLoad) {
-        String statement = stopPolicy.generateStopStatement() + ";";
-        classBuilder.addStatementAndNewLine(statement);
-        return null;
-      }
-    });
+    item.accept(new WebTestItemGenerator());
   }
 
   protected String generateStatementFor(Expression expression) {
@@ -265,5 +209,63 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
 
   public void setBaseClass(String baseClass) {
     this.baseClass = baseClass;
+  }
+  
+  private final class WebTestItemGenerator implements WebTestItemVisitor {
+
+    public Object visitWebAssertTitle(WebAssertTitle assertTitle) {
+      String assertStatement = generateStatementFor(assertTitle.getTitle());
+      String statement = "assertEquals(" + assertStatement + ", selenium.getTitle());";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+    
+    public Object visitWebAssertExpression(WebAssertExpression webAssertExpression) {
+      String assertStatement = generateStatementFor(webAssertExpression.getExpression());
+      String statement = "assertTrue(" + assertStatement + ");";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+    
+    public Object visitWebCreateVariableFromExpression(WebCreateVariableFromExpression webCreateVariableFromExpression) {
+      ExpressionType expressionType = webCreateVariableFromExpression.getType();
+      String typeAsJavaString = expressionTypeToJavaMapping.get(expressionType);
+      String expressionAsJavaString = generateStatementFor(webCreateVariableFromExpression.getExpression());
+      String variableName = webCreateVariableFromExpression.getVariableName();
+      String statement = null;
+
+      if (alreadyDefinedVariables.containsKey(variableName)) {
+        if (alreadyDefinedVariables.get(variableName).equals(expressionType)) {
+          statement = variableName + " = " + expressionAsJavaString + ";";
+        } else {
+          throw new IllegalStateException("Variable " + variableName + " is redefined with a different type");
+        }
+
+      } else {
+        statement = typeAsJavaString + " " + variableName + " = " + expressionAsJavaString + ";";
+        alreadyDefinedVariables.put(variableName, expressionType);
+      }
+
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+    
+    public Object visitWebOpenUrl(WebOpenUrl webOpenUrl) {
+      String statement = "selenium.open(" + "\"" + webOpenUrl.getUrl() + "\"" + ");";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+    
+    public Object visitWebExpression(WebExpression webExpression) {
+      String statement = generateStatementFor(webExpression.getExpression()) + ";";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+    
+    public Object visitWebWaitPageToLoad(WebWaitPageToLoad webWaitPageToLoad) {
+      String statement = stopPolicy.generateStopStatement() + ";";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
   }
 }

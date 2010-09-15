@@ -44,7 +44,6 @@ public abstract class SimulatorFactory {
 
 	private SimulationGenerationResult generateSimulations(WebSpecDiagram diagram, String homePath) {
 		WebSpec2WebSimulationTransformation transformation = new WebSpec2WebSimulationTransformation(homePath);
-		SimulationGenerationResult result = transformation.transform(diagram);
-		return result;
+		return transformation.transform(diagram);
 	}
 }
