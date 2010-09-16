@@ -41,6 +41,8 @@ import org.webspeclanguage.widget.TextField;
  */
 public class WebSpecFactory {
 
+  private WebSpecFactory() {}
+  
   public static WebSpecDiagram getWebSpecDiagram() {
     WebSpecDiagram diagram = new WebSpecDiagram("i1");
 

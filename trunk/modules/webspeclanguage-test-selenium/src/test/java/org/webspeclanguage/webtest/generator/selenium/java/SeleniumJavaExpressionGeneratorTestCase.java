@@ -26,7 +26,6 @@ import org.webspeclanguage.widget.Button;
 public class SeleniumJavaExpressionGeneratorTestCase extends TestCase {
 
   private SeleniumJavaExpressionGenerator expressionGenerator;
-  private SeleniumJavaWebTestGenerator webTestGenerator;
   private ExpressionParser parser;
   private WebSpecDiagram diagram;
 
@@ -34,8 +33,7 @@ public class SeleniumJavaExpressionGeneratorTestCase extends TestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
-    this.webTestGenerator = new SeleniumJavaWebTestGenerator();
-    this.expressionGenerator = new SeleniumJavaExpressionGenerator(this.webTestGenerator);
+    this.expressionGenerator = new SeleniumJavaExpressionGenerator();
 
     this.parser = new ExpressionParser();
     this.diagram = new WebSpecDiagram("a");

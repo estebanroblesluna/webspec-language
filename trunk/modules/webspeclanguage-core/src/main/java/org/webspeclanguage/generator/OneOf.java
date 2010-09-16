@@ -26,7 +26,8 @@ public abstract class OneOf<T> implements Generator {
   private T[] values;
 
   protected OneOf(T... values) {
-    this.setValues(values);
+    Validate.notNull(values);
+    this.values = values.clone();
   }
 
   @SuppressWarnings("unchecked")

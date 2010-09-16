@@ -27,7 +27,7 @@ import org.webspeclanguage.expression.parser.ExpressionParser;
  * 
  * @author Esteban Robles Luna
  */
-public class ExpressionUtils {
+public final class ExpressionUtils {
 
   private static ExpressionParser parser = new ExpressionParser();
   private static Pattern pattern = Pattern.compile(".*\\$\\{[A-z]+\\}.*");

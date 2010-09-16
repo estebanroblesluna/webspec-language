@@ -63,7 +63,6 @@ public class WebSpec2WebSimulationTransformation {
   private ExpressionConvertorToConjunctiveNormalForm cnfConvertor;
 
   private WebSpecDiagram currentDiagram;
-  private Simulation currentSimulation;
   private String homePath;
   private SimulationGenerationResult result;
   
@@ -227,8 +226,7 @@ public class WebSpec2WebSimulationTransformation {
   }
 
   protected Simulation createSimulation(String name) {
-    this.currentSimulation = new Simulation(name);
-    return this.currentSimulation;
+    return new Simulation(name);
   }
 
   protected void generateItemsFor(WebSpecRichBehavior richBehavior, Simulation simulation) {

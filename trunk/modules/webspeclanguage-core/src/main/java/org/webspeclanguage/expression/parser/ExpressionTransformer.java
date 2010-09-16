@@ -104,6 +104,7 @@ import org.webspeclanguage.widget.Widget;
  * 
  * @author Esteban Robles Luna
  */
+@SuppressWarnings("unchecked")
 public class ExpressionTransformer extends DepthFirstAdapter {
 
   private WebSpecDiagram diagram;
@@ -112,15 +113,13 @@ public class ExpressionTransformer extends DepthFirstAdapter {
     this.diagram = diagram;
   }
 
-  @SuppressWarnings("unchecked")
   public List<Action> transform(Start start) {
     this.caseStart(start);
     return (List<Action>) this.getOut(start);
   }
 
   @Override
-  public void outAWidgetPropertyReferenceValue(
-      AWidgetPropertyReferenceValue node) {
+  public void outAWidgetPropertyReferenceValue(AWidgetPropertyReferenceValue node) {
     Widget widget = this.diagram.getWidget(
         node.getInteraction().getText(), node.getWidget().getText());
 
@@ -364,7 +363,6 @@ public class ExpressionTransformer extends DepthFirstAdapter {
     this.setOut(node, new ArrayAccessExpression(exp, constant));
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public void outAArrayValue(AArrayValue node) {
     List<Expression> arguments = (List<Expression>) this.getOut(node
@@ -390,7 +388,6 @@ public class ExpressionTransformer extends DepthFirstAdapter {
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   public void outAFunctioncallValue(AFunctioncallValue node) {
     String functionName = (String) node.getIdentifier().getText();
     AbstractFunctionCallExpression fc = null;
@@ -410,7 +407,6 @@ public class ExpressionTransformer extends DepthFirstAdapter {
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   public void outANativefunctioncallValue(ANativefunctioncallValue node) {
     AbstractFunctionCallExpression fc = new NativeFunctionCallExpression((String) node
         .getIdentifier().getText(), (List<Expression>) this.getOut(node
@@ -432,7 +428,6 @@ public class ExpressionTransformer extends DepthFirstAdapter {
     this.setOut(node, let);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public void outAManyargsArguments(AManyargsArguments node) {
     List<Expression> arguments = new ArrayList<Expression>();
@@ -449,7 +444,6 @@ public class ExpressionTransformer extends DepthFirstAdapter {
     this.setOut(node, arguments);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public void outAManyactionsActions(AManyactionsActions node) {
     List<Action> actions = new ArrayList<Action>();
