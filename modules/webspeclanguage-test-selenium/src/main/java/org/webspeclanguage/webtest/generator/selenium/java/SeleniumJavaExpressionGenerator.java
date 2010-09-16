@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.webspeclanguage.exception.WebspecException;
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.AndExpression;
 import org.webspeclanguage.expression.base.ArrayAccessExpression;
@@ -57,13 +58,11 @@ import org.webspeclanguage.expression.base.WidgetReference;
  */
 public class SeleniumJavaExpressionGenerator {
 
-  private SeleniumJavaWebTestGenerator generator;
+  private static final String COMPARE_TO = "compareTo";
   private Set<String> specialFunctionCalls;
 
-  public SeleniumJavaExpressionGenerator(SeleniumJavaWebTestGenerator generator) {
-    this.setGenerator(generator);
+  public SeleniumJavaExpressionGenerator() {
     this.setSpecialFunctionCalls(new HashSet<String>());
-
     this.configureSpecialFunctionCalls();
   }
 
@@ -115,7 +114,7 @@ public class SeleniumJavaExpressionGenerator {
       }
 
       public Object visitBooleanConstant(BooleanConstant booleanConstant) {
-        return new Boolean(booleanConstant.getConstant()).toString();
+        return booleanConstant.getConstant().toString();
       }
 
       public Object visitDivExpression(DivExpression expression) {
@@ -128,19 +127,19 @@ public class SeleniumJavaExpressionGenerator {
 
       public Object visitGreaterEqualExpression(
           GreaterEqualExpression expression) {
-        return this.visitMessageSend(expression, "compareTo") + " >= 0";
+        return this.visitMessageSend(expression, COMPARE_TO) + " >= 0";
       }
 
       public Object visitGreaterExpression(GreaterExpression expression) {
-        return this.visitMessageSend(expression, "compareTo") + " > 0";
+        return this.visitMessageSend(expression, COMPARE_TO) + " > 0";
       }
 
       public Object visitLowerEqualExpression(LowerEqualExpression expression) {
-        return this.visitMessageSend(expression, "compareTo") + " <= 0";
+        return this.visitMessageSend(expression, COMPARE_TO) + " <= 0";
       }
 
       public Object visitLowerExpression(LowerExpression expression) {
-        return this.visitMessageSend(expression, "compareTo") + " < 0";
+        return this.visitMessageSend(expression, COMPARE_TO) + " < 0";
       }
 
       public Object visitMulExpression(MulExpression expression) {
@@ -194,9 +193,8 @@ public class SeleniumJavaExpressionGenerator {
             + widgetReference.getPreferedLocation() + "\"" + ")";
       }
 
-      public Object visitGeneratorExpression(
-          GeneratorExpression generatorExpression) {
-        throw new RuntimeException("Should be concrete");
+      public Object visitGeneratorExpression(GeneratorExpression generatorExpression) {
+        throw new WebspecException(generatorExpression.getGeneratorName() + " should be concrete");
       }
 
       private String getArguments(List<Expression> expressions) {
@@ -276,14 +274,6 @@ public class SeleniumJavaExpressionGenerator {
         return generate(arrayAccessExpression.getExpression());
       }
     });
-  }
-
-  private SeleniumJavaWebTestGenerator getGenerator() {
-    return generator;
-  }
-
-  private void setGenerator(SeleniumJavaWebTestGenerator generator) {
-    this.generator = generator;
   }
 
   private Set<String> getSpecialFunctionCalls() {

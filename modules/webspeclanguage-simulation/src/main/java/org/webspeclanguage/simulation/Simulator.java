@@ -13,6 +13,7 @@
 package org.webspeclanguage.simulation;
 
 import org.apache.commons.lang.Validate;
+import org.webspeclanguage.exception.WebspecException;
 
 /**
  * A simulator is responsible of executing a {@link Simulation}
@@ -57,7 +58,7 @@ public abstract class Simulator {
 		try {
 			Thread.sleep(this.getDelay());
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			throw new WebspecException(e);
 		}
 	}
 

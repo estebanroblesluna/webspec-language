@@ -10,25 +10,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.webtest.test;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+package org.webspeclanguage.exception;
 
 /**
- * An annotation for marking a test of {@link WebTestGenerator}
- * 
- * Usage:
- * - Create a Y TestCase extending {@link WebTestGenerationTestCase}
- * - Create a method testXXX
- * - Create a file Y.testXXX.expectedTest
- * - Call checkTestGeneration with the WebTest instance to check that
- * the test generated is equals to the file Y.testXXX.expectedTest
+ * A base class for Exceptions
  * 
  * @author Esteban Robles Luna
  */
-@Retention(RetentionPolicy.RUNTIME)
-public @interface WebTestGeneration {
+public class WebspecException extends RuntimeException {
 
-  public String[] expectedTestFilename() default {};
+  private static final long serialVersionUID = -3993904983196702319L;
+
+  public WebspecException(String message) {
+    super(message);
+  }
+
+  public WebspecException(Exception e) {
+    super(e);
+  }
 }

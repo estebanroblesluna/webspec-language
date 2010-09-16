@@ -16,6 +16,10 @@
   <name>WebSpec Language - Core</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <sonar.exclusions>**/org/webspeclanguage/expression/parser/analysis/*,**/org/webspeclanguage/expression/parser/lexer/*,**/org/webspeclanguage/expression/parser/node/*,**/org/webspeclanguage/expression/parser/parser/*</sonar.exclusions>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -81,7 +85,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
     </plugins>
   </build>
 

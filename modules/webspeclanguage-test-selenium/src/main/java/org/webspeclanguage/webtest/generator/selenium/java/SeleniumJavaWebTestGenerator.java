@@ -54,7 +54,7 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
   public SeleniumJavaWebTestGenerator() {
     this.alreadyDefinedVariables = new HashMap<String, ExpressionType>();
     this.classBuilder = new ClassBuilder();
-    this.expressionGenerator = new SeleniumJavaExpressionGenerator(this);
+    this.expressionGenerator = new SeleniumJavaExpressionGenerator();
     this.expressionTypeToJavaMapping = new HashMap<ExpressionType, String>();
 
     this.packageName = "";
