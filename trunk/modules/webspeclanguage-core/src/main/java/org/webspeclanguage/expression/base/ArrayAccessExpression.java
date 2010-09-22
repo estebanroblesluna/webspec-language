@@ -12,6 +12,8 @@
  */
 package org.webspeclanguage.expression.base;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+
 /**
  * An expression class for "${var}[index]"
  * 
@@ -27,6 +29,29 @@ public class ArrayAccessExpression extends AbstractExpression {
     this.index = index;
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+    if (obj.getClass() != getClass()) {
+      return false;
+    }
+    ArrayAccessExpression o = (ArrayAccessExpression) obj;
+    return new EqualsBuilder()
+      .append(this.arrayExpression, o.arrayExpression)
+      .append(this.index, o.index)
+      .isEquals();
+  }
+  
+  @Override
+  public int hashCode() {
+    return this.arrayExpression.hashCode() + 7 * this.index.hashCode();
+  }
+  
   public Object accept(ExpressionVisitor visitor) {
     return visitor.visitArrayAccessExpression(this);
   }

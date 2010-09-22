@@ -465,10 +465,10 @@ public class ExpressionTransformer extends DepthFirstAdapter {
 
   @Override
   public void outAInterfactionPropertyValue(AInterfactionPropertyValue node) {
-    String interactionName = node.getInteraction().getText();
+    String iName = node.getInteraction().getText();
     String propertyOrWidget = node.getProperty().getText();
     
-    WebSpecInteraction interaction = this.diagram.getInteractionNamed(interactionName);
+    WebSpecInteraction interaction = this.diagram.getInteractionNamed(iName);
     Widget widget = interaction.getWidget(propertyOrWidget);
     if (widget != null) {
       this.setOut(node, new WidgetReference(widget));

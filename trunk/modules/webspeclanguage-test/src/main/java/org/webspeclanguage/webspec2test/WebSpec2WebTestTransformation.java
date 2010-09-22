@@ -92,8 +92,7 @@ public class WebSpec2WebTestTransformation {
     this.basicInitializeOptimizerAndConcretizer();
 
     for (String generatorName : this.getCurrentDiagram().getGeneratorsNames()) {
-      Generator generator = this.getCurrentDiagram().getGeneratorNamed(
-          generatorName);
+      Generator generator = this.getCurrentDiagram().getGeneratorNamed(generatorName);
       this.getConcretizer().set(generatorName, generator);
     }
   }
@@ -188,25 +187,20 @@ public class WebSpec2WebTestTransformation {
     }
   }
 
-  protected void generateItemsFor(WebSpecRichBehavior richBehavior,
-      SimpleWebTest test) {
+  protected void generateItemsFor(WebSpecRichBehavior richBehavior, SimpleWebTest test) {
     generateItemsForTransition(richBehavior, test);
   }
 
-  protected void generateItemsFor(WebSpecNavigation navigation,
-      SimpleWebTest test) {
+  protected void generateItemsFor(WebSpecNavigation navigation, SimpleWebTest test) {
     generateItemsForTransition(navigation, test);
     test.addItem(new WebWaitPageToLoad());
   }
 
-  protected void generateItemsForTransition(WebSpecTransition transition,
-      SimpleWebTest test) {
+  protected void generateItemsForTransition(WebSpecTransition transition, SimpleWebTest test) {
     if (transition.getPrecondition() != null) {
-      Expression expression = makeConcreteAndOptimize(transition
-          .getPrecondition());
+      Expression expression = makeConcreteAndOptimize(transition.getPrecondition());
       if (expression.equals(BooleanConstant.FALSE)) {
-        throw new UnsatisfiedPreconditionException(transition, this
-            .getConcretizer().getVariables());
+        throw new UnsatisfiedPreconditionException(transition, this.getConcretizer().getVariables());
       } else {
         test.addItem(new WebAssertExpression(expression));
       }

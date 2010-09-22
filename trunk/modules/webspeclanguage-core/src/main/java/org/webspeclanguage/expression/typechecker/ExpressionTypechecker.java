@@ -21,6 +21,7 @@ import java.util.Properties;
 
 import org.webspeclanguage.base.WebSpecDiagram;
 import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.exception.WebspecException;
 import org.webspeclanguage.expression.base.AbstractFunctionCallExpression;
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.AndExpression;
@@ -83,41 +84,49 @@ public class ExpressionTypechecker implements ExpressionVisitor {
         
         if (key.contains("-")) {
           //it is a property
-          int index = key.indexOf("-");
-          String className = key.substring(0, index);
-          String propertyName = key.substring(index + 1, key.length());
-          Class<?> theClass = Class.forName(className);
-          if (!propertyDefinitions.containsKey(theClass)) {
-            propertyDefinitions.put(theClass, new HashMap<String, ExpressionType>());
-          }
-          propertyDefinitions.get(theClass).put(propertyName, ExpressionType.valueOf(value));
+          importPropertyDefinition(key, value);
         } else {
-          //it is a function declaration
-          int index = value.indexOf("->");
-          String[] argumentTypesAsString = value.substring(0, index).split(",");
-          String returnTypeAsString = value.substring(index + 2, value.length());
-          ExpressionType returnType = ExpressionType.valueOf(returnTypeAsString);
-          Matcher[] matchers = new Matcher[argumentTypesAsString.length];
-          for (int i = 0; i < argumentTypesAsString.length; i++) {
-            String argumentTypeAsString = argumentTypesAsString[i];
-            ExpressionType argumentType = ExpressionType.safeValueOf(argumentTypeAsString);
-            if (argumentType != null) {
-              matchers[i] = new TypeMatcher(argumentType);
-            } else {
-              matchers[i] = new ClassMatcher(Class.forName(argumentTypeAsString));
-            }
-          }
-          FunctionDefinition functionDefinition = new FunctionDefinition(key, returnType, matchers);
-          functionDefinitions.put(key, functionDefinition);
+          //it is a function definition
+          importFunctionDefinition(key, value);
         }
       }
     } catch (FileNotFoundException e) {
-      e.printStackTrace();
+      throw new WebspecException(e);
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new WebspecException(e);
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      throw new WebspecException(e);
     }
+  }
+
+  private static void importFunctionDefinition(String key, String value) throws ClassNotFoundException {
+    int index = value.indexOf("->");
+    String[] argumentTypesAsString = value.substring(0, index).split(",");
+    String returnTypeAsString = value.substring(index + 2, value.length());
+    ExpressionType returnType = ExpressionType.valueOf(returnTypeAsString);
+    Matcher[] matchers = new Matcher[argumentTypesAsString.length];
+    for (int i = 0; i < argumentTypesAsString.length; i++) {
+      String argumentTypeAsString = argumentTypesAsString[i];
+      ExpressionType argumentType = ExpressionType.safeValueOf(argumentTypeAsString);
+      if (argumentType != null) {
+        matchers[i] = new TypeMatcher(argumentType);
+      } else {
+        matchers[i] = new ClassMatcher(Class.forName(argumentTypeAsString));
+      }
+    }
+    FunctionDefinition functionDefinition = new FunctionDefinition(key, returnType, matchers);
+    functionDefinitions.put(key, functionDefinition);
+  }
+
+  private static void importPropertyDefinition(String key, String value) throws ClassNotFoundException {
+    int index = key.indexOf('-');
+    String className = key.substring(0, index);
+    String propertyName = key.substring(index + 1, key.length());
+    Class<?> theClass = Class.forName(className);
+    if (!propertyDefinitions.containsKey(theClass)) {
+      propertyDefinitions.put(theClass, new HashMap<String, ExpressionType>());
+    }
+    propertyDefinitions.get(theClass).put(propertyName, ExpressionType.valueOf(value));
   }
   
   static {

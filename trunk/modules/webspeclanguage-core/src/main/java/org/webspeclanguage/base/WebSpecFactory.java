@@ -39,7 +39,7 @@ import org.webspeclanguage.widget.TextField;
  * 
  * @author Esteban Robles Luna
  */
-public class WebSpecFactory {
+public final class WebSpecFactory {
 
   private WebSpecFactory() {}
   
