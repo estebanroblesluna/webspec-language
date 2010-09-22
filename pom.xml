@@ -57,6 +57,7 @@
     <module>modules/webspeclanguage-test-webdriver</module>
     <module>modules/webspeclanguage-selenium-extension</module> 
     <module>modules/webspeclanguage-webdiagrameditor</module>
+    <module>modules/webspeclanguage-io</module>
   </modules>
 
 </project>
