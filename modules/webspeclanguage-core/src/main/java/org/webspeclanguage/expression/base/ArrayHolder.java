@@ -13,29 +13,10 @@
 package org.webspeclanguage.expression.base;
 
 /**
- * An expression class for "${var}[index]"
+ * A marker interface for array expressions
  * 
  * @author Esteban Robles Luna
  */
-public class ArrayAccessExpression extends AbstractExpression {
+public interface ArrayHolder extends Expression {
 
-  private ArrayHolder arrayExpression;
-  private Expression index;
-
-  public ArrayAccessExpression(ArrayHolder arrayExpression, Expression index) {
-    this.arrayExpression = arrayExpression;
-    this.index = index;
-  }
-
-  public Object accept(ExpressionVisitor visitor) {
-    return visitor.visitArrayAccessExpression(this);
-  }
-
-  public ArrayHolder getArrayExpression() {
-    return arrayExpression;
-  }
-
-  public Expression getIndex() {
-    return index;
-  }
 }

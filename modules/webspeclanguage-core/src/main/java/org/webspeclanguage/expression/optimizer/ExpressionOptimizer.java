@@ -13,12 +13,15 @@
 package org.webspeclanguage.expression.optimizer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.AndExpression;
 import org.webspeclanguage.expression.base.ArrayAccessExpression;
 import org.webspeclanguage.expression.base.ArrayExpression;
+import org.webspeclanguage.expression.base.ArrayHolder;
 import org.webspeclanguage.expression.base.BinaryExpression;
 import org.webspeclanguage.expression.base.BooleanConstant;
 import org.webspeclanguage.expression.base.ConcatExpression;
@@ -32,6 +35,7 @@ import org.webspeclanguage.expression.base.GeneratorExpression;
 import org.webspeclanguage.expression.base.GreaterEqualExpression;
 import org.webspeclanguage.expression.base.GreaterExpression;
 import org.webspeclanguage.expression.base.ImpliesExpression;
+import org.webspeclanguage.expression.base.InteractionPropertyExpression;
 import org.webspeclanguage.expression.base.LowerEqualExpression;
 import org.webspeclanguage.expression.base.LowerExpression;
 import org.webspeclanguage.expression.base.MulExpression;
@@ -132,9 +136,17 @@ public class ExpressionOptimizer implements ExpressionVisitor {
     }
   }
 
-  public Object visitArrayAccessExpression(
-      ArrayAccessExpression arrayAccessExpression) {
-    return arrayAccessExpression;
+  public Object visitArrayAccessExpression(ArrayAccessExpression arrayAccessExpression) {
+    Expression index = this.optimize(arrayAccessExpression.getIndex());
+    Expression array = this.optimize(arrayAccessExpression.getArrayExpression());
+    
+    if (index.isConstant()) {
+      if (array.isConstant()) {
+        return ((ArrayExpression) array).get(((NumberConstant) index).getIntValue());
+      }
+    }
+    
+    return new ArrayAccessExpression((ArrayHolder) array, index);
   }
 
   public Object visitArrayExpression(ArrayExpression arrayExpression) {
@@ -178,22 +190,19 @@ public class ExpressionOptimizer implements ExpressionVisitor {
     return exps;
   }
 
-  public Object visitFunctionCallExpression(
-      FunctionCallExpression functionCallExpression) {
+  public Object visitFunctionCallExpression(FunctionCallExpression functionCallExpression) {
     return new FunctionCallExpression(
         functionCallExpression.getFunctionName(), 
         optimize(functionCallExpression.getArguments()));
   }
 
-  public Object visitNativeFunctionCallExpression(
-      NativeFunctionCallExpression functionCallExpression) {
+  public Object visitNativeFunctionCallExpression(NativeFunctionCallExpression functionCallExpression) {
     return new NativeFunctionCallExpression(
         functionCallExpression.getFunctionName(), 
         optimize(functionCallExpression.getArguments()));
   }
   
-  public Object visitToBooleanFunctionCallExpression(
-      ToBooleanFunctionCallExpression functionCallExpression) {
+  public Object visitToBooleanFunctionCallExpression(ToBooleanFunctionCallExpression functionCallExpression) {
     List<Expression> arguments = optimize(functionCallExpression.getArguments());
     if (arguments.size() == 1 && arguments.get(0).isConstant()) {
       return ((ConstantExpression<?>) arguments.get(0)).coerceToBoolean();
@@ -202,8 +211,7 @@ public class ExpressionOptimizer implements ExpressionVisitor {
     }
   }
 
-  public Object visitToNumberFunctionCallExpression(
-      ToNumberFunctionCallExpression functionCallExpression) {
+  public Object visitToNumberFunctionCallExpression(ToNumberFunctionCallExpression functionCallExpression) {
     List<Expression> arguments = optimize(functionCallExpression.getArguments());
     if (arguments.size() == 1 && arguments.get(0).isConstant()) {
       return ((ConstantExpression<?>) arguments.get(0)).coerceToNumber();
@@ -212,8 +220,7 @@ public class ExpressionOptimizer implements ExpressionVisitor {
     }
   }
 
-  public Object visitToStringFunctionCallExpression(
-      ToStringFunctionCallExpression functionCallExpression) {
+  public Object visitToStringFunctionCallExpression(ToStringFunctionCallExpression functionCallExpression) {
     List<Expression> arguments = optimize(functionCallExpression.getArguments());
     if (arguments.size() == 1 && arguments.get(0).isConstant()) {
       return ((ConstantExpression<?>) arguments.get(0)).coerceToString();
@@ -405,24 +412,37 @@ public class ExpressionOptimizer implements ExpressionVisitor {
     return variableValue;
   }
 
-  public Object visitWidgetPropertyReference(
-      WidgetPropertyReference widgetPropertyReference) {
+  public Object visitWidgetPropertyReference(WidgetPropertyReference widgetPropertyReference) {
     WidgetPropertyReference newWPR = new WidgetPropertyReference(
-        widgetPropertyReference.getWidget(), widgetPropertyReference
-            .getPropertyName());
-    newWPR.setLocation(this.optimizeString(widgetPropertyReference
-        .getPreferedLocation()));
+            widgetPropertyReference.getWidget(), 
+            widgetPropertyReference.getPropertyName());
+    String optimizedLocation = this.optimizeString(widgetPropertyReference.getPreferedLocation());
+    newWPR.setLocation(optimizedLocation);
+    newWPR.setVariables(this.optimizeMap(widgetPropertyReference.getVariables()));
     return newWPR;
   }
 
   public Object visitWidgetReference(WidgetReference widgetReference) {
     WidgetReference newWR = new WidgetReference(widgetReference.getWidget());
-    newWR.setLocation(this
-        .optimizeString(widgetReference.getPreferedLocation()));
+    String optimizedLocation = this.optimizeString(widgetReference.getPreferedLocation());
+    newWR.setLocation(optimizedLocation);
+    newWR.setVariables(this.optimizeMap(widgetReference.getVariables()));
     return newWR;
+  }
+  
+  public Map<String, Expression> optimizeMap(Map<String, Expression> map) {
+    Map<String, Expression> newMap = new HashMap<String, Expression>(map);
+    for (String key : newMap.keySet()) {
+      newMap.put(key, this.optimize(newMap.get(key)));
+    }
+    return newMap;
   }
 
   private String optimizeString(String constant) {
     return constant;
+  }
+
+  public Object visitInteractionPropertyExpression(InteractionPropertyExpression interactionPropertyExpression) {
+    return interactionPropertyExpression;
   }
 }

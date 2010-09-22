@@ -34,6 +34,7 @@ import org.webspeclanguage.expression.base.GeneratorExpression;
 import org.webspeclanguage.expression.base.GreaterEqualExpression;
 import org.webspeclanguage.expression.base.GreaterExpression;
 import org.webspeclanguage.expression.base.ImpliesExpression;
+import org.webspeclanguage.expression.base.InteractionPropertyExpression;
 import org.webspeclanguage.expression.base.LowerEqualExpression;
 import org.webspeclanguage.expression.base.LowerExpression;
 import org.webspeclanguage.expression.base.MulExpression;
@@ -269,9 +270,14 @@ public class SeleniumJavaExpressionGenerator {
         return "arrayExp";
       }
 
-      public Object visitArrayAccessExpression(
-          ArrayAccessExpression arrayAccessExpression) {
-        return generate(arrayAccessExpression.getExpression());
+      public Object visitArrayAccessExpression(ArrayAccessExpression arrayAccessExpression) {
+        //TODO
+        return generate(arrayAccessExpression.getIndex());
+      }
+
+      public Object visitInteractionPropertyExpression(InteractionPropertyExpression interactionPropertyExpression) {
+        // TODO Auto-generated method stub
+        return null;
       }
     });
   }

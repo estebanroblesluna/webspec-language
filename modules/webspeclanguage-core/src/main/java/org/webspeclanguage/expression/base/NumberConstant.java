@@ -51,4 +51,8 @@ public class NumberConstant extends ConstantExpression<BigDecimal> {
   public StringConstant coerceToString() {
     return new StringConstant(this.getConstant().toString());
   }
+
+  public int getIntValue() {
+    return this.getConstant().intValue();
+  }
 }

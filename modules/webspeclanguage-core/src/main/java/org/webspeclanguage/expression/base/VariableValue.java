@@ -19,7 +19,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
  * 
  * @author Esteban Robles Luna
  */
-public class VariableValue extends AbstractExpression {
+public class VariableValue extends AbstractExpression implements ArrayHolder {
 
   private String variableName;
 

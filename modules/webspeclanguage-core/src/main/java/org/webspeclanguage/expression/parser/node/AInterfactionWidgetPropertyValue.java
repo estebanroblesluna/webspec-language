@@ -5,32 +5,32 @@ package org.webspeclanguage.expression.parser.node;
 import org.webspeclanguage.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AWidgetPropertyReferenceValue extends PValue
+public final class AInterfactionWidgetPropertyValue extends PValue
 {
     private TIdentifier _interaction_;
-    private TPoint _p1_;
-    private TIdentifier _widget_;
+    private TPoint _point_;
+    private PWidgetOrWidgetAccessListWithProperty _widgets_;
     private TPoint _p2_;
     private TIdentifier _property_;
 
-    public AWidgetPropertyReferenceValue()
+    public AInterfactionWidgetPropertyValue()
     {
         // Constructor
     }
 
-    public AWidgetPropertyReferenceValue(
+    public AInterfactionWidgetPropertyValue(
         @SuppressWarnings("hiding") TIdentifier _interaction_,
-        @SuppressWarnings("hiding") TPoint _p1_,
-        @SuppressWarnings("hiding") TIdentifier _widget_,
+        @SuppressWarnings("hiding") TPoint _point_,
+        @SuppressWarnings("hiding") PWidgetOrWidgetAccessListWithProperty _widgets_,
         @SuppressWarnings("hiding") TPoint _p2_,
         @SuppressWarnings("hiding") TIdentifier _property_)
     {
         // Constructor
         setInteraction(_interaction_);
 
-        setP1(_p1_);
+        setPoint(_point_);
 
-        setWidget(_widget_);
+        setWidgets(_widgets_);
 
         setP2(_p2_);
 
@@ -41,17 +41,17 @@ public final class AWidgetPropertyReferenceValue extends PValue
     @Override
     public Object clone()
     {
-        return new AWidgetPropertyReferenceValue(
+        return new AInterfactionWidgetPropertyValue(
             cloneNode(this._interaction_),
-            cloneNode(this._p1_),
-            cloneNode(this._widget_),
+            cloneNode(this._point_),
+            cloneNode(this._widgets_),
             cloneNode(this._p2_),
             cloneNode(this._property_));
     }
 
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAWidgetPropertyReferenceValue(this);
+        ((Analysis) sw).caseAInterfactionWidgetPropertyValue(this);
     }
 
     public TIdentifier getInteraction()
@@ -79,16 +79,16 @@ public final class AWidgetPropertyReferenceValue extends PValue
         this._interaction_ = node;
     }
 
-    public TPoint getP1()
+    public TPoint getPoint()
     {
-        return this._p1_;
+        return this._point_;
     }
 
-    public void setP1(TPoint node)
+    public void setPoint(TPoint node)
     {
-        if(this._p1_ != null)
+        if(this._point_ != null)
         {
-            this._p1_.parent(null);
+            this._point_.parent(null);
         }
 
         if(node != null)
@@ -101,19 +101,19 @@ public final class AWidgetPropertyReferenceValue extends PValue
             node.parent(this);
         }
 
-        this._p1_ = node;
+        this._point_ = node;
     }
 
-    public TIdentifier getWidget()
+    public PWidgetOrWidgetAccessListWithProperty getWidgets()
     {
-        return this._widget_;
+        return this._widgets_;
     }
 
-    public void setWidget(TIdentifier node)
+    public void setWidgets(PWidgetOrWidgetAccessListWithProperty node)
     {
-        if(this._widget_ != null)
+        if(this._widgets_ != null)
         {
-            this._widget_.parent(null);
+            this._widgets_.parent(null);
         }
 
         if(node != null)
@@ -126,7 +126,7 @@ public final class AWidgetPropertyReferenceValue extends PValue
             node.parent(this);
         }
 
-        this._widget_ = node;
+        this._widgets_ = node;
     }
 
     public TPoint getP2()
@@ -184,8 +184,8 @@ public final class AWidgetPropertyReferenceValue extends PValue
     {
         return ""
             + toString(this._interaction_)
-            + toString(this._p1_)
-            + toString(this._widget_)
+            + toString(this._point_)
+            + toString(this._widgets_)
             + toString(this._p2_)
             + toString(this._property_);
     }
@@ -200,15 +200,15 @@ public final class AWidgetPropertyReferenceValue extends PValue
             return;
         }
 
-        if(this._p1_ == child)
+        if(this._point_ == child)
         {
-            this._p1_ = null;
+            this._point_ = null;
             return;
         }
 
-        if(this._widget_ == child)
+        if(this._widgets_ == child)
         {
-            this._widget_ = null;
+            this._widgets_ = null;
             return;
         }
 
@@ -237,15 +237,15 @@ public final class AWidgetPropertyReferenceValue extends PValue
             return;
         }
 
-        if(this._p1_ == oldChild)
+        if(this._point_ == oldChild)
         {
-            setP1((TPoint) newChild);
+            setPoint((TPoint) newChild);
             return;
         }
 
-        if(this._widget_ == oldChild)
+        if(this._widgets_ == oldChild)
         {
-            setWidget((TIdentifier) newChild);
+            setWidgets((PWidgetOrWidgetAccessListWithProperty) newChild);
             return;
         }
 

@@ -5,16 +5,16 @@ package org.webspeclanguage.expression.parser.node;
 import org.webspeclanguage.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AArrayValue extends PValue
+public final class AArrayVariableorliteralarray extends PVariableorliteralarray
 {
     private PArray _array_;
 
-    public AArrayValue()
+    public AArrayVariableorliteralarray()
     {
         // Constructor
     }
 
-    public AArrayValue(
+    public AArrayVariableorliteralarray(
         @SuppressWarnings("hiding") PArray _array_)
     {
         // Constructor
@@ -25,13 +25,13 @@ public final class AArrayValue extends PValue
     @Override
     public Object clone()
     {
-        return new AArrayValue(
+        return new AArrayVariableorliteralarray(
             cloneNode(this._array_));
     }
 
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAArrayValue(this);
+        ((Analysis) sw).caseAArrayVariableorliteralarray(this);
     }
 
     public PArray getArray()

@@ -12,43 +12,16 @@
  */
 package org.webspeclanguage.expression.concretizer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.webspeclanguage.expression.base.AddExpression;
-import org.webspeclanguage.expression.base.AndExpression;
 import org.webspeclanguage.expression.base.ArrayAccessExpression;
-import org.webspeclanguage.expression.base.ArrayExpression;
-import org.webspeclanguage.expression.base.BooleanConstant;
-import org.webspeclanguage.expression.base.ConcatExpression;
+import org.webspeclanguage.expression.base.ArrayHolder;
 import org.webspeclanguage.expression.base.ConstantExpression;
-import org.webspeclanguage.expression.base.DivExpression;
-import org.webspeclanguage.expression.base.EqualsExpression;
 import org.webspeclanguage.expression.base.Expression;
-import org.webspeclanguage.expression.base.ExpressionVisitor;
-import org.webspeclanguage.expression.base.FunctionCallExpression;
 import org.webspeclanguage.expression.base.GeneratorExpression;
-import org.webspeclanguage.expression.base.GreaterEqualExpression;
-import org.webspeclanguage.expression.base.GreaterExpression;
-import org.webspeclanguage.expression.base.ImpliesExpression;
-import org.webspeclanguage.expression.base.LowerEqualExpression;
-import org.webspeclanguage.expression.base.LowerExpression;
-import org.webspeclanguage.expression.base.MulExpression;
-import org.webspeclanguage.expression.base.NativeFunctionCallExpression;
-import org.webspeclanguage.expression.base.NotEqualsExpression;
-import org.webspeclanguage.expression.base.NotExpression;
-import org.webspeclanguage.expression.base.NumberConstant;
-import org.webspeclanguage.expression.base.OrExpression;
-import org.webspeclanguage.expression.base.StringConstant;
-import org.webspeclanguage.expression.base.SubExpression;
-import org.webspeclanguage.expression.base.ToBooleanFunctionCallExpression;
-import org.webspeclanguage.expression.base.ToNumberFunctionCallExpression;
-import org.webspeclanguage.expression.base.ToStringFunctionCallExpression;
 import org.webspeclanguage.expression.base.VariableValue;
-import org.webspeclanguage.expression.base.WidgetPropertyReference;
-import org.webspeclanguage.expression.base.WidgetReference;
+import org.webspeclanguage.expression.conjunctivenormalform.ClonerVisitor;
 import org.webspeclanguage.generator.Generator;
 
 /**
@@ -58,9 +31,8 @@ import org.webspeclanguage.generator.Generator;
  * 
  * @author Esteban Robles Luna
  */
-//TODO make this class uses ClonerVisitor
 @SuppressWarnings("unchecked")
-public class ExpressionConcretizer implements ExpressionVisitor {
+public class ExpressionConcretizer extends ClonerVisitor {
 
   private Map<String, ConstantExpression> variables;
   private Map<String, Generator> generators;
@@ -74,165 +46,24 @@ public class ExpressionConcretizer implements ExpressionVisitor {
     return (Expression) expression.accept(this);
   }
 
-  public Object visitBooleanConstant(BooleanConstant booleanConstant) {
-    return booleanConstant;
-  }
-
-  public Object visitEqualsExpression(EqualsExpression equalsExpression) {
-    return new EqualsExpression(makeConcrete(equalsExpression.getOp1()),
-        makeConcrete(equalsExpression.getOp2()));
-  }
-
   public Object visitGeneratorExpression(GeneratorExpression generatorExpression) {
     if (this.getGenerator(generatorExpression.getGeneratorName()) == null) {
       return generatorExpression;
     } else {
-      return this.getGenerator(generatorExpression.getGeneratorName())
-          .generate();
+      return this.getGenerator(generatorExpression.getGeneratorName()).generate();
     }
-  }
-
-  public Object visitStringConstant(StringConstant stringConstant) {
-    return stringConstant;
   }
 
   public Object visitVariableValue(VariableValue variableValue) {
-    return this.getVariables().containsKey(variableValue.getVariableName()) ? this
-        .getVariables().get(variableValue.getVariableName())
-        : variableValue;
-  }
-
-  public Object visitWidgetPropertyReference(
-      WidgetPropertyReference widgetPropertyReference) {
-    return widgetPropertyReference;
-  }
-
-  public Object visitWidgetReference(WidgetReference widgetReference) {
-    return widgetReference;
-  }
-
-  public Object visitNumberConstant(NumberConstant integerConstant) {
-    return integerConstant;
-  }
-
-  public Object visitAndExpression(AndExpression and) {
-    return new AndExpression(makeConcrete(and.getOp1()), makeConcrete(and
-        .getOp2()));
-  }
-
-  public Object visitConcatExpression(ConcatExpression concatExpression) {
-    return new ConcatExpression(makeConcrete(concatExpression.getOp1()),
-        makeConcrete(concatExpression.getOp2()));
-  }
-
-  public Object visitNotExpression(NotExpression notExpression) {
-    return new NotExpression(makeConcrete(notExpression.getExpression()));
-  }
-
-  public Object visitAddExpression(AddExpression expression) {
-    return new AddExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitDivExpression(DivExpression expression) {
-    return new DivExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitGreaterEqualExpression(GreaterEqualExpression expression) {
-    return new GreaterEqualExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitGreaterExpression(GreaterExpression expression) {
-    return new GreaterExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitLowerEqualExpression(LowerEqualExpression expression) {
-    return new LowerEqualExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitLowerExpression(LowerExpression expression) {
-    return new LowerExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitMulExpression(MulExpression expression) {
-    return new MulExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitNotEqualsExpression(NotEqualsExpression expression) {
-    return new NotEqualsExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitOrExpression(OrExpression expression) {
-    return new OrExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
-  }
-
-  public Object visitSubExpression(SubExpression expression) {
-    return new SubExpression(makeConcrete(expression.getOp1()),
-        makeConcrete(expression.getOp2()));
+    return this.getVariables().containsKey(variableValue.getVariableName()) 
+      ? this.getVariables().get(variableValue.getVariableName())
+      : variableValue;
   }
   
-  private List<Expression> makeConcrete(List<Expression> expressions) {
-    List<Expression> exps = new ArrayList<Expression>();
-    for (Expression exp : expressions) {
-      exps.add(makeConcrete(exp));
-    }
-    return exps;
-  }
-
-  public Object visitFunctionCallExpression(
-      FunctionCallExpression functionCallExpression) {
-    return new FunctionCallExpression(
-        functionCallExpression.getFunctionName(), 
-        makeConcrete(functionCallExpression.getArguments()));
-  }
-  
-  public Object visitNativeFunctionCallExpression(
-      NativeFunctionCallExpression functionCallExpression) {
-    return new NativeFunctionCallExpression(
-        functionCallExpression.getFunctionName(), 
-        makeConcrete(functionCallExpression.getArguments()));
-  }
-  
-  public Object visitToBooleanFunctionCallExpression(
-      ToBooleanFunctionCallExpression functionCallExpression) {
-    return new ToBooleanFunctionCallExpression(
-        makeConcrete(functionCallExpression.getArguments()));
-  }
-
-  public Object visitToNumberFunctionCallExpression(
-      ToNumberFunctionCallExpression functionCallExpression) {
-    return new ToNumberFunctionCallExpression(
-        makeConcrete(functionCallExpression.getArguments()));
-  }
-
-  public Object visitToStringFunctionCallExpression(
-      ToStringFunctionCallExpression functionCallExpression) {
-    return new ToStringFunctionCallExpression(
-        makeConcrete(functionCallExpression.getArguments()));
-  }
-
-  public Object visitImpliesExpression(ImpliesExpression impliesExpression) {
-    return new ImpliesExpression(makeConcrete(impliesExpression.getOp1()),
-        makeConcrete(impliesExpression.getOp2()));
-  }
-
-  public Object visitArrayExpression(ArrayExpression arrayExpression) {
-    return arrayExpression;
-  }
-
-  public Object visitArrayAccessExpression(
-      ArrayAccessExpression arrayAccessExpression) {
-    // TODO
-    return null;
-    // return arrayAccessExpression.evaluate(getGeneratedVariables());
+  public Object visitArrayAccessExpression(ArrayAccessExpression arrayAccessExpression) {
+    Expression index = this.makeConcrete(arrayAccessExpression.getIndex());
+    Expression array = this.makeConcrete(arrayAccessExpression.getArrayExpression());
+    return new ArrayAccessExpression((ArrayHolder) array, index);
   }
 
   private Generator getGenerator(String generatorName) {

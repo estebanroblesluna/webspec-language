@@ -7,10 +7,7 @@ import org.webspeclanguage.expression.parser.analysis.*;
 @SuppressWarnings("nls")
 public final class AVariableValue extends PValue
 {
-    private TVar _left_;
-    private TLeftBrace _leftBrace_;
-    private TIdentifier _i_;
-    private TRightBrace _rightBrace_;
+    private PVariable _variable_;
 
     public AVariableValue()
     {
@@ -18,19 +15,10 @@ public final class AVariableValue extends PValue
     }
 
     public AVariableValue(
-        @SuppressWarnings("hiding") TVar _left_,
-        @SuppressWarnings("hiding") TLeftBrace _leftBrace_,
-        @SuppressWarnings("hiding") TIdentifier _i_,
-        @SuppressWarnings("hiding") TRightBrace _rightBrace_)
+        @SuppressWarnings("hiding") PVariable _variable_)
     {
         // Constructor
-        setLeft(_left_);
-
-        setLeftBrace(_leftBrace_);
-
-        setI(_i_);
-
-        setRightBrace(_rightBrace_);
+        setVariable(_variable_);
 
     }
 
@@ -38,10 +26,7 @@ public final class AVariableValue extends PValue
     public Object clone()
     {
         return new AVariableValue(
-            cloneNode(this._left_),
-            cloneNode(this._leftBrace_),
-            cloneNode(this._i_),
-            cloneNode(this._rightBrace_));
+            cloneNode(this._variable_));
     }
 
     public void apply(Switch sw)
@@ -49,16 +34,16 @@ public final class AVariableValue extends PValue
         ((Analysis) sw).caseAVariableValue(this);
     }
 
-    public TVar getLeft()
+    public PVariable getVariable()
     {
-        return this._left_;
+        return this._variable_;
     }
 
-    public void setLeft(TVar node)
+    public void setVariable(PVariable node)
     {
-        if(this._left_ != null)
+        if(this._variable_ != null)
         {
-            this._left_.parent(null);
+            this._variable_.parent(null);
         }
 
         if(node != null)
@@ -71,119 +56,23 @@ public final class AVariableValue extends PValue
             node.parent(this);
         }
 
-        this._left_ = node;
-    }
-
-    public TLeftBrace getLeftBrace()
-    {
-        return this._leftBrace_;
-    }
-
-    public void setLeftBrace(TLeftBrace node)
-    {
-        if(this._leftBrace_ != null)
-        {
-            this._leftBrace_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._leftBrace_ = node;
-    }
-
-    public TIdentifier getI()
-    {
-        return this._i_;
-    }
-
-    public void setI(TIdentifier node)
-    {
-        if(this._i_ != null)
-        {
-            this._i_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._i_ = node;
-    }
-
-    public TRightBrace getRightBrace()
-    {
-        return this._rightBrace_;
-    }
-
-    public void setRightBrace(TRightBrace node)
-    {
-        if(this._rightBrace_ != null)
-        {
-            this._rightBrace_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._rightBrace_ = node;
+        this._variable_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._left_)
-            + toString(this._leftBrace_)
-            + toString(this._i_)
-            + toString(this._rightBrace_);
+            + toString(this._variable_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._left_ == child)
+        if(this._variable_ == child)
         {
-            this._left_ = null;
-            return;
-        }
-
-        if(this._leftBrace_ == child)
-        {
-            this._leftBrace_ = null;
-            return;
-        }
-
-        if(this._i_ == child)
-        {
-            this._i_ = null;
-            return;
-        }
-
-        if(this._rightBrace_ == child)
-        {
-            this._rightBrace_ = null;
+            this._variable_ = null;
             return;
         }
 
@@ -194,27 +83,9 @@ public final class AVariableValue extends PValue
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._left_ == oldChild)
+        if(this._variable_ == oldChild)
         {
-            setLeft((TVar) newChild);
-            return;
-        }
-
-        if(this._leftBrace_ == oldChild)
-        {
-            setLeftBrace((TLeftBrace) newChild);
-            return;
-        }
-
-        if(this._i_ == oldChild)
-        {
-            setI((TIdentifier) newChild);
-            return;
-        }
-
-        if(this._rightBrace_ == oldChild)
-        {
-            setRightBrace((TRightBrace) newChild);
+            setVariable((PVariable) newChild);
             return;
         }
 

@@ -5,45 +5,45 @@ package org.webspeclanguage.expression.parser.node;
 import org.webspeclanguage.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AArrayValue extends PValue
+public final class ASimplewidgetWidgetOrWidgetAccess extends PWidgetOrWidgetAccess
 {
-    private PArray _array_;
+    private TIdentifier _widget_;
 
-    public AArrayValue()
+    public ASimplewidgetWidgetOrWidgetAccess()
     {
         // Constructor
     }
 
-    public AArrayValue(
-        @SuppressWarnings("hiding") PArray _array_)
+    public ASimplewidgetWidgetOrWidgetAccess(
+        @SuppressWarnings("hiding") TIdentifier _widget_)
     {
         // Constructor
-        setArray(_array_);
+        setWidget(_widget_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AArrayValue(
-            cloneNode(this._array_));
+        return new ASimplewidgetWidgetOrWidgetAccess(
+            cloneNode(this._widget_));
     }
 
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAArrayValue(this);
+        ((Analysis) sw).caseASimplewidgetWidgetOrWidgetAccess(this);
     }
 
-    public PArray getArray()
+    public TIdentifier getWidget()
     {
-        return this._array_;
+        return this._widget_;
     }
 
-    public void setArray(PArray node)
+    public void setWidget(TIdentifier node)
     {
-        if(this._array_ != null)
+        if(this._widget_ != null)
         {
-            this._array_.parent(null);
+            this._widget_.parent(null);
         }
 
         if(node != null)
@@ -56,23 +56,23 @@ public final class AArrayValue extends PValue
             node.parent(this);
         }
 
-        this._array_ = node;
+        this._widget_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._array_);
+            + toString(this._widget_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._array_ == child)
+        if(this._widget_ == child)
         {
-            this._array_ = null;
+            this._widget_ = null;
             return;
         }
 
@@ -83,9 +83,9 @@ public final class AArrayValue extends PValue
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._array_ == oldChild)
+        if(this._widget_ == oldChild)
         {
-            setArray((PArray) newChild);
+            setWidget((TIdentifier) newChild);
             return;
         }
 

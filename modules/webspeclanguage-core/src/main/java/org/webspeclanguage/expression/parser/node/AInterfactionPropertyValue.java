@@ -5,43 +5,43 @@ package org.webspeclanguage.expression.parser.node;
 import org.webspeclanguage.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AWidgetReferenceValue extends PValue
+public final class AInterfactionPropertyValue extends PValue
 {
     private TIdentifier _interaction_;
     private TPoint _point_;
-    private TIdentifier _widget_;
+    private TIdentifier _property_;
 
-    public AWidgetReferenceValue()
+    public AInterfactionPropertyValue()
     {
         // Constructor
     }
 
-    public AWidgetReferenceValue(
+    public AInterfactionPropertyValue(
         @SuppressWarnings("hiding") TIdentifier _interaction_,
         @SuppressWarnings("hiding") TPoint _point_,
-        @SuppressWarnings("hiding") TIdentifier _widget_)
+        @SuppressWarnings("hiding") TIdentifier _property_)
     {
         // Constructor
         setInteraction(_interaction_);
 
         setPoint(_point_);
 
-        setWidget(_widget_);
+        setProperty(_property_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AWidgetReferenceValue(
+        return new AInterfactionPropertyValue(
             cloneNode(this._interaction_),
             cloneNode(this._point_),
-            cloneNode(this._widget_));
+            cloneNode(this._property_));
     }
 
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAWidgetReferenceValue(this);
+        ((Analysis) sw).caseAInterfactionPropertyValue(this);
     }
 
     public TIdentifier getInteraction()
@@ -94,16 +94,16 @@ public final class AWidgetReferenceValue extends PValue
         this._point_ = node;
     }
 
-    public TIdentifier getWidget()
+    public TIdentifier getProperty()
     {
-        return this._widget_;
+        return this._property_;
     }
 
-    public void setWidget(TIdentifier node)
+    public void setProperty(TIdentifier node)
     {
-        if(this._widget_ != null)
+        if(this._property_ != null)
         {
-            this._widget_.parent(null);
+            this._property_.parent(null);
         }
 
         if(node != null)
@@ -116,7 +116,7 @@ public final class AWidgetReferenceValue extends PValue
             node.parent(this);
         }
 
-        this._widget_ = node;
+        this._property_ = node;
     }
 
     @Override
@@ -125,7 +125,7 @@ public final class AWidgetReferenceValue extends PValue
         return ""
             + toString(this._interaction_)
             + toString(this._point_)
-            + toString(this._widget_);
+            + toString(this._property_);
     }
 
     @Override
@@ -144,9 +144,9 @@ public final class AWidgetReferenceValue extends PValue
             return;
         }
 
-        if(this._widget_ == child)
+        if(this._property_ == child)
         {
-            this._widget_ = null;
+            this._property_ = null;
             return;
         }
 
@@ -169,9 +169,9 @@ public final class AWidgetReferenceValue extends PValue
             return;
         }
 
-        if(this._widget_ == oldChild)
+        if(this._property_ == oldChild)
         {
-            setWidget((TIdentifier) newChild);
+            setProperty((TIdentifier) newChild);
             return;
         }
 

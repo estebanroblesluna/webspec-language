@@ -28,9 +28,7 @@ public class TypecheckException extends RuntimeException {
   private ExpressionType expectedType;
   private ExpressionType actualType;
   
-  public TypecheckException(Expression expression, ExpressionType expectedType,
-      ExpressionType actualType) {
-    
+  public TypecheckException(Expression expression, ExpressionType expectedType, ExpressionType actualType) {
     this.expression = expression;
     this.expectedType = expectedType;
     this.actualType = actualType;

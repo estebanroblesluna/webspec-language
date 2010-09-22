@@ -76,4 +76,6 @@ public interface ExpressionVisitor {
   Object visitToNumberFunctionCallExpression(ToNumberFunctionCallExpression toNumberFunctionCallExpression);
 
   Object visitToStringFunctionCallExpression(ToStringFunctionCallExpression toStringFunctionCallExpression);
+
+  Object visitInteractionPropertyExpression(InteractionPropertyExpression interactionPropertyExpression);
 }

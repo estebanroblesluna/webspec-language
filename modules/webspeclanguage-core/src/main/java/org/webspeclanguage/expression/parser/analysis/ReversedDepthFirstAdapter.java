@@ -801,72 +801,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAFunctioncallValue(node);
     }
 
-    public void inAWidgetReferenceValue(AWidgetReferenceValue node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAWidgetReferenceValue(AWidgetReferenceValue node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAWidgetReferenceValue(AWidgetReferenceValue node)
-    {
-        inAWidgetReferenceValue(node);
-        if(node.getWidget() != null)
-        {
-            node.getWidget().apply(this);
-        }
-        if(node.getPoint() != null)
-        {
-            node.getPoint().apply(this);
-        }
-        if(node.getInteraction() != null)
-        {
-            node.getInteraction().apply(this);
-        }
-        outAWidgetReferenceValue(node);
-    }
-
-    public void inAWidgetPropertyReferenceValue(AWidgetPropertyReferenceValue node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAWidgetPropertyReferenceValue(AWidgetPropertyReferenceValue node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAWidgetPropertyReferenceValue(AWidgetPropertyReferenceValue node)
-    {
-        inAWidgetPropertyReferenceValue(node);
-        if(node.getProperty() != null)
-        {
-            node.getProperty().apply(this);
-        }
-        if(node.getP2() != null)
-        {
-            node.getP2().apply(this);
-        }
-        if(node.getWidget() != null)
-        {
-            node.getWidget().apply(this);
-        }
-        if(node.getP1() != null)
-        {
-            node.getP1().apply(this);
-        }
-        if(node.getInteraction() != null)
-        {
-            node.getInteraction().apply(this);
-        }
-        outAWidgetPropertyReferenceValue(node);
-    }
-
     public void inAVariableValue(AVariableValue node)
     {
         defaultIn(node);
@@ -881,52 +815,11 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAVariableValue(AVariableValue node)
     {
         inAVariableValue(node);
-        if(node.getRightBrace() != null)
+        if(node.getVariable() != null)
         {
-            node.getRightBrace().apply(this);
-        }
-        if(node.getI() != null)
-        {
-            node.getI().apply(this);
-        }
-        if(node.getLeftBrace() != null)
-        {
-            node.getLeftBrace().apply(this);
-        }
-        if(node.getLeft() != null)
-        {
-            node.getLeft().apply(this);
+            node.getVariable().apply(this);
         }
         outAVariableValue(node);
-    }
-
-    public void inAArrayValue(AArrayValue node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAArrayValue(AArrayValue node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAArrayValue(AArrayValue node)
-    {
-        inAArrayValue(node);
-        if(node.getRightBlock() != null)
-        {
-            node.getRightBlock().apply(this);
-        }
-        if(node.getArguments() != null)
-        {
-            node.getArguments().apply(this);
-        }
-        if(node.getLeftBlock() != null)
-        {
-            node.getLeftBlock().apply(this);
-        }
-        outAArrayValue(node);
     }
 
     public void inAGeneratorValue(AGeneratorValue node)
@@ -987,39 +880,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAParensValue(node);
     }
 
-    public void inAArrayAccessValue(AArrayAccessValue node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAArrayAccessValue(AArrayAccessValue node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAArrayAccessValue(AArrayAccessValue node)
-    {
-        inAArrayAccessValue(node);
-        if(node.getRightBlock() != null)
-        {
-            node.getRightBlock().apply(this);
-        }
-        if(node.getNumber() != null)
-        {
-            node.getNumber().apply(this);
-        }
-        if(node.getLeftBlock() != null)
-        {
-            node.getLeftBlock().apply(this);
-        }
-        if(node.getValue() != null)
-        {
-            node.getValue().apply(this);
-        }
-        outAArrayAccessValue(node);
-    }
-
     public void inANativefunctioncallValue(ANativefunctioncallValue node)
     {
         defaultIn(node);
@@ -1055,6 +915,338 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getPercent().apply(this);
         }
         outANativefunctioncallValue(node);
+    }
+
+    public void inAArrayValue(AArrayValue node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayValue(AArrayValue node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayValue(AArrayValue node)
+    {
+        inAArrayValue(node);
+        if(node.getArray() != null)
+        {
+            node.getArray().apply(this);
+        }
+        outAArrayValue(node);
+    }
+
+    public void inAArrayAccessValue(AArrayAccessValue node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayAccessValue(AArrayAccessValue node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayAccessValue(AArrayAccessValue node)
+    {
+        inAArrayAccessValue(node);
+        if(node.getRightBlock() != null)
+        {
+            node.getRightBlock().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getLeftBlock() != null)
+        {
+            node.getLeftBlock().apply(this);
+        }
+        if(node.getVariableorliteralarray() != null)
+        {
+            node.getVariableorliteralarray().apply(this);
+        }
+        outAArrayAccessValue(node);
+    }
+
+    public void inAInterfactionPropertyValue(AInterfactionPropertyValue node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAInterfactionPropertyValue(AInterfactionPropertyValue node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAInterfactionPropertyValue(AInterfactionPropertyValue node)
+    {
+        inAInterfactionPropertyValue(node);
+        if(node.getProperty() != null)
+        {
+            node.getProperty().apply(this);
+        }
+        if(node.getPoint() != null)
+        {
+            node.getPoint().apply(this);
+        }
+        if(node.getInteraction() != null)
+        {
+            node.getInteraction().apply(this);
+        }
+        outAInterfactionPropertyValue(node);
+    }
+
+    public void inAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node)
+    {
+        inAInterfactionWidgetPropertyValue(node);
+        if(node.getProperty() != null)
+        {
+            node.getProperty().apply(this);
+        }
+        if(node.getP2() != null)
+        {
+            node.getP2().apply(this);
+        }
+        if(node.getWidgets() != null)
+        {
+            node.getWidgets().apply(this);
+        }
+        if(node.getPoint() != null)
+        {
+            node.getPoint().apply(this);
+        }
+        if(node.getInteraction() != null)
+        {
+            node.getInteraction().apply(this);
+        }
+        outAInterfactionWidgetPropertyValue(node);
+    }
+
+    public void inAVariableVariableorliteralarray(AVariableVariableorliteralarray node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVariableVariableorliteralarray(AVariableVariableorliteralarray node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVariableVariableorliteralarray(AVariableVariableorliteralarray node)
+    {
+        inAVariableVariableorliteralarray(node);
+        if(node.getVariable() != null)
+        {
+            node.getVariable().apply(this);
+        }
+        outAVariableVariableorliteralarray(node);
+    }
+
+    public void inAArrayVariableorliteralarray(AArrayVariableorliteralarray node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayVariableorliteralarray(AArrayVariableorliteralarray node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayVariableorliteralarray(AArrayVariableorliteralarray node)
+    {
+        inAArrayVariableorliteralarray(node);
+        if(node.getArray() != null)
+        {
+            node.getArray().apply(this);
+        }
+        outAArrayVariableorliteralarray(node);
+    }
+
+    public void inAArray(AArray node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArray(AArray node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArray(AArray node)
+    {
+        inAArray(node);
+        if(node.getRightBlock() != null)
+        {
+            node.getRightBlock().apply(this);
+        }
+        if(node.getArguments() != null)
+        {
+            node.getArguments().apply(this);
+        }
+        if(node.getLeftBlock() != null)
+        {
+            node.getLeftBlock().apply(this);
+        }
+        outAArray(node);
+    }
+
+    public void inAVariable(AVariable node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVariable(AVariable node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVariable(AVariable node)
+    {
+        inAVariable(node);
+        if(node.getRightBrace() != null)
+        {
+            node.getRightBrace().apply(this);
+        }
+        if(node.getI() != null)
+        {
+            node.getI().apply(this);
+        }
+        if(node.getLeftBrace() != null)
+        {
+            node.getLeftBrace().apply(this);
+        }
+        if(node.getLeft() != null)
+        {
+            node.getLeft().apply(this);
+        }
+        outAVariable(node);
+    }
+
+    public void inAWidgetOrWidgetAccessListWithProperty(AWidgetOrWidgetAccessListWithProperty node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAWidgetOrWidgetAccessListWithProperty(AWidgetOrWidgetAccessListWithProperty node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAWidgetOrWidgetAccessListWithProperty(AWidgetOrWidgetAccessListWithProperty node)
+    {
+        inAWidgetOrWidgetAccessListWithProperty(node);
+        {
+            List<PWidgetOrWidgetAccessListWithPropertyPoint> copy = new ArrayList<PWidgetOrWidgetAccessListWithPropertyPoint>(node.getWidgetOrWidgetAccessListWithPropertyPoint());
+            Collections.reverse(copy);
+            for(PWidgetOrWidgetAccessListWithPropertyPoint e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getWidgetOrWidgetAccess() != null)
+        {
+            node.getWidgetOrWidgetAccess().apply(this);
+        }
+        outAWidgetOrWidgetAccessListWithProperty(node);
+    }
+
+    public void inAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node)
+    {
+        inAWidgetOrWidgetAccessListWithPropertyPoint(node);
+        if(node.getWidgetOrWidgetAccess() != null)
+        {
+            node.getWidgetOrWidgetAccess().apply(this);
+        }
+        if(node.getPoint() != null)
+        {
+            node.getPoint().apply(this);
+        }
+        outAWidgetOrWidgetAccessListWithPropertyPoint(node);
+    }
+
+    public void inASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node)
+    {
+        inASimplewidgetWidgetOrWidgetAccess(node);
+        if(node.getWidget() != null)
+        {
+            node.getWidget().apply(this);
+        }
+        outASimplewidgetWidgetOrWidgetAccess(node);
+    }
+
+    public void inAWidgetarrayaccessWidgetOrWidgetAccess(AWidgetarrayaccessWidgetOrWidgetAccess node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAWidgetarrayaccessWidgetOrWidgetAccess(AWidgetarrayaccessWidgetOrWidgetAccess node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAWidgetarrayaccessWidgetOrWidgetAccess(AWidgetarrayaccessWidgetOrWidgetAccess node)
+    {
+        inAWidgetarrayaccessWidgetOrWidgetAccess(node);
+        if(node.getRightBlock() != null)
+        {
+            node.getRightBlock().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getLeftBlock() != null)
+        {
+            node.getLeftBlock().apply(this);
+        }
+        if(node.getWidget() != null)
+        {
+            node.getWidget().apply(this);
+        }
+        outAWidgetarrayaccessWidgetOrWidgetAccess(node);
     }
 
     public void inATrueBoolean(ATrueBoolean node)

@@ -104,14 +104,30 @@ value =
       | {string} string
       | {boolean} boolean
       | {functioncall} identifier left_paren arguments? right_paren 
-      | {widget_reference} [interaction]:identifier point [widget]:identifier
-      | {widget_property_reference} [interaction]:identifier [p1]:point [widget]:identifier [p2]:point [property]:identifier
-      | {variable} [left]:var left_brace [i]:identifier right_brace
-      | {array} left_block arguments right_block
+      | {variable} variable
       | {generator} [left]:var identifier [right]:var 
       | {parens} left_paren expr right_paren
-      | {array_access} value left_block number right_block
-      | {nativefunctioncall} percent identifier left_paren arguments? right_paren;
+      | {nativefunctioncall} percent identifier left_paren arguments? right_paren
+      | {array} array
+      | {array_access} variableorliteralarray left_block expr right_block
+      | {interfaction_property} [interaction]:identifier point [property]:identifier
+      | {interfaction_widget_property} [interaction]:identifier point [widgets]:widget_or_widget_access_list_with_property [p2]:point [property]:identifier;
+
+variableorliteralarray = 
+		{variable} variable 
+	  | {array} array;
+
+array = left_block arguments right_block;
+
+variable = [left]:var left_brace [i]:identifier right_brace;
+
+widget_or_widget_access_list_with_property = widget_or_widget_access widget_or_widget_access_list_with_property_point*;
+
+widget_or_widget_access_list_with_property_point = point widget_or_widget_access;
+
+widget_or_widget_access =
+       {simplewidget} [widget]:identifier
+     | {widgetarrayaccess} [widget]:identifier left_block expr right_block;
 
 boolean = 
         {true} true

@@ -12,30 +12,32 @@
  */
 package org.webspeclanguage.expression.base;
 
+import org.webspeclanguage.base.WebSpecInteraction;
+
 /**
- * An expression class for "${var}[index]"
+ * An expression class for "Home.title"
  * 
  * @author Esteban Robles Luna
  */
-public class ArrayAccessExpression extends AbstractExpression {
+public class InteractionPropertyExpression extends AbstractExpression {
 
-  private ArrayHolder arrayExpression;
-  private Expression index;
-
-  public ArrayAccessExpression(ArrayHolder arrayExpression, Expression index) {
-    this.arrayExpression = arrayExpression;
-    this.index = index;
+  private WebSpecInteraction interaction;
+  private String property;
+  
+  public InteractionPropertyExpression(WebSpecInteraction interaction, String property) {
+    this.interaction = interaction;
+    this.property = property;
   }
 
   public Object accept(ExpressionVisitor visitor) {
-    return visitor.visitArrayAccessExpression(this);
+    return visitor.visitInteractionPropertyExpression(this);
   }
 
-  public ArrayHolder getArrayExpression() {
-    return arrayExpression;
+  public WebSpecInteraction getInteraction() {
+    return interaction;
   }
-
-  public Expression getIndex() {
-    return index;
+  
+  public String getProperty() {
+    return property;
   }
 }

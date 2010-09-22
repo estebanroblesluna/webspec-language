@@ -12,6 +12,9 @@
  */
 package org.webspeclanguage.expression.base;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.webspeclanguage.widget.Widget;
 
@@ -25,10 +28,16 @@ public class WidgetPropertyReference extends AbstractExpression {
   private Widget widget;
   private String propertyName;
   private String location;
+  private Map<String, Expression> variables;
 
   public WidgetPropertyReference(Widget widget, String propertyName) {
-    this.setWidget(widget);
-    this.setPropertyName(propertyName);
+    this(widget, propertyName, new HashMap<String, Expression>());
+  }
+
+  public WidgetPropertyReference(Widget widget, String propertyName, Map<String, Expression> variables) {
+    this.widget = widget;
+    this.propertyName = propertyName;
+    this.variables = new HashMap<String, Expression>(variables);
   }
 
   @Override
@@ -43,8 +52,11 @@ public class WidgetPropertyReference extends AbstractExpression {
       return false;
     }
     WidgetPropertyReference o = (WidgetPropertyReference) obj;
-    return new EqualsBuilder().append(this.widget, o.widget).append(
-        this.propertyName, o.propertyName).isEquals();
+    return new EqualsBuilder()
+      .append(this.widget, o.widget)
+      .append(this.propertyName, o.propertyName)
+      .append(this.variables, o.variables)
+      .isEquals();
   }
 
   @Override
@@ -54,6 +66,10 @@ public class WidgetPropertyReference extends AbstractExpression {
 
   public Object accept(ExpressionVisitor visitor) {
     return visitor.visitWidgetPropertyReference(this);
+  }
+  
+  public void setVariables(Map<String, Expression> variables) {
+    this.variables = new HashMap<String, Expression>(variables);
   }
 
   public String getPreferedLocation() {
@@ -73,16 +89,8 @@ public class WidgetPropertyReference extends AbstractExpression {
     return widget;
   }
 
-  private void setWidget(Widget widget) {
-    this.widget = widget;
-  }
-
   public String getPropertyName() {
     return propertyName;
-  }
-
-  private void setPropertyName(String propertyName) {
-    this.propertyName = propertyName;
   }
 
   public String getLocation() {
@@ -91,5 +99,9 @@ public class WidgetPropertyReference extends AbstractExpression {
 
   public void setLocation(String location) {
     this.location = location;
+  }
+  
+  public Map<String, Expression> getVariables() {
+    return variables;
   }
 }

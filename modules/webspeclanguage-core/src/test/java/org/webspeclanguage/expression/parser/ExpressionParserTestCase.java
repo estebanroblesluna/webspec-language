@@ -15,8 +15,13 @@ package org.webspeclanguage.expression.parser;
 import junit.framework.TestCase;
 
 import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.WebSpecInteraction;
 import org.webspeclanguage.expression.parser.ExpressionParser;
 import org.webspeclanguage.expression.parser.ParsingException;
+import org.webspeclanguage.widget.Button;
+import org.webspeclanguage.widget.ListOfContainer;
+import org.webspeclanguage.widget.Panel;
+import org.webspeclanguage.widget.TextField;
 
 /**
  * @author Esteban Robles Luna
@@ -30,6 +35,30 @@ public class ExpressionParserTestCase extends TestCase {
     super.setUp();
     this.parser = new ExpressionParser();
     this.diagram = new WebSpecDiagram("diagram");
+    
+    WebSpecInteraction interaction = new WebSpecInteraction("Interaction", this.diagram);
+
+    TextField textField = new TextField();
+    textField.setName("widget");
+    interaction.addWidget(textField);
+    
+    ListOfContainer listContainer = new ListOfContainer();
+    listContainer.setName("widgetList");
+    interaction.addWidget(listContainer);
+    
+    Panel panel = new Panel();
+    panel.setName("panel");
+    listContainer.addWidget(panel);
+    
+    Button button = new Button();
+    button.setName("button");
+    panel.addWidget(button);
+
+    ListOfContainer listContainer2 = new ListOfContainer();
+    listContainer2.setName("widgetList");
+    listContainer.addWidget(listContainer2);
+
+    this.diagram.addInteraction(interaction);
   }
 
   public void testParsing() throws ParsingException {
@@ -77,6 +106,13 @@ public class ExpressionParserTestCase extends TestCase {
     this.basicParse("[1, [1, 2], 3, \"this is a test\", true]");
     this.basicParse("${userAndPass}->${aaa}");
     this.basicParse("${userAndPass}[123]");
+    
+    this.basicParse("${var}[1 + 2]");
+    this.basicParse("Interaction.property");
+    this.basicParse("Interaction.widget.property");
+    this.basicParse("Interaction.widgetList.property");
+    this.basicParse("Interaction.widgetList[1].widgetList.property");
+    this.basicParse("Interaction.widgetList[1].panel.button.property");
   }
 
   private void basicParse(String string) throws ParsingException {
