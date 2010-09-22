@@ -41,8 +41,7 @@ public abstract class AbstractFunctionCallExpression extends AbstractExpression 
     }
   }
 
-  protected AbstractFunctionCallExpression(String functionName,
-      List<Expression> arguments) {
+  protected AbstractFunctionCallExpression(String functionName, List<Expression> arguments) {
     this.setFunctionName(functionName);
     this.setArguments(new ArrayList<Expression>());
     if (arguments != null) {
@@ -64,8 +63,10 @@ public abstract class AbstractFunctionCallExpression extends AbstractExpression 
       return false;
     }
     AbstractFunctionCallExpression o = (AbstractFunctionCallExpression) obj;
-    return new EqualsBuilder().append(this.functionName, o.functionName)
-        .append(this.arguments, o.arguments).isEquals();
+    return new EqualsBuilder()
+      .append(this.functionName, o.functionName)
+      .append(this.arguments, o.arguments)
+      .isEquals();
   }
 
   @Override

@@ -20,20 +20,17 @@ import java.util.List;
  * 
  * @author Esteban Robles Luna
  */
-public class FunctionCallExpression extends
-    AbstractFunctionCallExpression {
+public class FunctionCallExpression extends AbstractFunctionCallExpression {
 
   public FunctionCallExpression(String functionName) {
     super(functionName);
   }
 
-  public FunctionCallExpression(String functionName,
-      Expression... arguments) {
+  public FunctionCallExpression(String functionName, Expression... arguments) {
     super(functionName, arguments);
   }
 
-  public FunctionCallExpression(String functionName,
-      List<Expression> arguments) {
+  public FunctionCallExpression(String functionName, List<Expression> arguments) {
     super(functionName, arguments);
   }
 
