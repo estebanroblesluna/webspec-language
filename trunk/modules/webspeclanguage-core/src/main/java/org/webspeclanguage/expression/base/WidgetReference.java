@@ -12,6 +12,9 @@
  */
 package org.webspeclanguage.expression.base;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.webspeclanguage.widget.Widget;
 
@@ -24,9 +27,15 @@ public class WidgetReference extends AbstractExpression {
 
   private Widget widget;
   private String location;
-
+  private Map<String, Expression> variables;
+  
   public WidgetReference(Widget widget) {
-    this.setWidget(widget);
+    this(widget, new HashMap<String, Expression>());
+  }
+  
+  public WidgetReference(Widget widget, Map<String, Expression> variables) {
+    this.widget = widget;
+    this.variables = new HashMap<String, Expression>(variables);
   }
 
   public Object accept(ExpressionVisitor visitor) {
@@ -45,12 +54,19 @@ public class WidgetReference extends AbstractExpression {
       return false;
     }
     WidgetReference o = (WidgetReference) obj;
-    return new EqualsBuilder().append(this.widget, o.widget).isEquals();
+    return new EqualsBuilder()
+      .append(this.widget, o.widget)
+      .append(this.variables, o.variables)
+      .isEquals();
   }
 
   @Override
   public int hashCode() {
     return this.widget.hashCode();
+  }
+  
+  public void setVariables(Map<String, Expression> variables) {
+    this.variables = new HashMap<String, Expression>(variables);
   }
 
   public String getPreferedLocation() {
@@ -70,15 +86,15 @@ public class WidgetReference extends AbstractExpression {
     return widget;
   }
 
-  private void setWidget(Widget widget) {
-    this.widget = widget;
-  }
-
   public String getLocation() {
     return location;
   }
 
   public void setLocation(String location) {
     this.location = location;
+  }
+  
+  public Map<String, Expression> getVariables() {
+    return variables;
   }
 }

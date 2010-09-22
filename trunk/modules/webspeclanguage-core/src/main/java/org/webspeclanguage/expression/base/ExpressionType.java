@@ -19,5 +19,13 @@ package org.webspeclanguage.expression.base;
  */
 public enum ExpressionType {
 
-  STRING, NUMBER, BOOLEAN, ARRAY, UNKNOWN,
+  STRING, NUMBER, BOOLEAN, ARRAY, UNKNOWN, VOID, WIDGET;
+  
+  public static ExpressionType safeValueOf(String s) {
+    try {
+      return valueOf(s);
+    } catch (IllegalArgumentException e) {
+      return null;
+    }
+  }
 }

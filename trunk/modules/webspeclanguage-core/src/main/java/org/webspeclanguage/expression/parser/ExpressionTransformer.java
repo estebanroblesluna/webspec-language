@@ -15,16 +15,21 @@ package org.webspeclanguage.expression.parser;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.webspeclanguage.action.Action;
 import org.webspeclanguage.action.ExpressionAction;
 import org.webspeclanguage.action.LetVariable;
 import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.expression.base.AbstractFunctionCallExpression;
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.AndExpression;
 import org.webspeclanguage.expression.base.ArrayAccessExpression;
 import org.webspeclanguage.expression.base.ArrayExpression;
+import org.webspeclanguage.expression.base.ArrayHolder;
 import org.webspeclanguage.expression.base.BooleanConstant;
 import org.webspeclanguage.expression.base.ConcatExpression;
 import org.webspeclanguage.expression.base.ConstantExpression;
@@ -32,12 +37,12 @@ import org.webspeclanguage.expression.base.DivExpression;
 import org.webspeclanguage.expression.base.EqualsExpression;
 import org.webspeclanguage.expression.base.Expression;
 import org.webspeclanguage.expression.base.ExpressionType;
-import org.webspeclanguage.expression.base.AbstractFunctionCallExpression;
+import org.webspeclanguage.expression.base.FunctionCallExpression;
 import org.webspeclanguage.expression.base.GeneratorExpression;
 import org.webspeclanguage.expression.base.GreaterEqualExpression;
 import org.webspeclanguage.expression.base.GreaterExpression;
 import org.webspeclanguage.expression.base.ImpliesExpression;
-import org.webspeclanguage.expression.base.FunctionCallExpression;
+import org.webspeclanguage.expression.base.InteractionPropertyExpression;
 import org.webspeclanguage.expression.base.LowerEqualExpression;
 import org.webspeclanguage.expression.base.LowerExpression;
 import org.webspeclanguage.expression.base.MulExpression;
@@ -57,8 +62,10 @@ import org.webspeclanguage.expression.base.WidgetReference;
 import org.webspeclanguage.expression.parser.analysis.DepthFirstAdapter;
 import org.webspeclanguage.expression.parser.node.AAddNumExpr;
 import org.webspeclanguage.expression.parser.node.AAndExpr;
+import org.webspeclanguage.expression.parser.node.AArray;
 import org.webspeclanguage.expression.parser.node.AArrayAccessValue;
 import org.webspeclanguage.expression.parser.node.AArrayValue;
+import org.webspeclanguage.expression.parser.node.AArrayVariableorliteralarray;
 import org.webspeclanguage.expression.parser.node.ABooleanValue;
 import org.webspeclanguage.expression.parser.node.ACompExprExpr;
 import org.webspeclanguage.expression.parser.node.AConcatFactor;
@@ -72,6 +79,8 @@ import org.webspeclanguage.expression.parser.node.AGeneratorValue;
 import org.webspeclanguage.expression.parser.node.AGreaterCompExpr;
 import org.webspeclanguage.expression.parser.node.AGreaterEqualCompExpr;
 import org.webspeclanguage.expression.parser.node.AImpliesExpr;
+import org.webspeclanguage.expression.parser.node.AInterfactionPropertyValue;
+import org.webspeclanguage.expression.parser.node.AInterfactionWidgetPropertyValue;
 import org.webspeclanguage.expression.parser.node.ALetAction;
 import org.webspeclanguage.expression.parser.node.ALowerCompExpr;
 import org.webspeclanguage.expression.parser.node.ALowerEqualCompExpr;
@@ -86,16 +95,20 @@ import org.webspeclanguage.expression.parser.node.ANumberValue;
 import org.webspeclanguage.expression.parser.node.AOneargArguments;
 import org.webspeclanguage.expression.parser.node.AOrExpr;
 import org.webspeclanguage.expression.parser.node.AParensValue;
+import org.webspeclanguage.expression.parser.node.ASimplewidgetWidgetOrWidgetAccess;
 import org.webspeclanguage.expression.parser.node.ASingleactionActions;
 import org.webspeclanguage.expression.parser.node.AStringValue;
 import org.webspeclanguage.expression.parser.node.ASubNumExpr;
 import org.webspeclanguage.expression.parser.node.ATrueBoolean;
 import org.webspeclanguage.expression.parser.node.AValueFactor;
+import org.webspeclanguage.expression.parser.node.AVariable;
 import org.webspeclanguage.expression.parser.node.AVariableValue;
-import org.webspeclanguage.expression.parser.node.AWidgetPropertyReferenceValue;
-import org.webspeclanguage.expression.parser.node.AWidgetReferenceValue;
+import org.webspeclanguage.expression.parser.node.AVariableVariableorliteralarray;
+import org.webspeclanguage.expression.parser.node.AWidgetarrayaccessWidgetOrWidgetAccess;
 import org.webspeclanguage.expression.parser.node.Start;
 import org.webspeclanguage.expression.parser.node.TNumber;
+import org.webspeclanguage.widget.Container;
+import org.webspeclanguage.widget.ListOfContainer;
 import org.webspeclanguage.widget.Widget;
 
 /**
@@ -116,35 +129,6 @@ public class ExpressionTransformer extends DepthFirstAdapter {
   public List<Action> transform(Start start) {
     this.caseStart(start);
     return (List<Action>) this.getOut(start);
-  }
-
-  @Override
-  public void outAWidgetPropertyReferenceValue(AWidgetPropertyReferenceValue node) {
-    Widget widget = this.diagram.getWidget(
-        node.getInteraction().getText(), node.getWidget().getText());
-
-    if (widget == null) {
-      throw new WidgetNotFoundException(node.getInteraction().getText(), node
-          .getWidget().getText());
-    }
-    WidgetPropertyReference expression = new WidgetPropertyReference(widget,
-        node.getProperty().getText());
-
-    this.setOut(node, expression);
-  }
-
-  @Override
-  public void outAWidgetReferenceValue(AWidgetReferenceValue node) {
-    Widget widget = this.diagram.getWidget(
-        node.getInteraction().getText(), node.getWidget().getText());
-
-    if (widget == null) {
-      throw new WidgetNotFoundException(node.getInteraction().getText(), node
-          .getWidget().getText());
-    }
-    WidgetReference expression = new WidgetReference(widget);
-
-    this.setOut(node, expression);
   }
 
   @Override
@@ -353,20 +337,34 @@ public class ExpressionTransformer extends DepthFirstAdapter {
 
   @Override
   public void outAVariableValue(AVariableValue node) {
-    this.setOut(node, new VariableValue(node.getI().getText()));
+    this.setOut(node, this.getOut(node.getVariable()));
   }
 
   @Override
   public void outAArrayAccessValue(AArrayAccessValue node) {
-    Expression exp = (Expression) this.getOut(node.getValue());
-    NumberConstant constant = (NumberConstant) this.getNumber(node.getNumber());
-    this.setOut(node, new ArrayAccessExpression(exp, constant));
+    Expression exp = (Expression) this.getOut(node.getExpr());
+    ArrayHolder arrayHolder = (ArrayHolder) this.getOut(node.getVariableorliteralarray());
+    this.setOut(node, new ArrayAccessExpression(arrayHolder, exp));
+  }
+
+  @Override
+  public void outAArrayVariableorliteralarray(AArrayVariableorliteralarray node) {
+    this.setOut(node, this.getOut(node.getArray()));
+  }
+
+  @Override
+  public void outAVariableVariableorliteralarray(AVariableVariableorliteralarray node) {
+    this.setOut(node, this.getOut(node.getVariable()));
   }
 
   @Override
   public void outAArrayValue(AArrayValue node) {
-    List<Expression> arguments = (List<Expression>) this.getOut(node
-        .getArguments());
+    this.setOut(node, this.getOut(node.getArray()));
+  }
+  
+  @Override
+  public void outAArray(AArray node) {
+    List<Expression> arguments = (List<Expression>) this.getOut(node.getArguments());
     ConstantExpression<?>[] exps = new ConstantExpression<?>[arguments.size()];
     for (int i = 0; i < arguments.size(); i++) {
       ConstantExpression<?> constantExpression = (ConstantExpression<?>) arguments
@@ -463,5 +461,79 @@ public class ExpressionTransformer extends DepthFirstAdapter {
   @Override
   public void outAGeneratorValue(AGeneratorValue node) {
     this.setOut(node, new GeneratorExpression(node.getIdentifier().getText()));
+  }
+
+  @Override
+  public void outAInterfactionPropertyValue(AInterfactionPropertyValue node) {
+    String interactionName = node.getInteraction().getText();
+    String propertyOrWidget = node.getProperty().getText();
+    
+    WebSpecInteraction interaction = this.diagram.getInteractionNamed(interactionName);
+    Widget widget = interaction.getWidget(propertyOrWidget);
+    if (widget != null) {
+      this.setOut(node, new WidgetReference(widget));
+    } else {
+      this.setOut(node, new InteractionPropertyExpression(interaction, propertyOrWidget));
+    }
+  }
+
+  @Override
+  public void outAVariable(AVariable node) {
+    this.setOut(node, new VariableValue(node.getI().getText()));
+  }
+  
+  private Container currentContainer;
+  private Map<String, Expression> currentVariables = new HashMap<String, Expression>();
+  private Widget lastWidget;
+  private String interactionName;
+  private String property;
+  
+  @Override
+  public void inAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node) {
+    this.currentVariables.clear();
+    this.interactionName = node.getInteraction().getText();
+    WebSpecInteraction interaction = this.diagram.getInteractionNamed(this.interactionName);
+    this.currentContainer = interaction.getRoot();
+    this.property = node.getProperty().getText();
+  }
+
+  @Override
+  public void outASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node) {
+    String widgetName = node.getWidget().getText();
+    if (this.currentContainer != null && this.currentContainer.getWidgetNamed(widgetName) != null) {
+      this.lastWidget = this.currentContainer.getWidgetNamed(widgetName);
+      if (this.lastWidget instanceof Container) {
+        this.currentContainer = (Container) this.lastWidget;
+      }
+    } else {
+      throw new WidgetNotFoundException(this.interactionName, widgetName);
+    }
+  }
+
+  @Override
+  public void outAWidgetarrayaccessWidgetOrWidgetAccess(AWidgetarrayaccessWidgetOrWidgetAccess node) {
+    String widgetName = node.getWidget().getText();
+    if (this.currentContainer != null && this.currentContainer.getWidgetNamed(widgetName) != null) {
+      Widget widget = this.currentContainer.getWidgetNamed(widgetName);
+      if (!(widget instanceof ListOfContainer)) {
+        throw new IncompatibleWidgetException(this.interactionName, widgetName);
+      } else {
+        this.currentContainer = (Container) widget;
+        this.currentVariables.put(widgetName, (Expression) this.getOut(node.getExpr()));
+      }
+    } else {
+      throw new WidgetNotFoundException(this.interactionName, widgetName);
+    }
+  }
+
+  @Override
+  public void outAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node) {
+    Widget widget = this.currentContainer.getWidgetNamed(this.property);
+    if (widget != null) {
+      this.setOut(node, new WidgetReference(widget, this.currentVariables));
+    } else {
+      WidgetPropertyReference widgetPropertyReference = new WidgetPropertyReference(this.lastWidget, this.property, this.currentVariables);
+      this.setOut(node, widgetPropertyReference);
+    }
   }
 }

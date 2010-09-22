@@ -214,22 +214,7 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
-    public void caseAWidgetReferenceValue(AWidgetReferenceValue node)
-    {
-        defaultCase(node);
-    }
-
-    public void caseAWidgetPropertyReferenceValue(AWidgetPropertyReferenceValue node)
-    {
-        defaultCase(node);
-    }
-
     public void caseAVariableValue(AVariableValue node)
-    {
-        defaultCase(node);
-    }
-
-    public void caseAArrayValue(AArrayValue node)
     {
         defaultCase(node);
     }
@@ -244,12 +229,67 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
+    public void caseANativefunctioncallValue(ANativefunctioncallValue node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAArrayValue(AArrayValue node)
+    {
+        defaultCase(node);
+    }
+
     public void caseAArrayAccessValue(AArrayAccessValue node)
     {
         defaultCase(node);
     }
 
-    public void caseANativefunctioncallValue(ANativefunctioncallValue node)
+    public void caseAInterfactionPropertyValue(AInterfactionPropertyValue node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAVariableVariableorliteralarray(AVariableVariableorliteralarray node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAArrayVariableorliteralarray(AArrayVariableorliteralarray node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAArray(AArray node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAVariable(AVariable node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAWidgetOrWidgetAccessListWithProperty(AWidgetOrWidgetAccessListWithProperty node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAWidgetarrayaccessWidgetOrWidgetAccess(AWidgetarrayaccessWidgetOrWidgetAccess node)
     {
         defaultCase(node);
     }

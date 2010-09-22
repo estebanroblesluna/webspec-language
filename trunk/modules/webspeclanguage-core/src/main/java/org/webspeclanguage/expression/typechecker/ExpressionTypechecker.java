@@ -12,10 +12,15 @@
  */
 package org.webspeclanguage.expression.typechecker;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.WebSpecInteraction;
 import org.webspeclanguage.expression.base.AbstractFunctionCallExpression;
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.AndExpression;
@@ -34,6 +39,7 @@ import org.webspeclanguage.expression.base.GeneratorExpression;
 import org.webspeclanguage.expression.base.GreaterEqualExpression;
 import org.webspeclanguage.expression.base.GreaterExpression;
 import org.webspeclanguage.expression.base.ImpliesExpression;
+import org.webspeclanguage.expression.base.InteractionPropertyExpression;
 import org.webspeclanguage.expression.base.LowerEqualExpression;
 import org.webspeclanguage.expression.base.LowerExpression;
 import org.webspeclanguage.expression.base.MulExpression;
@@ -61,50 +67,71 @@ import org.webspeclanguage.generator.Generator;
 @SuppressWarnings("unchecked")
 public class ExpressionTypechecker implements ExpressionVisitor {
 
+  private static Map<String, FunctionDefinition> functionDefinitions = new HashMap<String, FunctionDefinition>();
+  private static Map<Class<?>, Map<String, ExpressionType>> propertyDefinitions = new HashMap<Class<?>, Map<String, ExpressionType>>();
+
+  private static void initializeFunctionDefinitions() {
+    try {
+      Properties properties = new Properties();
+      InputStream in = Thread.currentThread().getContextClassLoader().getResource("typechecker.rules").openStream();
+      properties.load(in);
+      in.close();
+      
+      for (Object keyObject : properties.keySet()) {
+        String key = (String) keyObject;
+        String value = properties.getProperty(key);
+        
+        if (key.contains("-")) {
+          //it is a property
+          int index = key.indexOf("-");
+          String className = key.substring(0, index);
+          String propertyName = key.substring(index + 1, key.length());
+          Class<?> theClass = Class.forName(className);
+          if (!propertyDefinitions.containsKey(theClass)) {
+            propertyDefinitions.put(theClass, new HashMap<String, ExpressionType>());
+          }
+          propertyDefinitions.get(theClass).put(propertyName, ExpressionType.valueOf(value));
+        } else {
+          //it is a function declaration
+          int index = value.indexOf("->");
+          String[] argumentTypesAsString = value.substring(0, index).split(",");
+          String returnTypeAsString = value.substring(index + 2, value.length());
+          ExpressionType returnType = ExpressionType.valueOf(returnTypeAsString);
+          Matcher[] matchers = new Matcher[argumentTypesAsString.length];
+          for (int i = 0; i < argumentTypesAsString.length; i++) {
+            String argumentTypeAsString = argumentTypesAsString[i];
+            ExpressionType argumentType = ExpressionType.safeValueOf(argumentTypeAsString);
+            if (argumentType != null) {
+              matchers[i] = new TypeMatcher(argumentType);
+            } else {
+              matchers[i] = new ClassMatcher(Class.forName(argumentTypeAsString));
+            }
+          }
+          FunctionDefinition functionDefinition = new FunctionDefinition(key, returnType, matchers);
+          functionDefinitions.put(key, functionDefinition);
+        }
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  static {
+    initializeFunctionDefinitions();
+  }
+  
   private Map<String, ExpressionType> variables;
   private Map<String, Generator> generators;
-  private Map<String, FunctionDefinition> functionDefinitions;
   
   public ExpressionTypechecker(WebSpecDiagram diagram) {
-    this.setGenerators(new HashMap<String, Generator>());
-    this.setVariables(new HashMap<String, ExpressionType>());
-    this.setFunctionDefinitions(new HashMap<String, FunctionDefinition>());
+    this.generators = new HashMap<String, Generator>();
+    this.variables = new HashMap<String, ExpressionType>();
     
     this.initializeGenerators(diagram);
-    this.initializeFunctionDefinitions();
-  }
-
-  private void initializeFunctionDefinitions() {
-    this.addFunctionDefinition(
-        "click",
-        ExpressionType.UNKNOWN,
-        new ClassMatcher(WidgetReference.class));
-    
-    this.addFunctionDefinition(
-        "type", 
-        ExpressionType.UNKNOWN,
-        new ClassMatcher(WidgetReference.class), 
-        new TypeMatcher(ExpressionType.STRING));
-    
-    this.addFunctionDefinition(
-        "toString", 
-        ExpressionType.STRING, 
-        new ClassMatcher(Expression.class));
-    
-    this.addFunctionDefinition(
-        "toNumber", 
-        ExpressionType.NUMBER, 
-        new ClassMatcher(Expression.class));
-
-    this.addFunctionDefinition(
-        "toBoolean", 
-        ExpressionType.BOOLEAN, 
-        new ClassMatcher(Expression.class));
-  }
-
-  private void addFunctionDefinition(String functionName, ExpressionType returnType, Matcher... matchers) {
-    FunctionDefinition definition = new FunctionDefinition(functionName, returnType, matchers);
-    this.getFunctionDefinitions().put(functionName, definition);
   }
 
   private void initializeGenerators(WebSpecDiagram diagram) {
@@ -117,6 +144,12 @@ public class ExpressionTypechecker implements ExpressionVisitor {
 
   public ExpressionType typecheck(Expression expression) {
     return (ExpressionType) expression.accept(this);
+  }
+
+  private void shouldNotBe(Expression e, ExpressionType unexpectedType, ExpressionType type) {
+    if (type.equals(unexpectedType)) {
+      throw new TypecheckException(e, unexpectedType, type);
+    }
   }
 
   private void shouldBe(ExpressionType expectedType, Expression... expressions) {
@@ -134,26 +167,24 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   }
 
   public Object visitAddExpression(AddExpression expression) {
-    this.shouldBe(ExpressionType.NUMBER, expression.getOp1(), expression
-        .getOp2());
+    this.shouldBe(ExpressionType.NUMBER, expression.getOp1(), expression.getOp2());
     return ExpressionType.NUMBER;
   }
 
   public Object visitAndExpression(AndExpression expression) {
-    this.shouldBe(ExpressionType.BOOLEAN, expression.getOp1(), expression
-        .getOp2());
+    this.shouldBe(ExpressionType.BOOLEAN, expression.getOp1(), expression.getOp2());
     return ExpressionType.BOOLEAN;
   }
 
   public Object visitConcatExpression(ConcatExpression expression) {
-    this.shouldBe(ExpressionType.STRING, expression.getOp1(), expression
-        .getOp2());
+    this.shouldBe(ExpressionType.STRING, expression.getOp1(), expression.getOp2());
     return ExpressionType.STRING;
   }
 
-  public Object visitArrayAccessExpression(
-      ArrayAccessExpression arrayAccessExpression) {
-    // TODO Auto-generated method stub
+  public Object visitArrayAccessExpression(ArrayAccessExpression arrayAccessExpression) {
+    this.shouldBe(ExpressionType.ARRAY, arrayAccessExpression.getArrayExpression());
+    this.shouldBe(ExpressionType.NUMBER, arrayAccessExpression.getIndex());
+    //TODO
     return null;
   }
 
@@ -166,8 +197,7 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   }
 
   public Object visitDivExpression(DivExpression expression) {
-    this.shouldBe(ExpressionType.NUMBER, expression.getOp1(), expression
-        .getOp2());
+    this.shouldBe(ExpressionType.NUMBER, expression.getOp1(), expression.getOp2());
     return ExpressionType.NUMBER;
   }
 
@@ -177,8 +207,7 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   }
 
   public Object visitGeneratorExpression(GeneratorExpression generatorExpression) {
-    Generator generator = this.getGenerators().get(
-        generatorExpression.getGeneratorName());
+    Generator generator = this.generators.get(generatorExpression.getGeneratorName());
     if (generator == null) {
       throw new InexistentGeneratorException(generatorExpression.getGeneratorName());
     } else {
@@ -197,8 +226,7 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   }
 
   public Object visitImpliesExpression(ImpliesExpression expression) {
-    this.shouldBe(ExpressionType.BOOLEAN, expression.getOp1(), expression
-        .getOp2());
+    this.shouldBe(ExpressionType.BOOLEAN, expression.getOp1(), expression.getOp2());
     return ExpressionType.BOOLEAN;
   }
 
@@ -207,23 +235,20 @@ public class ExpressionTypechecker implements ExpressionVisitor {
     return this.typecheck(testFunctionCallExpression);
   }
   
-  public Object visitToBooleanFunctionCallExpression(
-      ToBooleanFunctionCallExpression toBooleanFunctionCallExpression) {
+  public Object visitToBooleanFunctionCallExpression(ToBooleanFunctionCallExpression toBooleanFunctionCallExpression) {
     return this.typecheck(toBooleanFunctionCallExpression);
   }
 
-  public Object visitToNumberFunctionCallExpression(
-      ToNumberFunctionCallExpression toNumberFunctionCallExpression) {
+  public Object visitToNumberFunctionCallExpression(ToNumberFunctionCallExpression toNumberFunctionCallExpression) {
     return this.typecheck(toNumberFunctionCallExpression);
   }
 
-  public Object visitToStringFunctionCallExpression(
-      ToStringFunctionCallExpression toStringFunctionCallExpression) {
+  public Object visitToStringFunctionCallExpression(ToStringFunctionCallExpression toStringFunctionCallExpression) {
     return this.typecheck(toStringFunctionCallExpression);
   }
   
   private ExpressionType typecheck(AbstractFunctionCallExpression functionCall) {
-    FunctionDefinition definition = this.getFunctionDefinitions().get(functionCall.getFunctionName());
+    FunctionDefinition definition = functionDefinitions.get(functionCall.getFunctionName());
     if (definition != null) {
       if (definition.matches(functionCall, this)) {
         return definition.getReturnType();
@@ -246,17 +271,15 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   }
 
   public Object visitMulExpression(MulExpression expression) {
-    this.shouldBe(ExpressionType.NUMBER, expression.getOp1(), expression
-        .getOp2());
+    this.shouldBe(ExpressionType.NUMBER, expression.getOp1(), expression.getOp2());
     return ExpressionType.NUMBER;
   }
 
-  public Object visitNativeFunctionCallExpression(
-      NativeFunctionCallExpression nativeFunctionCallExpression) {
+  public Object visitNativeFunctionCallExpression(NativeFunctionCallExpression nativeFunctionCallExpression) {
     for (Expression e : nativeFunctionCallExpression.getArguments()) {
       this.typecheck(e);
     }
-    return ExpressionType.UNKNOWN;
+    return ExpressionType.VOID;
   }
 
   public Object visitNotEqualsExpression(NotEqualsExpression expression) {
@@ -274,8 +297,7 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   }
 
   public Object visitOrExpression(OrExpression expression) {
-    this.shouldBe(ExpressionType.BOOLEAN, expression.getOp1(), expression
-        .getOp2());
+    this.shouldBe(ExpressionType.BOOLEAN, expression.getOp1(), expression.getOp2());
     return ExpressionType.BOOLEAN;
   }
 
@@ -284,69 +306,67 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   }
 
   public Object visitSubExpression(SubExpression expression) {
-    this.shouldBe(ExpressionType.NUMBER, expression.getOp1(), expression
-        .getOp2());
+    this.shouldBe(ExpressionType.NUMBER, expression.getOp1(), expression.getOp2());
     return ExpressionType.NUMBER;
   }
 
   public Object visitVariableValue(VariableValue variableValue) {
-    ExpressionType type = this.getVariables().get(
-        variableValue.getVariableName());
+    ExpressionType type = this.variables.get(variableValue.getVariableName());
     if (type != null) {
       return type;
     } else {
       throw new UndeclaredVariableException(variableValue.getVariableName());
     }
   }
+  
+  public Object visitInteractionPropertyExpression(InteractionPropertyExpression interactionPropertyExpression) {
+    return propertyDefinitions.get(WebSpecInteraction.class).get(interactionPropertyExpression.getProperty());
+  }
 
-  public Object visitWidgetPropertyReference(
-      WidgetPropertyReference widgetPropertyReference) {
-    return ExpressionType.STRING;
+  public Object visitWidgetPropertyReference(WidgetPropertyReference widgetPropertyReference) {
+    ExpressionType type = this.getTypeOfProperty(widgetPropertyReference.getWidget().getClass(), widgetPropertyReference.getPropertyName());
+    this.shouldNotBe(widgetPropertyReference, ExpressionType.UNKNOWN, type);
+    for (Expression expression : widgetPropertyReference.getVariables().values()) {
+      this.shouldBe(ExpressionType.NUMBER, expression);
+    }
+    return type;
+  }
+  
+  private ExpressionType getTypeOfProperty(Class<?> aWidgetClass, String property) {
+    for (Class<?> aClass : propertyDefinitions.keySet()) {
+      if (aClass.isAssignableFrom(aWidgetClass)) {
+        Map<String, ExpressionType> types = propertyDefinitions.get(aClass);
+        if (types != null) {
+          ExpressionType type = types.get(property);
+          if (type != null) {
+            return type;
+          }
+        }
+      }
+    }
+    return ExpressionType.UNKNOWN;
   }
 
   public Object visitWidgetReference(WidgetReference widgetReference) {
-    return ExpressionType.STRING;
+    for (Expression expression : widgetReference.getVariables().values()) {
+      this.shouldBe(ExpressionType.NUMBER, expression);
+    }
+    return ExpressionType.WIDGET;
   }
 
   public void set(String variableName, ConstantExpression expression) {
-    this.getVariables().put(variableName,
-        (ExpressionType) expression.accept(this));
+    this.variables.put(variableName, (ExpressionType) expression.accept(this));
   }
 
   public void set(String variableName, ExpressionType type) {
-    this.getVariables().put(variableName, type);
+    this.variables.put(variableName, type);
   }
 
   public void set(String generatorName, Generator generator) {
-    this.getGenerators().put(generatorName, generator);
+    this.generators.put(generatorName, generator);
   }
 
   public ExpressionType getType(String variableName) {
-    return this.getVariables().get(variableName);
-  }
-
-  private Map<String, ExpressionType> getVariables() {
-    return variables;
-  }
-
-  private void setVariables(Map<String, ExpressionType> variables) {
-    this.variables = variables;
-  }
-
-  private Map<String, Generator> getGenerators() {
-    return generators;
-  }
-
-  private void setGenerators(Map<String, Generator> generators) {
-    this.generators = generators;
-  }
-
-  private Map<String, FunctionDefinition> getFunctionDefinitions() {
-    return functionDefinitions;
-  }
-
-  private void setFunctionDefinitions(
-      Map<String, FunctionDefinition> functionDefinitions) {
-    this.functionDefinitions = functionDefinitions;
+    return this.variables.get(variableName);
   }
 }

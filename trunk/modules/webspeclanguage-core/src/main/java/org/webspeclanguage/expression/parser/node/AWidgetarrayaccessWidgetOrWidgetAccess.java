@@ -5,26 +5,26 @@ package org.webspeclanguage.expression.parser.node;
 import org.webspeclanguage.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AArrayAccessValue extends PValue
+public final class AWidgetarrayaccessWidgetOrWidgetAccess extends PWidgetOrWidgetAccess
 {
-    private PVariableorliteralarray _variableorliteralarray_;
+    private TIdentifier _widget_;
     private TLeftBlock _leftBlock_;
     private PExpr _expr_;
     private TRightBlock _rightBlock_;
 
-    public AArrayAccessValue()
+    public AWidgetarrayaccessWidgetOrWidgetAccess()
     {
         // Constructor
     }
 
-    public AArrayAccessValue(
-        @SuppressWarnings("hiding") PVariableorliteralarray _variableorliteralarray_,
+    public AWidgetarrayaccessWidgetOrWidgetAccess(
+        @SuppressWarnings("hiding") TIdentifier _widget_,
         @SuppressWarnings("hiding") TLeftBlock _leftBlock_,
         @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") TRightBlock _rightBlock_)
     {
         // Constructor
-        setVariableorliteralarray(_variableorliteralarray_);
+        setWidget(_widget_);
 
         setLeftBlock(_leftBlock_);
 
@@ -37,8 +37,8 @@ public final class AArrayAccessValue extends PValue
     @Override
     public Object clone()
     {
-        return new AArrayAccessValue(
-            cloneNode(this._variableorliteralarray_),
+        return new AWidgetarrayaccessWidgetOrWidgetAccess(
+            cloneNode(this._widget_),
             cloneNode(this._leftBlock_),
             cloneNode(this._expr_),
             cloneNode(this._rightBlock_));
@@ -46,19 +46,19 @@ public final class AArrayAccessValue extends PValue
 
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAArrayAccessValue(this);
+        ((Analysis) sw).caseAWidgetarrayaccessWidgetOrWidgetAccess(this);
     }
 
-    public PVariableorliteralarray getVariableorliteralarray()
+    public TIdentifier getWidget()
     {
-        return this._variableorliteralarray_;
+        return this._widget_;
     }
 
-    public void setVariableorliteralarray(PVariableorliteralarray node)
+    public void setWidget(TIdentifier node)
     {
-        if(this._variableorliteralarray_ != null)
+        if(this._widget_ != null)
         {
-            this._variableorliteralarray_.parent(null);
+            this._widget_.parent(null);
         }
 
         if(node != null)
@@ -71,7 +71,7 @@ public final class AArrayAccessValue extends PValue
             node.parent(this);
         }
 
-        this._variableorliteralarray_ = node;
+        this._widget_ = node;
     }
 
     public TLeftBlock getLeftBlock()
@@ -153,7 +153,7 @@ public final class AArrayAccessValue extends PValue
     public String toString()
     {
         return ""
-            + toString(this._variableorliteralarray_)
+            + toString(this._widget_)
             + toString(this._leftBlock_)
             + toString(this._expr_)
             + toString(this._rightBlock_);
@@ -163,9 +163,9 @@ public final class AArrayAccessValue extends PValue
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._variableorliteralarray_ == child)
+        if(this._widget_ == child)
         {
-            this._variableorliteralarray_ = null;
+            this._widget_ = null;
             return;
         }
 
@@ -194,9 +194,9 @@ public final class AArrayAccessValue extends PValue
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._variableorliteralarray_ == oldChild)
+        if(this._widget_ == oldChild)
         {
-            setVariableorliteralarray((PVariableorliteralarray) newChild);
+            setWidget((TIdentifier) newChild);
             return;
         }
 

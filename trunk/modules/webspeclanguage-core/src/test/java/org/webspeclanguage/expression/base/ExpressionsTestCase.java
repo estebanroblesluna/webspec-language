@@ -40,6 +40,8 @@ import org.webspeclanguage.generator.OneOfStrings;
 import org.webspeclanguage.generator.StringGenerator;
 import org.webspeclanguage.generator.UniformNumberGenerator;
 import org.webspeclanguage.widget.Button;
+import org.webspeclanguage.widget.ListOfContainer;
+import org.webspeclanguage.widget.TextField;
 
 /**
  * @author Esteban Robles Luna
@@ -61,12 +63,19 @@ public class ExpressionsTestCase extends TestCase {
     this.parser = new ExpressionParser();
     this.diagram = new WebSpecDiagram("a");
 
-    WebSpecInteraction interaction = new WebSpecInteraction("Home",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("Home", this.diagram);
     this.diagram.addInteraction(interaction);
     Button button = interaction.createButtonWithLocation("loc");
     button.setName("register");
     interaction.addWidget(button);
+    
+    ListOfContainer list = new ListOfContainer();
+    list.setName("list");
+    interaction.addWidget(list);
+    
+    TextField textField = new TextField();
+    textField.setName("textField");
+    list.addWidget(textField);
 
     this.convertorCNF = new ExpressionConvertorToConjunctiveNormalForm();
     this.optimizer = new ExpressionOptimizer();
@@ -75,7 +84,9 @@ public class ExpressionsTestCase extends TestCase {
 
     this.concretizer.set("b", BooleanConstant.TRUE);
     this.concretizer.set("n", new NumberConstant(new BigDecimal(2)));
-
+    this.concretizer.set("array", new ArrayExpression(new NumberConstant("1"), 
+            new NumberConstant("2"), new NumberConstant("3"), new NumberConstant("4")));
+    
     this.concretizer.set("genI", new OneOfNumbers(1));
     this.concretizer.set("uni", new UniformNumberGenerator(0, 1));
 
@@ -171,6 +182,14 @@ public class ExpressionsTestCase extends TestCase {
     this.basicOptimize("toBoolean(false)", "false");
     
     this.basicOptimize("!(!($bools$))", "$bools$");
+    
+    this.basicOptimize("Home.list[1 + 5].textField.text", "Home.list[6].textField.text");
+    this.basicOptimize("Home.list[1 + ${n}].textField.text", "Home.list[3].textField.text");
+    this.basicOptimize("Home.list[1 + toNumber(\"44\")].textField.text", "Home.list[45].textField.text");
+
+    this.basicOptimize("[1, 2, 3, 4][(2 * 5) - 10]", "1");
+    this.basicOptimize("[1, 2, 3, 4][1]", "2");
+    this.basicOptimize("${array}[1]", "2");
   }
 
   public void testTypecheck() {
@@ -207,12 +226,22 @@ public class ExpressionsTestCase extends TestCase {
 
     this.basicTypecheck("\"a\" & \"b\"", ExpressionType.STRING);
 
-    this.basicTypecheck("click(Home.register)", ExpressionType.UNKNOWN);
-    this.basicTypecheck("%native()", ExpressionType.UNKNOWN);
+    this.basicTypecheck("click(Home.register)", ExpressionType.VOID);
+    this.basicTypecheck("%native()", ExpressionType.VOID);
 
+    this.basicTypecheck("Home.title", ExpressionType.STRING);
+    this.basicTypecheck("Home.list", ExpressionType.WIDGET);
+    this.basicTypecheck("Home.list.visible", ExpressionType.BOOLEAN);
+    this.basicTypecheck("Home.list[1 + 5].textField.text", ExpressionType.STRING);
+    this.basicTypecheck("Home.list[1 + $genI$].textField.text", ExpressionType.STRING);
+    this.basicTypecheck("Home.list[1].textField", ExpressionType.WIDGET);
+    this.basicTypecheck("Home.list[1 + $genI$].textField", ExpressionType.WIDGET);
+    
     this.basicTypecheckError("1 + true");
     this.basicTypecheckError("true && $genI$");
     this.basicTypecheckError("1 & true");
+    this.basicTypecheckError("Home.list[\"a\"].textField");
+    this.basicTypecheckError("Home.list[true].textField");
 
     this.basicUnmatchedError("toString(1, 2)");
     this.basicUnmatchedError("toNumber(1, 2)");
@@ -310,8 +339,7 @@ public class ExpressionsTestCase extends TestCase {
     return this.optimizer.optimize(concreteExpression);
   }
 
-  private void basicTypecheckMissingGenerator(String expression,
-      String generatorName) {
+  private void basicTypecheckMissingGenerator(String expression, String generatorName) {
     Expression expressionE = this.parser.parseFor(expression, this.diagram);
     try {
       this.typechecker.typecheck(expressionE);

@@ -13,6 +13,7 @@
 package org.webspeclanguage.simulation;
 
 import org.apache.commons.lang.Validate;
+import org.webspeclanguage.expression.base.AbstractFunctionCallExpression;
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.AndExpression;
 import org.webspeclanguage.expression.base.ArrayAccessExpression;
@@ -29,6 +30,7 @@ import org.webspeclanguage.expression.base.GeneratorExpression;
 import org.webspeclanguage.expression.base.GreaterEqualExpression;
 import org.webspeclanguage.expression.base.GreaterExpression;
 import org.webspeclanguage.expression.base.ImpliesExpression;
+import org.webspeclanguage.expression.base.InteractionPropertyExpression;
 import org.webspeclanguage.expression.base.LowerEqualExpression;
 import org.webspeclanguage.expression.base.LowerExpression;
 import org.webspeclanguage.expression.base.MulExpression;
@@ -111,7 +113,7 @@ public class ExpressionPrettyPrinter implements ExpressionVisitor {
   }
 
   public Object visitFunctionCallExpression(FunctionCallExpression testFunctionCallExpression) {
-    return "int-test-fwk";
+    return this.printFunction(testFunctionCallExpression);
   }
 
   public Object visitLowerEqualExpression(LowerEqualExpression expression) {
@@ -127,7 +129,7 @@ public class ExpressionPrettyPrinter implements ExpressionVisitor {
   }
 
   public Object visitNativeFunctionCallExpression(NativeFunctionCallExpression nativeFunctionCallExpression) {
-    return "native-func";
+    return "%" + this.printFunction(nativeFunctionCallExpression);
   }
 
   public Object visitNotEqualsExpression(NotEqualsExpression expression) {
@@ -169,23 +171,41 @@ public class ExpressionPrettyPrinter implements ExpressionVisitor {
     return "Widget: " + widgetReference.getWidget().getName();
   }
 
-  public Object visitConcatExpression(ConcatExpression arg0) {
-    // TODO Auto-generated method stub
-    return null;
+  public Object visitConcatExpression(ConcatExpression concat) {
+    return generateForBinaryExpression(concat, " & ");
   }
 
-  public Object visitToBooleanFunctionCallExpression(ToBooleanFunctionCallExpression arg0) {
-    // TODO Auto-generated method stub
-    return null;
+  public Object visitToBooleanFunctionCallExpression(ToBooleanFunctionCallExpression function) {
+    return this.printFunction(function);
   }
 
-  public Object visitToNumberFunctionCallExpression(ToNumberFunctionCallExpression arg0) {
-    // TODO Auto-generated method stub
-    return null;
+  public Object visitToNumberFunctionCallExpression(ToNumberFunctionCallExpression function) {
+    return this.printFunction(function);
   }
 
-  public Object visitToStringFunctionCallExpression(ToStringFunctionCallExpression arg0) {
-    // TODO Auto-generated method stub
-    return null;
+  public Object visitToStringFunctionCallExpression(ToStringFunctionCallExpression function) {
+    return this.printFunction(function);
+  }
+  
+  private String printFunction(AbstractFunctionCallExpression functionCall) {
+    StringBuffer buffer = new StringBuffer();
+    buffer.append(functionCall.getFunctionName());
+    buffer.append("(");
+    for (Expression expression : functionCall.getArguments()) {
+      buffer.append(this.prettyPrint(expression));
+      buffer.append(",");
+    }
+    String function = buffer.toString();
+    function = functionCall.getArguments().size() > 0 
+      ? function.substring(0, function.length() - 1) 
+      : function;
+    return function + ")";
+  }
+
+  public Object visitInteractionPropertyExpression(InteractionPropertyExpression interactionPropertyExpression) {
+    return "Interaction: " 
+      + interactionPropertyExpression.getInteraction().getName() 
+      + " property: " 
+      + interactionPropertyExpression.getProperty();
   }
 }

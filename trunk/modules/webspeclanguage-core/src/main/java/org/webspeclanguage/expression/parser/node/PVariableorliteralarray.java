@@ -2,7 +2,7 @@
 
 package org.webspeclanguage.expression.parser.node;
 
-public abstract class PVariable extends Node
+public abstract class PVariableorliteralarray extends Node
 {
     // Empty body
 }

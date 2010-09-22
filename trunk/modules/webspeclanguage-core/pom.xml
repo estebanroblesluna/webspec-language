@@ -36,6 +36,14 @@
     <finalName>${project.artifactId}</finalName>
     <sourceDirectory>src/main/java</sourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.rules</include>
+        </includes>
+      </resource>
+    </resources>
     
     <plugins>
       <plugin>

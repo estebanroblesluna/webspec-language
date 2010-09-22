@@ -5,45 +5,45 @@ package org.webspeclanguage.expression.parser.node;
 import org.webspeclanguage.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AArrayValue extends PValue
+public final class AVariableVariableorliteralarray extends PVariableorliteralarray
 {
-    private PArray _array_;
+    private PVariable _variable_;
 
-    public AArrayValue()
+    public AVariableVariableorliteralarray()
     {
         // Constructor
     }
 
-    public AArrayValue(
-        @SuppressWarnings("hiding") PArray _array_)
+    public AVariableVariableorliteralarray(
+        @SuppressWarnings("hiding") PVariable _variable_)
     {
         // Constructor
-        setArray(_array_);
+        setVariable(_variable_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AArrayValue(
-            cloneNode(this._array_));
+        return new AVariableVariableorliteralarray(
+            cloneNode(this._variable_));
     }
 
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAArrayValue(this);
+        ((Analysis) sw).caseAVariableVariableorliteralarray(this);
     }
 
-    public PArray getArray()
+    public PVariable getVariable()
     {
-        return this._array_;
+        return this._variable_;
     }
 
-    public void setArray(PArray node)
+    public void setVariable(PVariable node)
     {
-        if(this._array_ != null)
+        if(this._variable_ != null)
         {
-            this._array_.parent(null);
+            this._variable_.parent(null);
         }
 
         if(node != null)
@@ -56,23 +56,23 @@ public final class AArrayValue extends PValue
             node.parent(this);
         }
 
-        this._array_ = node;
+        this._variable_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._array_);
+            + toString(this._variable_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._array_ == child)
+        if(this._variable_ == child)
         {
-            this._array_ = null;
+            this._variable_ = null;
             return;
         }
 
@@ -83,9 +83,9 @@ public final class AArrayValue extends PValue
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._array_ == oldChild)
+        if(this._variable_ == oldChild)
         {
-            setArray((PArray) newChild);
+            setVariable((PVariable) newChild);
             return;
         }
 

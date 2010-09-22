@@ -5,30 +5,26 @@ package org.webspeclanguage.expression.parser.node;
 import org.webspeclanguage.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AArrayAccessValue extends PValue
+public final class AArray extends PArray
 {
-    private PVariableorliteralarray _variableorliteralarray_;
     private TLeftBlock _leftBlock_;
-    private PExpr _expr_;
+    private PArguments _arguments_;
     private TRightBlock _rightBlock_;
 
-    public AArrayAccessValue()
+    public AArray()
     {
         // Constructor
     }
 
-    public AArrayAccessValue(
-        @SuppressWarnings("hiding") PVariableorliteralarray _variableorliteralarray_,
+    public AArray(
         @SuppressWarnings("hiding") TLeftBlock _leftBlock_,
-        @SuppressWarnings("hiding") PExpr _expr_,
+        @SuppressWarnings("hiding") PArguments _arguments_,
         @SuppressWarnings("hiding") TRightBlock _rightBlock_)
     {
         // Constructor
-        setVariableorliteralarray(_variableorliteralarray_);
-
         setLeftBlock(_leftBlock_);
 
-        setExpr(_expr_);
+        setArguments(_arguments_);
 
         setRightBlock(_rightBlock_);
 
@@ -37,41 +33,15 @@ public final class AArrayAccessValue extends PValue
     @Override
     public Object clone()
     {
-        return new AArrayAccessValue(
-            cloneNode(this._variableorliteralarray_),
+        return new AArray(
             cloneNode(this._leftBlock_),
-            cloneNode(this._expr_),
+            cloneNode(this._arguments_),
             cloneNode(this._rightBlock_));
     }
 
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAArrayAccessValue(this);
-    }
-
-    public PVariableorliteralarray getVariableorliteralarray()
-    {
-        return this._variableorliteralarray_;
-    }
-
-    public void setVariableorliteralarray(PVariableorliteralarray node)
-    {
-        if(this._variableorliteralarray_ != null)
-        {
-            this._variableorliteralarray_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._variableorliteralarray_ = node;
+        ((Analysis) sw).caseAArray(this);
     }
 
     public TLeftBlock getLeftBlock()
@@ -99,16 +69,16 @@ public final class AArrayAccessValue extends PValue
         this._leftBlock_ = node;
     }
 
-    public PExpr getExpr()
+    public PArguments getArguments()
     {
-        return this._expr_;
+        return this._arguments_;
     }
 
-    public void setExpr(PExpr node)
+    public void setArguments(PArguments node)
     {
-        if(this._expr_ != null)
+        if(this._arguments_ != null)
         {
-            this._expr_.parent(null);
+            this._arguments_.parent(null);
         }
 
         if(node != null)
@@ -121,7 +91,7 @@ public final class AArrayAccessValue extends PValue
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._arguments_ = node;
     }
 
     public TRightBlock getRightBlock()
@@ -153,9 +123,8 @@ public final class AArrayAccessValue extends PValue
     public String toString()
     {
         return ""
-            + toString(this._variableorliteralarray_)
             + toString(this._leftBlock_)
-            + toString(this._expr_)
+            + toString(this._arguments_)
             + toString(this._rightBlock_);
     }
 
@@ -163,21 +132,15 @@ public final class AArrayAccessValue extends PValue
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._variableorliteralarray_ == child)
-        {
-            this._variableorliteralarray_ = null;
-            return;
-        }
-
         if(this._leftBlock_ == child)
         {
             this._leftBlock_ = null;
             return;
         }
 
-        if(this._expr_ == child)
+        if(this._arguments_ == child)
         {
-            this._expr_ = null;
+            this._arguments_ = null;
             return;
         }
 
@@ -194,21 +157,15 @@ public final class AArrayAccessValue extends PValue
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._variableorliteralarray_ == oldChild)
-        {
-            setVariableorliteralarray((PVariableorliteralarray) newChild);
-            return;
-        }
-
         if(this._leftBlock_ == oldChild)
         {
             setLeftBlock((TLeftBlock) newChild);
             return;
         }
 
-        if(this._expr_ == oldChild)
+        if(this._arguments_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setArguments((PArguments) newChild);
             return;
         }
 

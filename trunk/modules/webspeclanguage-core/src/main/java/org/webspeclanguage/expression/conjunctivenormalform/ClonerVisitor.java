@@ -13,12 +13,15 @@
 package org.webspeclanguage.expression.conjunctivenormalform;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.AndExpression;
 import org.webspeclanguage.expression.base.ArrayAccessExpression;
 import org.webspeclanguage.expression.base.ArrayExpression;
+import org.webspeclanguage.expression.base.ArrayHolder;
 import org.webspeclanguage.expression.base.BooleanConstant;
 import org.webspeclanguage.expression.base.ConcatExpression;
 import org.webspeclanguage.expression.base.DivExpression;
@@ -30,6 +33,7 @@ import org.webspeclanguage.expression.base.GeneratorExpression;
 import org.webspeclanguage.expression.base.GreaterEqualExpression;
 import org.webspeclanguage.expression.base.GreaterExpression;
 import org.webspeclanguage.expression.base.ImpliesExpression;
+import org.webspeclanguage.expression.base.InteractionPropertyExpression;
 import org.webspeclanguage.expression.base.LowerEqualExpression;
 import org.webspeclanguage.expression.base.LowerExpression;
 import org.webspeclanguage.expression.base.MulExpression;
@@ -48,7 +52,7 @@ import org.webspeclanguage.expression.base.WidgetPropertyReference;
 import org.webspeclanguage.expression.base.WidgetReference;
 
 /**
- * A cloner visitor clones the {@link Expression} tree
+ * A cloner visitor clones an {@link Expression} tree
  * 
  * @author Esteban Robles Luna
  */
@@ -83,11 +87,20 @@ public class ClonerVisitor implements ExpressionVisitor {
   public Object visitWidgetPropertyReference(WidgetPropertyReference widgetPropertyReference) {
     return new WidgetPropertyReference(
         widgetPropertyReference.getWidget(),
-        widgetPropertyReference.getPropertyName());
+        widgetPropertyReference.getPropertyName(),
+        this.clone(widgetPropertyReference.getVariables()));
+  }
+
+  private Map<String, Expression> clone(Map<String, Expression> variables) {
+    Map<String, Expression> result = new HashMap<String, Expression>();
+    for (String variable : variables.keySet()) {
+      result.put(variable, this.clone(variables.get(variable)));
+    }
+    return result;
   }
 
   public Object visitWidgetReference(WidgetReference widgetReference) {
-    return new WidgetReference(widgetReference.getWidget());
+    return new WidgetReference(widgetReference.getWidget(), this.clone(widgetReference.getVariables()));
   }
 
   public Object visitNumberConstant(NumberConstant numberConstant) {
@@ -178,34 +191,29 @@ public class ClonerVisitor implements ExpressionVisitor {
     return exps;
   }
 
-  public Object visitFunctionCallExpression(
-      FunctionCallExpression functionCallExpression) {
+  public Object visitFunctionCallExpression(FunctionCallExpression functionCallExpression) {
     return new FunctionCallExpression(
         functionCallExpression.getFunctionName(), 
         this.clone(functionCallExpression.getArguments()));
   }
   
-  public Object visitNativeFunctionCallExpression(
-      NativeFunctionCallExpression functionCallExpression) {
+  public Object visitNativeFunctionCallExpression(NativeFunctionCallExpression functionCallExpression) {
     return new NativeFunctionCallExpression(
         functionCallExpression.getFunctionName(), 
         this.clone(functionCallExpression.getArguments()));
   }
   
-  public Object visitToBooleanFunctionCallExpression(
-      ToBooleanFunctionCallExpression functionCallExpression) {
+  public Object visitToBooleanFunctionCallExpression(ToBooleanFunctionCallExpression functionCallExpression) {
     return new ToBooleanFunctionCallExpression(
         this.clone(functionCallExpression.getArguments()));
   }
 
-  public Object visitToNumberFunctionCallExpression(
-      ToNumberFunctionCallExpression functionCallExpression) {
+  public Object visitToNumberFunctionCallExpression(ToNumberFunctionCallExpression functionCallExpression) {
     return new ToNumberFunctionCallExpression(
         this.clone(functionCallExpression.getArguments()));
   }
 
-  public Object visitToStringFunctionCallExpression(
-      ToStringFunctionCallExpression functionCallExpression) {
+  public Object visitToStringFunctionCallExpression(ToStringFunctionCallExpression functionCallExpression) {
     return new ToStringFunctionCallExpression(
         this.clone(functionCallExpression.getArguments()));
   }
@@ -220,10 +228,15 @@ public class ClonerVisitor implements ExpressionVisitor {
     return arrayExpression;
   }
 
-  public Object visitArrayAccessExpression(
-      ArrayAccessExpression arrayAccessExpression) {
-    // TODO
-    return null;
-    // return arrayAccessExpression.evaluate(getGeneratedVariables());
+  public Object visitArrayAccessExpression(ArrayAccessExpression arrayAccessExpression) {
+    ArrayHolder arrayExpression = (ArrayHolder) this.clone(arrayAccessExpression.getArrayExpression());
+    Expression newIndex = this.clone(arrayAccessExpression.getIndex());
+    return new ArrayAccessExpression(arrayExpression, newIndex);
+  }
+
+  public Object visitInteractionPropertyExpression(InteractionPropertyExpression interactionPropertyExpression) {
+    return new InteractionPropertyExpression(
+            interactionPropertyExpression.getInteraction(), 
+            interactionPropertyExpression.getProperty());
   }
 }

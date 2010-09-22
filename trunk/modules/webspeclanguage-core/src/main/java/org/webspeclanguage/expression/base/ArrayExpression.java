@@ -12,17 +12,19 @@
  */
 package org.webspeclanguage.expression.base;
 
+import java.math.BigDecimal;
+
 /**
  * An expression class for "[1, 2, 3]"
  * 
  * @author Esteban Robles Luna
  */
-public class ArrayExpression extends ConstantExpression<ConstantExpression<?>[]> {
+public class ArrayExpression extends ConstantExpression<ConstantExpression<?>[]> implements ArrayHolder {
 
-  public ArrayExpression(ConstantExpression<?>[] exps) {
+  public ArrayExpression(ConstantExpression<?>... exps) {
     super(exps);
   }
-
+  
   public Object accept(ExpressionVisitor visitor) {
     return visitor.visitArrayExpression(this);
   }
@@ -33,19 +35,16 @@ public class ArrayExpression extends ConstantExpression<ConstantExpression<?>[]>
 
   @Override
   public BooleanConstant coerceToBoolean() {
-    // TODO Auto-generated method stub
-    return null;
+    return BooleanConstant.FALSE;
   }
 
   @Override
   public NumberConstant coerceToNumber() {
-    // TODO Auto-generated method stub
-    return null;
+    return new NumberConstant(BigDecimal.ZERO);
   }
 
   @Override
   public StringConstant coerceToString() {
-    // TODO Auto-generated method stub
-    return null;
+    return new StringConstant("[]");
   }
 }
