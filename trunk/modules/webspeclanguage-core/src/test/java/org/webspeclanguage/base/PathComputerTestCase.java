@@ -89,10 +89,10 @@ public class PathComputerTestCase extends TestCase {
   public void testComputePathsFor() {
     WebSpecDiagram diagram = new WebSpecDiagram("a");
 
-    WebSpecInteraction i1 = new WebSpecInteraction("i1", diagram);
-    WebSpecInteraction i2 = new WebSpecInteraction("i2", diagram);
-    WebSpecInteraction i3 = new WebSpecInteraction("i3", diagram);
-    WebSpecInteraction i4 = new WebSpecInteraction("i4", diagram);
+    WebSpecInteraction i1 = new WebSpecInteraction("i1");
+    WebSpecInteraction i2 = new WebSpecInteraction("i2");
+    WebSpecInteraction i3 = new WebSpecInteraction("i3");
+    WebSpecInteraction i4 = new WebSpecInteraction("i4");
 
     i1.setLocation("http://www.google.com");
     diagram.setStartingInteraction(i1);

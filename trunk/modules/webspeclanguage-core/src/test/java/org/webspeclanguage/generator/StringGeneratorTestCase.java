@@ -23,7 +23,7 @@ import org.webspeclanguage.generator.StringGenerator;
 public class StringGeneratorTestCase extends TestCase {
 
   public void testGenerator() {
-    StringGenerator generator = new StringGenerator(10);
+    StringGenerator generator = new StringGenerator("stringGenerator", 10);
     for (int i = 0; i < 100; i++) {
       StringConstant constant = (StringConstant) generator.generate();
       assertNotNull(constant.getConstant());

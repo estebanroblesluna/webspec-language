@@ -177,7 +177,7 @@ public class WebSpec2WebSimulationTransformation {
     for (String generatorName : this.getCurrentDiagram().getGeneratorsNames()) {
       Generator generator = this.getCurrentDiagram().getGeneratorNamed(
           generatorName);
-      this.getConcretizer().set(generatorName, generator);
+      this.getConcretizer().set(generator);
     }
   }
 

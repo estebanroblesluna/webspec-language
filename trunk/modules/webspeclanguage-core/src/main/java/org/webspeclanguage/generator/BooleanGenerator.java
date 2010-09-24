@@ -21,7 +21,11 @@ import org.webspeclanguage.expression.base.ExpressionType;
  * 
  * @author Esteban Robles Luna
  */
-public class BooleanGenerator implements Generator {
+public class BooleanGenerator extends AbstractGenerator {
+
+  public BooleanGenerator(String name) {
+    super(name);
+  }
 
   @SuppressWarnings("unchecked")
   public ConstantExpression generate() {

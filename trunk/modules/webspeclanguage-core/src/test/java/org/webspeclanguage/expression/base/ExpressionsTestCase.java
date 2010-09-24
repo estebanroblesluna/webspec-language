@@ -63,7 +63,7 @@ public class ExpressionsTestCase extends TestCase {
     this.parser = new ExpressionParser();
     this.diagram = new WebSpecDiagram("a");
 
-    WebSpecInteraction interaction = new WebSpecInteraction("Home", this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("Home");
     this.diagram.addInteraction(interaction);
     Button button = interaction.createButtonWithLocation("loc");
     button.setName("register");
@@ -87,14 +87,14 @@ public class ExpressionsTestCase extends TestCase {
     this.concretizer.set("array", new ArrayExpression(new NumberConstant("1"), 
             new NumberConstant("2"), new NumberConstant("3"), new NumberConstant("4")));
     
-    this.concretizer.set("genI", new OneOfNumbers(1));
-    this.concretizer.set("uni", new UniformNumberGenerator(0, 1));
+    this.concretizer.set(new OneOfNumbers("genI", 1));
+    this.concretizer.set(new UniformNumberGenerator("uni", 0, 1));
 
-    this.typechecker.set("genI", new OneOfNumbers(1));
-    this.typechecker.set("bools", new BooleanGenerator());
-    this.typechecker.set("ss", new OneOfStrings("a", "b"));
-    this.typechecker.set("uni", new UniformNumberGenerator(0, 1));
-    this.typechecker.set("sss", new StringGenerator(25));
+    this.typechecker.set(new OneOfNumbers("genI", 1));
+    this.typechecker.set(new BooleanGenerator("bools"));
+    this.typechecker.set(new OneOfStrings("ss", "a", "b"));
+    this.typechecker.set(new UniformNumberGenerator("uni", 0, 1));
+    this.typechecker.set(new StringGenerator("sss", 25));
   }
 
   public void testOptimize() {

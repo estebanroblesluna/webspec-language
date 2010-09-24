@@ -40,6 +40,8 @@ public abstract class WebSpecTransition implements WebSpecPathItem {
     this.from = from;
     this.to = to;
     this.actions = new ArrayList<Action>();
+    
+    this.from.addTransition(this);
   }
 
   public void addAction(Action action) {

@@ -25,12 +25,14 @@ import org.webspeclanguage.expression.base.StringConstant;
  * 
  * @author Esteban Robles Luna
  */
-public class StringGenerator implements Generator {
+public class StringGenerator extends AbstractGenerator {
 
   private int maxLength;
   private List<Character> characters;
 
-  public StringGenerator(int maxLength) {
+  public StringGenerator(String name, int maxLength) {
+    super(name);
+    
     this.maxLength = maxLength;
     this.characters = new ArrayList<Character>();
     

@@ -50,7 +50,7 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
     this.testGenerator = new SeleniumJavaWebTestGenerator();
     this.diagram = new WebSpecDiagram("the diagram");
     
-    homeInteraction = new WebSpecInteraction("Home", this.diagram);
+    homeInteraction = new WebSpecInteraction("Home");
     this.diagram.addInteraction(homeInteraction);
     
     searchButton = new Button();

@@ -23,8 +23,8 @@ import org.webspeclanguage.expression.base.ExpressionType;
  */
 public class OneOfArray extends OneOf<ArrayExpression> {
 
-  public OneOfArray(ArrayExpression... values) {
-    super(values);
+  public OneOfArray(String name, ArrayExpression... values) {
+    super(name, values);
   }
 
   @SuppressWarnings("unchecked")

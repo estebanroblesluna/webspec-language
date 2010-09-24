@@ -46,7 +46,7 @@ public final class WebSpecFactory {
   public static WebSpecDiagram getWebSpecDiagram() {
     WebSpecDiagram diagram = new WebSpecDiagram("i1");
 
-    WebSpecInteraction i1 = new WebSpecInteraction("i1", diagram);
+    WebSpecInteraction i1 = new WebSpecInteraction("i1");
     i1.setLocation("http://www.google.com");
 
     Label usernameLabel = new Label();
@@ -64,7 +64,7 @@ public final class WebSpecFactory {
     button.setId("login");
     i1.addWidget(button);
 
-    WebSpecInteraction i2 = new WebSpecInteraction("i2", diagram);
+    WebSpecInteraction i2 = new WebSpecInteraction("i2");
 
     Label errorMessage = new Label();
     errorMessage.setId("message");
@@ -81,7 +81,7 @@ public final class WebSpecFactory {
     button2.setId("login");
     i2.addWidget(button2);
 
-    WebSpecInteraction i3 = new WebSpecInteraction("i3", diagram);
+    WebSpecInteraction i3 = new WebSpecInteraction("i3");
 
     Label welcomeMessage = new Label();
     welcomeMessage.setId("message");
@@ -140,14 +140,11 @@ public final class WebSpecFactory {
   public static WebSpecDiagram getAmazonExample() {
     WebSpecDiagram diagram = new WebSpecDiagram("Amazon example");
 
-    diagram.addGenerator("productNames", new OneOfStrings("ipod", "iphone"));
+    diagram.addGenerator(new OneOfStrings("productNames", "ipod", "iphone"));
+    diagram.addGenerator(new OneOfNumbers("productIndexs", 0, 2, 3, 4, 5, 6, 7, 8, 9));
+    diagram.addGenerator(new UniformNumberGenerator("relatedIndexs", 1, 3));
 
-    diagram.addGenerator("productIndexs", new OneOfNumbers(0, 2, 3, 4, 5, 6, 7,
-        8, 9));
-
-    diagram.addGenerator("relatedIndexs", new UniformNumberGenerator(1, 3));
-
-    WebSpecInteraction i1 = new WebSpecInteraction("Home", diagram);
+    WebSpecInteraction i1 = new WebSpecInteraction("Home");
     i1.setTitle("\"Amazon\"");
     i1.setLocation("http://www.amazon.com");
     diagram.setStartingInteraction(i1);
@@ -160,7 +157,7 @@ public final class WebSpecFactory {
     searchButton.setLocation("//div[@id='navGoButton']/input");
     i1.addWidget(searchButton);
 
-    WebSpecInteraction i2 = new WebSpecInteraction("Search results", diagram);
+    WebSpecInteraction i2 = new WebSpecInteraction("Search results");
 
     TextField searchTextFieldResult = new TextField();
     searchTextFieldResult.setLocation("//input[@id='twotabsearchtextbox']");
@@ -191,7 +188,7 @@ public final class WebSpecFactory {
         searchTextFieldResult, "value"), new VariableValue("productName"));
     i2.setInvariant(i2Invariant);
 
-    WebSpecInteraction i3 = new WebSpecInteraction("Product detail", diagram);
+    WebSpecInteraction i3 = new WebSpecInteraction("Product detail");
 
     Label titleLabel = new Label();
     titleLabel.setLocation("//span[@id='btAsinTitle']");
@@ -215,25 +212,17 @@ public final class WebSpecFactory {
   public static WebSpecDiagram getAmazonExample2() {
     WebSpecDiagram diagram = new WebSpecDiagram("Amazon example2");
 
-    diagram.addGenerator("productNames", new OneOfStrings("ipod", "iphone"));
+    diagram.addGenerator(new OneOfStrings("productNames", "ipod", "iphone"));
+    diagram.addGenerator(new OneOfNumbers("productIndexs", 0, 2, 3, 4, 5, 6, 7, 8, 9));
+    diagram.addGenerator(new UniformNumberGenerator("relatedIndexs", 1, 3));
 
-    diagram.addGenerator("productIndexs", new OneOfNumbers(0, 2, 3, 4, 5, 6, 7,
-        8, 9));
-
-    diagram.addGenerator("relatedIndexs", new UniformNumberGenerator(1, 3));
-
-    WebSpecInteraction homeInteraction = new WebSpecInteraction("Home", diagram);
+    WebSpecInteraction homeInteraction = new WebSpecInteraction("Home");
     homeInteraction.setLocation("http://www.amazon.com");
-    WebSpecInteraction searchResultsInteraction = new WebSpecInteraction(
-        "Search results", diagram);
-    WebSpecInteraction productDetailInteraction = new WebSpecInteraction(
-        "Product detail", diagram);
-    WebSpecInteraction productAddedToSCInteraction = new WebSpecInteraction(
-        "Product added to shopping cart", diagram);
-    WebSpecInteraction relatedProductAddedToSCInteraction = new WebSpecInteraction(
-        "Related product added to shopping cart", diagram);
-    WebSpecInteraction home2Interaction = new WebSpecInteraction("Home 2",
-        diagram);
+    WebSpecInteraction searchResultsInteraction = new WebSpecInteraction("Search results");
+    WebSpecInteraction productDetailInteraction = new WebSpecInteraction("Product detail");
+    WebSpecInteraction productAddedToSCInteraction = new WebSpecInteraction("Product added to shopping cart");
+    WebSpecInteraction relatedProductAddedToSCInteraction = new WebSpecInteraction("Related product added to shopping cart");
+    WebSpecInteraction home2Interaction = new WebSpecInteraction("Home 2");
 
     diagram.setStartingInteraction(homeInteraction);
 
@@ -364,15 +353,15 @@ public final class WebSpecFactory {
   public static WebSpecDiagram getCycleExample() {
     WebSpecDiagram diagram = new WebSpecDiagram("Cycle example");
 
-    WebSpecInteraction i1 = new WebSpecInteraction("i1", diagram);
+    WebSpecInteraction i1 = new WebSpecInteraction("i1");
     i1.setLocation("http://www.amazon.com");
     diagram.setStartingInteraction(i1);
     diagram.addInteraction(i1);
 
-    WebSpecInteraction i2 = new WebSpecInteraction("i2", diagram);
+    WebSpecInteraction i2 = new WebSpecInteraction("i2");
     diagram.addInteraction(i2);
 
-    WebSpecInteraction i3 = new WebSpecInteraction("i3", diagram);
+    WebSpecInteraction i3 = new WebSpecInteraction("i3");
     diagram.addInteraction(i3);
 
     WebSpecNavigation i1i2 = i1.navigateTo(i2);

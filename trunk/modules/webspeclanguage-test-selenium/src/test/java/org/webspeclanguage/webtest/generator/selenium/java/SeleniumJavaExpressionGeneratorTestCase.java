@@ -38,7 +38,7 @@ public class SeleniumJavaExpressionGeneratorTestCase extends TestCase {
     this.parser = new ExpressionParser();
     this.diagram = new WebSpecDiagram("a");
 
-    WebSpecInteraction interaction = new WebSpecInteraction("Home", this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("Home");
     this.diagram.addInteraction(interaction);
     Button button = interaction.createButtonWithLocation("loc");
     button.setName("register");

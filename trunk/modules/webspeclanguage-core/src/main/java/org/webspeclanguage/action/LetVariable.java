@@ -13,6 +13,8 @@
 package org.webspeclanguage.action;
 
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.webspeclanguage.expression.base.BinaryExpression;
 import org.webspeclanguage.expression.base.Expression;
 import org.webspeclanguage.expression.base.ExpressionType;
 
@@ -35,6 +37,30 @@ public class LetVariable implements Action {
     this.variableName = variableName;
     this.expression = expression;
     this.type = type;
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+    if (obj.getClass() != getClass()) {
+      return false;
+    }
+    LetVariable o = (LetVariable) obj;
+    return new EqualsBuilder()
+      .append(this.variableName, o.variableName)
+      .append(this.expression, o.expression)
+      .append(this.expression, o.expression)
+      .isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return this.variableName.hashCode() + 7 * this.expression.hashCode();
   }
 
   /**

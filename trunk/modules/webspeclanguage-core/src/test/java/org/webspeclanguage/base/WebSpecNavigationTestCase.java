@@ -12,10 +12,6 @@
  */
 package org.webspeclanguage.base;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
-import org.webspeclanguage.base.WebSpecNavigation;
-
 import junit.framework.TestCase;
 
 /**
@@ -24,9 +20,8 @@ import junit.framework.TestCase;
 public class WebSpecNavigationTestCase extends TestCase {
 
   public void testCreation() {
-    WebSpecDiagram diagram = new WebSpecDiagram("diagram");
-    WebSpecInteraction i1 = new WebSpecInteraction("i1", diagram);
-    WebSpecInteraction i2 = new WebSpecInteraction("i2", diagram);
+    WebSpecInteraction i1 = new WebSpecInteraction("i1");
+    WebSpecInteraction i2 = new WebSpecInteraction("i2");
     WebSpecNavigation nav = i1.navigateTo(i2);
     assertEquals("i1->i2", nav.toString());
   }

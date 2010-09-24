@@ -78,8 +78,8 @@ public class ExpressionConcretizer extends ClonerVisitor {
     this.getVariables().remove(variableName);
   }
 
-  public void set(String generatorName, Generator generator) {
-    this.getGenerators().put(generatorName, generator);
+  public void set(Generator generator) {
+    this.getGenerators().put(generator.getName(), generator);
   }
 
   public Map<String, ConstantExpression> getVariables() {

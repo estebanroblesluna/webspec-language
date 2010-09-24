@@ -31,7 +31,7 @@ public class ActionParserTestCase extends TestCase {
   public void setUp() throws Exception {
     super.setUp();
     this.diagram = new WebSpecDiagram("diagram");
-    WebSpecInteraction i1 = new WebSpecInteraction("home", this.diagram);
+    WebSpecInteraction i1 = new WebSpecInteraction("home");
     this.diagram.addInteraction(i1);
     TextField tf = i1.createTextFieldWithId("searchTF");
     tf.setName("searchTF");

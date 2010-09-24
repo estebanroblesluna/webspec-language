@@ -25,16 +25,17 @@ import org.webspeclanguage.expression.base.NumberConstant;
  * 
  * @author Esteban Robles Luna
  */
-public class UniformNumberGenerator implements Generator {
+public class UniformNumberGenerator extends AbstractGenerator {
 
   private BigDecimal min;
   private BigDecimal max;
 
-  public UniformNumberGenerator(int min, int max) {
-    this(new BigDecimal(min), new BigDecimal(max));
+  public UniformNumberGenerator(String name, int min, int max) {
+    this(name, new BigDecimal(min), new BigDecimal(max));
   }
 
-  public UniformNumberGenerator(BigDecimal min, BigDecimal max) {
+  public UniformNumberGenerator(String name, BigDecimal min, BigDecimal max) {
+    super(name);
     if (min.compareTo(max) > 0) {
       throw new IllegalArgumentException("Illegal interval");
     }

@@ -146,7 +146,8 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   private void initializeGenerators(WebSpecDiagram diagram) {
     if (diagram != null) {
       for (String generatorName : diagram.getGeneratorsNames()) {
-        this.set(generatorName, diagram.getGeneratorNamed(generatorName));
+        Generator generator = diagram.getGeneratorNamed(generatorName);
+        this.set(generator);
       }
     }
   }
@@ -371,8 +372,8 @@ public class ExpressionTypechecker implements ExpressionVisitor {
     this.variables.put(variableName, type);
   }
 
-  public void set(String generatorName, Generator generator) {
-    this.generators.put(generatorName, generator);
+  public void set(Generator generator) {
+    this.generators.put(generator.getName(), generator);
   }
 
   public ExpressionType getType(String variableName) {

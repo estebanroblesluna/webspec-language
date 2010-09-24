@@ -25,7 +25,7 @@ import org.webspeclanguage.generator.UniformNumberGenerator;
 public class UniformNumberGeneratorTestCase extends TestCase {
 
   public void testGenerate() {
-    UniformNumberGenerator generator = new UniformNumberGenerator(0, 1);
+    UniformNumberGenerator generator = new UniformNumberGenerator("uniformGenerator", 0, 1);
     NumberConstant constant = (NumberConstant) generator.generate();
     assertEquals(NumberConstant.class, constant.getClass());
     assertTrue(constant.getConstant().compareTo(new BigDecimal(0)) >= 0

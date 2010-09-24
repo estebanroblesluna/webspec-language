@@ -57,11 +57,11 @@ public class WebSpecDiagramTestCase extends TestCase {
 
   public void testAddGenerator() {
     assertTrue(this.diagram.getGeneratorsNames().isEmpty());
-    Generator generator = new OneOfStrings("aaa", "aaab");
-    Generator generator2 = new OneOfStrings("aaddda", "aaab");
-    this.diagram.addGenerator("aaa", generator);
+    Generator generator = new OneOfStrings("aaa", "aaa", "aaab");
+    Generator generator2 = new OneOfStrings("aaa", "aaddda", "aaab");
+    this.diagram.addGenerator(generator);
     try {
-      this.diagram.addGenerator("aaa", generator2);
+      this.diagram.addGenerator(generator2);
       fail("Exception should be thrown");
     } catch (DuplicatedGeneratorException e) {
       assertEquals("aaa", e.getName());
@@ -73,8 +73,8 @@ public class WebSpecDiagramTestCase extends TestCase {
   }
 
   public void testAddInteraction() {
-    WebSpecInteraction interaction1 = new WebSpecInteraction("i1", this.diagram);
-    WebSpecInteraction interaction2 = new WebSpecInteraction("i1", this.diagram);
+    WebSpecInteraction interaction1 = new WebSpecInteraction("i1");
+    WebSpecInteraction interaction2 = new WebSpecInteraction("i1");
     this.diagram.addInteraction(interaction1);
     try {
       this.diagram.addInteraction(interaction2);
@@ -86,9 +86,9 @@ public class WebSpecDiagramTestCase extends TestCase {
 
   @SuppressWarnings("unchecked")
   public void testGetUndeclaredVariables() {
-    WebSpecInteraction interaction1 = new WebSpecInteraction("i1", this.diagram);
-    WebSpecInteraction interaction2 = new WebSpecInteraction("i2", this.diagram);
-    WebSpecInteraction interaction3 = new WebSpecInteraction("i3", this.diagram);
+    WebSpecInteraction interaction1 = new WebSpecInteraction("i1");
+    WebSpecInteraction interaction2 = new WebSpecInteraction("i2");
+    WebSpecInteraction interaction3 = new WebSpecInteraction("i3");
 
     this.diagram.addInteraction(interaction1);
     this.diagram.addInteraction(interaction2);
@@ -117,7 +117,7 @@ public class WebSpecDiagramTestCase extends TestCase {
   }
 
   public void testSetStartingInteraction() {
-    WebSpecInteraction interaction1 = new WebSpecInteraction("i1", this.diagram);
+    WebSpecInteraction interaction1 = new WebSpecInteraction("i1");
 
     this.diagram.addInteraction(interaction1);
 
@@ -130,7 +130,7 @@ public class WebSpecDiagramTestCase extends TestCase {
   }
 
   public void testGetWidget() {
-    WebSpecInteraction interaction1 = new WebSpecInteraction("i1", this.diagram);
+    WebSpecInteraction interaction1 = new WebSpecInteraction("i1");
     Button button = new Button();
     button.setName("aaa");
     interaction1.addWidget(button);

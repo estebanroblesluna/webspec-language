@@ -36,7 +36,7 @@ public class ExpressionParserTestCase extends TestCase {
     this.parser = new ExpressionParser();
     this.diagram = new WebSpecDiagram("diagram");
     
-    WebSpecInteraction interaction = new WebSpecInteraction("Interaction", this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("Interaction");
 
     TextField textField = new TextField();
     textField.setName("widget");

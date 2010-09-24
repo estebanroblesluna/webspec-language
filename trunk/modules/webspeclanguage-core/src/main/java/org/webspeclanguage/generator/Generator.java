@@ -34,4 +34,9 @@ public interface Generator {
    * @return the type of the expression that will be generated
    */
   ExpressionType getGenerationType();
+
+  /**
+   * @return the name of the generator
+   */
+  String getName();
 }
