@@ -13,6 +13,7 @@
 package org.webspeclanguage.base;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -134,18 +135,18 @@ public class WebSpecDiagram {
     if (this.containsInteractionNamed(anInteraction.getName())) {
       throw new ExistingInteractionException(anInteraction.getName());
     } else {
-      this.getInteractions().add(anInteraction);
+      this.interactions.add(anInteraction);
+      anInteraction.setDiagram(this);
     }
   }
 
-  public void addGenerator(String name, Generator generator) {
-    Validate.notNull(name);
+  public void addGenerator(Generator generator) {
     Validate.notNull(generator);
     
-    if (this.getGenerators().containsKey(name)) {
-      throw new DuplicatedGeneratorException(name);
+    if (this.getGenerators().containsKey(generator.getName())) {
+      throw new DuplicatedGeneratorException(generator.getName());
     }
-    this.getGenerators().put(name, generator);
+    this.getGenerators().put(generator.getName(), generator);
   }
 
   public Set<String> getGeneratorsNames() {
@@ -161,7 +162,7 @@ public class WebSpecDiagram {
   }
 
   public WebSpecInteraction getInteractionNamed(String interactionName) {
-    for (WebSpecInteraction interaction : this.getInteractions()) {
+    for (WebSpecInteraction interaction : this.interactions) {
       if (interaction.getName().equals(interactionName)) {
         return interaction;
       }
@@ -170,7 +171,7 @@ public class WebSpecDiagram {
   }
 
   public Widget getWidget(String interactionName, String widgetName) {
-    for (WebSpecInteraction interaction : this.getInteractions()) {
+    for (WebSpecInteraction interaction : this.interactions) {
       if (interaction.getName().equals(interactionName)) {
         return interaction.getWidget(widgetName);
       }
@@ -193,8 +194,8 @@ public class WebSpecDiagram {
     return name;
   }
 
-  private Set<WebSpecInteraction> getInteractions() {
-    return interactions;
+  public Set<WebSpecInteraction> getInteractions() {
+    return Collections.unmodifiableSet(this.interactions);
   }
 
   public Map<String, Generator> getGenerators() {

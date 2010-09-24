@@ -23,8 +23,8 @@ import org.webspeclanguage.expression.base.StringConstant;
  */
 public class OneOfStrings extends OneOf<String> {
 
-  public OneOfStrings(String... values) {
-    super(values);
+  public OneOfStrings(String name, String... values) {
+    super(name, values);
   }
 
   @SuppressWarnings("unchecked")

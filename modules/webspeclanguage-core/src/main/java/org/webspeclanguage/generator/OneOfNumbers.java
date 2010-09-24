@@ -25,7 +25,8 @@ import org.webspeclanguage.expression.base.NumberConstant;
  */
 public class OneOfNumbers extends OneOf<BigDecimal> {
 
-  public OneOfNumbers(Integer... values) {
+  public OneOfNumbers(String name, Integer... values) {
+    super(name);
     BigDecimal[] numbers = new BigDecimal[values.length];
     for (int i = 0; i < values.length; i++) {
       Integer integer = values[i];
@@ -34,8 +35,8 @@ public class OneOfNumbers extends OneOf<BigDecimal> {
     this.setValues(numbers);
   }
 
-  public OneOfNumbers(BigDecimal... values) {
-    super(values);
+  public OneOfNumbers(String name, BigDecimal... values) {
+    super(name, values);
   }
 
   public ExpressionType getGenerationType() {

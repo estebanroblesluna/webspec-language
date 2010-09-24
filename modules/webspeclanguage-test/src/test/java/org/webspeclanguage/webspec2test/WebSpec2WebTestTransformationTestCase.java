@@ -51,11 +51,11 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
     this.transformation = new WebSpec2WebTestTransformation();
 
     this.diagram = new WebSpecDiagram("d");
-    this.diagram.addGenerator("validUsernames", new OneOfStrings("carlos2"));
-    this.diagram.addGenerator("invalidUsernames", new OneOfStrings("carlos"));
-    this.diagram.addGenerator("uandpss", new OneOfArray(new ArrayExpression(new StringConstant("user"), new StringConstant("pass"))));
+    this.diagram.addGenerator(new OneOfStrings("validUsernames", "carlos2"));
+    this.diagram.addGenerator(new OneOfStrings("invalidUsernames", "carlos"));
+    this.diagram.addGenerator(new OneOfArray("uandpss", new ArrayExpression(new StringConstant("user"), new StringConstant("pass"))));
 
-    this.starting = new WebSpecInteraction("start", this.diagram);
+    this.starting = new WebSpecInteraction("start");
     this.starting.setTitle("\"The title\"");
     this.starting.setLocation("http://www.google.com");
     this.diagram.setStartingInteraction(this.starting);
@@ -117,8 +117,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInteractionWithTitleAndInvariant() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     interaction.setTitle("\"The title\"");
     interaction.setLocation("http://www.google.com");
     this.diagram.addInteraction(interaction);
@@ -144,8 +143,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInteractionWithoutTitleAndInvariant() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     Label l = interaction.createLabelWithLocation("id=a");
@@ -160,8 +158,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateNavigation() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecNavigation navigation = starting.navigateTo(interaction);
@@ -179,8 +176,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateRichBehavior() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -199,8 +195,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateConstantTransition() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -215,8 +210,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateConstantThenDynamicTransition() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -241,8 +235,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInsatisfiedRichBehavior() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -260,8 +253,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateTransitionWithPrecondition() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -279,15 +271,13 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testTransform() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction",
-        this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
     richBehavior.setActions("click(start.label)");
 
-    WebSpecInteraction interaction2 = new WebSpecInteraction(
-        "otherInteraction2", this.diagram);
+    WebSpecInteraction interaction2 = new WebSpecInteraction("otherInteraction2");
     this.diagram.addInteraction(interaction2);
 
     WebSpecNavigation navigation = starting.navigateTo(interaction2);
@@ -303,7 +293,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
   
   public void testArrayGenerator() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction", this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecNavigation navigation = starting.navigateTo(interaction);
@@ -337,7 +327,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
   
   public void testConstantArrayGenerator() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction", this.diagram);
+    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     WebSpecNavigation navigation = starting.navigateTo(interaction);

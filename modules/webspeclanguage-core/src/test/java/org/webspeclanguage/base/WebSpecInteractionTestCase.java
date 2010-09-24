@@ -14,8 +14,6 @@ package org.webspeclanguage.base;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
 import org.webspeclanguage.widget.Button;
 import org.webspeclanguage.widget.Label;
 import org.webspeclanguage.widget.ListOfContainer;
@@ -32,8 +30,7 @@ public class WebSpecInteractionTestCase extends TestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
-    WebSpecDiagram diagram = new WebSpecDiagram("diagram");
-    this.interaction = new WebSpecInteraction("i", diagram);
+    this.interaction = new WebSpecInteraction("i");
   }
 
   public void testAccessors() {

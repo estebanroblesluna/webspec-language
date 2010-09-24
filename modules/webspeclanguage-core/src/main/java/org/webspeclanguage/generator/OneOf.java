@@ -21,11 +21,13 @@ import org.webspeclanguage.expression.base.ConstantExpression;
  * 
  * @author Esteban Robles Luna
  */
-public abstract class OneOf<T> implements Generator {
+public abstract class OneOf<T> extends AbstractGenerator {
 
   private T[] values;
 
-  protected OneOf(T... values) {
+  protected OneOf(String name, T... values) {
+    super(name);
+    
     Validate.notNull(values);
     this.values = values.clone();
   }

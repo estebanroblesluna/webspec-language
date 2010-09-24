@@ -13,6 +13,7 @@
 package org.webspeclanguage.base;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
@@ -43,11 +44,9 @@ public class WebSpecInteraction implements WebSpecPathItem {
   private Container root;
   private WebSpecDiagram diagram;
 
-  public WebSpecInteraction(String name, WebSpecDiagram diagram) {
+  public WebSpecInteraction(String name) {
     Validate.notNull(name);
-    Validate.notNull(diagram);
 
-    this.diagram = diagram;
     this.forwardTransitions = new ArrayList<WebSpecTransition>();
     this.name = name;
     this.root = new Panel();
@@ -65,16 +64,15 @@ public class WebSpecInteraction implements WebSpecPathItem {
   }
 
   public WebSpecNavigation navigateTo(WebSpecInteraction interaction) {
-    WebSpecNavigation navigation = new WebSpecNavigation(this, interaction);
-    this.getForwardTransitions().add(navigation);
-    return navigation;
+    return new WebSpecNavigation(this, interaction);
   }
 
   public WebSpecRichBehavior richBehaviorTo(WebSpecInteraction interaction) {
-    WebSpecRichBehavior richBehavior = new WebSpecRichBehavior(this,
-        interaction);
-    this.getForwardTransitions().add(richBehavior);
-    return richBehavior;
+    return new WebSpecRichBehavior(this, interaction);
+  }
+  
+  public void addTransition(WebSpecTransition webSpecTransition) {
+    this.forwardTransitions.add(webSpecTransition);
   }
 
   public void addWidget(Widget widget) {
@@ -98,8 +96,7 @@ public class WebSpecInteraction implements WebSpecPathItem {
   }
 
   public void setTitle(String expressionString) {
-    this
-        .setTitle(ExpressionUtils.getExpression(expressionString, getDiagram()));
+    this.setTitle(ExpressionUtils.getExpression(expressionString, getDiagram()));
   }
 
   public Expression getInvariant() {
@@ -146,8 +143,7 @@ public class WebSpecInteraction implements WebSpecPathItem {
     return this.getRoot().getWidgetNamed(widgetName);
   }
 
-  public List<WebSpecNavigation> navigationsTo(
-      WebSpecInteraction currentInteraction) {
+  public List<WebSpecNavigation> navigationsTo(WebSpecInteraction currentInteraction) {
     List<WebSpecNavigation> navigations = new ArrayList<WebSpecNavigation>();
     for (WebSpecTransition transition : this.getForwardTransitions()) {
       if (transition instanceof WebSpecNavigation
@@ -157,10 +153,20 @@ public class WebSpecInteraction implements WebSpecPathItem {
     }
     return navigations;
   }
+  
+  public List<WebSpecRichBehavior> richBehaviorsTo(WebSpecInteraction currentInteraction) {
+    List<WebSpecRichBehavior> navigations = new ArrayList<WebSpecRichBehavior>();
+    for (WebSpecTransition transition : this.getForwardTransitions()) {
+      if (transition instanceof WebSpecRichBehavior
+          && transition.getTo().equals(currentInteraction)) {
+        navigations.add((WebSpecRichBehavior) transition);
+      }
+    }
+    return navigations;
+  }
 
   public void setInvariant(String expressionString) {
-    Expression expression = ExpressionUtils.getExpression(expressionString,
-        this.getDiagram());
+    Expression expression = ExpressionUtils.getExpression(expressionString, this.getDiagram());
     this.setInvariant(expression);
   }
 
@@ -177,6 +183,10 @@ public class WebSpecInteraction implements WebSpecPathItem {
   }
 
   public List<WebSpecTransition> getForwardTransitions() {
-    return forwardTransitions;
+    return Collections.unmodifiableList(this.forwardTransitions);
+  }
+
+  void setDiagram(WebSpecDiagram diagram) {
+    this.diagram = diagram;
   }
 }

@@ -1,0 +1,24 @@
+<diagram 
+  xmlns="http://www.webspeclanguage.org/webspec" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.webspeclanguage.org/webspec webspec.xsd"
+  name="example">
+
+  <one-of-string-generator name="products" values="hello,how,are,you" />
+  
+  <interaction name="Home" starting="true">
+    <button name="search" />
+    <textfield name="searchTF" />
+  </interaction>
+
+  <interaction name="SearchResults" invariant="searchTitle.text = ${productName}">
+    <label name="searchTitle" />
+    <list-of name="books">
+      <label name="price" />
+    </list-of>
+  </interaction>
+
+  <navigation from="Home" to="SearchResults" actions="productName := $products$; type(Home.searchTF, ${productName}); click(Home.search)" />
+  
+  <rich-behavior from="Home" to="SearchResults" actions="click(Home.search)" />
+</diagram>

@@ -27,7 +27,7 @@ import org.webspeclanguage.generator.OneOfNumbers;
 public class OneOfNumbersTestCase extends TestCase {
 
   public void testGenerate() {
-    OneOfNumbers generator = new OneOfNumbers(1, 2);
+    OneOfNumbers generator = new OneOfNumbers("numbers", 1, 2);
     ConstantExpression constant = generator.generate();
     assertEquals(NumberConstant.class, constant.getClass());
     assertTrue(constant.getConstant().equals(new BigDecimal(1))
@@ -35,7 +35,7 @@ public class OneOfNumbersTestCase extends TestCase {
   }
 
   public void testGenerate2() {
-    OneOfNumbers generator = new OneOfNumbers(new BigDecimal(1));
+    OneOfNumbers generator = new OneOfNumbers("numbers", new BigDecimal(1));
     ConstantExpression constant = generator.generate();
     assertEquals(NumberConstant.class, constant.getClass());
     assertTrue(constant.getConstant().equals(new BigDecimal(1)));
