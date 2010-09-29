@@ -16,8 +16,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
 import org.webspeclanguage.expression.parser.ParsingException;
 import org.webspeclanguage.widget.TextField;
 
@@ -26,12 +26,12 @@ import org.webspeclanguage.widget.TextField;
  */
 public class ActionParserTestCase extends TestCase {
 
-  private WebSpecDiagram diagram;
+  private Diagram diagram;
 
   public void setUp() throws Exception {
     super.setUp();
-    this.diagram = new WebSpecDiagram("diagram");
-    WebSpecInteraction i1 = new WebSpecInteraction("home");
+    this.diagram = new Diagram("diagram");
+    Interaction i1 = new Interaction("home");
     this.diagram.addInteraction(i1);
     TextField tf = i1.createTextFieldWithId("searchTF");
     tf.setName("searchTF");

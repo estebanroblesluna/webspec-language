@@ -26,14 +26,14 @@ import org.webspeclanguage.expression.utils.ExpressionUtils;
  * 
  * @author Esteban Robles Luna
  */
-public abstract class WebSpecTransition implements WebSpecPathItem {
+public abstract class Transition implements PathItem {
 
-  private WebSpecInteraction from;
-  private WebSpecInteraction to;
+  private Interaction from;
+  private Interaction to;
   private Expression precondition;
   private List<Action> actions;
 
-  protected WebSpecTransition(WebSpecInteraction from, WebSpecInteraction to) {
+  protected Transition(Interaction from, Interaction to) {
     Validate.notNull(from);
     Validate.notNull(to);
     
@@ -59,11 +59,11 @@ public abstract class WebSpecTransition implements WebSpecPathItem {
     }
   }
 
-  public WebSpecInteraction getFrom() {
+  public Interaction getFrom() {
     return from;
   }
 
-  public WebSpecInteraction getTo() {
+  public Interaction getTo() {
     return to;
   }
 
@@ -83,7 +83,7 @@ public abstract class WebSpecTransition implements WebSpecPathItem {
     return actions;
   }
 
-  protected WebSpecDiagram getDiagram() {
+  protected Diagram getDiagram() {
     return this.getFrom().getDiagram();
   }
 }

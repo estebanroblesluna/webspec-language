@@ -15,21 +15,21 @@ package org.webspeclanguage.base;
 import java.util.List;
 
 import org.webspeclanguage.base.PathComputer;
-import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.Diagram;
 import org.webspeclanguage.base.WebSpecFactory;
-import org.webspeclanguage.base.WebSpecPath;
+import org.webspeclanguage.base.Path;
 
 import junit.framework.TestCase;
 
 /**
  * @author Esteban Robles Luna
  */
-public class WebSpecPathTestCase extends TestCase {
+public class PathTestCase extends TestCase {
 
   public void testToString() {
     PathComputer pathComputer = new PathComputer(2);
-    WebSpecDiagram diagram = WebSpecFactory.getCycleExample();
-    List<WebSpecPath> paths = pathComputer.computePathsFor(diagram);
+    Diagram diagram = WebSpecFactory.getCycleExample();
+    List<Path> paths = pathComputer.computePathsFor(diagram);
 
     assertEquals("i1_i2_i1_i2_i1", paths.get(0).toString());
     assertEquals("i1_i2_i1_i3", paths.get(1).toString());
@@ -38,8 +38,8 @@ public class WebSpecPathTestCase extends TestCase {
 
   public void testContains() {
     PathComputer pathComputer = new PathComputer(2);
-    WebSpecDiagram diagram = WebSpecFactory.getCycleExample();
-    List<WebSpecPath> paths = pathComputer.computePathsFor(diagram);
+    Diagram diagram = WebSpecFactory.getCycleExample();
+    List<Path> paths = pathComputer.computePathsFor(diagram);
 
     assertTrue(paths.get(0).contains(diagram.getInteractionNamed("i1")));
     assertTrue(paths.get(0).contains(diagram.getInteractionNamed("i2")));

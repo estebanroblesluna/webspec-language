@@ -17,12 +17,12 @@ import junit.framework.TestCase;
 /**
  * @author Esteban Robles Luna
  */
-public class WebSpecRichBehaviorTestCase extends TestCase {
+public class NavigationTestCase extends TestCase {
 
   public void testCreation() {
-    WebSpecInteraction i1 = new WebSpecInteraction("i1");
-    WebSpecInteraction i2 = new WebSpecInteraction("i2");
-    WebSpecRichBehavior rich = i1.richBehaviorTo(i2);
-    assertEquals("i1*>i2", rich.toString());
+    Interaction i1 = new Interaction("i1");
+    Interaction i2 = new Interaction("i2");
+    Navigation nav = i1.navigateTo(i2);
+    assertEquals("i1->i2", nav.toString());
   }
 }

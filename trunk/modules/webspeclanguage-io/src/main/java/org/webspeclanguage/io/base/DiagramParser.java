@@ -12,22 +12,22 @@
  */
 package org.webspeclanguage.io.base;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
 import org.webspeclanguage.generator.Generator;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
 import org.xml.sax.Attributes;
 
 /**
- * A {@link WebSpecDiagram} parser
+ * A {@link Diagram} parser
  * 
  * @author Esteban Robles Luna
  */
 public class DiagramParser extends AbstractElementParser {
 
   public DiagramParser() {
-    this.registerChild(WebSpecInteraction.class, "addInteraction");
+    this.registerChild(Interaction.class, "addInteraction");
     this.registerChild(Generator.class, "addGenerator");
   }
   
@@ -35,7 +35,7 @@ public class DiagramParser extends AbstractElementParser {
    * {@inheritDoc}
    */
   public void parse(Attributes attributes, ParseContext context) {
-    WebSpecDiagram diagram = new WebSpecDiagram(attributes.getValue("name"));
+    Diagram diagram = new Diagram(attributes.getValue("name"));
     this.setResult(diagram);
   }
 }

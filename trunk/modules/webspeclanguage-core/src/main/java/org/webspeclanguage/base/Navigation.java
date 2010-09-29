@@ -18,9 +18,9 @@ package org.webspeclanguage.base;
  * 
  * @author Esteban Robles Luna
  */
-public class WebSpecNavigation extends WebSpecTransition {
+public class Navigation extends Transition {
 
-  public WebSpecNavigation(WebSpecInteraction from, WebSpecInteraction to) {
+  public Navigation(Interaction from, Interaction to) {
     super(from, to);
   }
 
@@ -31,7 +31,7 @@ public class WebSpecNavigation extends WebSpecTransition {
   /**
    * {@inheritDoc}
    */
-  public Object accept(WebSpecPathItemVisitor pathItemVisitor) {
-    return pathItemVisitor.visitWebSpecNavigation(this);
+  public Object accept(PathItemVisitor pathItemVisitor) {
+    return pathItemVisitor.visitNavigation(this);
   }
 }

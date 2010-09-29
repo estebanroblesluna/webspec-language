@@ -20,15 +20,15 @@ package org.webspeclanguage.base;
  */
 public class InvalidStartingInteractionException extends RuntimeException {
 
-  private WebSpecInteraction startingInteraction;
+  private Interaction startingInteraction;
 
   private static final long serialVersionUID = -2059856228247237272L;
 
-  public InvalidStartingInteractionException(WebSpecInteraction startingInteraction) {
+  public InvalidStartingInteractionException(Interaction startingInteraction) {
     this.startingInteraction = startingInteraction;
   }
 
-  public WebSpecInteraction getStartingInteraction() {
+  public Interaction getStartingInteraction() {
     return startingInteraction;
   }
 }

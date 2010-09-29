@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.Diagram;
 import org.webspeclanguage.simulation.Simulation;
 import org.webspeclanguage.simulation.Simulator;
 
@@ -27,7 +27,7 @@ import org.webspeclanguage.simulation.Simulator;
  */
 public abstract class SimulatorFactory {
 
-	public List<Simulator> getSimulators(WebSpecDiagram diagram, String homePath) {
+	public List<Simulator> getSimulators(Diagram diagram, String homePath) {
 	  Validate.notNull(diagram);
 	  Validate.notNull(homePath);
 	  
@@ -42,7 +42,7 @@ public abstract class SimulatorFactory {
 	
 	protected abstract Simulator createSimulatorFor(Simulation simulation);
 
-	private SimulationGenerationResult generateSimulations(WebSpecDiagram diagram, String homePath) {
+	private SimulationGenerationResult generateSimulations(Diagram diagram, String homePath) {
 		WebSpec2WebSimulationTransformation transformation = new WebSpec2WebSimulationTransformation(homePath);
 		return transformation.transform(diagram);
 	}

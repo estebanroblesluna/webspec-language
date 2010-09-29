@@ -24,18 +24,18 @@ import org.apache.commons.lang.Validate;
  * 
  * @author Esteban Robles Luna
  */
-public class WebSpecPath {
+public class Path {
 
-  private List<WebSpecPathItem> items;
+  private List<PathItem> items;
   private String name;
-  private Map<WebSpecPathItem, Integer> occurences;
+  private Map<PathItem, Integer> occurences;
   private int cyclesCount;
 
-  public WebSpecPath(WebSpecInteraction startingInteraction) {
+  public Path(Interaction startingInteraction) {
     Validate.notNull(startingInteraction);
     
-    this.items = new ArrayList<WebSpecPathItem>();
-    this.occurences = new HashMap<WebSpecPathItem, Integer>();
+    this.items = new ArrayList<PathItem>();
+    this.occurences = new HashMap<PathItem, Integer>();
     this.cyclesCount = 0;
     
     this.basicAddItem(startingInteraction);
@@ -53,14 +53,14 @@ public class WebSpecPath {
   }
 
   public String getNameUsing(String separator) {
-    WebSpecInteraction previousInteraction = this.getInteraction(0);
+    Interaction previousInteraction = this.getInteraction(0);
     String computedName = this.getInteraction(0).getName();
     
     if (this.getItems().size() != 1) {
       for (int i = 1; i < this.getItems().size(); i = i + 2) {
-        WebSpecTransition currentTransition = (WebSpecTransition) this.getItems().get(i);
-        WebSpecInteraction currentInteraction = (WebSpecInteraction) this.getItems().get(i + 1);
-        List<WebSpecNavigation> navigations = previousInteraction.navigationsTo(currentInteraction);
+        Transition currentTransition = (Transition) this.getItems().get(i);
+        Interaction currentInteraction = (Interaction) this.getItems().get(i + 1);
+        List<Navigation> navigations = previousInteraction.navigationsTo(currentInteraction);
         if (navigations.size() == 1) {
           computedName += separator + currentInteraction.getName();
         } else {
@@ -74,7 +74,7 @@ public class WebSpecPath {
     return computedName.replaceAll(" ", "");
   }
 
-  private void basicAddItem(WebSpecPathItem item) {
+  private void basicAddItem(PathItem item) {
     this.getItems().add(item);
     
     if (this.occurences.containsKey(item)) {
@@ -85,41 +85,41 @@ public class WebSpecPath {
     }
   }
 
-  public WebSpecPath extendWith(WebSpecTransition transition, WebSpecInteraction to) {
+  public Path extendWith(Transition transition, Interaction to) {
     Validate.notNull(transition);
     Validate.notNull(to);
     
-    WebSpecPath newPath = this.copy();
+    Path newPath = this.copy();
     newPath.basicAddItem(transition);
     newPath.basicAddItem(to);
     return newPath;
   }
 
-  private WebSpecPath copy() {
-    WebSpecPath newPath = new WebSpecPath((WebSpecInteraction) this.getItems().get(0));
+  private Path copy() {
+    Path newPath = new Path((Interaction) this.getItems().get(0));
     for (int i = 1; i < this.getItems().size(); i++) {
       newPath.basicAddItem(this.getItems().get(i));
     }
     return newPath;
   }
 
-  public List<WebSpecPathItem> getItems() {
+  public List<PathItem> getItems() {
     return items;
   }
 
-  public WebSpecInteraction getInteraction(int i) {
-    return (WebSpecInteraction) this.getItems().get(i * 2);
+  public Interaction getInteraction(int i) {
+    return (Interaction) this.getItems().get(i * 2);
   }
 
-  public WebSpecNavigation getNavigation(int i) {
-    return (WebSpecNavigation) this.getItems().get((i * 2) + 1);
+  public Navigation getNavigation(int i) {
+    return (Navigation) this.getItems().get((i * 2) + 1);
   }
 
-  public boolean contains(WebSpecPathItem item) {
+  public boolean contains(PathItem item) {
     return this.getItems().contains(item);
   }
 
-  public int occurrencesOf(WebSpecPathItem item) {
+  public int occurrencesOf(PathItem item) {
     return this.occurences.get(item);
   }
 
@@ -128,7 +128,7 @@ public class WebSpecPath {
   }
 
   public boolean hasCycles() {
-    for (WebSpecPathItem item : this.occurences.keySet()) {
+    for (PathItem item : this.occurences.keySet()) {
       if (this.occurences.get(item) > 1) {
         return true;
       }

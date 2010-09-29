@@ -33,21 +33,21 @@ import org.webspeclanguage.widget.Widget;
  * 
  * @author Esteban Robles Luna
  */
-public class WebSpecInteraction implements WebSpecPathItem {
+public class Interaction implements PathItem {
 
-  private List<WebSpecTransition> forwardTransitions;
+  private List<Transition> forwardTransitions;
   private String location;
   private Expression title;
   private String name;
   private String mockupFile;
   private Expression invariant;
   private Container root;
-  private WebSpecDiagram diagram;
+  private Diagram diagram;
 
-  public WebSpecInteraction(String name) {
+  public Interaction(String name) {
     Validate.notNull(name);
 
-    this.forwardTransitions = new ArrayList<WebSpecTransition>();
+    this.forwardTransitions = new ArrayList<Transition>();
     this.name = name;
     this.root = new Panel();
   }
@@ -59,19 +59,19 @@ public class WebSpecInteraction implements WebSpecPathItem {
   /**
    * {@inheritDoc}
    */
-  public Object accept(WebSpecPathItemVisitor pathItemVisitor) {
-    return pathItemVisitor.visitWebSpecInteraction(this);
+  public Object accept(PathItemVisitor pathItemVisitor) {
+    return pathItemVisitor.visitInteraction(this);
   }
 
-  public WebSpecNavigation navigateTo(WebSpecInteraction interaction) {
-    return new WebSpecNavigation(this, interaction);
+  public Navigation navigateTo(Interaction interaction) {
+    return new Navigation(this, interaction);
   }
 
-  public WebSpecRichBehavior richBehaviorTo(WebSpecInteraction interaction) {
-    return new WebSpecRichBehavior(this, interaction);
+  public RichBehavior richBehaviorTo(Interaction interaction) {
+    return new RichBehavior(this, interaction);
   }
   
-  public void addTransition(WebSpecTransition webSpecTransition) {
+  public void addTransition(Transition webSpecTransition) {
     this.forwardTransitions.add(webSpecTransition);
   }
 
@@ -143,23 +143,23 @@ public class WebSpecInteraction implements WebSpecPathItem {
     return this.getRoot().getWidgetNamed(widgetName);
   }
 
-  public List<WebSpecNavigation> navigationsTo(WebSpecInteraction currentInteraction) {
-    List<WebSpecNavigation> navigations = new ArrayList<WebSpecNavigation>();
-    for (WebSpecTransition transition : this.getForwardTransitions()) {
-      if (transition instanceof WebSpecNavigation
+  public List<Navigation> navigationsTo(Interaction currentInteraction) {
+    List<Navigation> navigations = new ArrayList<Navigation>();
+    for (Transition transition : this.getForwardTransitions()) {
+      if (transition instanceof Navigation
           && transition.getTo().equals(currentInteraction)) {
-        navigations.add((WebSpecNavigation) transition);
+        navigations.add((Navigation) transition);
       }
     }
     return navigations;
   }
   
-  public List<WebSpecRichBehavior> richBehaviorsTo(WebSpecInteraction currentInteraction) {
-    List<WebSpecRichBehavior> navigations = new ArrayList<WebSpecRichBehavior>();
-    for (WebSpecTransition transition : this.getForwardTransitions()) {
-      if (transition instanceof WebSpecRichBehavior
+  public List<RichBehavior> richBehaviorsTo(Interaction currentInteraction) {
+    List<RichBehavior> navigations = new ArrayList<RichBehavior>();
+    for (Transition transition : this.getForwardTransitions()) {
+      if (transition instanceof RichBehavior
           && transition.getTo().equals(currentInteraction)) {
-        navigations.add((WebSpecRichBehavior) transition);
+        navigations.add((RichBehavior) transition);
       }
     }
     return navigations;
@@ -170,7 +170,7 @@ public class WebSpecInteraction implements WebSpecPathItem {
     this.setInvariant(expression);
   }
 
-  WebSpecDiagram getDiagram() {
+  Diagram getDiagram() {
     return diagram;
   }
 
@@ -182,11 +182,11 @@ public class WebSpecInteraction implements WebSpecPathItem {
     this.mockupFile = mockupFile;
   }
 
-  public List<WebSpecTransition> getForwardTransitions() {
+  public List<Transition> getForwardTransitions() {
     return Collections.unmodifiableList(this.forwardTransitions);
   }
 
-  void setDiagram(WebSpecDiagram diagram) {
+  void setDiagram(Diagram diagram) {
     this.diagram = diagram;
   }
 }

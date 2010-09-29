@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.webspeclanguage.action.Action;
 import org.webspeclanguage.action.ExpressionAction;
-import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.Diagram;
 import org.webspeclanguage.expression.base.Expression;
 import org.webspeclanguage.expression.parser.lexer.Lexer;
 import org.webspeclanguage.expression.parser.lexer.LexerException;
@@ -34,7 +34,7 @@ import org.webspeclanguage.expression.parser.parser.ParserException;
  */
 public class ExpressionParser {
 
-  public Expression parseFor(String input, WebSpecDiagram diagram)
+  public Expression parseFor(String input, Diagram diagram)
       throws ParsingException {
     String modifiedInput = input.replaceAll("\n", "");
 

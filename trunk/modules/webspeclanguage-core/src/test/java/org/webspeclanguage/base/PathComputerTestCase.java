@@ -15,10 +15,10 @@ package org.webspeclanguage.base;
 import java.util.List;
 
 import org.webspeclanguage.base.PathComputer;
-import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.Diagram;
 import org.webspeclanguage.base.WebSpecFactory;
-import org.webspeclanguage.base.WebSpecInteraction;
-import org.webspeclanguage.base.WebSpecPath;
+import org.webspeclanguage.base.Interaction;
+import org.webspeclanguage.base.Path;
 
 import junit.framework.TestCase;
 
@@ -36,13 +36,13 @@ public class PathComputerTestCase extends TestCase {
   }
 
   public void testPathComputing() {
-    WebSpecDiagram diagram = WebSpecFactory.getCycleExample();
-    List<WebSpecPath> paths = this.pathComputer.computePathsFor(diagram);
+    Diagram diagram = WebSpecFactory.getCycleExample();
+    List<Path> paths = this.pathComputer.computePathsFor(diagram);
     assertEquals(3, paths.size());
 
-    WebSpecPath path1 = paths.get(0);
-    WebSpecPath path2 = paths.get(1);
-    WebSpecPath path3 = paths.get(2);
+    Path path1 = paths.get(0);
+    Path path2 = paths.get(1);
+    Path path3 = paths.get(2);
 
     // path1
     assertEquals("i1", path1.getInteraction(0).getName());
@@ -87,12 +87,12 @@ public class PathComputerTestCase extends TestCase {
   }
 
   public void testComputePathsFor() {
-    WebSpecDiagram diagram = new WebSpecDiagram("a");
+    Diagram diagram = new Diagram("a");
 
-    WebSpecInteraction i1 = new WebSpecInteraction("i1");
-    WebSpecInteraction i2 = new WebSpecInteraction("i2");
-    WebSpecInteraction i3 = new WebSpecInteraction("i3");
-    WebSpecInteraction i4 = new WebSpecInteraction("i4");
+    Interaction i1 = new Interaction("i1");
+    Interaction i2 = new Interaction("i2");
+    Interaction i3 = new Interaction("i3");
+    Interaction i4 = new Interaction("i4");
 
     i1.setLocation("http://www.google.com");
     diagram.setStartingInteraction(i1);
@@ -102,17 +102,17 @@ public class PathComputerTestCase extends TestCase {
     i3.navigateTo(i4);
     i4.navigateTo(i1);
 
-    List<WebSpecPath> paths = this.pathComputer.computePathsFor(diagram);
+    List<Path> paths = this.pathComputer.computePathsFor(diagram);
     assertEquals(3, paths.size());
 
     // 1-2
-    WebSpecPath path1 = paths.get(0);
+    Path path1 = paths.get(0);
     assertEquals(3, path1.length());
     assertEquals("i1", path1.getInteraction(0).getName());
     assertEquals("i2", path1.getInteraction(1).getName());
 
     // 1-3-4-1-2
-    WebSpecPath path2 = paths.get(1);
+    Path path2 = paths.get(1);
     assertEquals(9, path2.length());
     assertEquals("i1", path2.getInteraction(0).getName());
     assertEquals("i3", path2.getInteraction(1).getName());
@@ -121,7 +121,7 @@ public class PathComputerTestCase extends TestCase {
     assertEquals("i2", path2.getInteraction(4).getName());
 
     // 1-3-4-1-3-4-1
-    WebSpecPath path3 = paths.get(2);
+    Path path3 = paths.get(2);
     assertEquals(13, path3.length());
     assertEquals("i1", path3.getInteraction(0).getName());
     assertEquals("i3", path3.getInteraction(1).getName());

@@ -14,7 +14,6 @@ package org.webspeclanguage.action;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.webspeclanguage.expression.base.BinaryExpression;
 import org.webspeclanguage.expression.base.Expression;
 import org.webspeclanguage.expression.base.ExpressionType;
 

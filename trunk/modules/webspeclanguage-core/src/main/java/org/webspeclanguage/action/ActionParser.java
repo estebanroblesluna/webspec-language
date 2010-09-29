@@ -17,7 +17,7 @@ import java.io.PushbackReader;
 import java.io.StringReader;
 import java.util.List;
 
-import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.Diagram;
 import org.webspeclanguage.expression.parser.ExpressionTransformer;
 import org.webspeclanguage.expression.parser.ParsingException;
 import org.webspeclanguage.expression.parser.lexer.Lexer;
@@ -42,7 +42,7 @@ public class ActionParser {
    * @param diagram the diagram
    * @return the list of actions as a result of the parsing process
    */
-  public static List<Action> getActions(String input, WebSpecDiagram diagram) {
+  public static List<Action> getActions(String input, Diagram diagram) {
     if (input == null) {
       return null;
     } else {
@@ -58,7 +58,7 @@ public class ActionParser {
    * @return the list of actions as a result of the parsing process
    * @throws ParsingException if an exception during parsing is thrown
    */
-  public List<Action> parseFor(String input, WebSpecDiagram diagram) throws ParsingException {
+  public List<Action> parseFor(String input, Diagram diagram) throws ParsingException {
     String modifiedInput = input.replaceAll("\n", "");
 
     Lexer lexer = new Lexer(new PushbackReader(new StringReader(modifiedInput),

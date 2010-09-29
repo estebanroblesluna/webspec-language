@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.base.WebSpecPath;
+import org.webspeclanguage.base.Path;
 import org.webspeclanguage.webtest.base.SimpleWebTest;
 import org.webspeclanguage.webtest.base.WebTestSuite;
 
@@ -34,17 +34,17 @@ public class TestGenerationResult {
   private String name;
   private WebTestSuite testSuite;
   private List<SimpleWebTest> tests;
-  private Map<WebSpecPath, SimpleWebTest> generatedTests;
+  private Map<Path, SimpleWebTest> generatedTests;
   
   public TestGenerationResult(String name) {
     Validate.notNull(name);
     
     this.name = name;
-    this.setGeneratedTests(new HashMap<WebSpecPath, SimpleWebTest>());
+    this.setGeneratedTests(new HashMap<Path, SimpleWebTest>());
     this.setTests(new ArrayList<SimpleWebTest>());
   }
 
-  protected void addTest(WebSpecPath path, SimpleWebTest aT) {
+  protected void addTest(Path path, SimpleWebTest aT) {
     this.getTests().add(aT);
     this.generatedTests.put(path, aT);
   }
@@ -61,11 +61,11 @@ public class TestGenerationResult {
     return this.tests;
   }
 
-  public Set<WebSpecPath> getPaths() {
+  public Set<Path> getPaths() {
     return this.generatedTests.keySet();
   }
 
-  private void setGeneratedTests(Map<WebSpecPath, SimpleWebTest> generatedTs) {
+  private void setGeneratedTests(Map<Path, SimpleWebTest> generatedTs) {
     this.generatedTests = generatedTs;
   }
 

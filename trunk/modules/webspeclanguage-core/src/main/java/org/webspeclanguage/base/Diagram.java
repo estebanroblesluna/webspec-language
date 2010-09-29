@@ -29,7 +29,7 @@ import org.webspeclanguage.action.ExpressionAction;
 import org.webspeclanguage.action.LetVariable;
 import org.webspeclanguage.expression.base.VariableValue;
 import org.webspeclanguage.expression.typechecker.TypecheckingResult;
-import org.webspeclanguage.expression.typechecker.WebSpecDiagramTypechecker;
+import org.webspeclanguage.expression.typechecker.DiagramTypechecker;
 import org.webspeclanguage.generator.Generator;
 import org.webspeclanguage.widget.Widget;
 
@@ -39,22 +39,22 @@ import org.webspeclanguage.widget.Widget;
  * 
  * @author Esteban Robles Luna
  */
-public class WebSpecDiagram {
+public class Diagram {
 
   private String name;
-  private WebSpecInteraction startingInteraction;
+  private Interaction startingInteraction;
 
   private int cyclesAllowed;
 
-  private Set<WebSpecInteraction> interactions;
+  private Set<Interaction> interactions;
   private Map<String, Generator> generators;
   private List<Action> actionsSetup;
 
-  public WebSpecDiagram(String name) {
+  public Diagram(String name) {
     Validate.notNull(name);
     
     this.name = name;
-    this.interactions = new HashSet<WebSpecInteraction>();
+    this.interactions = new HashSet<Interaction>();
     this.generators = new HashMap<String, Generator>();
     this.cyclesAllowed = 0;
     this.actionsSetup = new ArrayList<Action>();
@@ -67,14 +67,14 @@ public class WebSpecDiagram {
   }
 
   public TypecheckingResult typecheck() {
-    return new WebSpecDiagramTypechecker().typecheck(this);
+    return new DiagramTypechecker().typecheck(this);
   }
 
-  public Map<WebSpecPath, Set<String>> getUndeclaredVariables() {
-    Map<WebSpecPath, Set<String>> undeclaredVariables = new HashMap<WebSpecPath, Set<String>>();
+  public Map<Path, Set<String>> getUndeclaredVariables() {
+    Map<Path, Set<String>> undeclaredVariables = new HashMap<Path, Set<String>>();
     PathComputer computer = new PathComputer(this.getCyclesAllowed());
-    List<WebSpecPath> paths = computer.computePathsFor(this);
-    for (WebSpecPath path : paths) {
+    List<Path> paths = computer.computePathsFor(this);
+    for (Path path : paths) {
       Set<String> undeclaredVariablesInPath = this.getUndeclaredVariables(path);
       if (!undeclaredVariablesInPath.isEmpty()) {
         undeclaredVariables.put(path, undeclaredVariablesInPath);
@@ -84,7 +84,7 @@ public class WebSpecDiagram {
   }
 
   @SuppressWarnings("unchecked")
-  private Set<String> getUndeclaredVariables(WebSpecPath path) {
+  private Set<String> getUndeclaredVariables(Path path) {
     final Set<String> declaredVariables = new HashSet<String>();
     Set<String> undeclaredVariables = new HashSet<String>();
     final Set references = new HashSet();
@@ -93,7 +93,7 @@ public class WebSpecDiagram {
       analyzeUndeclaredOn(declaredVariables, references, action);
     }
 
-    for (WebSpecPathItem item : path.getItems()) {
+    for (PathItem item : path.getItems()) {
       references.clear();
 
       item.accept(new UndeclareVariableAnalyzer(references, declaredVariables));
@@ -129,7 +129,7 @@ public class WebSpecDiagram {
     });
   }
 
-  public void addInteraction(WebSpecInteraction anInteraction) {
+  public void addInteraction(Interaction anInteraction) {
     Validate.notNull(anInteraction);
     
     if (this.containsInteractionNamed(anInteraction.getName())) {
@@ -161,8 +161,8 @@ public class WebSpecDiagram {
     return this.getInteractionNamed(name) != null;
   }
 
-  public WebSpecInteraction getInteractionNamed(String interactionName) {
-    for (WebSpecInteraction interaction : this.interactions) {
+  public Interaction getInteractionNamed(String interactionName) {
+    for (Interaction interaction : this.interactions) {
       if (interaction.getName().equals(interactionName)) {
         return interaction;
       }
@@ -171,7 +171,7 @@ public class WebSpecDiagram {
   }
 
   public Widget getWidget(String interactionName, String widgetName) {
-    for (WebSpecInteraction interaction : this.interactions) {
+    for (Interaction interaction : this.interactions) {
       if (interaction.getName().equals(interactionName)) {
         return interaction.getWidget(widgetName);
       }
@@ -179,11 +179,11 @@ public class WebSpecDiagram {
     return null;
   }
 
-  public WebSpecInteraction getStartingInteraction() {
+  public Interaction getStartingInteraction() {
     return startingInteraction;
   }
 
-  public void setStartingInteraction(WebSpecInteraction startingInteraction) {
+  public void setStartingInteraction(Interaction startingInteraction) {
     if (startingInteraction.getLocation() == null) {
       throw new InvalidStartingInteractionException(startingInteraction);
     }
@@ -194,7 +194,7 @@ public class WebSpecDiagram {
     return name;
   }
 
-  public Set<WebSpecInteraction> getInteractions() {
+  public Set<Interaction> getInteractions() {
     return Collections.unmodifiableSet(this.interactions);
   }
 
@@ -222,7 +222,7 @@ public class WebSpecDiagram {
     this.actionsSetup = ActionParser.getActions(actions, this);
   }
   
-  private final class UndeclareVariableAnalyzer implements WebSpecPathItemVisitor {
+  private final class UndeclareVariableAnalyzer implements PathItemVisitor {
 
     private final Set references;
     private final Set<String> declaredVariables;
@@ -232,22 +232,22 @@ public class WebSpecDiagram {
       this.declaredVariables = declaredVariables;
     }
     
-    public Object visitWebSpecInteraction(WebSpecInteraction interaction) {
+    public Object visitInteraction(Interaction interaction) {
       if (interaction.getInvariant() != null) {
         interaction.getInvariant().getInstancesOfOn(VariableValue.class, references);
       }
       return null;
     }
     
-    public Object visitWebSpecNavigation(WebSpecNavigation navigation) {
+    public Object visitNavigation(Navigation navigation) {
       return analyze(navigation);
     }
     
-    public Object visitWebSpecRichBehavior(WebSpecRichBehavior richBehavior) {
+    public Object visitRichBehavior(RichBehavior richBehavior) {
       return analyze(richBehavior);
     }
     
-    private Object analyze(WebSpecTransition transition) {
+    private Object analyze(Transition transition) {
       if (transition.getPrecondition() != null) {
         transition.getPrecondition().getInstancesOfOn(VariableValue.class, references);
       }

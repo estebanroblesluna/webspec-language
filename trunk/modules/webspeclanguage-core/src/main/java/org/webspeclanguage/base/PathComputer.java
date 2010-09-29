@@ -26,7 +26,7 @@ public class PathComputer {
 
   private int cyclesAllowed;
 
-  public static List<WebSpecPath> computePaths(WebSpecDiagram diagram) {
+  public static List<Path> computePaths(Diagram diagram) {
     return new PathComputer(diagram.getCyclesAllowed())
         .computePathsFor(diagram);
   }
@@ -35,17 +35,17 @@ public class PathComputer {
     this.cyclesAllowed = cyclesAllowed;
   }
 
-  public List<WebSpecPath> computePathsFor(WebSpecDiagram diagram) {
-    List<WebSpecPath> paths = new ArrayList<WebSpecPath>();
-    WebSpecInteraction startInteraction = diagram.getStartingInteraction();
-    WebSpecPath currentPath = new WebSpecPath(startInteraction);
+  public List<Path> computePathsFor(Diagram diagram) {
+    List<Path> paths = new ArrayList<Path>();
+    Interaction startInteraction = diagram.getStartingInteraction();
+    Path currentPath = new Path(startInteraction);
 
     this.basicComputePathsFrom(startInteraction, currentPath, paths);
     return paths;
   }
 
-  private void basicComputePathsFrom(WebSpecInteraction interaction,
-      WebSpecPath currentPath, List<WebSpecPath> paths) {
+  private void basicComputePathsFrom(Interaction interaction,
+      Path currentPath, List<Path> paths) {
     if (interaction.getForwardTransitions().isEmpty()) {
       paths.add(currentPath);
     } else {
@@ -57,9 +57,9 @@ public class PathComputer {
             || (currentPath.hasCycles() 
                 && this.isAllowCycles() 
                 && currentPath.getCyclesCount() < this.getCyclesAllowed())) {
-          for (WebSpecTransition forwardTransition : interaction.getForwardTransitions()) {
-            WebSpecInteraction to = forwardTransition.getTo();
-            WebSpecPath newPath = currentPath.extendWith(forwardTransition, to);
+          for (Transition forwardTransition : interaction.getForwardTransitions()) {
+            Interaction to = forwardTransition.getTo();
+            Path newPath = currentPath.extendWith(forwardTransition, to);
             this.basicComputePathsFrom(to, newPath, paths);
           }
         }

@@ -14,7 +14,7 @@ package org.webspeclanguage.webtest.generator.selenium.java;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.WebSpecDiagram;
+import org.webspeclanguage.base.Diagram;
 import org.webspeclanguage.base.WebSpecFactory;
 import org.webspeclanguage.webspec2test.TestGenerationResult;
 import org.webspeclanguage.webspec2test.WebSpec2WebTestTransformation;
@@ -38,7 +38,7 @@ public class SeleniumJavaWebTestGeneratorTestCase extends TestCase {
   }
 
   public void testGeneratedClass() {
-    WebSpecDiagram webSpecDiagram = WebSpecFactory.getAmazonExample();
+    Diagram webSpecDiagram = WebSpecFactory.getAmazonExample();
     TestGenerationResult result = this.transformation.transform(webSpecDiagram);
     assertEquals(1, result.getSize());
     SimpleWebTest test1 = result.getTest(0);
@@ -48,7 +48,7 @@ public class SeleniumJavaWebTestGeneratorTestCase extends TestCase {
   }
 
   public void testGeneratedClass2() {
-    WebSpecDiagram webSpecDiagram = WebSpecFactory.getAmazonExample2();
+    Diagram webSpecDiagram = WebSpecFactory.getAmazonExample2();
     TestGenerationResult result = this.transformation.transform(webSpecDiagram);
     assertEquals(2, result.getSize());
 

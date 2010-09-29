@@ -14,10 +14,10 @@ package org.webspeclanguage.webspec2test;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
-import org.webspeclanguage.base.WebSpecNavigation;
-import org.webspeclanguage.base.WebSpecRichBehavior;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
+import org.webspeclanguage.base.Navigation;
+import org.webspeclanguage.base.RichBehavior;
 import org.webspeclanguage.expression.base.ArrayExpression;
 import org.webspeclanguage.expression.base.StringConstant;
 import org.webspeclanguage.expression.utils.ExpressionUtils;
@@ -41,21 +41,21 @@ import org.webspeclanguage.widget.TextField;
 public class WebSpec2WebTestTransformationTestCase extends TestCase {
 
   private WebSpec2WebTestTransformation transformation;
-  private WebSpecDiagram diagram;
+  private Diagram diagram;
   private SimpleWebTest test;
-  private WebSpecInteraction starting;
+  private Interaction starting;
 
   public void setUp() throws Exception {
     super.setUp();
 
     this.transformation = new WebSpec2WebTestTransformation();
 
-    this.diagram = new WebSpecDiagram("d");
+    this.diagram = new Diagram("d");
     this.diagram.addGenerator(new OneOfStrings("validUsernames", "carlos2"));
     this.diagram.addGenerator(new OneOfStrings("invalidUsernames", "carlos"));
     this.diagram.addGenerator(new OneOfArray("uandpss", new ArrayExpression(new StringConstant("user"), new StringConstant("pass"))));
 
-    this.starting = new WebSpecInteraction("start");
+    this.starting = new Interaction("start");
     this.starting.setTitle("\"The title\"");
     this.starting.setLocation("http://www.google.com");
     this.diagram.setStartingInteraction(this.starting);
@@ -117,7 +117,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInteractionWithTitleAndInvariant() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     interaction.setTitle("\"The title\"");
     interaction.setLocation("http://www.google.com");
     this.diagram.addInteraction(interaction);
@@ -143,7 +143,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInteractionWithoutTitleAndInvariant() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     Label l = interaction.createLabelWithLocation("id=a");
@@ -158,10 +158,10 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateNavigation() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecNavigation navigation = starting.navigateTo(interaction);
+    Navigation navigation = starting.navigateTo(interaction);
 
     navigation.setActions("click(start.label)");
 
@@ -176,10 +176,10 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateRichBehavior() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
+    RichBehavior richBehavior = starting.richBehaviorTo(interaction);
 
     richBehavior.setActions("click(start.label)");
 
@@ -195,10 +195,10 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateConstantTransition() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
+    RichBehavior richBehavior = starting.richBehaviorTo(interaction);
 
     richBehavior.setActions("Number var := 1");
 
@@ -210,10 +210,10 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateConstantThenDynamicTransition() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
+    RichBehavior richBehavior = starting.richBehaviorTo(interaction);
 
     richBehavior.setActions("String var := \"a\";var := start.label");
 
@@ -235,10 +235,10 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInsatisfiedRichBehavior() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
+    RichBehavior richBehavior = starting.richBehaviorTo(interaction);
 
     richBehavior.setActions("click(start.label)");
     richBehavior.setPrecondition("false");
@@ -253,10 +253,10 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateTransitionWithPrecondition() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
+    RichBehavior richBehavior = starting.richBehaviorTo(interaction);
 
     richBehavior.setActions("click(start.label)");
     richBehavior.setPrecondition("start.label = \"a\"");
@@ -271,16 +271,16 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testTransform() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecRichBehavior richBehavior = starting.richBehaviorTo(interaction);
+    RichBehavior richBehavior = starting.richBehaviorTo(interaction);
     richBehavior.setActions("click(start.label)");
 
-    WebSpecInteraction interaction2 = new WebSpecInteraction("otherInteraction2");
+    Interaction interaction2 = new Interaction("otherInteraction2");
     this.diagram.addInteraction(interaction2);
 
-    WebSpecNavigation navigation = starting.navigateTo(interaction2);
+    Navigation navigation = starting.navigateTo(interaction2);
     navigation.setActions("click(start.label)");
 
     TestGenerationResult result = this.transformation.transform(this.diagram);
@@ -293,10 +293,10 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
   
   public void testArrayGenerator() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecNavigation navigation = starting.navigateTo(interaction);
+    Navigation navigation = starting.navigateTo(interaction);
 
     navigation.setActions("userAndPass := $uandpss$; type(start.username, ${userAndPass}[0]); type(start.password, ${userAndPass}[1]); click(start.login)");
 
@@ -327,10 +327,10 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
   
   public void testConstantArrayGenerator() {
-    WebSpecInteraction interaction = new WebSpecInteraction("otherInteraction");
+    Interaction interaction = new Interaction("otherInteraction");
     this.diagram.addInteraction(interaction);
 
-    WebSpecNavigation navigation = starting.navigateTo(interaction);
+    Navigation navigation = starting.navigateTo(interaction);
 
     navigation.setActions("userAndPass := [\"user\", \"pass\"]; type(start.username, ${userAndPass}[0]); type(start.password, ${userAndPass}[1]); click(start.login)");
 

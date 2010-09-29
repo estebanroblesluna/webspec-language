@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.expression.base;
 
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Interaction;
 
 /**
  * An expression class for "Home.title"
@@ -21,10 +21,10 @@ import org.webspeclanguage.base.WebSpecInteraction;
  */
 public class InteractionPropertyExpression extends AbstractExpression {
 
-  private WebSpecInteraction interaction;
+  private Interaction interaction;
   private String property;
   
-  public InteractionPropertyExpression(WebSpecInteraction interaction, String property) {
+  public InteractionPropertyExpression(Interaction interaction, String property) {
     this.interaction = interaction;
     this.property = property;
   }
@@ -33,7 +33,7 @@ public class InteractionPropertyExpression extends AbstractExpression {
     return visitor.visitInteractionPropertyExpression(this);
   }
 
-  public WebSpecInteraction getInteraction() {
+  public Interaction getInteraction() {
     return interaction;
   }
   

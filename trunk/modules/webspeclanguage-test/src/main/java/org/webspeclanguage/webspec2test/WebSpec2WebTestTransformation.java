@@ -21,14 +21,14 @@ import org.webspeclanguage.action.ActionVisitor;
 import org.webspeclanguage.action.ExpressionAction;
 import org.webspeclanguage.action.LetVariable;
 import org.webspeclanguage.base.PathComputer;
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
-import org.webspeclanguage.base.WebSpecNavigation;
-import org.webspeclanguage.base.WebSpecPath;
-import org.webspeclanguage.base.WebSpecPathItem;
-import org.webspeclanguage.base.WebSpecPathItemVisitor;
-import org.webspeclanguage.base.WebSpecRichBehavior;
-import org.webspeclanguage.base.WebSpecTransition;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
+import org.webspeclanguage.base.Navigation;
+import org.webspeclanguage.base.Path;
+import org.webspeclanguage.base.PathItem;
+import org.webspeclanguage.base.PathItemVisitor;
+import org.webspeclanguage.base.RichBehavior;
+import org.webspeclanguage.base.Transition;
 import org.webspeclanguage.expression.base.BooleanConstant;
 import org.webspeclanguage.expression.base.ConstantExpression;
 import org.webspeclanguage.expression.base.Expression;
@@ -58,7 +58,7 @@ public class WebSpec2WebTestTransformation {
   private ExpressionConcretizer concretizer;
   private ExpressionConvertorToConjunctiveNormalForm cnfConvertor;
 
-  private WebSpecDiagram currentDiagram;
+  private Diagram currentDiagram;
 
   private TestGenerationResult result;
   private SimpleWebTest currentTest;
@@ -68,15 +68,15 @@ public class WebSpec2WebTestTransformation {
     this.basicInitializeOptimizerAndConcretizer();
   }
 
-  public TestGenerationResult transform(WebSpecDiagram diagram) {
+  public TestGenerationResult transform(Diagram diagram) {
     Validate.notNull(diagram);
     
     this.setCurrentDiagram(diagram);
     this.createResult(diagram);
 
-    List<WebSpecPath> paths = this.computePathsFor(diagram);
+    List<Path> paths = this.computePathsFor(diagram);
 
-    for (WebSpecPath path : paths) {
+    for (Path path : paths) {
       try {
         this.initializeOptimizerAndConcretizer();
         SimpleWebTest simpleTest = this.computeSimpleTest(path, diagram);
@@ -102,29 +102,29 @@ public class WebSpec2WebTestTransformation {
     this.setConcretizer(new ExpressionConcretizer());
   }
 
-  public List<WebSpecPath> computePathsFor(WebSpecDiagram diagram) {
+  public List<Path> computePathsFor(Diagram diagram) {
     return new PathComputer(diagram.getCyclesAllowed())
         .computePathsFor(diagram);
   }
 
-  public SimpleWebTest computeSimpleTest(WebSpecPath path, WebSpecDiagram diagram) {
+  public SimpleWebTest computeSimpleTest(Path path, Diagram diagram) {
     final SimpleWebTest aT = this.createTest(this.computeNameFor(path));
 
     this.preItemsIteration();
 
-    for (WebSpecPathItem item : path.getItems()) {
-      item.accept(new WebSpecPathItemVisitor() {
-        public Object visitWebSpecInteraction(WebSpecInteraction interaction) {
+    for (PathItem item : path.getItems()) {
+      item.accept(new PathItemVisitor() {
+        public Object visitInteraction(Interaction interaction) {
           generateItemsFor(interaction, aT);
           return null;
         }
 
-        public Object visitWebSpecNavigation(WebSpecNavigation navigation) {
+        public Object visitNavigation(Navigation navigation) {
           generateItemsFor(navigation, aT);
           return null;
         }
 
-        public Object visitWebSpecRichBehavior(WebSpecRichBehavior richBehavior) {
+        public Object visitRichBehavior(RichBehavior richBehavior) {
           generateItemsFor(richBehavior, aT);
           return null;
         }
@@ -165,7 +165,7 @@ public class WebSpec2WebTestTransformation {
     return typechecker.typecheck(expression);
   }
   
-  protected void createResult(WebSpecDiagram diagram) {
+  protected void createResult(Diagram diagram) {
     this.result = new TestGenerationResult(diagram.getName());
   }
 
@@ -187,16 +187,16 @@ public class WebSpec2WebTestTransformation {
     }
   }
 
-  protected void generateItemsFor(WebSpecRichBehavior richBehavior, SimpleWebTest test) {
+  protected void generateItemsFor(RichBehavior richBehavior, SimpleWebTest test) {
     generateItemsForTransition(richBehavior, test);
   }
 
-  protected void generateItemsFor(WebSpecNavigation navigation, SimpleWebTest test) {
+  protected void generateItemsFor(Navigation navigation, SimpleWebTest test) {
     generateItemsForTransition(navigation, test);
     test.addItem(new WebWaitPageToLoad());
   }
 
-  protected void generateItemsForTransition(WebSpecTransition transition, SimpleWebTest test) {
+  protected void generateItemsForTransition(Transition transition, SimpleWebTest test) {
     if (transition.getPrecondition() != null) {
       Expression expression = makeConcreteAndOptimize(transition.getPrecondition());
       if (expression.equals(BooleanConstant.FALSE)) {
@@ -214,7 +214,7 @@ public class WebSpec2WebTestTransformation {
     }
   }
 
-  protected void generateItemsFor(WebSpecInteraction interaction,
+  protected void generateItemsFor(Interaction interaction,
       SimpleWebTest test) {
     if (this.getCurrentDiagram().getStartingInteraction().equals(interaction)) {
       test.addSetUpItem(new WebOpenUrl(interaction.getLocation()));
@@ -249,7 +249,7 @@ public class WebSpec2WebTestTransformation {
     return concrete;
   }
 
-  private String computeNameFor(WebSpecPath path) {
+  private String computeNameFor(Path path) {
     return path.getName();
   }
 
@@ -281,11 +281,11 @@ public class WebSpec2WebTestTransformation {
     this.concretizer = concretizer;
   }
 
-  protected WebSpecDiagram getCurrentDiagram() {
+  protected Diagram getCurrentDiagram() {
     return currentDiagram;
   }
 
-  public void setCurrentDiagram(WebSpecDiagram currentDiagram) {
+  public void setCurrentDiagram(Diagram currentDiagram) {
     this.currentDiagram = currentDiagram;
   }
 

@@ -1,6 +1,6 @@
 org.webspeclanguage.widget.Widget-visible=BOOLEAN
 org.webspeclanguage.widget.Widget-text=STRING
-org.webspeclanguage.base.WebSpecInteraction-title=STRING
+org.webspeclanguage.base.Interaction-title=STRING
 
 click=org.webspeclanguage.expression.base.WidgetReference->VOID
 type=org.webspeclanguage.expression.base.WidgetReference,STRING->VOID
