@@ -12,8 +12,8 @@
  */
 package org.webspeclanguage.webtest.generator.selenium.java;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.ExpressionType;
 import org.webspeclanguage.expression.base.NumberConstant;
@@ -36,11 +36,11 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
 
   private SeleniumJavaWebTestGenerator testGenerator;
   
-  private WebSpecDiagram diagram;
+  private Diagram diagram;
 
   private Button searchButton;
 
-  private WebSpecInteraction homeInteraction;
+  private Interaction homeInteraction;
 
   private TextField searchField;
   
@@ -48,9 +48,9 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
   protected void setUp() throws Exception {
     super.setUp();
     this.testGenerator = new SeleniumJavaWebTestGenerator();
-    this.diagram = new WebSpecDiagram("the diagram");
+    this.diagram = new Diagram("the diagram");
     
-    homeInteraction = new WebSpecInteraction("Home");
+    homeInteraction = new Interaction("Home");
     this.diagram.addInteraction(homeInteraction);
     
     searchButton = new Button();

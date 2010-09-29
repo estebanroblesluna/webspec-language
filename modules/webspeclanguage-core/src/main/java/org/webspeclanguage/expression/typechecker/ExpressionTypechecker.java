@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
 import org.webspeclanguage.exception.WebspecException;
 import org.webspeclanguage.expression.base.AbstractFunctionCallExpression;
 import org.webspeclanguage.expression.base.AddExpression;
@@ -61,7 +61,7 @@ import org.webspeclanguage.generator.Generator;
 
 /**
  * A typechecker for {@link Expression} in the context of a
- * {@link WebSpecDiagram}
+ * {@link Diagram}
  * 
  * @author Esteban Robles Luna
  */
@@ -136,14 +136,14 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   private Map<String, ExpressionType> variables;
   private Map<String, Generator> generators;
   
-  public ExpressionTypechecker(WebSpecDiagram diagram) {
+  public ExpressionTypechecker(Diagram diagram) {
     this.generators = new HashMap<String, Generator>();
     this.variables = new HashMap<String, ExpressionType>();
     
     this.initializeGenerators(diagram);
   }
 
-  private void initializeGenerators(WebSpecDiagram diagram) {
+  private void initializeGenerators(Diagram diagram) {
     if (diagram != null) {
       for (String generatorName : diagram.getGeneratorsNames()) {
         Generator generator = diagram.getGeneratorNamed(generatorName);
@@ -330,7 +330,7 @@ public class ExpressionTypechecker implements ExpressionVisitor {
   }
   
   public Object visitInteractionPropertyExpression(InteractionPropertyExpression interactionPropertyExpression) {
-    return propertyDefinitions.get(WebSpecInteraction.class).get(interactionPropertyExpression.getProperty());
+    return propertyDefinitions.get(Interaction.class).get(interactionPropertyExpression.getProperty());
   }
 
   public Object visitWidgetPropertyReference(WidgetPropertyReference widgetPropertyReference) {

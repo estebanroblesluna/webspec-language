@@ -19,62 +19,62 @@ import org.webspeclanguage.action.ActionVisitor;
 import org.webspeclanguage.action.ExpressionAction;
 import org.webspeclanguage.action.LetVariable;
 import org.webspeclanguage.base.PathComputer;
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
-import org.webspeclanguage.base.WebSpecNavigation;
-import org.webspeclanguage.base.WebSpecPath;
-import org.webspeclanguage.base.WebSpecPathItem;
-import org.webspeclanguage.base.WebSpecPathItemVisitor;
-import org.webspeclanguage.base.WebSpecRichBehavior;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
+import org.webspeclanguage.base.Navigation;
+import org.webspeclanguage.base.Path;
+import org.webspeclanguage.base.PathItem;
+import org.webspeclanguage.base.PathItemVisitor;
+import org.webspeclanguage.base.RichBehavior;
 import org.webspeclanguage.expression.base.Expression;
 import org.webspeclanguage.expression.base.ExpressionType;
 
 /**
- * A typechecker for a {@link WebSpecDiagram}
+ * A typechecker for a {@link Diagram}
  * 
  * @author Esteban Robles Luna
  */
-public class WebSpecDiagramTypechecker {
+public class DiagramTypechecker {
 
   private ExpressionTypechecker expressionTypechecker;
 
-  private WebSpecDiagram currentDiagram;
+  private Diagram currentDiagram;
   private TypecheckingResult result;
 
-  public TypecheckingResult typecheck(WebSpecDiagram webSpecDiagram) {
+  public TypecheckingResult typecheck(Diagram webSpecDiagram) {
     this.currentDiagram = webSpecDiagram;
     this.expressionTypechecker = new ExpressionTypechecker(this.currentDiagram);
 
     this.result = new TypecheckingResult();
 
-    List<WebSpecPath> paths = PathComputer.computePaths(webSpecDiagram);
-    for (WebSpecPath path : paths) {
+    List<Path> paths = PathComputer.computePaths(webSpecDiagram);
+    for (Path path : paths) {
       this.typecheck(path);
     }
 
     return this.result;
   }
 
-  private void typecheck(WebSpecPath path) {
+  private void typecheck(Path path) {
     // add setup actions
     this.typecheck(this.currentDiagram.getActionsSetup());
 
     // typecheck every item
-    for (WebSpecPathItem item : path.getItems()) {
-      item.accept(new WebSpecPathItemVisitor() {
-        public Object visitWebSpecInteraction(WebSpecInteraction interaction) {
+    for (PathItem item : path.getItems()) {
+      item.accept(new PathItemVisitor() {
+        public Object visitInteraction(Interaction interaction) {
           typecheck(interaction.getTitle(), ExpressionType.STRING);
           typecheck(interaction.getInvariant(), ExpressionType.BOOLEAN);
           return null;
         }
 
-        public Object visitWebSpecNavigation(WebSpecNavigation navigation) {
+        public Object visitNavigation(Navigation navigation) {
           typecheck(navigation.getPrecondition(), ExpressionType.BOOLEAN);
           typecheck(navigation.getActions());
           return null;
         }
 
-        public Object visitWebSpecRichBehavior(WebSpecRichBehavior richBehavior) {
+        public Object visitRichBehavior(RichBehavior richBehavior) {
           typecheck(richBehavior.getPrecondition(), ExpressionType.BOOLEAN);
           typecheck(richBehavior.getActions());
           return null;

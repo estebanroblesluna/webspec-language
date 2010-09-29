@@ -23,14 +23,14 @@ import org.webspeclanguage.action.ActionVisitor;
 import org.webspeclanguage.action.ExpressionAction;
 import org.webspeclanguage.action.LetVariable;
 import org.webspeclanguage.base.PathComputer;
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
-import org.webspeclanguage.base.WebSpecNavigation;
-import org.webspeclanguage.base.WebSpecPath;
-import org.webspeclanguage.base.WebSpecPathItem;
-import org.webspeclanguage.base.WebSpecPathItemVisitor;
-import org.webspeclanguage.base.WebSpecRichBehavior;
-import org.webspeclanguage.base.WebSpecTransition;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
+import org.webspeclanguage.base.Navigation;
+import org.webspeclanguage.base.Path;
+import org.webspeclanguage.base.PathItem;
+import org.webspeclanguage.base.PathItemVisitor;
+import org.webspeclanguage.base.RichBehavior;
+import org.webspeclanguage.base.Transition;
 import org.webspeclanguage.expression.base.BooleanConstant;
 import org.webspeclanguage.expression.base.ConstantExpression;
 import org.webspeclanguage.expression.base.Expression;
@@ -62,7 +62,7 @@ public class WebSpec2WebSimulationTransformation {
   private ExpressionConcretizer concretizer;
   private ExpressionConvertorToConjunctiveNormalForm cnfConvertor;
 
-  private WebSpecDiagram currentDiagram;
+  private Diagram currentDiagram;
   private String homePath;
   private SimulationGenerationResult result;
   
@@ -75,13 +75,13 @@ public class WebSpec2WebSimulationTransformation {
     this.basicInitializeOptimizerAndConcretizer();
   }
 
-  public SimulationGenerationResult transform(WebSpecDiagram diagram) {
+  public SimulationGenerationResult transform(Diagram diagram) {
     this.setCurrentDiagram(diagram);
     this.createResult(diagram);
 
-    List<WebSpecPath> paths = this.computePathsFor(diagram);
+    List<Path> paths = this.computePathsFor(diagram);
 
-    for (WebSpecPath path : paths) {
+    for (Path path : paths) {
       try {
         this.initializeOptimizerAndConcretizer();
         Simulation simpleSimulation = this.computeSimpleSimulation(path, diagram);
@@ -95,7 +95,7 @@ public class WebSpec2WebSimulationTransformation {
     return this.getResult();
   }
 
-  protected void generateItemsForTransition(WebSpecTransition transition, Simulation simulation) {
+  protected void generateItemsForTransition(Transition transition, Simulation simulation) {
     if (transition.getPrecondition() != null) {
       Expression expression = makeConcreteAndOptimize(transition.getPrecondition());
       if (expression.equals(BooleanConstant.FALSE)) {
@@ -120,7 +120,7 @@ public class WebSpec2WebSimulationTransformation {
   }
 
   @SuppressWarnings("unchecked")
-  protected void generateItemsFor(WebSpecInteraction interaction,  Simulation simulation) {
+  protected void generateItemsFor(Interaction interaction,  Simulation simulation) {
     simulation.addItem(new OpenMockup("file://" 
         + this.homePath
         + interaction.getMockupFile()));
@@ -186,28 +186,28 @@ public class WebSpec2WebSimulationTransformation {
     this.concretizer = new ExpressionConcretizer();
   }
 
-  public List<WebSpecPath> computePathsFor(WebSpecDiagram diagram) {
+  public List<Path> computePathsFor(Diagram diagram) {
     return new PathComputer(diagram.getCyclesAllowed())
         .computePathsFor(diagram);
   }
 
-  public Simulation computeSimpleSimulation(WebSpecPath path, WebSpecDiagram diagram) {
+  public Simulation computeSimpleSimulation(Path path, Diagram diagram) {
     final Simulation simulation = this.createSimulation(this.computeNameFor(path));
 
-    for (WebSpecPathItem item : path.getItems()) {
-      item.accept(new WebSpecPathItemVisitor() {
-        public Object visitWebSpecInteraction(WebSpecInteraction interaction) {
+    for (PathItem item : path.getItems()) {
+      item.accept(new PathItemVisitor() {
+        public Object visitInteraction(Interaction interaction) {
           generateItemsFor(interaction, simulation);
           return null;
         }
 
-        public Object visitWebSpecNavigation(WebSpecNavigation navigation) {
+        public Object visitNavigation(Navigation navigation) {
           generateItemsFor(navigation, simulation);
           simulation.addItem(new ShowGeneralDescription("Navigation must occur"));
           return null;
         }
 
-        public Object visitWebSpecRichBehavior(WebSpecRichBehavior richBehavior) {
+        public Object visitRichBehavior(RichBehavior richBehavior) {
           generateItemsFor(richBehavior, simulation);
           return null;
         }
@@ -217,7 +217,7 @@ public class WebSpec2WebSimulationTransformation {
     return simulation;
   }
 
-  protected void createResult(WebSpecDiagram diagram) {
+  protected void createResult(Diagram diagram) {
     this.result = new SimulationGenerationResult(diagram.getName());
   }
 
@@ -229,11 +229,11 @@ public class WebSpec2WebSimulationTransformation {
     return new Simulation(name);
   }
 
-  protected void generateItemsFor(WebSpecRichBehavior richBehavior, Simulation simulation) {
+  protected void generateItemsFor(RichBehavior richBehavior, Simulation simulation) {
     generateItemsForTransition(richBehavior, simulation);
   }
 
-  protected void generateItemsFor(WebSpecNavigation navigation, Simulation simulation) {
+  protected void generateItemsFor(Navigation navigation, Simulation simulation) {
     generateItemsForTransition(navigation, simulation);
   }
 
@@ -247,7 +247,7 @@ public class WebSpec2WebSimulationTransformation {
     return concrete;
   }
 
-  private String computeNameFor(WebSpecPath path) {
+  private String computeNameFor(Path path) {
     return path.getName();
   }
 
@@ -267,11 +267,11 @@ public class WebSpec2WebSimulationTransformation {
     return concretizer;
   }
 
-  protected WebSpecDiagram getCurrentDiagram() {
+  protected Diagram getCurrentDiagram() {
     return currentDiagram;
   }
 
-  public void setCurrentDiagram(WebSpecDiagram currentDiagram) {
+  public void setCurrentDiagram(Diagram currentDiagram) {
     this.currentDiagram = currentDiagram;
   }
 

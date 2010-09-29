@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.base.WebSpecPath;
+import org.webspeclanguage.base.Path;
 import org.webspeclanguage.simulation.Simulation;
 
 /**
@@ -30,7 +30,7 @@ import org.webspeclanguage.simulation.Simulation;
 public class SimulationGenerationResult {
 
   private String name;
-  private Map<WebSpecPath, Simulation> generatedSimulations;
+  private Map<Path, Simulation> generatedSimulations;
   private List<Simulation> simulations;
   
   public SimulationGenerationResult(String name) {
@@ -38,10 +38,10 @@ public class SimulationGenerationResult {
     
     this.name = name;
     this.simulations = new ArrayList<Simulation>();
-    this.generatedSimulations = new HashMap<WebSpecPath, Simulation>();
+    this.generatedSimulations = new HashMap<Path, Simulation>();
   }
 
-  public void addSimulation(WebSpecPath path, Simulation result) {
+  public void addSimulation(Path path, Simulation result) {
     Validate.notNull(path);
     Validate.notNull(result);
     
@@ -61,7 +61,7 @@ public class SimulationGenerationResult {
     return name;
   }
 
-  private Map<WebSpecPath, Simulation> getGeneratedSimulations() {
+  private Map<Path, Simulation> getGeneratedSimulations() {
     return generatedSimulations;
   }
 

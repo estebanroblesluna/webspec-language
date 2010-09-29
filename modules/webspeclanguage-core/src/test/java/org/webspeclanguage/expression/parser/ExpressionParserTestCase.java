@@ -14,8 +14,8 @@ package org.webspeclanguage.expression.parser;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
 import org.webspeclanguage.expression.parser.ExpressionParser;
 import org.webspeclanguage.expression.parser.ParsingException;
 import org.webspeclanguage.widget.Button;
@@ -29,14 +29,14 @@ import org.webspeclanguage.widget.TextField;
 public class ExpressionParserTestCase extends TestCase {
 
   private ExpressionParser parser;
-  private WebSpecDiagram diagram;
+  private Diagram diagram;
 
   public void setUp() throws Exception {
     super.setUp();
     this.parser = new ExpressionParser();
-    this.diagram = new WebSpecDiagram("diagram");
+    this.diagram = new Diagram("diagram");
     
-    WebSpecInteraction interaction = new WebSpecInteraction("Interaction");
+    Interaction interaction = new Interaction("Interaction");
 
     TextField textField = new TextField();
     textField.setName("widget");

@@ -22,10 +22,10 @@ import org.webspeclanguage.action.LetVariable;
 import org.webspeclanguage.base.DuplicatedGeneratorException;
 import org.webspeclanguage.base.ExistingInteractionException;
 import org.webspeclanguage.base.InvalidStartingInteractionException;
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
-import org.webspeclanguage.base.WebSpecNavigation;
-import org.webspeclanguage.base.WebSpecPath;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
+import org.webspeclanguage.base.Navigation;
+import org.webspeclanguage.base.Path;
 import org.webspeclanguage.expression.base.ExpressionType;
 import org.webspeclanguage.expression.base.StringConstant;
 import org.webspeclanguage.generator.Generator;
@@ -35,14 +35,14 @@ import org.webspeclanguage.widget.Button;
 /**
  * @author Esteban Robles Luna
  */
-public class WebSpecDiagramTestCase extends TestCase {
+public class DiagramTestCase extends TestCase {
 
-  private WebSpecDiagram diagram;
+  private Diagram diagram;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.diagram = new WebSpecDiagram("diagram");
+    this.diagram = new Diagram("diagram");
   }
 
   public void testActionSetup() {
@@ -73,8 +73,8 @@ public class WebSpecDiagramTestCase extends TestCase {
   }
 
   public void testAddInteraction() {
-    WebSpecInteraction interaction1 = new WebSpecInteraction("i1");
-    WebSpecInteraction interaction2 = new WebSpecInteraction("i1");
+    Interaction interaction1 = new Interaction("i1");
+    Interaction interaction2 = new Interaction("i1");
     this.diagram.addInteraction(interaction1);
     try {
       this.diagram.addInteraction(interaction2);
@@ -86,9 +86,9 @@ public class WebSpecDiagramTestCase extends TestCase {
 
   @SuppressWarnings("unchecked")
   public void testGetUndeclaredVariables() {
-    WebSpecInteraction interaction1 = new WebSpecInteraction("i1");
-    WebSpecInteraction interaction2 = new WebSpecInteraction("i2");
-    WebSpecInteraction interaction3 = new WebSpecInteraction("i3");
+    Interaction interaction1 = new Interaction("i1");
+    Interaction interaction2 = new Interaction("i2");
+    Interaction interaction3 = new Interaction("i3");
 
     this.diagram.addInteraction(interaction1);
     this.diagram.addInteraction(interaction2);
@@ -99,7 +99,7 @@ public class WebSpecDiagramTestCase extends TestCase {
     interaction1.setLocation("http://www.google.com");
     this.diagram.setStartingInteraction(interaction1);
 
-    WebSpecNavigation navigation1 = interaction1.navigateTo(interaction2);
+    Navigation navigation1 = interaction1.navigateTo(interaction2);
     interaction1.navigateTo(interaction3);
 
     navigation1.setActions("typeK(1,2,3); Number username := 3");
@@ -108,7 +108,7 @@ public class WebSpecDiagramTestCase extends TestCase {
     interaction2.setInvariant("${username} = 1");
     interaction3.setInvariant("${username} = 2");
 
-    Map<WebSpecPath, Set<String>> undeclaredVariables = this.diagram
+    Map<Path, Set<String>> undeclaredVariables = this.diagram
         .getUndeclaredVariables();
     Set<String> variables = (Set<String>) undeclaredVariables.values()
         .toArray()[0];
@@ -117,7 +117,7 @@ public class WebSpecDiagramTestCase extends TestCase {
   }
 
   public void testSetStartingInteraction() {
-    WebSpecInteraction interaction1 = new WebSpecInteraction("i1");
+    Interaction interaction1 = new Interaction("i1");
 
     this.diagram.addInteraction(interaction1);
 
@@ -130,7 +130,7 @@ public class WebSpecDiagramTestCase extends TestCase {
   }
 
   public void testGetWidget() {
-    WebSpecInteraction interaction1 = new WebSpecInteraction("i1");
+    Interaction interaction1 = new Interaction("i1");
     Button button = new Button();
     button.setName("aaa");
     interaction1.addWidget(button);

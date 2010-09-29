@@ -13,17 +13,33 @@
 package org.webspeclanguage.base;
 
 /**
- * A path item is an element that could be included in a path
+ * A visitor for visiting path items
  * 
  * @author Esteban Robles Luna
  */
-public interface WebSpecPathItem {
+public interface PathItemVisitor {
 
   /**
-   * Accepts a {@link WebSpecPathItemVisitor} visitor
+   * Visits a {@link Navigation}
    * 
-   * @param pathItemVisitor the visitor
+   * @param navigation the item to visit
    * @return the result of visiting the item
    */
-  Object accept(WebSpecPathItemVisitor pathItemVisitor);
+  Object visitNavigation(Navigation navigation);
+
+  /**
+   * Visits a {@link Interaction}
+   * 
+   * @param interaction the item to visit
+   * @return the result of visiting the item
+   */
+  Object visitInteraction(Interaction interaction);
+
+  /**
+   * Visits a {@link RichBehavior}
+   * 
+   * @param richBehavior the item to visit
+   * @return the result of visiting the item
+   */
+  Object visitRichBehavior(RichBehavior richBehavior);
 }

@@ -14,7 +14,7 @@ package org.webspeclanguage.webspec2test;
 
 import java.util.Map;
 
-import org.webspeclanguage.base.WebSpecTransition;
+import org.webspeclanguage.base.Transition;
 import org.webspeclanguage.expression.base.ConstantExpression;
 
 /**
@@ -28,15 +28,15 @@ public class UnsatisfiedPreconditionException extends RuntimeException {
 
   private static final long serialVersionUID = -2769170119849199990L;
 
-  private WebSpecTransition transition;
+  private Transition transition;
   private Map<String, ConstantExpression> variables;
 
-  public UnsatisfiedPreconditionException(WebSpecTransition transition, Map<String, ConstantExpression> variables) {
+  public UnsatisfiedPreconditionException(Transition transition, Map<String, ConstantExpression> variables) {
     this.transition = transition;
     this.variables = variables;
   }
 
-  public WebSpecTransition getTransition() {
+  public Transition getTransition() {
     return transition;
   }
 

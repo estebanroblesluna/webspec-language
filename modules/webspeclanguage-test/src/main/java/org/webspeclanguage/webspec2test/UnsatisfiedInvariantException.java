@@ -14,7 +14,7 @@ package org.webspeclanguage.webspec2test;
 
 import java.util.Map;
 
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Interaction;
 import org.webspeclanguage.expression.base.ConstantExpression;
 
 /**
@@ -28,15 +28,15 @@ public class UnsatisfiedInvariantException extends RuntimeException {
 
   private static final long serialVersionUID = 6577862746645365744L;
 
-  private WebSpecInteraction interaction;
+  private Interaction interaction;
   private Map<String, ConstantExpression> variables;
 
-  public UnsatisfiedInvariantException(WebSpecInteraction interaction, Map<String, ConstantExpression> variables) {
+  public UnsatisfiedInvariantException(Interaction interaction, Map<String, ConstantExpression> variables) {
     this.interaction = interaction;
     this.variables = variables;
   }
 
-  public WebSpecInteraction getInteraction() {
+  public Interaction getInteraction() {
     return interaction;
   }
 

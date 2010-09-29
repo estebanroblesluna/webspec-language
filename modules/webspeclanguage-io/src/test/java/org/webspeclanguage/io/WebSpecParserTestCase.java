@@ -13,10 +13,10 @@
 package org.webspeclanguage.io;
 
 import org.webspeclanguage.action.ActionParser;
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
-import org.webspeclanguage.base.WebSpecNavigation;
-import org.webspeclanguage.base.WebSpecRichBehavior;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
+import org.webspeclanguage.base.Navigation;
+import org.webspeclanguage.base.RichBehavior;
 import org.webspeclanguage.io.WebSpecParser;
 import org.webspeclanguage.widget.ListOfContainer;
 
@@ -29,16 +29,16 @@ public class WebSpecParserTestCase extends TestCase {
 
   public void testParsing() {
     WebSpecParser parser = new WebSpecParser();
-    WebSpecDiagram diagram = (WebSpecDiagram) parser.parse("webspecexample.xml");
+    Diagram diagram = (Diagram) parser.parse("webspecexample.xml");
 
     assertEquals("example", diagram.getName());
     assertEquals(2, diagram.getInteractions().size());
 
-    WebSpecInteraction home = diagram.getInteractionNamed("Home");
+    Interaction home = diagram.getInteractionNamed("Home");
     assertNotNull(home.getWidget("search"));
     assertNotNull(home.getWidget("searchTF"));
 
-    WebSpecInteraction searchResults = diagram.getInteractionNamed("SearchResults");
+    Interaction searchResults = diagram.getInteractionNamed("SearchResults");
     assertNotNull(searchResults.getWidget("searchTitle"));
 
     ListOfContainer listOfContainer = (ListOfContainer) searchResults.getWidget("books");
@@ -46,12 +46,12 @@ public class WebSpecParserTestCase extends TestCase {
 
     assertEquals(2, home.getForwardTransitions().size());
 
-    WebSpecNavigation navigation = home.navigationsTo(searchResults).get(0);
+    Navigation navigation = home.navigationsTo(searchResults).get(0);
     assertEquals(
             ActionParser.getActions("productName := $products$; type(Home.searchTF, ${productName}); click(Home.search)", diagram), 
             navigation.getActions());
 
-    WebSpecRichBehavior richBehavior = home.richBehaviorsTo(searchResults).get(0);
+    RichBehavior richBehavior = home.richBehaviorsTo(searchResults).get(0);
     assertEquals(
             ActionParser.getActions("click(Home.search)", diagram), 
             richBehavior.getActions());

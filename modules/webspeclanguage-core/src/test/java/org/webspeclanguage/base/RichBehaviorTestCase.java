@@ -12,26 +12,17 @@
  */
 package org.webspeclanguage.base;
 
+import junit.framework.TestCase;
+
 /**
- * A rich behavior represents a transition that happens locally
- * on the browser and does not alter the user's browsing history.
- * 
  * @author Esteban Robles Luna
  */
-public class WebSpecRichBehavior extends WebSpecTransition {
+public class RichBehaviorTestCase extends TestCase {
 
-  public WebSpecRichBehavior(WebSpecInteraction from, WebSpecInteraction to) {
-    super(from, to);
-  }
-
-  public String toString() {
-    return this.getFrom().getName() + "*>" + this.getTo().getName();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public Object accept(WebSpecPathItemVisitor pathItemVisitor) {
-    return pathItemVisitor.visitWebSpecRichBehavior(this);
+  public void testCreation() {
+    Interaction i1 = new Interaction("i1");
+    Interaction i2 = new Interaction("i2");
+    RichBehavior rich = i1.richBehaviorTo(i2);
+    assertEquals("i1*>i2", rich.toString());
   }
 }

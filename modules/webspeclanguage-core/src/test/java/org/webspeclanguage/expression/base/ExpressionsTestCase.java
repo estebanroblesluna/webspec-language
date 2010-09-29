@@ -18,8 +18,8 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.BooleanConstant;
 import org.webspeclanguage.expression.base.Expression;
@@ -49,7 +49,7 @@ import org.webspeclanguage.widget.TextField;
 public class ExpressionsTestCase extends TestCase {
 
   private ExpressionParser parser;
-  private WebSpecDiagram diagram;
+  private Diagram diagram;
 
   private ExpressionOptimizer optimizer;
   private ExpressionConcretizer concretizer;
@@ -61,9 +61,9 @@ public class ExpressionsTestCase extends TestCase {
     super.setUp();
 
     this.parser = new ExpressionParser();
-    this.diagram = new WebSpecDiagram("a");
+    this.diagram = new Diagram("a");
 
-    WebSpecInteraction interaction = new WebSpecInteraction("Home");
+    Interaction interaction = new Interaction("Home");
     this.diagram.addInteraction(interaction);
     Button button = interaction.createButtonWithLocation("loc");
     button.setName("register");

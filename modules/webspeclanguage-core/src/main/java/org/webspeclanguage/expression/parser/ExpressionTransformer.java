@@ -22,8 +22,8 @@ import java.util.Map;
 import org.webspeclanguage.action.Action;
 import org.webspeclanguage.action.ExpressionAction;
 import org.webspeclanguage.action.LetVariable;
-import org.webspeclanguage.base.WebSpecDiagram;
-import org.webspeclanguage.base.WebSpecInteraction;
+import org.webspeclanguage.base.Diagram;
+import org.webspeclanguage.base.Interaction;
 import org.webspeclanguage.expression.base.AbstractFunctionCallExpression;
 import org.webspeclanguage.expression.base.AddExpression;
 import org.webspeclanguage.expression.base.AndExpression;
@@ -120,9 +120,9 @@ import org.webspeclanguage.widget.Widget;
 @SuppressWarnings("unchecked")
 public class ExpressionTransformer extends DepthFirstAdapter {
 
-  private WebSpecDiagram diagram;
+  private Diagram diagram;
 
-  public ExpressionTransformer(WebSpecDiagram diagram) {
+  public ExpressionTransformer(Diagram diagram) {
     this.diagram = diagram;
   }
 
@@ -468,7 +468,7 @@ public class ExpressionTransformer extends DepthFirstAdapter {
     String iName = node.getInteraction().getText();
     String propertyOrWidget = node.getProperty().getText();
     
-    WebSpecInteraction interaction = this.diagram.getInteractionNamed(iName);
+    Interaction interaction = this.diagram.getInteractionNamed(iName);
     Widget widget = interaction.getWidget(propertyOrWidget);
     if (widget != null) {
       this.setOut(node, new WidgetReference(widget));
@@ -492,7 +492,7 @@ public class ExpressionTransformer extends DepthFirstAdapter {
   public void inAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node) {
     this.currentVariables.clear();
     this.interactionName = node.getInteraction().getText();
-    WebSpecInteraction interaction = this.diagram.getInteractionNamed(this.interactionName);
+    Interaction interaction = this.diagram.getInteractionNamed(this.interactionName);
     this.currentContainer = interaction.getRoot();
     this.property = node.getProperty().getText();
   }

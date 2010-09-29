@@ -22,15 +22,15 @@ import org.webspeclanguage.widget.TextField;
 /**
  * @author Esteban Robles Luna
  */
-public class WebSpecInteractionTestCase extends TestCase {
+public class InteractionTestCase extends TestCase {
 
-  private WebSpecInteraction interaction;
+  private Interaction interaction;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
 
-    this.interaction = new WebSpecInteraction("i");
+    this.interaction = new Interaction("i");
   }
 
   public void testAccessors() {
