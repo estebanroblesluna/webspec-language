@@ -24,7 +24,6 @@ import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.Interaction;
 import org.webspeclanguage.impl.action.ExpressionAction;
 import org.webspeclanguage.impl.action.LetVariable;
-import org.webspeclanguage.impl.core.InteractionImpl;
 import org.webspeclanguage.impl.expression.core.AbstractFunctionCallExpression;
 import org.webspeclanguage.impl.expression.core.AddExpression;
 import org.webspeclanguage.impl.expression.core.AndExpression;

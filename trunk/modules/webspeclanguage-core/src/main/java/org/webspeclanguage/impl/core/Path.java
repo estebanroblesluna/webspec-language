@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.api.Interaction;
-import org.webspeclanguage.api.Navigation;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.api.Transition;
 import org.webspeclanguage.api.TransitionSource;

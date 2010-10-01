@@ -13,20 +13,14 @@
 package org.webspeclanguage.impl.core;
 
 import org.webspeclanguage.api.Navigation;
-import org.webspeclanguage.impl.action.ExpressionAction;
-import org.webspeclanguage.impl.action.LetVariable;
-import org.webspeclanguage.impl.expression.core.AbstractFunctionCallExpression;
 import org.webspeclanguage.impl.expression.core.AndExpression;
 import org.webspeclanguage.impl.expression.core.EqualsExpression;
 import org.webspeclanguage.impl.expression.core.Expression;
-import org.webspeclanguage.impl.expression.core.ExpressionType;
 import org.webspeclanguage.impl.expression.core.FunctionCallExpression;
-import org.webspeclanguage.impl.expression.core.GeneratorExpression;
 import org.webspeclanguage.impl.expression.core.NotExpression;
 import org.webspeclanguage.impl.expression.core.StringConstant;
 import org.webspeclanguage.impl.expression.core.VariableValue;
 import org.webspeclanguage.impl.expression.core.WidgetPropertyReference;
-import org.webspeclanguage.impl.expression.core.WidgetReference;
 import org.webspeclanguage.impl.generator.OneOfNumbers;
 import org.webspeclanguage.impl.generator.OneOfStrings;
 import org.webspeclanguage.impl.generator.UniformNumberGenerator;
