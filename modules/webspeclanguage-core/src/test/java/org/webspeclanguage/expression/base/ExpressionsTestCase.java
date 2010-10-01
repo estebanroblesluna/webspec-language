@@ -18,30 +18,31 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.expression.base.AddExpression;
-import org.webspeclanguage.expression.base.BooleanConstant;
-import org.webspeclanguage.expression.base.Expression;
-import org.webspeclanguage.expression.base.ExpressionType;
-import org.webspeclanguage.expression.base.NotExpression;
-import org.webspeclanguage.expression.base.NumberConstant;
-import org.webspeclanguage.expression.concretizer.ExpressionConcretizer;
-import org.webspeclanguage.expression.conjunctivenormalform.ExpressionConvertorToConjunctiveNormalForm;
-import org.webspeclanguage.expression.optimizer.ExpressionOptimizer;
-import org.webspeclanguage.expression.parser.ExpressionParser;
-import org.webspeclanguage.expression.typechecker.ExpressionTypechecker;
-import org.webspeclanguage.expression.typechecker.TypecheckException;
-import org.webspeclanguage.expression.typechecker.InexistentGeneratorException;
-import org.webspeclanguage.expression.typechecker.UnmatchedFunctionException;
-import org.webspeclanguage.generator.BooleanGenerator;
-import org.webspeclanguage.generator.OneOfNumbers;
-import org.webspeclanguage.generator.OneOfStrings;
-import org.webspeclanguage.generator.StringGenerator;
-import org.webspeclanguage.generator.UniformNumberGenerator;
-import org.webspeclanguage.widget.Button;
-import org.webspeclanguage.widget.ListOfContainer;
-import org.webspeclanguage.widget.TextField;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.expression.concretizer.ExpressionConcretizer;
+import org.webspeclanguage.impl.expression.conjunctivenormalform.ExpressionConvertorToConjunctiveNormalForm;
+import org.webspeclanguage.impl.expression.core.AddExpression;
+import org.webspeclanguage.impl.expression.core.ArrayExpression;
+import org.webspeclanguage.impl.expression.core.BooleanConstant;
+import org.webspeclanguage.impl.expression.core.Expression;
+import org.webspeclanguage.impl.expression.core.ExpressionType;
+import org.webspeclanguage.impl.expression.core.NotExpression;
+import org.webspeclanguage.impl.expression.core.NumberConstant;
+import org.webspeclanguage.impl.expression.optimizer.ExpressionOptimizer;
+import org.webspeclanguage.impl.expression.parser.ExpressionParser;
+import org.webspeclanguage.impl.expression.typechecker.ExpressionTypechecker;
+import org.webspeclanguage.impl.expression.typechecker.InexistentGeneratorException;
+import org.webspeclanguage.impl.expression.typechecker.TypecheckException;
+import org.webspeclanguage.impl.expression.typechecker.UnmatchedFunctionException;
+import org.webspeclanguage.impl.generator.BooleanGenerator;
+import org.webspeclanguage.impl.generator.OneOfNumbers;
+import org.webspeclanguage.impl.generator.OneOfStrings;
+import org.webspeclanguage.impl.generator.StringGenerator;
+import org.webspeclanguage.impl.generator.UniformNumberGenerator;
+import org.webspeclanguage.impl.widget.Button;
+import org.webspeclanguage.impl.widget.ListOfContainer;
+import org.webspeclanguage.impl.widget.TextField;
 
 /**
  * @author Esteban Robles Luna
@@ -49,7 +50,7 @@ import org.webspeclanguage.widget.TextField;
 public class ExpressionsTestCase extends TestCase {
 
   private ExpressionParser parser;
-  private Diagram diagram;
+  private DiagramImpl diagram;
 
   private ExpressionOptimizer optimizer;
   private ExpressionConcretizer concretizer;
@@ -61,9 +62,9 @@ public class ExpressionsTestCase extends TestCase {
     super.setUp();
 
     this.parser = new ExpressionParser();
-    this.diagram = new Diagram("a");
+    this.diagram = new DiagramImpl("a");
 
-    Interaction interaction = new Interaction("Home");
+    InteractionImpl interaction = new InteractionImpl("Home");
     this.diagram.addInteraction(interaction);
     Button button = interaction.createButtonWithLocation("loc");
     button.setName("register");

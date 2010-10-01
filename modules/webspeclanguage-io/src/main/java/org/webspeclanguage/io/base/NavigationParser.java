@@ -12,19 +12,19 @@
  */
 package org.webspeclanguage.io.base;
 
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.base.Navigation;
-import org.webspeclanguage.base.Transition;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.core.NavigationImpl;
+import org.webspeclanguage.impl.core.TransitionImpl;
 
 /**
- * A {@link Navigation} parser
+ * A {@link NavigationImpl} parser
  * 
  * @author Esteban Robles Luna
  */
 public class NavigationParser extends TransitionParser {
 
   @Override
-  protected Transition createTransition(Interaction from, Interaction to) {
-    return new Navigation(from, to);
+  protected TransitionImpl createTransition(InteractionImpl from, InteractionImpl to) {
+    return new NavigationImpl(from, to);
   }
 }

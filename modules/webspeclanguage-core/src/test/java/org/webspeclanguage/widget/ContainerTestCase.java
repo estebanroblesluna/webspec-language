@@ -12,11 +12,11 @@
  */
 package org.webspeclanguage.widget;
 
-import org.webspeclanguage.widget.Button;
-import org.webspeclanguage.widget.Container;
-import org.webspeclanguage.widget.ExistingWidgetException;
-import org.webspeclanguage.widget.Label;
-import org.webspeclanguage.widget.ListOfContainer;
+import org.webspeclanguage.impl.widget.Button;
+import org.webspeclanguage.impl.widget.Container;
+import org.webspeclanguage.impl.widget.ExistingWidgetException;
+import org.webspeclanguage.impl.widget.Label;
+import org.webspeclanguage.impl.widget.ListOfContainer;
 
 import junit.framework.TestCase;
 

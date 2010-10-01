@@ -16,12 +16,12 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 import org.selenium.SeleniumEvaluator;
-import org.webspeclanguage.expression.base.BooleanConstant;
-import org.webspeclanguage.expression.base.Expression;
-import org.webspeclanguage.expression.base.NumberConstant;
-import org.webspeclanguage.expression.base.StringConstant;
-import org.webspeclanguage.expression.base.WidgetPropertyReference;
-import org.webspeclanguage.expression.base.WidgetReference;
+import org.webspeclanguage.impl.expression.core.BooleanConstant;
+import org.webspeclanguage.impl.expression.core.Expression;
+import org.webspeclanguage.impl.expression.core.NumberConstant;
+import org.webspeclanguage.impl.expression.core.StringConstant;
+import org.webspeclanguage.impl.expression.core.WidgetPropertyReference;
+import org.webspeclanguage.impl.expression.core.WidgetReference;
 
 /**
  * A simulator based on Selenium

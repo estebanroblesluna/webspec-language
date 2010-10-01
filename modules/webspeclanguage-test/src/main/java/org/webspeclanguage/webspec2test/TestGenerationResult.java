@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.base.Path;
+import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.webtest.base.SimpleWebTest;
 import org.webspeclanguage.webtest.base.WebTestSuite;
 

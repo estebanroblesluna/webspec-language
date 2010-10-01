@@ -12,8 +12,8 @@
  */
 package org.webspeclanguage.io.widgets;
 
-import org.webspeclanguage.widget.Label;
-import org.webspeclanguage.widget.Widget;
+import org.webspeclanguage.impl.widget.Label;
+import org.webspeclanguage.impl.widget.Widget;
 
 /**
  * A {@link Label} parser

@@ -14,13 +14,13 @@ package org.webspeclanguage.base;
 
 import java.util.List;
 
-import org.webspeclanguage.base.PathComputer;
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.WebSpecFactory;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.base.Path;
-
 import junit.framework.TestCase;
+
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.core.Path;
+import org.webspeclanguage.impl.core.PathComputer;
+import org.webspeclanguage.impl.core.WebSpecFactory;
 
 /**
  * @author Esteban Robles Luna
@@ -36,7 +36,7 @@ public class PathComputerTestCase extends TestCase {
   }
 
   public void testPathComputing() {
-    Diagram diagram = WebSpecFactory.getCycleExample();
+    DiagramImpl diagram = WebSpecFactory.getCycleExample();
     List<Path> paths = this.pathComputer.computePathsFor(diagram);
     assertEquals(3, paths.size());
 
@@ -45,54 +45,54 @@ public class PathComputerTestCase extends TestCase {
     Path path3 = paths.get(2);
 
     // path1
-    assertEquals("i1", path1.getInteraction(0).getName());
-    assertEquals(path1.getInteraction(0), path1.getNavigation(0).getFrom());
-    assertEquals(path1.getInteraction(1), path1.getNavigation(0).getTo());
+    assertEquals("i1", path1.getTransitionSource(0).getName());
+    assertEquals(path1.getTransitionSource(0), path1.getTransition(0).getSource());
+    assertEquals(path1.getTransitionSource(1), path1.getTransition(0).getTarget());
 
-    assertEquals("i2", path1.getInteraction(1).getName());
-    assertEquals(path1.getInteraction(1), path1.getNavigation(1).getFrom());
-    assertEquals(path1.getInteraction(2), path1.getNavigation(1).getTo());
+    assertEquals("i2", path1.getTransitionSource(1).getName());
+    assertEquals(path1.getTransitionSource(1), path1.getTransition(1).getSource());
+    assertEquals(path1.getTransitionSource(2), path1.getTransition(1).getTarget());
 
-    assertEquals("i1", path1.getInteraction(2).getName());
-    assertEquals(path1.getInteraction(2), path1.getNavigation(2).getFrom());
-    assertEquals(path1.getInteraction(3), path1.getNavigation(2).getTo());
+    assertEquals("i1", path1.getTransitionSource(2).getName());
+    assertEquals(path1.getTransitionSource(2), path1.getTransition(2).getSource());
+    assertEquals(path1.getTransitionSource(3), path1.getTransition(2).getTarget());
 
-    assertEquals("i2", path1.getInteraction(3).getName());
-    assertEquals(path1.getInteraction(3), path1.getNavigation(3).getFrom());
-    assertEquals(path1.getInteraction(4), path1.getNavigation(3).getTo());
+    assertEquals("i2", path1.getTransitionSource(3).getName());
+    assertEquals(path1.getTransitionSource(3), path1.getTransition(3).getSource());
+    assertEquals(path1.getTransitionSource(4), path1.getTransition(3).getTarget());
 
-    assertEquals("i1", path1.getInteraction(4).getName());
+    assertEquals("i1", path1.getTransitionSource(4).getName());
 
     // path2
-    assertEquals("i1", path2.getInteraction(0).getName());
-    assertEquals(path2.getInteraction(0), path2.getNavigation(0).getFrom());
-    assertEquals(path2.getInteraction(1), path2.getNavigation(0).getTo());
+    assertEquals("i1", path2.getTransitionSource(0).getName());
+    assertEquals(path2.getTransitionSource(0), path2.getTransition(0).getSource());
+    assertEquals(path2.getTransitionSource(1), path2.getTransition(0).getTarget());
 
-    assertEquals("i2", path2.getInteraction(1).getName());
-    assertEquals(path2.getInteraction(1), path2.getNavigation(1).getFrom());
-    assertEquals(path2.getInteraction(2), path2.getNavigation(1).getTo());
+    assertEquals("i2", path2.getTransitionSource(1).getName());
+    assertEquals(path2.getTransitionSource(1), path2.getTransition(1).getSource());
+    assertEquals(path2.getTransitionSource(2), path2.getTransition(1).getTarget());
 
-    assertEquals("i1", path2.getInteraction(2).getName());
-    assertEquals(path2.getInteraction(2), path2.getNavigation(2).getFrom());
-    assertEquals(path2.getInteraction(3), path2.getNavigation(2).getTo());
+    assertEquals("i1", path2.getTransitionSource(2).getName());
+    assertEquals(path2.getTransitionSource(2), path2.getTransition(2).getSource());
+    assertEquals(path2.getTransitionSource(3), path2.getTransition(2).getTarget());
 
-    assertEquals("i3", path2.getInteraction(3).getName());
+    assertEquals("i3", path2.getTransitionSource(3).getName());
 
     // path3
-    assertEquals("i1", path3.getInteraction(0).getName());
-    assertEquals(path3.getInteraction(0), path3.getNavigation(0).getFrom());
-    assertEquals(path3.getInteraction(1), path3.getNavigation(0).getTo());
+    assertEquals("i1", path3.getTransitionSource(0).getName());
+    assertEquals(path3.getTransitionSource(0), path3.getTransition(0).getSource());
+    assertEquals(path3.getTransitionSource(1), path3.getTransition(0).getTarget());
 
-    assertEquals("i3", path3.getInteraction(1).getName());
+    assertEquals("i3", path3.getTransitionSource(1).getName());
   }
 
   public void testComputePathsFor() {
-    Diagram diagram = new Diagram("a");
+    DiagramImpl diagram = new DiagramImpl("a");
 
-    Interaction i1 = new Interaction("i1");
-    Interaction i2 = new Interaction("i2");
-    Interaction i3 = new Interaction("i3");
-    Interaction i4 = new Interaction("i4");
+    InteractionImpl i1 = new InteractionImpl("i1");
+    InteractionImpl i2 = new InteractionImpl("i2");
+    InteractionImpl i3 = new InteractionImpl("i3");
+    InteractionImpl i4 = new InteractionImpl("i4");
 
     i1.setLocation("http://www.google.com");
     diagram.setStartingInteraction(i1);
@@ -108,27 +108,27 @@ public class PathComputerTestCase extends TestCase {
     // 1-2
     Path path1 = paths.get(0);
     assertEquals(3, path1.length());
-    assertEquals("i1", path1.getInteraction(0).getName());
-    assertEquals("i2", path1.getInteraction(1).getName());
+    assertEquals("i1", path1.getTransitionSource(0).getName());
+    assertEquals("i2", path1.getTransitionSource(1).getName());
 
     // 1-3-4-1-2
     Path path2 = paths.get(1);
     assertEquals(9, path2.length());
-    assertEquals("i1", path2.getInteraction(0).getName());
-    assertEquals("i3", path2.getInteraction(1).getName());
-    assertEquals("i4", path2.getInteraction(2).getName());
-    assertEquals("i1", path2.getInteraction(3).getName());
-    assertEquals("i2", path2.getInteraction(4).getName());
+    assertEquals("i1", path2.getTransitionSource(0).getName());
+    assertEquals("i3", path2.getTransitionSource(1).getName());
+    assertEquals("i4", path2.getTransitionSource(2).getName());
+    assertEquals("i1", path2.getTransitionSource(3).getName());
+    assertEquals("i2", path2.getTransitionSource(4).getName());
 
     // 1-3-4-1-3-4-1
     Path path3 = paths.get(2);
     assertEquals(13, path3.length());
-    assertEquals("i1", path3.getInteraction(0).getName());
-    assertEquals("i3", path3.getInteraction(1).getName());
-    assertEquals("i4", path3.getInteraction(2).getName());
-    assertEquals("i1", path3.getInteraction(3).getName());
-    assertEquals("i3", path3.getInteraction(4).getName());
-    assertEquals("i4", path3.getInteraction(5).getName());
-    assertEquals("i1", path3.getInteraction(6).getName());
+    assertEquals("i1", path3.getTransitionSource(0).getName());
+    assertEquals("i3", path3.getTransitionSource(1).getName());
+    assertEquals("i4", path3.getTransitionSource(2).getName());
+    assertEquals("i1", path3.getTransitionSource(3).getName());
+    assertEquals("i3", path3.getTransitionSource(4).getName());
+    assertEquals("i4", path3.getTransitionSource(5).getName());
+    assertEquals("i1", path3.getTransitionSource(6).getName());
   }
 }

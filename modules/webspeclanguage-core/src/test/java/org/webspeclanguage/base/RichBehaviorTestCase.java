@@ -14,14 +14,17 @@ package org.webspeclanguage.base;
 
 import junit.framework.TestCase;
 
+import org.webspeclanguage.api.RichBehavior;
+import org.webspeclanguage.impl.core.InteractionImpl;
+
 /**
  * @author Esteban Robles Luna
  */
 public class RichBehaviorTestCase extends TestCase {
 
   public void testCreation() {
-    Interaction i1 = new Interaction("i1");
-    Interaction i2 = new Interaction("i2");
+    InteractionImpl i1 = new InteractionImpl("i1");
+    InteractionImpl i2 = new InteractionImpl("i2");
     RichBehavior rich = i1.richBehaviorTo(i2);
     assertEquals("i1*>i2", rich.toString());
   }

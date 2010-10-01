@@ -13,7 +13,7 @@
 package org.webspeclanguage.webtest.action;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.expression.base.Expression;
+import org.webspeclanguage.impl.expression.core.Expression;
 import org.webspeclanguage.webtest.base.WebTestItemVisitor;
 
 /**

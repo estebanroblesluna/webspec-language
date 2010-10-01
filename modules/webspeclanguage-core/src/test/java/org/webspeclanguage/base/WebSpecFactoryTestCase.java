@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.base;
 
-import org.webspeclanguage.base.WebSpecFactory;
+import org.webspeclanguage.impl.core.WebSpecFactory;
 
 import junit.framework.TestCase;
 
@@ -21,10 +21,19 @@ import junit.framework.TestCase;
  */
 public class WebSpecFactoryTestCase extends TestCase {
 
-  public void testGeneration() {
+  public void testGenerationAmazon1() {
     assertNotNull(WebSpecFactory.getAmazonExample());
+  }
+
+  public void testGenerationAmazon2() {
     assertNotNull(WebSpecFactory.getAmazonExample2());
+  }
+
+  public void testGenerationCycle() {
     assertNotNull(WebSpecFactory.getCycleExample());
+  }
+
+  public void testGenerationDiagram() {
     assertNotNull(WebSpecFactory.getWebSpecDiagram());
   }
 }

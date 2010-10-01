@@ -1,0 +1,30 @@
+<operation name="register" outputVariables="username,password">
+
+  <import location="generators.xml" />
+  
+  <interaction name="Home">
+    <link name="register" />
+  </interaction>
+
+  <actions value="click(Home.register)" />
+  
+  <interaction name="Register">
+    <textfield name="firstName" />
+    <textfield name="lastName" />
+    <textfield name="username" />
+    <textfield name="password" />
+    <textfield name="confirmPassword" />
+    <button name="register" />
+  </interaction>
+
+  <actions>
+    username := $usernames$;
+    password := $passwords$;
+    type(Register.firstName, $names$);
+    type(Register.lastName, $names$);
+    type(Register.username, ${username});
+    type(Register.password, ${password});
+    type(Register.confirmPassword, ${password});
+    click(Register.register);
+  </actions>
+</operation>

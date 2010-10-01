@@ -14,7 +14,7 @@ package org.webspeclanguage.webtest.base;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.expression.base.FunctionCallExpression;
+import org.webspeclanguage.impl.expression.core.FunctionCallExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.base.SimpleWebTest;
 import org.webspeclanguage.webtest.base.WebTestSuite;

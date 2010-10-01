@@ -14,8 +14,8 @@ package org.webspeclanguage.webspec2simulation;
 
 import java.util.Map;
 
-import org.webspeclanguage.base.Transition;
-import org.webspeclanguage.expression.base.ConstantExpression;
+import org.webspeclanguage.api.Transition;
+import org.webspeclanguage.impl.expression.core.ConstantExpression;
 
 /**
  * An exception thrown when a precondition is not satisfied during path

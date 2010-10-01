@@ -26,8 +26,8 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.apache.log4j.lf5.util.StreamUtils;
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.exception.WebspecException;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.exception.WebspecException;
 import org.webspeclanguage.io.base.DiagramParser;
 import org.webspeclanguage.io.base.InteractionParser;
 import org.webspeclanguage.io.base.NavigationParser;
@@ -39,7 +39,7 @@ import org.webspeclanguage.io.widgets.ListOfParser;
 import org.webspeclanguage.io.widgets.TextFieldParser;
 
 /**
- * A {@link Diagram} parser
+ * A {@link DiagramImpl} parser
  * 
  * @author Esteban Robles Luna
  */
@@ -66,7 +66,7 @@ public class WebSpecParser {
     this.parsersMappings.put("one-of-string-generator", new OneOfStringParser());
   }
 
-  public Diagram parse(String resource) {
+  public DiagramImpl parse(String resource) {
     InputStream stream = null;
     try {
       stream = Thread.currentThread().getContextClassLoader().getResource(resource).openStream();
@@ -76,7 +76,7 @@ public class WebSpecParser {
     }
   }
 
-  public Diagram parse(InputStream inputStream) {
+  public DiagramImpl parse(InputStream inputStream) {
     try {
       InputStream allStream = new ByteArrayInputStream(StreamUtils.getBytes(inputStream));
       SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -90,7 +90,7 @@ public class WebSpecParser {
       
       SAXParser saxParser = saxParserFactory.newSAXParser();
       saxParser.parse(allStream, new ParseHandler(this));
-      return (Diagram) this.getResult();
+      return (DiagramImpl) this.getResult();
     } catch (Exception e) {
       throw new WebspecException(e);
     }

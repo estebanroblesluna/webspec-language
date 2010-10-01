@@ -12,14 +12,14 @@
  */
 package org.webspeclanguage.io.base;
 
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.base.Transition;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.core.TransitionImpl;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
 import org.xml.sax.Attributes;
 
 /**
- * An abstract class for {@link Transition} parsers
+ * An abstract class for {@link TransitionImpl} parsers
  * 
  * @author Esteban Robles Luna
  */
@@ -34,15 +34,15 @@ public abstract class TransitionParser extends AbstractElementParser {
     String actions = attributes.getValue("actions");
     String precondition = attributes.getValue("precondition");
 
-    Interaction from = (Interaction) context.get(fromInteraction + "-Interaction");
-    Interaction to = (Interaction) context.get(toInteraction + "-Interaction");
+    InteractionImpl from = (InteractionImpl) context.get(fromInteraction + "-Interaction");
+    InteractionImpl to = (InteractionImpl) context.get(toInteraction + "-Interaction");
 
-    Transition transition = this.createTransition(from, to);
+    TransitionImpl transition = this.createTransition(from, to);
     transition.setActions(actions);
     transition.setPrecondition(precondition);
     
     this.setResult(transition);
   }
 
-  protected abstract Transition createTransition(Interaction from, Interaction to);
+  protected abstract TransitionImpl createTransition(InteractionImpl from, InteractionImpl to);
 }

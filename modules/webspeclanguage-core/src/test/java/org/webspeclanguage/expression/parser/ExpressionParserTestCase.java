@@ -14,14 +14,14 @@ package org.webspeclanguage.expression.parser;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.expression.parser.ExpressionParser;
-import org.webspeclanguage.expression.parser.ParsingException;
-import org.webspeclanguage.widget.Button;
-import org.webspeclanguage.widget.ListOfContainer;
-import org.webspeclanguage.widget.Panel;
-import org.webspeclanguage.widget.TextField;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.expression.parser.ExpressionParser;
+import org.webspeclanguage.impl.expression.parser.ParsingException;
+import org.webspeclanguage.impl.widget.Button;
+import org.webspeclanguage.impl.widget.ListOfContainer;
+import org.webspeclanguage.impl.widget.Panel;
+import org.webspeclanguage.impl.widget.TextField;
 
 /**
  * @author Esteban Robles Luna
@@ -29,14 +29,14 @@ import org.webspeclanguage.widget.TextField;
 public class ExpressionParserTestCase extends TestCase {
 
   private ExpressionParser parser;
-  private Diagram diagram;
+  private DiagramImpl diagram;
 
   public void setUp() throws Exception {
     super.setUp();
     this.parser = new ExpressionParser();
-    this.diagram = new Diagram("diagram");
+    this.diagram = new DiagramImpl("diagram");
     
-    Interaction interaction = new Interaction("Interaction");
+    InteractionImpl interaction = new InteractionImpl("Interaction");
 
     TextField textField = new TextField();
     textField.setName("widget");

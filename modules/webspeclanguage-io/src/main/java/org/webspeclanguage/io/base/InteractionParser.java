@@ -12,14 +12,14 @@
  */
 package org.webspeclanguage.io.base;
 
-import org.webspeclanguage.base.Interaction;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.widget.Widget;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
-import org.webspeclanguage.widget.Widget;
 import org.xml.sax.Attributes;
 
 /**
- * A {@link Interaction} parser
+ * A {@link InteractionImpl} parser
  * 
  * @author Esteban Robles Luna
  */
@@ -33,7 +33,7 @@ public class InteractionParser extends AbstractElementParser {
    * {@inheritDoc}
    */
   public void parse(Attributes attributes, ParseContext context) {
-    Interaction interaction = new Interaction(attributes.getValue("name"));
+    InteractionImpl interaction = new InteractionImpl(attributes.getValue("name"));
     this.setResult(interaction);
     
     context.put(interaction.getName() + "-Interaction", interaction);

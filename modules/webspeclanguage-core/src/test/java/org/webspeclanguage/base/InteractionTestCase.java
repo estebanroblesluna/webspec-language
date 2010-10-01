@@ -14,23 +14,24 @@ package org.webspeclanguage.base;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.widget.Button;
-import org.webspeclanguage.widget.Label;
-import org.webspeclanguage.widget.ListOfContainer;
-import org.webspeclanguage.widget.TextField;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.widget.Button;
+import org.webspeclanguage.impl.widget.Label;
+import org.webspeclanguage.impl.widget.ListOfContainer;
+import org.webspeclanguage.impl.widget.TextField;
 
 /**
  * @author Esteban Robles Luna
  */
 public class InteractionTestCase extends TestCase {
 
-  private Interaction interaction;
+  private InteractionImpl interaction;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
 
-    this.interaction = new Interaction("i");
+    this.interaction = new InteractionImpl("i");
   }
 
   public void testAccessors() {

@@ -13,7 +13,7 @@
 package org.webspeclanguage.simulation;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.exception.WebspecException;
+import org.webspeclanguage.impl.exception.WebspecException;
 
 /**
  * A simulator is responsible of executing a {@link Simulation}

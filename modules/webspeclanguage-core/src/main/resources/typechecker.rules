@@ -1,9 +1,9 @@
-org.webspeclanguage.widget.Widget-visible=BOOLEAN
-org.webspeclanguage.widget.Widget-text=STRING
-org.webspeclanguage.base.Interaction-title=STRING
+org.webspeclanguage.impl.widget.Widget-visible=BOOLEAN
+org.webspeclanguage.impl.widget.Widget-text=STRING
+org.webspeclanguage.api.Interaction-title=STRING
 
-click=org.webspeclanguage.expression.base.WidgetReference->VOID
-type=org.webspeclanguage.expression.base.WidgetReference,STRING->VOID
-toString=org.webspeclanguage.expression.base.Expression->STRING
-toNumber=org.webspeclanguage.expression.base.Expression->NUMBER
-toBoolean=org.webspeclanguage.expression.base.Expression->BOOLEAN
+click=org.webspeclanguage.impl.expression.core.WidgetReference->VOID
+type=org.webspeclanguage.impl.expression.core.WidgetReference,STRING->VOID
+toString=org.webspeclanguage.impl.expression.core.Expression->STRING
+toNumber=org.webspeclanguage.impl.expression.core.Expression->NUMBER
+toBoolean=org.webspeclanguage.impl.expression.core.Expression->BOOLEAN

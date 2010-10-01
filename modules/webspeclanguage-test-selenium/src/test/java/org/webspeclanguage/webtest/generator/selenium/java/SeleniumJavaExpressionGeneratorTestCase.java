@@ -14,11 +14,11 @@ package org.webspeclanguage.webtest.generator.selenium.java;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.expression.base.Expression;
-import org.webspeclanguage.expression.parser.ExpressionParser;
-import org.webspeclanguage.widget.Button;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.expression.core.Expression;
+import org.webspeclanguage.impl.expression.parser.ExpressionParser;
+import org.webspeclanguage.impl.widget.Button;
 
 /**
  * @author Esteban Robles Luna
@@ -27,7 +27,7 @@ public class SeleniumJavaExpressionGeneratorTestCase extends TestCase {
 
   private SeleniumJavaExpressionGenerator expressionGenerator;
   private ExpressionParser parser;
-  private Diagram diagram;
+  private DiagramImpl diagram;
 
   @Override
   protected void setUp() throws Exception {
@@ -36,9 +36,9 @@ public class SeleniumJavaExpressionGeneratorTestCase extends TestCase {
     this.expressionGenerator = new SeleniumJavaExpressionGenerator();
 
     this.parser = new ExpressionParser();
-    this.diagram = new Diagram("a");
+    this.diagram = new DiagramImpl("a");
 
-    Interaction interaction = new Interaction("Home");
+    InteractionImpl interaction = new InteractionImpl("Home");
     this.diagram.addInteraction(interaction);
     Button button = interaction.createButtonWithLocation("loc");
     button.setName("register");

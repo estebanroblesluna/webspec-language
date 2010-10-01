@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.webtest.generator.selenium.java;
 
-import org.webspeclanguage.expression.base.Expression;
+import org.webspeclanguage.impl.expression.core.Expression;
 
 /**
  * An exception thrown when an {@link Expression} should be resolved but it is not

@@ -17,32 +17,32 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.action.Action;
-import org.webspeclanguage.action.LetVariable;
-import org.webspeclanguage.base.DuplicatedGeneratorException;
-import org.webspeclanguage.base.ExistingInteractionException;
-import org.webspeclanguage.base.InvalidStartingInteractionException;
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.base.Navigation;
-import org.webspeclanguage.base.Path;
-import org.webspeclanguage.expression.base.ExpressionType;
-import org.webspeclanguage.expression.base.StringConstant;
-import org.webspeclanguage.generator.Generator;
-import org.webspeclanguage.generator.OneOfStrings;
-import org.webspeclanguage.widget.Button;
+import org.webspeclanguage.api.Action;
+import org.webspeclanguage.api.Generator;
+import org.webspeclanguage.api.Navigation;
+import org.webspeclanguage.impl.action.LetVariable;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.DuplicatedGeneratorException;
+import org.webspeclanguage.impl.core.ExistingInteractionException;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.core.InvalidStartingInteractionException;
+import org.webspeclanguage.impl.core.Path;
+import org.webspeclanguage.impl.expression.core.ExpressionType;
+import org.webspeclanguage.impl.expression.core.StringConstant;
+import org.webspeclanguage.impl.generator.OneOfStrings;
+import org.webspeclanguage.impl.widget.Button;
 
 /**
  * @author Esteban Robles Luna
  */
 public class DiagramTestCase extends TestCase {
 
-  private Diagram diagram;
+  private DiagramImpl diagram;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.diagram = new Diagram("diagram");
+    this.diagram = new DiagramImpl("diagram");
   }
 
   public void testActionSetup() {
@@ -56,7 +56,7 @@ public class DiagramTestCase extends TestCase {
   }
 
   public void testAddGenerator() {
-    assertTrue(this.diagram.getGeneratorsNames().isEmpty());
+    assertTrue(this.diagram.getGenerators().isEmpty());
     Generator generator = new OneOfStrings("aaa", "aaa", "aaab");
     Generator generator2 = new OneOfStrings("aaa", "aaddda", "aaab");
     this.diagram.addGenerator(generator);
@@ -68,13 +68,13 @@ public class DiagramTestCase extends TestCase {
     }
 
     assertEquals(generator, this.diagram.getGeneratorNamed("aaa"));
-    assertEquals(1, this.diagram.getGeneratorsNames().size());
-    assertEquals("aaa", this.diagram.getGeneratorsNames().toArray()[0]);
+    assertEquals(1, this.diagram.getGenerators().size());
+    assertEquals(generator, this.diagram.getGenerators().toArray()[0]);
   }
 
   public void testAddInteraction() {
-    Interaction interaction1 = new Interaction("i1");
-    Interaction interaction2 = new Interaction("i1");
+    InteractionImpl interaction1 = new InteractionImpl("i1");
+    InteractionImpl interaction2 = new InteractionImpl("i1");
     this.diagram.addInteraction(interaction1);
     try {
       this.diagram.addInteraction(interaction2);
@@ -86,9 +86,9 @@ public class DiagramTestCase extends TestCase {
 
   @SuppressWarnings("unchecked")
   public void testGetUndeclaredVariables() {
-    Interaction interaction1 = new Interaction("i1");
-    Interaction interaction2 = new Interaction("i2");
-    Interaction interaction3 = new Interaction("i3");
+    InteractionImpl interaction1 = new InteractionImpl("i1");
+    InteractionImpl interaction2 = new InteractionImpl("i2");
+    InteractionImpl interaction3 = new InteractionImpl("i3");
 
     this.diagram.addInteraction(interaction1);
     this.diagram.addInteraction(interaction2);
@@ -117,7 +117,7 @@ public class DiagramTestCase extends TestCase {
   }
 
   public void testSetStartingInteraction() {
-    Interaction interaction1 = new Interaction("i1");
+    InteractionImpl interaction1 = new InteractionImpl("i1");
 
     this.diagram.addInteraction(interaction1);
 
@@ -130,7 +130,7 @@ public class DiagramTestCase extends TestCase {
   }
 
   public void testGetWidget() {
-    Interaction interaction1 = new Interaction("i1");
+    InteractionImpl interaction1 = new InteractionImpl("i1");
     Button button = new Button();
     button.setName("aaa");
     interaction1.addWidget(button);

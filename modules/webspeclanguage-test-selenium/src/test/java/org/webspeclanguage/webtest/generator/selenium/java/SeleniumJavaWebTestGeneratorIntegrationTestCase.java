@@ -12,13 +12,15 @@
  */
 package org.webspeclanguage.webtest.generator.selenium.java;
 
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.expression.base.AddExpression;
-import org.webspeclanguage.expression.base.ExpressionType;
-import org.webspeclanguage.expression.base.NumberConstant;
-import org.webspeclanguage.expression.base.VariableValue;
-import org.webspeclanguage.expression.utils.ExpressionUtils;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.expression.core.AddExpression;
+import org.webspeclanguage.impl.expression.core.ExpressionType;
+import org.webspeclanguage.impl.expression.core.NumberConstant;
+import org.webspeclanguage.impl.expression.core.VariableValue;
+import org.webspeclanguage.impl.expression.utils.ExpressionUtils;
+import org.webspeclanguage.impl.widget.Button;
+import org.webspeclanguage.impl.widget.TextField;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.base.SimpleWebTest;
@@ -26,8 +28,6 @@ import org.webspeclanguage.webtest.base.WebTestGenerator;
 import org.webspeclanguage.webtest.base.WebTestSuite;
 import org.webspeclanguage.webtest.test.WebTestGeneration;
 import org.webspeclanguage.webtest.test.WebTestGenerationTestCase;
-import org.webspeclanguage.widget.Button;
-import org.webspeclanguage.widget.TextField;
 
 /**
  * @author Esteban Robles Luna
@@ -36,11 +36,11 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
 
   private SeleniumJavaWebTestGenerator testGenerator;
   
-  private Diagram diagram;
+  private DiagramImpl diagram;
 
   private Button searchButton;
 
-  private Interaction homeInteraction;
+  private InteractionImpl homeInteraction;
 
   private TextField searchField;
   
@@ -48,9 +48,9 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
   protected void setUp() throws Exception {
     super.setUp();
     this.testGenerator = new SeleniumJavaWebTestGenerator();
-    this.diagram = new Diagram("the diagram");
+    this.diagram = new DiagramImpl("the diagram");
     
-    homeInteraction = new Interaction("Home");
+    homeInteraction = new InteractionImpl("Home");
     this.diagram.addInteraction(homeInteraction);
     
     searchButton = new Button();

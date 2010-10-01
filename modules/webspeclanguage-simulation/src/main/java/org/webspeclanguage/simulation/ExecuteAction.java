@@ -15,7 +15,7 @@ package org.webspeclanguage.simulation;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.expression.base.Expression;
+import org.webspeclanguage.impl.expression.core.Expression;
 
 /**
  * Represents an action executed in the browser

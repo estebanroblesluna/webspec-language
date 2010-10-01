@@ -14,15 +14,18 @@ package org.webspeclanguage.webspec2test;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.base.Navigation;
-import org.webspeclanguage.base.RichBehavior;
-import org.webspeclanguage.expression.base.ArrayExpression;
-import org.webspeclanguage.expression.base.StringConstant;
-import org.webspeclanguage.expression.utils.ExpressionUtils;
-import org.webspeclanguage.generator.OneOfArray;
-import org.webspeclanguage.generator.OneOfStrings;
+import org.webspeclanguage.api.Navigation;
+import org.webspeclanguage.api.RichBehavior;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.expression.core.ArrayExpression;
+import org.webspeclanguage.impl.expression.core.StringConstant;
+import org.webspeclanguage.impl.expression.utils.ExpressionUtils;
+import org.webspeclanguage.impl.generator.OneOfArray;
+import org.webspeclanguage.impl.generator.OneOfStrings;
+import org.webspeclanguage.impl.widget.Button;
+import org.webspeclanguage.impl.widget.Label;
+import org.webspeclanguage.impl.widget.TextField;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;
@@ -31,9 +34,6 @@ import org.webspeclanguage.webtest.assertion.WebAssertExpression;
 import org.webspeclanguage.webtest.assertion.WebAssertTitle;
 import org.webspeclanguage.webtest.base.SimpleWebTest;
 import org.webspeclanguage.webtest.base.WebTestSuite;
-import org.webspeclanguage.widget.Button;
-import org.webspeclanguage.widget.Label;
-import org.webspeclanguage.widget.TextField;
 
 /**
  * @author Esteban Robles Luna
@@ -41,21 +41,21 @@ import org.webspeclanguage.widget.TextField;
 public class WebSpec2WebTestTransformationTestCase extends TestCase {
 
   private WebSpec2WebTestTransformation transformation;
-  private Diagram diagram;
+  private DiagramImpl diagram;
   private SimpleWebTest test;
-  private Interaction starting;
+  private InteractionImpl starting;
 
   public void setUp() throws Exception {
     super.setUp();
 
     this.transformation = new WebSpec2WebTestTransformation();
 
-    this.diagram = new Diagram("d");
+    this.diagram = new DiagramImpl("d");
     this.diagram.addGenerator(new OneOfStrings("validUsernames", "carlos2"));
     this.diagram.addGenerator(new OneOfStrings("invalidUsernames", "carlos"));
     this.diagram.addGenerator(new OneOfArray("uandpss", new ArrayExpression(new StringConstant("user"), new StringConstant("pass"))));
 
-    this.starting = new Interaction("start");
+    this.starting = new InteractionImpl("start");
     this.starting.setTitle("\"The title\"");
     this.starting.setLocation("http://www.google.com");
     this.diagram.setStartingInteraction(this.starting);
@@ -117,7 +117,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInteractionWithTitleAndInvariant() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     interaction.setTitle("\"The title\"");
     interaction.setLocation("http://www.google.com");
     this.diagram.addInteraction(interaction);
@@ -143,7 +143,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInteractionWithoutTitleAndInvariant() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     Label l = interaction.createLabelWithLocation("id=a");
@@ -158,7 +158,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateNavigation() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     Navigation navigation = starting.navigateTo(interaction);
@@ -176,7 +176,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateRichBehavior() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     RichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -195,7 +195,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateConstantTransition() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     RichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -210,9 +210,9 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateConstantThenDynamicTransition() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
-
+    
     RichBehavior richBehavior = starting.richBehaviorTo(interaction);
 
     richBehavior.setActions("String var := \"a\";var := start.label");
@@ -235,7 +235,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateInsatisfiedRichBehavior() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     RichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -253,7 +253,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testGenerateTransitionWithPrecondition() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     RichBehavior richBehavior = starting.richBehaviorTo(interaction);
@@ -271,13 +271,13 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
 
   public void testTransform() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     RichBehavior richBehavior = starting.richBehaviorTo(interaction);
     richBehavior.setActions("click(start.label)");
 
-    Interaction interaction2 = new Interaction("otherInteraction2");
+    InteractionImpl interaction2 = new InteractionImpl("otherInteraction2");
     this.diagram.addInteraction(interaction2);
 
     Navigation navigation = starting.navigateTo(interaction2);
@@ -293,7 +293,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
   
   public void testArrayGenerator() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     Navigation navigation = starting.navigateTo(interaction);
@@ -327,7 +327,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
   }
   
   public void testConstantArrayGenerator() {
-    Interaction interaction = new Interaction("otherInteraction");
+    InteractionImpl interaction = new InteractionImpl("otherInteraction");
     this.diagram.addInteraction(interaction);
 
     Navigation navigation = starting.navigateTo(interaction);

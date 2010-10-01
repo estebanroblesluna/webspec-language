@@ -18,7 +18,7 @@ import junit.framework.TestCase;
 
 import org.selenium.ExtendedSelenium;
 import org.selenium.SeleniumEvaluator;
-import org.webspeclanguage.base.WebSpecFactory;
+import org.webspeclanguage.impl.core.WebSpecFactory;
 import org.webspeclanguage.webspec2simulation.SeleniumSimulatorFactory;
 import org.webspeclanguage.webspec2simulation.SimulatorFactory;
 
