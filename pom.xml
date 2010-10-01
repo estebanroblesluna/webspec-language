@@ -63,6 +63,7 @@
     <module>modules/webspeclanguage-selenium-extension</module> 
     <module>modules/webspeclanguage-webdiagrameditor</module>
     <module>modules/webspeclanguage-io</module>
+    <module>modules/webspeclanguage-metamock-core</module>
   </modules>
 
 </project>
