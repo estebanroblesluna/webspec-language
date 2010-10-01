@@ -22,6 +22,7 @@ import java.util.Properties;
 import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.Generator;
 import org.webspeclanguage.api.Interaction;
+import org.webspeclanguage.impl.core.DiagramImpl;
 import org.webspeclanguage.impl.exception.WebspecException;
 import org.webspeclanguage.impl.expression.core.AbstractFunctionCallExpression;
 import org.webspeclanguage.impl.expression.core.AddExpression;

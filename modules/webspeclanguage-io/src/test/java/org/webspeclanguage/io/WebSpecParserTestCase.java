@@ -19,7 +19,6 @@ import org.webspeclanguage.api.Navigation;
 import org.webspeclanguage.api.RichBehavior;
 import org.webspeclanguage.impl.action.ActionParser;
 import org.webspeclanguage.impl.core.DiagramImpl;
-import org.webspeclanguage.impl.core.RichBehaviorImpl;
 import org.webspeclanguage.impl.widget.ListOfContainer;
 
 /**
