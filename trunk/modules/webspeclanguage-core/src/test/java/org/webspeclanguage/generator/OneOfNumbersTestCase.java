@@ -16,9 +16,9 @@ import java.math.BigDecimal;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.expression.base.ConstantExpression;
-import org.webspeclanguage.expression.base.NumberConstant;
-import org.webspeclanguage.generator.OneOfNumbers;
+import org.webspeclanguage.impl.expression.core.ConstantExpression;
+import org.webspeclanguage.impl.expression.core.NumberConstant;
+import org.webspeclanguage.impl.generator.OneOfNumbers;
 
 /**
  * @author Esteban Robles Luna

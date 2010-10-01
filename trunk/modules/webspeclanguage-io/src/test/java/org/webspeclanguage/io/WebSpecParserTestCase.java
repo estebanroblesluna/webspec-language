@@ -12,15 +12,15 @@
  */
 package org.webspeclanguage.io;
 
-import org.webspeclanguage.action.ActionParser;
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.base.Navigation;
-import org.webspeclanguage.base.RichBehavior;
-import org.webspeclanguage.io.WebSpecParser;
-import org.webspeclanguage.widget.ListOfContainer;
-
 import junit.framework.TestCase;
+
+import org.webspeclanguage.api.Interaction;
+import org.webspeclanguage.api.Navigation;
+import org.webspeclanguage.api.RichBehavior;
+import org.webspeclanguage.impl.action.ActionParser;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.RichBehaviorImpl;
+import org.webspeclanguage.impl.widget.ListOfContainer;
 
 /**
  * @author Esteban Robles Luna
@@ -29,7 +29,7 @@ public class WebSpecParserTestCase extends TestCase {
 
   public void testParsing() {
     WebSpecParser parser = new WebSpecParser();
-    Diagram diagram = (Diagram) parser.parse("webspecexample.xml");
+    DiagramImpl diagram = (DiagramImpl) parser.parse("webspecexample.xml");
 
     assertEquals("example", diagram.getName());
     assertEquals(2, diagram.getInteractions().size());
@@ -46,12 +46,12 @@ public class WebSpecParserTestCase extends TestCase {
 
     assertEquals(2, home.getForwardTransitions().size());
 
-    Navigation navigation = home.navigationsTo(searchResults).get(0);
+    Navigation navigation = home.getForwardTransitionsTo(searchResults, Navigation.class).get(0);
     assertEquals(
             ActionParser.getActions("productName := $products$; type(Home.searchTF, ${productName}); click(Home.search)", diagram), 
             navigation.getActions());
 
-    RichBehavior richBehavior = home.richBehaviorsTo(searchResults).get(0);
+    RichBehavior richBehavior = home.getForwardTransitionsTo(searchResults, RichBehavior.class).get(0);
     assertEquals(
             ActionParser.getActions("click(Home.search)", diagram), 
             richBehavior.getActions());

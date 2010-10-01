@@ -1,8 +1,7 @@
-<diagram 
+<diagram name="example"
   xmlns="http://www.webspeclanguage.org/webspec" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://www.webspeclanguage.org/webspec webspec.xsd"
-  name="example">
+  xsi:schemaLocation="http://www.webspeclanguage.org/webspec webspec.xsd">
 
   <one-of-string-generator name="products" values="hello,how,are,you" />
   

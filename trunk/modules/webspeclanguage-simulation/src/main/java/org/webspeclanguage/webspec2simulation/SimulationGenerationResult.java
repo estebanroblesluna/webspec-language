@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.base.Path;
+import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.simulation.Simulation;
 
 /**

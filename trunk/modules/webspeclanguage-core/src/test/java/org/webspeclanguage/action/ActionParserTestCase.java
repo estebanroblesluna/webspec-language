@@ -16,22 +16,26 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.expression.parser.ParsingException;
-import org.webspeclanguage.widget.TextField;
+import org.webspeclanguage.api.Action;
+import org.webspeclanguage.impl.action.ActionParser;
+import org.webspeclanguage.impl.action.ExpressionAction;
+import org.webspeclanguage.impl.action.LetVariable;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.expression.parser.ParsingException;
+import org.webspeclanguage.impl.widget.TextField;
 
 /**
  * @author Esteban Robles Luna
  */
 public class ActionParserTestCase extends TestCase {
 
-  private Diagram diagram;
+  private DiagramImpl diagram;
 
   public void setUp() throws Exception {
     super.setUp();
-    this.diagram = new Diagram("diagram");
-    Interaction i1 = new Interaction("home");
+    this.diagram = new DiagramImpl("diagram");
+    InteractionImpl i1 = new InteractionImpl("home");
     this.diagram.addInteraction(i1);
     TextField tf = i1.createTextFieldWithId("searchTF");
     tf.setName("searchTF");

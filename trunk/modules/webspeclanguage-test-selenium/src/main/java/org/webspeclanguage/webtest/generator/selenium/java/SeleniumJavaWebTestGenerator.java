@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.webspeclanguage.expression.base.Expression;
-import org.webspeclanguage.expression.base.ExpressionType;
+import org.webspeclanguage.impl.expression.core.Expression;
+import org.webspeclanguage.impl.expression.core.ExpressionType;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;

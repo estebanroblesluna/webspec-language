@@ -12,8 +12,8 @@
  */
 package org.webspeclanguage.io.widgets;
 
-import org.webspeclanguage.widget.Button;
-import org.webspeclanguage.widget.Widget;
+import org.webspeclanguage.impl.widget.Button;
+import org.webspeclanguage.impl.widget.Widget;
 
 /**
  * A {@link Button} parser

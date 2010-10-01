@@ -12,15 +12,15 @@
  */
 package org.webspeclanguage.io.base;
 
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.generator.Generator;
+import org.webspeclanguage.api.Generator;
+import org.webspeclanguage.api.Interaction;
+import org.webspeclanguage.impl.core.DiagramImpl;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
 import org.xml.sax.Attributes;
 
 /**
- * A {@link Diagram} parser
+ * A {@link DiagramImpl} parser
  * 
  * @author Esteban Robles Luna
  */
@@ -35,7 +35,7 @@ public class DiagramParser extends AbstractElementParser {
    * {@inheritDoc}
    */
   public void parse(Attributes attributes, ParseContext context) {
-    Diagram diagram = new Diagram(attributes.getValue("name"));
+    DiagramImpl diagram = new DiagramImpl(attributes.getValue("name"));
     this.setResult(diagram);
   }
 }

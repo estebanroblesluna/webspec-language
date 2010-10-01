@@ -14,9 +14,9 @@ package org.webspeclanguage.webtest.base;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.expression.base.BooleanConstant;
-import org.webspeclanguage.expression.base.ExpressionType;
-import org.webspeclanguage.expression.base.StringConstant;
+import org.webspeclanguage.impl.expression.core.BooleanConstant;
+import org.webspeclanguage.impl.expression.core.ExpressionType;
+import org.webspeclanguage.impl.expression.core.StringConstant;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;

@@ -12,9 +12,9 @@
  */
 package org.webspeclanguage.io.widgets;
 
+import org.webspeclanguage.impl.widget.Widget;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
-import org.webspeclanguage.widget.Widget;
 import org.xml.sax.Attributes;
 
 /**

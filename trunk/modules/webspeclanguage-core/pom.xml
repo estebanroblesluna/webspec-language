@@ -17,7 +17,7 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <sonar.exclusions>**/org/webspeclanguage/expression/parser/analysis/*,**/org/webspeclanguage/expression/parser/lexer/*,**/org/webspeclanguage/expression/parser/node/*,**/org/webspeclanguage/expression/parser/parser/*</sonar.exclusions>
+    <sonar.exclusions>**/org/webspeclanguage/impl/expression/parser/analysis/*,**/org/webspeclanguage/impl/expression/parser/lexer/*,**/org/webspeclanguage/impl/expression/parser/node/*,**/org/webspeclanguage/impl/expression/parser/parser/*</sonar.exclusions>
   </properties>
 
   <dependencies>

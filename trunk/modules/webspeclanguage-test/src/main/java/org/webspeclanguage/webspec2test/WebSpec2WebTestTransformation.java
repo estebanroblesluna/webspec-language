@@ -13,31 +13,31 @@
 package org.webspeclanguage.webspec2test;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.action.Action;
-import org.webspeclanguage.action.ActionVisitor;
-import org.webspeclanguage.action.ExpressionAction;
-import org.webspeclanguage.action.LetVariable;
-import org.webspeclanguage.base.PathComputer;
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.base.Navigation;
-import org.webspeclanguage.base.Path;
-import org.webspeclanguage.base.PathItem;
-import org.webspeclanguage.base.PathItemVisitor;
-import org.webspeclanguage.base.RichBehavior;
-import org.webspeclanguage.base.Transition;
-import org.webspeclanguage.expression.base.BooleanConstant;
-import org.webspeclanguage.expression.base.ConstantExpression;
-import org.webspeclanguage.expression.base.Expression;
-import org.webspeclanguage.expression.base.ExpressionType;
-import org.webspeclanguage.expression.concretizer.ExpressionConcretizer;
-import org.webspeclanguage.expression.conjunctivenormalform.ExpressionConvertorToConjunctiveNormalForm;
-import org.webspeclanguage.expression.optimizer.ExpressionOptimizer;
-import org.webspeclanguage.expression.typechecker.ExpressionTypechecker;
-import org.webspeclanguage.generator.Generator;
+import org.webspeclanguage.api.Action;
+import org.webspeclanguage.api.Generator;
+import org.webspeclanguage.api.Interaction;
+import org.webspeclanguage.api.Navigation;
+import org.webspeclanguage.api.Operation;
+import org.webspeclanguage.api.PathItem;
+import org.webspeclanguage.api.PathItemVisitor;
+import org.webspeclanguage.api.RichBehavior;
+import org.webspeclanguage.api.Transition;
+import org.webspeclanguage.impl.action.ActionVisitor;
+import org.webspeclanguage.impl.action.ExpressionAction;
+import org.webspeclanguage.impl.action.LetVariable;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.Path;
+import org.webspeclanguage.impl.core.PathComputer;
+import org.webspeclanguage.impl.expression.concretizer.ExpressionConcretizer;
+import org.webspeclanguage.impl.expression.conjunctivenormalform.ExpressionConvertorToConjunctiveNormalForm;
+import org.webspeclanguage.impl.expression.core.BooleanConstant;
+import org.webspeclanguage.impl.expression.core.ConstantExpression;
+import org.webspeclanguage.impl.expression.core.Expression;
+import org.webspeclanguage.impl.expression.core.ExpressionType;
+import org.webspeclanguage.impl.expression.optimizer.ExpressionOptimizer;
+import org.webspeclanguage.impl.expression.typechecker.ExpressionTypechecker;
 import org.webspeclanguage.webtest.action.WebAction;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
@@ -58,7 +58,7 @@ public class WebSpec2WebTestTransformation {
   private ExpressionConcretizer concretizer;
   private ExpressionConvertorToConjunctiveNormalForm cnfConvertor;
 
-  private Diagram currentDiagram;
+  private DiagramImpl currentDiagram;
 
   private TestGenerationResult result;
   private SimpleWebTest currentTest;
@@ -68,7 +68,7 @@ public class WebSpec2WebTestTransformation {
     this.basicInitializeOptimizerAndConcretizer();
   }
 
-  public TestGenerationResult transform(Diagram diagram) {
+  public TestGenerationResult transform(DiagramImpl diagram) {
     Validate.notNull(diagram);
     
     this.setCurrentDiagram(diagram);
@@ -91,8 +91,7 @@ public class WebSpec2WebTestTransformation {
   private void initializeOptimizerAndConcretizer() {
     this.basicInitializeOptimizerAndConcretizer();
 
-    for (String generatorName : this.getCurrentDiagram().getGeneratorsNames()) {
-      Generator generator = this.getCurrentDiagram().getGeneratorNamed(generatorName);
+    for (Generator generator : this.getCurrentDiagram().getGenerators()) {
       this.getConcretizer().set(generator);
     }
   }
@@ -102,12 +101,12 @@ public class WebSpec2WebTestTransformation {
     this.setConcretizer(new ExpressionConcretizer());
   }
 
-  public List<Path> computePathsFor(Diagram diagram) {
+  public List<Path> computePathsFor(DiagramImpl diagram) {
     return new PathComputer(diagram.getCyclesAllowed())
         .computePathsFor(diagram);
   }
 
-  public SimpleWebTest computeSimpleTest(Path path, Diagram diagram) {
+  public SimpleWebTest computeSimpleTest(Path path, DiagramImpl diagram) {
     final SimpleWebTest aT = this.createTest(this.computeNameFor(path));
 
     this.preItemsIteration();
@@ -126,6 +125,13 @@ public class WebSpec2WebTestTransformation {
 
         public Object visitRichBehavior(RichBehavior richBehavior) {
           generateItemsFor(richBehavior, aT);
+          return null;
+        }
+
+        public Object visitOperation(Operation operation) {
+          for (PathItem item : operation.getItems()) {
+            item.accept(this);
+          }
           return null;
         }
       });
@@ -165,7 +171,7 @@ public class WebSpec2WebTestTransformation {
     return typechecker.typecheck(expression);
   }
   
-  protected void createResult(Diagram diagram) {
+  protected void createResult(DiagramImpl diagram) {
     this.result = new TestGenerationResult(diagram.getName());
   }
 
@@ -214,8 +220,7 @@ public class WebSpec2WebTestTransformation {
     }
   }
 
-  protected void generateItemsFor(Interaction interaction,
-      SimpleWebTest test) {
+  protected void generateItemsFor(Interaction interaction, SimpleWebTest test) {
     if (this.getCurrentDiagram().getStartingInteraction().equals(interaction)) {
       test.addSetUpItem(new WebOpenUrl(interaction.getLocation()));
     }
@@ -226,8 +231,7 @@ public class WebSpec2WebTestTransformation {
     }
 
     if (interaction.getInvariant() != null) {
-      Expression expression = this.makeConcreteAndOptimize(interaction
-          .getInvariant());
+      Expression expression = this.makeConcreteAndOptimize(interaction.getInvariant());
       if (expression.equals(BooleanConstant.FALSE)) {
         throw new UnsatisfiedInvariantException(interaction, this.getConcretizer().getVariables());
       } else {
@@ -240,7 +244,7 @@ public class WebSpec2WebTestTransformation {
   }
 
   protected Generator getGenerator(String generatorName) {
-    return this.getGenerators().get(generatorName);
+    return this.getCurrentDiagram().getGeneratorNamed(generatorName);
   }
 
   protected Expression makeConcreteAndOptimize(Expression expression) {
@@ -251,10 +255,6 @@ public class WebSpec2WebTestTransformation {
 
   private String computeNameFor(Path path) {
     return path.getName();
-  }
-
-  private Map<String, Generator> getGenerators() {
-    return this.getCurrentDiagram().getGenerators();
   }
 
   public boolean isAllowCycles() {
@@ -281,11 +281,11 @@ public class WebSpec2WebTestTransformation {
     this.concretizer = concretizer;
   }
 
-  protected Diagram getCurrentDiagram() {
+  protected DiagramImpl getCurrentDiagram() {
     return currentDiagram;
   }
 
-  public void setCurrentDiagram(Diagram currentDiagram) {
+  public void setCurrentDiagram(DiagramImpl currentDiagram) {
     this.currentDiagram = currentDiagram;
   }
 

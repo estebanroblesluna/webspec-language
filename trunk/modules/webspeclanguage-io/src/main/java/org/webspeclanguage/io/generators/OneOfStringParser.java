@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.io.generators;
 
-import org.webspeclanguage.generator.OneOfStrings;
+import org.webspeclanguage.impl.generator.OneOfStrings;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
 import org.xml.sax.Attributes;

@@ -12,17 +12,17 @@
  */
 package org.webspeclanguage.widget;
 
-import org.webspeclanguage.widget.Button;
-import org.webspeclanguage.widget.CheckBox;
-import org.webspeclanguage.widget.ComboBox;
-import org.webspeclanguage.widget.Label;
-import org.webspeclanguage.widget.Link;
-import org.webspeclanguage.widget.ListBox;
-import org.webspeclanguage.widget.ListOfContainer;
-import org.webspeclanguage.widget.Panel;
-import org.webspeclanguage.widget.RadioButton;
-import org.webspeclanguage.widget.TextField;
-import org.webspeclanguage.widget.Widget;
+import org.webspeclanguage.impl.widget.Button;
+import org.webspeclanguage.impl.widget.CheckBox;
+import org.webspeclanguage.impl.widget.ComboBox;
+import org.webspeclanguage.impl.widget.Label;
+import org.webspeclanguage.impl.widget.Link;
+import org.webspeclanguage.impl.widget.ListBox;
+import org.webspeclanguage.impl.widget.ListOfContainer;
+import org.webspeclanguage.impl.widget.Panel;
+import org.webspeclanguage.impl.widget.RadioButton;
+import org.webspeclanguage.impl.widget.TextField;
+import org.webspeclanguage.impl.widget.Widget;
 
 import junit.framework.TestCase;
 

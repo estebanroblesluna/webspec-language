@@ -12,8 +12,8 @@
  */
 package org.webspeclanguage.io.widgets;
 
-import org.webspeclanguage.widget.TextField;
-import org.webspeclanguage.widget.Widget;
+import org.webspeclanguage.impl.widget.TextField;
+import org.webspeclanguage.impl.widget.Widget;
 
 /**
  * A {@link TextField} parser

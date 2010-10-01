@@ -14,8 +14,8 @@ package org.webspeclanguage.generator;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.expression.base.StringConstant;
-import org.webspeclanguage.generator.StringGenerator;
+import org.webspeclanguage.impl.expression.core.StringConstant;
+import org.webspeclanguage.impl.generator.StringGenerator;
 
 /**
  * @author Esteban Robles Luna

@@ -16,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.apache.commons.lang.Validate;
-import org.webspeclanguage.exception.WebspecException;
+import org.webspeclanguage.impl.exception.WebspecException;
 
 /**
  * A resolver that injects childs into parents by invoking a specific method

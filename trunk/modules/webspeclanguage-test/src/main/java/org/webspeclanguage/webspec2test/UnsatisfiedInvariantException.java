@@ -14,8 +14,8 @@ package org.webspeclanguage.webspec2test;
 
 import java.util.Map;
 
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.expression.base.ConstantExpression;
+import org.webspeclanguage.api.Interaction;
+import org.webspeclanguage.impl.expression.core.ConstantExpression;
 
 /**
  * An exception thrown when an invariant is not satisfied during path

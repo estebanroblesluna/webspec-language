@@ -14,7 +14,7 @@ package org.webspeclanguage.expression.base;
 
 import junit.framework.TestCase;
 
-import org.webspeclanguage.expression.utils.ExpressionUtils;
+import org.webspeclanguage.impl.expression.utils.ExpressionUtils;
 
 /**
  * @author Esteban Robles Luna

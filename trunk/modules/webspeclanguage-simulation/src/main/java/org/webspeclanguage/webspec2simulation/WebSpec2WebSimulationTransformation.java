@@ -18,32 +18,33 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.webspeclanguage.action.Action;
-import org.webspeclanguage.action.ActionVisitor;
-import org.webspeclanguage.action.ExpressionAction;
-import org.webspeclanguage.action.LetVariable;
-import org.webspeclanguage.base.PathComputer;
-import org.webspeclanguage.base.Diagram;
-import org.webspeclanguage.base.Interaction;
-import org.webspeclanguage.base.Navigation;
-import org.webspeclanguage.base.Path;
-import org.webspeclanguage.base.PathItem;
-import org.webspeclanguage.base.PathItemVisitor;
-import org.webspeclanguage.base.RichBehavior;
-import org.webspeclanguage.base.Transition;
-import org.webspeclanguage.expression.base.BooleanConstant;
-import org.webspeclanguage.expression.base.ConstantExpression;
-import org.webspeclanguage.expression.base.Expression;
-import org.webspeclanguage.expression.base.ExpressionType;
-import org.webspeclanguage.expression.base.FunctionCallExpression;
-import org.webspeclanguage.expression.base.NumberConstant;
-import org.webspeclanguage.expression.base.StringConstant;
-import org.webspeclanguage.expression.base.WidgetPropertyReference;
-import org.webspeclanguage.expression.base.WidgetReference;
-import org.webspeclanguage.expression.concretizer.ExpressionConcretizer;
-import org.webspeclanguage.expression.conjunctivenormalform.ExpressionConvertorToConjunctiveNormalForm;
-import org.webspeclanguage.expression.optimizer.ExpressionOptimizer;
-import org.webspeclanguage.generator.Generator;
+import org.webspeclanguage.api.Action;
+import org.webspeclanguage.api.Generator;
+import org.webspeclanguage.api.Interaction;
+import org.webspeclanguage.api.Navigation;
+import org.webspeclanguage.api.Operation;
+import org.webspeclanguage.api.PathItem;
+import org.webspeclanguage.api.PathItemVisitor;
+import org.webspeclanguage.api.RichBehavior;
+import org.webspeclanguage.api.Transition;
+import org.webspeclanguage.impl.action.ActionVisitor;
+import org.webspeclanguage.impl.action.ExpressionAction;
+import org.webspeclanguage.impl.action.LetVariable;
+import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.impl.core.Path;
+import org.webspeclanguage.impl.core.PathComputer;
+import org.webspeclanguage.impl.expression.concretizer.ExpressionConcretizer;
+import org.webspeclanguage.impl.expression.conjunctivenormalform.ExpressionConvertorToConjunctiveNormalForm;
+import org.webspeclanguage.impl.expression.core.BooleanConstant;
+import org.webspeclanguage.impl.expression.core.ConstantExpression;
+import org.webspeclanguage.impl.expression.core.Expression;
+import org.webspeclanguage.impl.expression.core.ExpressionType;
+import org.webspeclanguage.impl.expression.core.FunctionCallExpression;
+import org.webspeclanguage.impl.expression.core.NumberConstant;
+import org.webspeclanguage.impl.expression.core.StringConstant;
+import org.webspeclanguage.impl.expression.core.WidgetPropertyReference;
+import org.webspeclanguage.impl.expression.core.WidgetReference;
+import org.webspeclanguage.impl.expression.optimizer.ExpressionOptimizer;
 import org.webspeclanguage.simulation.ExecuteAction;
 import org.webspeclanguage.simulation.ExpressionPrettyPrinter;
 import org.webspeclanguage.simulation.OpenMockup;
@@ -62,7 +63,7 @@ public class WebSpec2WebSimulationTransformation {
   private ExpressionConcretizer concretizer;
   private ExpressionConvertorToConjunctiveNormalForm cnfConvertor;
 
-  private Diagram currentDiagram;
+  private DiagramImpl currentDiagram;
   private String homePath;
   private SimulationGenerationResult result;
   
@@ -75,7 +76,7 @@ public class WebSpec2WebSimulationTransformation {
     this.basicInitializeOptimizerAndConcretizer();
   }
 
-  public SimulationGenerationResult transform(Diagram diagram) {
+  public SimulationGenerationResult transform(DiagramImpl diagram) {
     this.setCurrentDiagram(diagram);
     this.createResult(diagram);
 
@@ -174,9 +175,7 @@ public class WebSpec2WebSimulationTransformation {
   private void initializeOptimizerAndConcretizer() {
     this.basicInitializeOptimizerAndConcretizer();
 
-    for (String generatorName : this.getCurrentDiagram().getGeneratorsNames()) {
-      Generator generator = this.getCurrentDiagram().getGeneratorNamed(
-          generatorName);
+    for (Generator generator : this.getCurrentDiagram().getGenerators()) {
       this.getConcretizer().set(generator);
     }
   }
@@ -186,12 +185,12 @@ public class WebSpec2WebSimulationTransformation {
     this.concretizer = new ExpressionConcretizer();
   }
 
-  public List<Path> computePathsFor(Diagram diagram) {
+  public List<Path> computePathsFor(DiagramImpl diagram) {
     return new PathComputer(diagram.getCyclesAllowed())
         .computePathsFor(diagram);
   }
 
-  public Simulation computeSimpleSimulation(Path path, Diagram diagram) {
+  public Simulation computeSimpleSimulation(Path path, DiagramImpl diagram) {
     final Simulation simulation = this.createSimulation(this.computeNameFor(path));
 
     for (PathItem item : path.getItems()) {
@@ -211,13 +210,20 @@ public class WebSpec2WebSimulationTransformation {
           generateItemsFor(richBehavior, simulation);
           return null;
         }
+
+        public Object visitOperation(Operation operation) {
+          for (PathItem item : operation.getItems()) {
+            item.accept(this);
+          }
+          return null;
+        }
       });
     }
 
     return simulation;
   }
 
-  protected void createResult(Diagram diagram) {
+  protected void createResult(DiagramImpl diagram) {
     this.result = new SimulationGenerationResult(diagram.getName());
   }
 
@@ -238,7 +244,7 @@ public class WebSpec2WebSimulationTransformation {
   }
 
   protected Generator getGenerator(String generatorName) {
-    return this.getGenerators().get(generatorName);
+    return this.getCurrentDiagram().getGeneratorNamed(generatorName);
   }
 
   protected Expression makeConcreteAndOptimize(Expression expression) {
@@ -249,10 +255,6 @@ public class WebSpec2WebSimulationTransformation {
 
   private String computeNameFor(Path path) {
     return path.getName();
-  }
-
-  private Map<String, Generator> getGenerators() {
-    return this.getCurrentDiagram().getGenerators();
   }
 
   public boolean isAllowCycles() {
@@ -267,11 +269,11 @@ public class WebSpec2WebSimulationTransformation {
     return concretizer;
   }
 
-  protected Diagram getCurrentDiagram() {
+  protected DiagramImpl getCurrentDiagram() {
     return currentDiagram;
   }
 
-  public void setCurrentDiagram(Diagram currentDiagram) {
+  public void setCurrentDiagram(DiagramImpl currentDiagram) {
     this.currentDiagram = currentDiagram;
   }
 

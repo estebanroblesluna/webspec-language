@@ -12,8 +12,8 @@
  */
 package org.webspeclanguage.io.widgets;
 
-import org.webspeclanguage.widget.ListOfContainer;
-import org.webspeclanguage.widget.Widget;
+import org.webspeclanguage.impl.widget.ListOfContainer;
+import org.webspeclanguage.impl.widget.Widget;
 
 /**
  * A {@link ListOfContainer} parser
