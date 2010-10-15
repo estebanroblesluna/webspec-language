@@ -15,7 +15,7 @@ package org.webspeclanguage.generator;
 import junit.framework.TestCase;
 
 import org.webspeclanguage.impl.expression.core.StringConstant;
-import org.webspeclanguage.impl.generator.StringGenerator;
+import org.webspeclanguage.impl.generator.RandomStringGenerator;
 
 /**
  * @author Esteban Robles Luna
@@ -23,7 +23,7 @@ import org.webspeclanguage.impl.generator.StringGenerator;
 public class StringGeneratorTestCase extends TestCase {
 
   public void testGenerator() {
-    StringGenerator generator = new StringGenerator("stringGenerator", 10);
+    RandomStringGenerator generator = new RandomStringGenerator("stringGenerator", 10);
     for (int i = 0; i < 100; i++) {
       StringConstant constant = (StringConstant) generator.generate();
       assertNotNull(constant.getConstant());

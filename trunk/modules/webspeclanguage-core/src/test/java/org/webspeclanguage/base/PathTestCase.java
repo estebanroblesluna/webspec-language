@@ -14,12 +14,12 @@ package org.webspeclanguage.base;
 
 import java.util.List;
 
-import org.webspeclanguage.impl.core.DiagramImpl;
+import junit.framework.TestCase;
+
+import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.impl.core.PathComputer;
 import org.webspeclanguage.impl.core.WebSpecFactory;
-
-import junit.framework.TestCase;
 
 /**
  * @author Esteban Robles Luna
@@ -28,7 +28,7 @@ public class PathTestCase extends TestCase {
 
   public void testToString() {
     PathComputer pathComputer = new PathComputer(2);
-    DiagramImpl diagram = WebSpecFactory.getCycleExample();
+    Diagram diagram = WebSpecFactory.getCycleExample();
     List<Path> paths = pathComputer.computePathsFor(diagram);
 
     assertEquals("i1_i2_i1_i2_i1", paths.get(0).toString());
@@ -38,7 +38,7 @@ public class PathTestCase extends TestCase {
 
   public void testContains() {
     PathComputer pathComputer = new PathComputer(2);
-    DiagramImpl diagram = WebSpecFactory.getCycleExample();
+    Diagram diagram = WebSpecFactory.getCycleExample();
     List<Path> paths = pathComputer.computePathsFor(diagram);
 
     assertTrue(paths.get(0).contains(diagram.getInteractionNamed("i1")));

@@ -10,33 +10,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.io.base;
+package org.webspeclanguage.io.generators;
 
-import org.webspeclanguage.api.Interaction;
-import org.webspeclanguage.impl.core.InteractionImpl;
-import org.webspeclanguage.impl.widget.Widget;
+import java.math.BigDecimal;
+
+import org.webspeclanguage.impl.generator.UniformNumberGenerator;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
 import org.xml.sax.Attributes;
 
 /**
- * A {@link Interaction} parser
+ * A {@link UniformNumberGenerator} parser
  * 
  * @author Esteban Robles Luna
  */
-public class InteractionParser extends AbstractElementParser {
-
-  public InteractionParser() {
-    this.registerChild(Widget.class, "addWidget");
-  }
+public class UniformNumberParser extends AbstractElementParser {
 
   /**
    * {@inheritDoc}
    */
   public void parse(Attributes attributes, ParseContext context) {
-    Interaction interaction = new InteractionImpl(attributes.getValue("name"));
-    this.setResult(interaction);
-    
-    context.put(interaction.getName() + "-Interaction", interaction);
+    String name = attributes.getValue("name");
+    BigDecimal minValue = new BigDecimal(attributes.getValue("minValue"));
+    BigDecimal maxValue = new BigDecimal(attributes.getValue("maxValue"));
+    this.setResult(new UniformNumberGenerator(name, minValue, maxValue));
   }
 }

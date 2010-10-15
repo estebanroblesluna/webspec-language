@@ -44,10 +44,10 @@ public interface PathItemVisitor {
   Object visitRichBehavior(RichBehavior richBehavior);
 
   /**
-   * Visits an {@link Operation}
+   * Visits an {@link OperationReference}
    * 
-   * @param operation the item to visit
+   * @param operationReference the item to visit
    * @return the result of visiting the item
    */
-  Object visitOperation(Operation operation);
+  Object visitOperationReference(OperationReference operationReference);
 }

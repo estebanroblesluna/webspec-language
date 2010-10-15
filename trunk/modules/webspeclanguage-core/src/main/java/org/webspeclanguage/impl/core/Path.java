@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
+import org.webspeclanguage.api.Interaction;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.api.Transition;
 import org.webspeclanguage.api.TransitionSource;
@@ -101,7 +102,7 @@ public class Path {
   }
 
   private Path copy() {
-    Path newPath = new Path((InteractionImpl) this.getItems().get(0));
+    Path newPath = new Path((Interaction) this.getItems().get(0));
     for (int i = 1; i < this.getItems().size(); i++) {
       newPath.basicAddItem(this.getItems().get(i));
     }

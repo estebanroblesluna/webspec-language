@@ -28,7 +28,7 @@ import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.Generator;
 import org.webspeclanguage.api.Interaction;
 import org.webspeclanguage.api.Navigation;
-import org.webspeclanguage.api.Operation;
+import org.webspeclanguage.api.OperationReference;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.api.PathItemVisitor;
 import org.webspeclanguage.api.RichBehavior;
@@ -188,7 +188,7 @@ public class DiagramImpl implements Diagram {
     return startingInteraction;
   }
 
-  public void setStartingInteraction(InteractionImpl startingInteraction) {
+  public void setStartingInteraction(Interaction startingInteraction) {
     if (startingInteraction.getLocation() == null) {
       throw new InvalidStartingInteractionException(startingInteraction);
     }
@@ -262,8 +262,8 @@ public class DiagramImpl implements Diagram {
       return null;
     }
 
-    public Object visitOperation(Operation operation) {
-      for (PathItem item : operation.getItems()) {
+    public Object visitOperationReference(OperationReference operationReference) {
+      for (PathItem item : operationReference.getReference().getItems()) {
         item.accept(this);
       }
       return null;

@@ -26,12 +26,16 @@ import org.webspeclanguage.impl.expression.core.StringConstant;
  * 
  * @author Esteban Robles Luna
  */
-public class StringGenerator extends AbstractGenerator {
+public class RandomStringGenerator extends AbstractGenerator {
 
   private int maxLength;
   private List<Character> characters;
 
-  public StringGenerator(String name, int maxLength) {
+  public RandomStringGenerator(String name, int maxLength) {
+    this(name, 0, maxLength);
+  }
+
+  public RandomStringGenerator(String name, int minLength, int maxLength) {
     super(name);
     
     this.maxLength = maxLength;

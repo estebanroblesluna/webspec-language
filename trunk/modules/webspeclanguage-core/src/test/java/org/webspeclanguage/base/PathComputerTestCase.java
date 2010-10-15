@@ -16,6 +16,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.impl.core.DiagramImpl;
 import org.webspeclanguage.impl.core.InteractionImpl;
 import org.webspeclanguage.impl.core.Path;
@@ -36,7 +37,7 @@ public class PathComputerTestCase extends TestCase {
   }
 
   public void testPathComputing() {
-    DiagramImpl diagram = WebSpecFactory.getCycleExample();
+    Diagram diagram = WebSpecFactory.getCycleExample();
     List<Path> paths = this.pathComputer.computePathsFor(diagram);
     assertEquals(3, paths.size());
 

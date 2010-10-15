@@ -32,7 +32,7 @@ public class PathComputer {
 
   private int cyclesAllowed;
 
-  public static List<Path> computePaths(DiagramImpl diagram) {
+  public static List<Path> computePaths(Diagram diagram) {
     return new PathComputer(diagram.getCyclesAllowed())
         .computePathsFor(diagram);
   }

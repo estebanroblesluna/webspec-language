@@ -2,8 +2,18 @@
   xmlns="http://www.webspeclanguage.org/webspec" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.webspeclanguage.org/webspec webspec.xsd">
+ 
+  <one-of-strings-generator name="products" values="hello,how,are,you" />
+  <one-of-numbers-generator name="numbers" values="1,2,3,4.5" />
+  <random-string-generator  name="randomString" minLength="2" maxLength="10" />
+  <random-boolean-generator name="boolean" />
+  <uniform-number-generator name="uniform" minValue="0" maxValue="1" />
 
-  <one-of-string-generator name="products" values="hello,how,are,you" />
+  <one-of-arrays-generator  name="arrays">
+    <arrayExpression values="1,2,3" />
+    <arrayExpression values="4,5,6" />
+  </one-of-arrays-generator>
+  
   
   <interaction name="Home" starting="true">
     <button name="search" />

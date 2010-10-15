@@ -15,23 +15,23 @@ package org.webspeclanguage.impl.expression.typechecker;
 import java.util.List;
 
 import org.webspeclanguage.api.Action;
+import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.Interaction;
 import org.webspeclanguage.api.Navigation;
-import org.webspeclanguage.api.Operation;
+import org.webspeclanguage.api.OperationReference;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.api.PathItemVisitor;
 import org.webspeclanguage.api.RichBehavior;
 import org.webspeclanguage.impl.action.ActionVisitor;
 import org.webspeclanguage.impl.action.ExpressionAction;
 import org.webspeclanguage.impl.action.LetVariable;
-import org.webspeclanguage.impl.core.DiagramImpl;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.impl.core.PathComputer;
 import org.webspeclanguage.impl.expression.core.Expression;
 import org.webspeclanguage.impl.expression.core.ExpressionType;
 
 /**
- * A typechecker for a {@link DiagramImpl}
+ * A typechecker for a {@link Diagram}
  * 
  * @author Esteban Robles Luna
  */
@@ -39,10 +39,10 @@ public class DiagramTypechecker {
 
   private ExpressionTypechecker expressionTypechecker;
 
-  private DiagramImpl currentDiagram;
+  private Diagram currentDiagram;
   private TypecheckingResult result;
 
-  public TypecheckingResult typecheck(DiagramImpl webSpecDiagram) {
+  public TypecheckingResult typecheck(Diagram webSpecDiagram) {
     this.currentDiagram = webSpecDiagram;
     this.expressionTypechecker = new ExpressionTypechecker(this.currentDiagram);
 
@@ -81,8 +81,8 @@ public class DiagramTypechecker {
           return null;
         }
 
-        public Object visitOperation(Operation operation) {
-          for (PathItem item : operation.getItems()) {
+        public Object visitOperationReference(OperationReference operationReference) {
+          for (PathItem item : operationReference.getReference().getItems()) {
             item.accept(this);
           }
           return null;

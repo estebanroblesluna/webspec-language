@@ -35,10 +35,10 @@ import org.webspeclanguage.impl.expression.typechecker.ExpressionTypechecker;
 import org.webspeclanguage.impl.expression.typechecker.InexistentGeneratorException;
 import org.webspeclanguage.impl.expression.typechecker.TypecheckException;
 import org.webspeclanguage.impl.expression.typechecker.UnmatchedFunctionException;
-import org.webspeclanguage.impl.generator.BooleanGenerator;
+import org.webspeclanguage.impl.generator.RandomBooleanGenerator;
 import org.webspeclanguage.impl.generator.OneOfNumbers;
 import org.webspeclanguage.impl.generator.OneOfStrings;
-import org.webspeclanguage.impl.generator.StringGenerator;
+import org.webspeclanguage.impl.generator.RandomStringGenerator;
 import org.webspeclanguage.impl.generator.UniformNumberGenerator;
 import org.webspeclanguage.impl.widget.Button;
 import org.webspeclanguage.impl.widget.ListOfContainer;
@@ -92,10 +92,10 @@ public class ExpressionsTestCase extends TestCase {
     this.concretizer.set(new UniformNumberGenerator("uni", 0, 1));
 
     this.typechecker.set(new OneOfNumbers("genI", 1));
-    this.typechecker.set(new BooleanGenerator("bools"));
+    this.typechecker.set(new RandomBooleanGenerator("bools"));
     this.typechecker.set(new OneOfStrings("ss", "a", "b"));
     this.typechecker.set(new UniformNumberGenerator("uni", 0, 1));
-    this.typechecker.set(new StringGenerator("sss", 25));
+    this.typechecker.set(new RandomStringGenerator("sss", 25));
   }
 
   public void testOptimize() {

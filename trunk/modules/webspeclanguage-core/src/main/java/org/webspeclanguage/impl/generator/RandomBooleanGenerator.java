@@ -12,28 +12,32 @@
  */
 package org.webspeclanguage.impl.generator;
 
-import org.webspeclanguage.impl.expression.core.ArrayExpression;
+import org.webspeclanguage.api.Generator;
+import org.webspeclanguage.impl.expression.core.BooleanConstant;
 import org.webspeclanguage.impl.expression.core.ConstantExpression;
 import org.webspeclanguage.impl.expression.core.ExpressionType;
 
 /**
- * A {@link OneOf} generator for {@link ArrayExpression}
+ * A {@link Generator} for {@link BooleanConstant}
  * 
  * @author Esteban Robles Luna
  */
-public class OneOfArray extends OneOf<ArrayExpression> {
+public class RandomBooleanGenerator extends AbstractGenerator {
 
-  public OneOfArray(String name, ArrayExpression... values) {
-    super(name, values);
+  public RandomBooleanGenerator(String name) {
+    super(name);
   }
 
   @SuppressWarnings("unchecked")
-  @Override
-  protected ConstantExpression computeExpression(ArrayExpression aT) {
-    return aT;
+  public ConstantExpression generate() {
+    if (Math.random() < 0.5d) {
+      return BooleanConstant.FALSE;
+    } else {
+      return BooleanConstant.TRUE;
+    }
   }
 
   public ExpressionType getGenerationType() {
-    return ExpressionType.ARRAY;
+    return ExpressionType.BOOLEAN;
   }
 }

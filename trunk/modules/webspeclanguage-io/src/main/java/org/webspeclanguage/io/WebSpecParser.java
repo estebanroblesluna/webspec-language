@@ -26,20 +26,26 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.apache.log4j.lf5.util.StreamUtils;
-import org.webspeclanguage.impl.core.DiagramImpl;
+import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.impl.exception.WebspecException;
 import org.webspeclanguage.io.base.DiagramParser;
 import org.webspeclanguage.io.base.InteractionParser;
 import org.webspeclanguage.io.base.NavigationParser;
 import org.webspeclanguage.io.base.RichBehaviorParser;
-import org.webspeclanguage.io.generators.OneOfStringParser;
+import org.webspeclanguage.io.generators.ArrayParser;
+import org.webspeclanguage.io.generators.OneOfArraysParser;
+import org.webspeclanguage.io.generators.OneOfNumbersParser;
+import org.webspeclanguage.io.generators.OneOfStringsParser;
+import org.webspeclanguage.io.generators.RandomBooleanParser;
+import org.webspeclanguage.io.generators.RandomStringParser;
+import org.webspeclanguage.io.generators.UniformNumberParser;
 import org.webspeclanguage.io.widgets.ButtonParser;
 import org.webspeclanguage.io.widgets.LabelParser;
 import org.webspeclanguage.io.widgets.ListOfParser;
 import org.webspeclanguage.io.widgets.TextFieldParser;
 
 /**
- * A {@link DiagramImpl} parser
+ * A {@link Diagram} parser
  * 
  * @author Esteban Robles Luna
  */
@@ -63,10 +69,16 @@ public class WebSpecParser {
     this.parsersMappings.put("list-of", new ListOfParser());
     this.parsersMappings.put("label", new LabelParser());
     
-    this.parsersMappings.put("one-of-string-generator", new OneOfStringParser());
+    this.parsersMappings.put("one-of-strings-generator", new OneOfStringsParser());
+    this.parsersMappings.put("one-of-numbers-generator", new OneOfNumbersParser());
+    this.parsersMappings.put("random-string-generator",  new RandomStringParser());
+    this.parsersMappings.put("random-boolean-generator", new RandomBooleanParser());
+    this.parsersMappings.put("uniform-number-generator", new UniformNumberParser());
+    this.parsersMappings.put("one-of-arrays-generator",  new OneOfArraysParser());
+    this.parsersMappings.put("arrayExpression",          new ArrayParser());
   }
 
-  public DiagramImpl parse(String resource) {
+  public Diagram parse(String resource) {
     InputStream stream = null;
     try {
       stream = Thread.currentThread().getContextClassLoader().getResource(resource).openStream();
@@ -76,7 +88,7 @@ public class WebSpecParser {
     }
   }
 
-  public DiagramImpl parse(InputStream inputStream) {
+  public Diagram parse(InputStream inputStream) {
     try {
       InputStream allStream = new ByteArrayInputStream(StreamUtils.getBytes(inputStream));
       SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -90,7 +102,7 @@ public class WebSpecParser {
       
       SAXParser saxParser = saxParserFactory.newSAXParser();
       saxParser.parse(allStream, new ParseHandler(this));
-      return (DiagramImpl) this.getResult();
+      return (Diagram) this.getResult();
     } catch (Exception e) {
       throw new WebspecException(e);
     }

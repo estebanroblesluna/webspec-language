@@ -10,26 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.io.generators;
-
-import org.webspeclanguage.impl.generator.OneOfStrings;
-import org.webspeclanguage.io.AbstractElementParser;
-import org.webspeclanguage.io.ParseContext;
-import org.xml.sax.Attributes;
+package org.webspeclanguage.api;
 
 /**
- * A {@link OneOfStrings} parser
+ * A reference to a different element.
  * 
  * @author Esteban Robles Luna
  */
-public class OneOfStringParser extends AbstractElementParser {
+public interface Reference<T> {
 
   /**
-   * {@inheritDoc}
+   * @return the reference
    */
-  public void parse(Attributes attributes, ParseContext context) {
-    String[] values = attributes.getValue("values").split(",");
-    OneOfStrings generator = new OneOfStrings(attributes.getValue("name"), values);
-    this.setResult(generator);
-  }
+  T getReference();
 }

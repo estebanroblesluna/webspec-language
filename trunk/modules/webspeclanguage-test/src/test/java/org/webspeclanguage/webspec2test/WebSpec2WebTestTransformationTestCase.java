@@ -21,7 +21,7 @@ import org.webspeclanguage.impl.core.InteractionImpl;
 import org.webspeclanguage.impl.expression.core.ArrayExpression;
 import org.webspeclanguage.impl.expression.core.StringConstant;
 import org.webspeclanguage.impl.expression.utils.ExpressionUtils;
-import org.webspeclanguage.impl.generator.OneOfArray;
+import org.webspeclanguage.impl.generator.OneOfArrays;
 import org.webspeclanguage.impl.generator.OneOfStrings;
 import org.webspeclanguage.impl.widget.Button;
 import org.webspeclanguage.impl.widget.Label;
@@ -53,7 +53,7 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
     this.diagram = new DiagramImpl("d");
     this.diagram.addGenerator(new OneOfStrings("validUsernames", "carlos2"));
     this.diagram.addGenerator(new OneOfStrings("invalidUsernames", "carlos"));
-    this.diagram.addGenerator(new OneOfArray("uandpss", new ArrayExpression(new StringConstant("user"), new StringConstant("pass"))));
+    this.diagram.addGenerator(new OneOfArrays("uandpss", new ArrayExpression(new StringConstant("user"), new StringConstant("pass"))));
 
     this.starting = new InteractionImpl("start");
     this.starting.setTitle("\"The title\"");

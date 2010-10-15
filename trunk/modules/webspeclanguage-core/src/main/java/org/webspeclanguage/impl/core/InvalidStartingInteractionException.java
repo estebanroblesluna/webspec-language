@@ -12,6 +12,8 @@
  */
 package org.webspeclanguage.impl.core;
 
+import org.webspeclanguage.api.Interaction;
+
 /**
  * An exception thrown when the interaction we are trying to add is invalid
  * because it doesn't have a location.
@@ -20,15 +22,15 @@ package org.webspeclanguage.impl.core;
  */
 public class InvalidStartingInteractionException extends RuntimeException {
 
-  private InteractionImpl startingInteraction;
+  private Interaction startingInteraction;
 
   private static final long serialVersionUID = -2059856228247237272L;
 
-  public InvalidStartingInteractionException(InteractionImpl startingInteraction) {
+  public InvalidStartingInteractionException(Interaction startingInteraction) {
     this.startingInteraction = startingInteraction;
   }
 
-  public InteractionImpl getStartingInteraction() {
+  public Interaction getStartingInteraction() {
     return startingInteraction;
   }
 }

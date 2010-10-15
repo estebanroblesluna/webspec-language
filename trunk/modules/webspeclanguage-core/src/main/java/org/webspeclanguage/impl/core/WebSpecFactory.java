@@ -12,6 +12,7 @@
  */
 package org.webspeclanguage.impl.core;
 
+import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.Navigation;
 import org.webspeclanguage.impl.expression.core.AndExpression;
 import org.webspeclanguage.impl.expression.core.EqualsExpression;
@@ -38,8 +39,8 @@ public final class WebSpecFactory {
 
   private WebSpecFactory() {}
   
-  public static DiagramImpl getWebSpecDiagram() {
-    DiagramImpl diagram = new DiagramImpl("i1");
+  public static Diagram getWebSpecDiagram() {
+    Diagram diagram = new DiagramImpl("i1");
 
     InteractionImpl i1 = new InteractionImpl("i1");
     i1.setLocation("http://www.google.com");
@@ -112,8 +113,8 @@ public final class WebSpecFactory {
     return diagram;
   }
 
-  public static DiagramImpl getAmazonExample() {
-    DiagramImpl diagram = new DiagramImpl("Amazon example");
+  public static Diagram getAmazonExample() {
+    Diagram diagram = new DiagramImpl("Amazon example");
 
     diagram.addGenerator(new OneOfStrings("productNames", "ipod", "iphone"));
     diagram.addGenerator(new OneOfNumbers("productIndexs", 0, 2, 3, 4, 5, 6, 7, 8, 9));
@@ -179,8 +180,8 @@ public final class WebSpecFactory {
     return diagram;
   }
 
-  public static DiagramImpl getAmazonExample2() {
-    DiagramImpl diagram = new DiagramImpl("Amazon example2");
+  public static Diagram getAmazonExample2() {
+    Diagram diagram = new DiagramImpl("Amazon example2");
 
     diagram.addGenerator(new OneOfStrings("productNames", "ipod", "iphone"));
     diagram.addGenerator(new OneOfNumbers("productIndexs", 0, 2, 3, 4, 5, 6, 7, 8, 9));
@@ -307,8 +308,8 @@ public final class WebSpecFactory {
   }
 
   @SuppressWarnings("unused")
-  public static DiagramImpl getCycleExample() {
-    DiagramImpl diagram = new DiagramImpl("Cycle example");
+  public static Diagram getCycleExample() {
+    Diagram diagram = new DiagramImpl("Cycle example");
 
     InteractionImpl i1 = new InteractionImpl("i1");
     i1.setLocation("http://www.amazon.com");
