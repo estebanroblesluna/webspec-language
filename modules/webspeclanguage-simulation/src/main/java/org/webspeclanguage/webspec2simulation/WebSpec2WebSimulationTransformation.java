@@ -15,14 +15,14 @@ package org.webspeclanguage.webspec2simulation;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.webspeclanguage.api.Action;
+import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.Generator;
 import org.webspeclanguage.api.Interaction;
 import org.webspeclanguage.api.Navigation;
-import org.webspeclanguage.api.Operation;
+import org.webspeclanguage.api.OperationReference;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.api.PathItemVisitor;
 import org.webspeclanguage.api.RichBehavior;
@@ -30,7 +30,6 @@ import org.webspeclanguage.api.Transition;
 import org.webspeclanguage.impl.action.ActionVisitor;
 import org.webspeclanguage.impl.action.ExpressionAction;
 import org.webspeclanguage.impl.action.LetVariable;
-import org.webspeclanguage.impl.core.DiagramImpl;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.impl.core.PathComputer;
 import org.webspeclanguage.impl.expression.concretizer.ExpressionConcretizer;
@@ -63,7 +62,7 @@ public class WebSpec2WebSimulationTransformation {
   private ExpressionConcretizer concretizer;
   private ExpressionConvertorToConjunctiveNormalForm cnfConvertor;
 
-  private DiagramImpl currentDiagram;
+  private Diagram currentDiagram;
   private String homePath;
   private SimulationGenerationResult result;
   
@@ -76,7 +75,7 @@ public class WebSpec2WebSimulationTransformation {
     this.basicInitializeOptimizerAndConcretizer();
   }
 
-  public SimulationGenerationResult transform(DiagramImpl diagram) {
+  public SimulationGenerationResult transform(Diagram diagram) {
     this.setCurrentDiagram(diagram);
     this.createResult(diagram);
 
@@ -185,12 +184,12 @@ public class WebSpec2WebSimulationTransformation {
     this.concretizer = new ExpressionConcretizer();
   }
 
-  public List<Path> computePathsFor(DiagramImpl diagram) {
+  public List<Path> computePathsFor(Diagram diagram) {
     return new PathComputer(diagram.getCyclesAllowed())
         .computePathsFor(diagram);
   }
 
-  public Simulation computeSimpleSimulation(Path path, DiagramImpl diagram) {
+  public Simulation computeSimpleSimulation(Path path, Diagram diagram) {
     final Simulation simulation = this.createSimulation(this.computeNameFor(path));
 
     for (PathItem item : path.getItems()) {
@@ -211,8 +210,8 @@ public class WebSpec2WebSimulationTransformation {
           return null;
         }
 
-        public Object visitOperation(Operation operation) {
-          for (PathItem item : operation.getItems()) {
+        public Object visitOperationReference(OperationReference operationReference) {
+          for (PathItem item : operationReference.getReference().getItems()) {
             item.accept(this);
           }
           return null;
@@ -223,7 +222,7 @@ public class WebSpec2WebSimulationTransformation {
     return simulation;
   }
 
-  protected void createResult(DiagramImpl diagram) {
+  protected void createResult(Diagram diagram) {
     this.result = new SimulationGenerationResult(diagram.getName());
   }
 
@@ -269,11 +268,11 @@ public class WebSpec2WebSimulationTransformation {
     return concretizer;
   }
 
-  protected DiagramImpl getCurrentDiagram() {
+  protected Diagram getCurrentDiagram() {
     return currentDiagram;
   }
 
-  public void setCurrentDiagram(DiagramImpl currentDiagram) {
+  public void setCurrentDiagram(Diagram currentDiagram) {
     this.currentDiagram = currentDiagram;
   }
 

@@ -63,33 +63,44 @@
       <attribute name="name" type="string"/>
     </complexType>
 
-    <element name="boolean-generator" type="tns:tBooleanGenerator" substitutionGroup="tns:generator"/>
+    <element name="random-boolean-generator" type="tns:tRandomBooleanGenerator" substitutionGroup="tns:generator"/>
     
-    <complexType name="tBooleanGenerator">
+    <complexType name="tRandomBooleanGenerator">
       <complexContent>
         <extension base="tns:tGenerator"></extension>
       </complexContent>
     </complexType>
 
-    <element name="one-of-array-generator" type="tns:tOneOfArrayGenerator" substitutionGroup="tns:generator"/>
+    <element name="one-of-arrays-generator" type="tns:tOneOfArraysGenerator" substitutionGroup="tns:generator"/>
 
-    <complexType name="tOneOfArrayGenerator">
+    <complexType name="tOneOfArraysGenerator">
       <complexContent>
-        <extension base="tns:tGenerator"></extension>
+        <extension base="tns:tGenerator">
+          <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="tns:arrayExpression"/>
+          </sequence>
+        </extension>
       </complexContent>
     </complexType>
 
-    <element name="one-of-number-generator" type="tns:tOneOfNumberGenerator" substitutionGroup="tns:generator"/>
+    <element name="arrayExpression" type="tns:tArray"/>
+    <complexType name="tArray">
+      <attribute name="values" type="string"/>
+    </complexType>
 
-    <complexType name="tOneOfNumberGenerator">
+    <element name="one-of-numbers-generator" type="tns:tOneOfNumbersGenerator" substitutionGroup="tns:generator"/>
+
+    <complexType name="tOneOfNumbersGenerator">
       <complexContent>
-        <extension base="tns:tGenerator"></extension>
+        <extension base="tns:tGenerator">
+          <attribute name="values" type="string"/>
+        </extension>
       </complexContent>
     </complexType>
 
-    <element name="one-of-string-generator" type="tns:tOneOfStringGenerator" substitutionGroup="tns:generator"/>
+    <element name="one-of-strings-generator" type="tns:tOneOfStringsGenerator" substitutionGroup="tns:generator"/>
 
-    <complexType name="tOneOfStringGenerator">
+    <complexType name="tOneOfStringsGenerator">
       <complexContent>
         <extension base="tns:tGenerator">
           <attribute name="values" type="string"/>
@@ -97,11 +108,14 @@
       </complexContent>
     </complexType>
     
-    <element name="string-generator" type="tns:tStringGenerator" substitutionGroup="tns:generator"/>
+    <element name="random-string-generator" type="tns:tRandomStringGenerator" substitutionGroup="tns:generator"/>
 
-    <complexType name="tStringGenerator">
+    <complexType name="tRandomStringGenerator">
       <complexContent>
-        <extension base="tns:tGenerator"></extension>
+        <extension base="tns:tGenerator">
+          <attribute name="minLength" type="int" default="0"/>
+          <attribute name="maxLength" type="int" default="25"/>
+        </extension>
       </complexContent>
     </complexType>
 
@@ -109,7 +123,10 @@
 
     <complexType name="tUniformNumberGenerator">
       <complexContent>
-        <extension base="tns:tGenerator"></extension>
+        <extension base="tns:tGenerator">
+          <attribute name="minValue" type="double"/>
+          <attribute name="maxValue" type="double"/>
+        </extension>
       </complexContent>
     </complexType>
 

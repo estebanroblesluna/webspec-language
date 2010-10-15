@@ -10,22 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.io.base;
-
-import org.webspeclanguage.api.Interaction;
-import org.webspeclanguage.api.Navigation;
-import org.webspeclanguage.api.Transition;
-import org.webspeclanguage.impl.core.NavigationImpl;
+package org.webspeclanguage.api;
 
 /**
- * A {@link Navigation} parser
+ * A reference to an {@link Operation}
  * 
  * @author Esteban Robles Luna
  */
-public class NavigationParser extends TransitionParser {
+public interface OperationReference extends Reference<Operation>, TransitionSource, TransitionTarget, PathItem {
 
-  @Override
-  protected Transition createTransition(Interaction from, Interaction to) {
-    return new NavigationImpl(from, to);
-  }
 }

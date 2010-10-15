@@ -10,22 +10,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.io.base;
+package org.webspeclanguage.io.generators;
 
-import org.webspeclanguage.api.Interaction;
-import org.webspeclanguage.api.Navigation;
-import org.webspeclanguage.api.Transition;
-import org.webspeclanguage.impl.core.NavigationImpl;
+import org.webspeclanguage.impl.generator.RandomBooleanGenerator;
+import org.webspeclanguage.io.AbstractElementParser;
+import org.webspeclanguage.io.ParseContext;
+import org.xml.sax.Attributes;
 
 /**
- * A {@link Navigation} parser
+ * A {@link RandomBooleanGenerator} parser
  * 
  * @author Esteban Robles Luna
  */
-public class NavigationParser extends TransitionParser {
+public class RandomBooleanParser extends AbstractElementParser {
 
-  @Override
-  protected Transition createTransition(Interaction from, Interaction to) {
-    return new NavigationImpl(from, to);
+  /**
+   * {@inheritDoc}
+   */
+  public void parse(Attributes attributes, ParseContext context) {
+    this.setResult(new RandomBooleanGenerator(attributes.getValue("name")));
   }
 }

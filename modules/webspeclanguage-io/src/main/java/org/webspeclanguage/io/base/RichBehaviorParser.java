@@ -12,19 +12,20 @@
  */
 package org.webspeclanguage.io.base;
 
-import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.api.Interaction;
+import org.webspeclanguage.api.RichBehavior;
+import org.webspeclanguage.api.Transition;
 import org.webspeclanguage.impl.core.RichBehaviorImpl;
-import org.webspeclanguage.impl.core.TransitionImpl;
 
 /**
- * A {@link RichBehaviorImpl} parser
+ * A {@link RichBehavior} parser
  * 
  * @author Esteban Robles Luna
  */
 public class RichBehaviorParser extends TransitionParser {
 
   @Override
-  protected TransitionImpl createTransition(InteractionImpl from, InteractionImpl to) {
+  protected Transition createTransition(Interaction from, Interaction to) {
     return new RichBehaviorImpl(from, to);
   }
 }

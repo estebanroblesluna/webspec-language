@@ -20,6 +20,7 @@ import org.apache.commons.lang.Validate;
 import org.webspeclanguage.api.Interaction;
 import org.webspeclanguage.api.Navigation;
 import org.webspeclanguage.api.Operation;
+import org.webspeclanguage.api.OperationReference;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.api.PathItemVisitor;
 import org.webspeclanguage.api.RichBehavior;
@@ -29,16 +30,13 @@ import org.webspeclanguage.api.TransitionTarget;
 
 /**
  * An operation represents a sequence of actions perform over
- * a sequence of {@link InteractionImpl}s
+ * a sequence of {@link Interaction}s
  * 
  * @author Esteban Robles Luna
  */
 public class OperationImpl implements Operation {
 
   private String name;
-  private List<Transition> forwardTransitions;
-  private List<Transition> backwardTransitions;
-
   private List<PathItem> items;
   
   public OperationImpl(String name) {
@@ -55,12 +53,21 @@ public class OperationImpl implements Operation {
     this.items.add(item);
   }
 
+  public void addItem(Operation operation) {
+    Validate.notNull(operation);
+    
+    OperationReference reference = new OperationReferenceImpl(operation);
+    
+    this.checkAddition(reference);
+    this.items.add(reference);
+  }
+
   private void checkAddition(PathItem item) {
     item.accept(new PathItemVisitor() {
       
       private Object visitTransition(Transition transition) {
         if (!items.isEmpty() && !(items.get(items.size() - 1) instanceof TransitionSource)) {
-          throw new IllegalArgumentException("Last element must be a transition or it should be the first element");
+          throw new IllegalArgumentException("Last element must be a TransitionSource");
         }
         return null;
       }
@@ -74,21 +81,20 @@ public class OperationImpl implements Operation {
       }
       
       public Object visitInteraction(Interaction interaction) {
-        if (!items.isEmpty() && !(items.get(items.size() - 1) instanceof TransitionImpl)) {
-          throw new IllegalArgumentException("Last element must be a transition or it should be the first element");
+        return this.visitTransitionTarget(interaction);
+      }
+
+      public Object visitOperationReference(OperationReference operationReference) {
+        return this.visitTransitionTarget(operationReference);
+      }
+
+      private Object visitTransitionTarget(TransitionTarget target) {
+        if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Transition)) {
+          throw new IllegalArgumentException("Last element must be a Transition or it should be the first element");
         }
         return null;
       }
-
-      public Object visitOperation(Operation operation) {
-        // TODO Auto-generated method stub
-        return null;
-      }
     });
-  }
-
-  public Object accept(PathItemVisitor pathItemVisitor) {
-    return pathItemVisitor.visitOperation(this);
   }
 
   public String getName() {
@@ -97,32 +103,5 @@ public class OperationImpl implements Operation {
   
   public List<PathItem> getItems() {
     return Collections.unmodifiableList(this.items);
-  }
-
-  public void addForwardTransition(Transition transition) {
-    this.forwardTransitions.add(transition);
-  }
-
-  public void addBackwardTransition(Transition transition) {
-    this.backwardTransitions.add(transition);
-  }
-  
-  public List<Transition> getForwardTransitions() {
-    return Collections.unmodifiableList(this.forwardTransitions);
-  }
-
-  public List<Transition> getBackwardTransitions() {
-    return Collections.unmodifiableList(this.backwardTransitions);
-  }
-  
-  public <T extends Transition> List<T> getForwardTransitionsTo(TransitionTarget target, Class<T> theClass) {
-    List<T> result = new ArrayList<T>();
-    for (Transition transition : this.getForwardTransitions()) {
-      if (theClass.isAssignableFrom(transition.getClass())
-          && transition.getTarget().equals(target)) {
-        result.add((T) transition);
-      }
-    }
-    return result;
   }
 }

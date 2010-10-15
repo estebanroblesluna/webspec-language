@@ -14,15 +14,13 @@ package org.webspeclanguage.api;
 
 import java.util.List;
 
-import org.webspeclanguage.impl.core.InteractionImpl;
-
 /**
  * An operation represents a sequence of actions perform over
- * a sequence of {@link InteractionImpl}s
+ * a sequence of {@link Interaction}s
  * 
  * @author Esteban Robles Luna
  */
-public interface Operation extends NamedObject, TransitionSource, TransitionTarget, PathItem {
+public interface Operation extends NamedObject {
 
   /**
    * @return the list of items that this operation contains

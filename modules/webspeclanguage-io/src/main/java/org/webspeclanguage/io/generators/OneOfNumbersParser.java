@@ -10,33 +10,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.io.base;
+package org.webspeclanguage.io.generators;
 
-import org.webspeclanguage.api.Interaction;
-import org.webspeclanguage.impl.core.InteractionImpl;
-import org.webspeclanguage.impl.widget.Widget;
+import java.math.BigDecimal;
+
+import org.webspeclanguage.impl.generator.OneOfNumbers;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
 import org.xml.sax.Attributes;
 
 /**
- * A {@link Interaction} parser
+ * A {@link OneOfNumbers} parser
  * 
  * @author Esteban Robles Luna
  */
-public class InteractionParser extends AbstractElementParser {
-
-  public InteractionParser() {
-    this.registerChild(Widget.class, "addWidget");
-  }
+public class OneOfNumbersParser extends AbstractElementParser {
 
   /**
    * {@inheritDoc}
    */
   public void parse(Attributes attributes, ParseContext context) {
-    Interaction interaction = new InteractionImpl(attributes.getValue("name"));
-    this.setResult(interaction);
-    
-    context.put(interaction.getName() + "-Interaction", interaction);
+    String[] values = attributes.getValue("values").split(",");
+    BigDecimal[] numbers = new BigDecimal[values.length];
+    for (int i = 0; i < values.length; i++) {
+      String value = values[i];
+      numbers[i] = new BigDecimal(value);
+    }
+    OneOfNumbers generator = new OneOfNumbers(attributes.getValue("name"), numbers);
+    this.setResult(generator);
   }
 }

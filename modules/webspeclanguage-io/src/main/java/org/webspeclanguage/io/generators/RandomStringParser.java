@@ -10,33 +10,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.io.base;
+package org.webspeclanguage.io.generators;
 
-import org.webspeclanguage.api.Interaction;
-import org.webspeclanguage.impl.core.InteractionImpl;
-import org.webspeclanguage.impl.widget.Widget;
+import org.webspeclanguage.impl.generator.RandomStringGenerator;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
 import org.xml.sax.Attributes;
 
 /**
- * A {@link Interaction} parser
+ * A {@link RandomStringGenerator} parser
  * 
  * @author Esteban Robles Luna
  */
-public class InteractionParser extends AbstractElementParser {
-
-  public InteractionParser() {
-    this.registerChild(Widget.class, "addWidget");
-  }
+public class RandomStringParser extends AbstractElementParser {
 
   /**
    * {@inheritDoc}
    */
   public void parse(Attributes attributes, ParseContext context) {
-    Interaction interaction = new InteractionImpl(attributes.getValue("name"));
-    this.setResult(interaction);
-    
-    context.put(interaction.getName() + "-Interaction", interaction);
+    String name = attributes.getValue("name");
+    int minLength = Integer.valueOf(attributes.getValue("minLength"));
+    int maxLength = Integer.valueOf(attributes.getValue("maxLength"));
+    RandomStringGenerator generator = new RandomStringGenerator(name, minLength, maxLength);
+    this.setResult(generator);
   }
 }

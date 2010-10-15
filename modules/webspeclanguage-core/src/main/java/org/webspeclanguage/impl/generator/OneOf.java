@@ -45,7 +45,7 @@ public abstract class OneOf<T> extends AbstractGenerator {
     return values;
   }
 
-  protected void setValues(T[] values) {
+  public void setValues(T[] values) {
     Validate.notNull(values);
     this.values = values.clone();
   }
