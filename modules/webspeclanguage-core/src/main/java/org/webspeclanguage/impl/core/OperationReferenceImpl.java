@@ -22,6 +22,7 @@ import org.webspeclanguage.api.OperationReference;
 import org.webspeclanguage.api.PathItemVisitor;
 import org.webspeclanguage.api.Transition;
 import org.webspeclanguage.api.TransitionTarget;
+import org.webspeclanguage.impl.widget.Widget;
 
 /**
  * A reference to an {@link Operation}
@@ -83,5 +84,9 @@ public class OperationReferenceImpl implements OperationReference {
 
   public String getName() {
     return this.operation.getName() + "-ref";
+  }
+
+  public Widget getWidget(String widgetPath) {
+    return this.getReference().getWidget(widgetPath);
   }
 }

@@ -15,11 +15,17 @@ package org.webspeclanguage.webtest.test;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 
-import org.apache.commons.io.IOUtils;
-import org.webspeclanguage.webtest.base.WebTestGenerator;
-import org.webspeclanguage.webtest.base.WebTest;
-
 import junit.framework.TestCase;
+
+import org.apache.commons.io.IOUtils;
+import org.webspeclanguage.api.Diagram;
+import org.webspeclanguage.io.WebSpecParser;
+import org.webspeclanguage.webspec2test.TestGenerationResult;
+import org.webspeclanguage.webspec2test.WebSpec2WebTestTransformation;
+import org.webspeclanguage.webtest.action.WebOpenUrl;
+import org.webspeclanguage.webtest.base.WebTest;
+import org.webspeclanguage.webtest.base.WebTestGenerator;
+import org.webspeclanguage.webtest.base.WebTestSuite;
 
 
 /**
@@ -59,6 +65,21 @@ public abstract class WebTestGenerationTestCase extends TestCase {
 	  String generatedTest = this.getTestGenerator().generateTest(webTest);
 	  assertEquals(this.expectedTest, generatedTest);
 	}
+	
+	protected void checkTestGenerationFromResource() {
+    String filename = this.getClass().getName().replace(".", "/")
+      + "."
+      + this.getName()
+      + ".xml";
+
+    WebSpecParser parser = new WebSpecParser();
+	  Diagram diagram = parser.parse(filename);
+	  
+	  WebSpec2WebTestTransformation transformation = new WebSpec2WebTestTransformation();
+	  TestGenerationResult generationResult = transformation.transform(diagram);
+	  WebTestSuite testSuite = generationResult.getTestSuite();
+	  this.checkTestGeneration(testSuite);
+  }
 	
 	protected abstract WebTestGenerator getTestGenerator();
 }

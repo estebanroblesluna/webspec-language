@@ -2,14 +2,13 @@
 
 package org.webspeclanguage.impl.expression.parser.node;
 
-import java.util.*;
 import org.webspeclanguage.impl.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
 public final class AWidgetOrWidgetAccessListWithProperty extends PWidgetOrWidgetAccessListWithProperty
 {
+    private TPoint _p_;
     private PWidgetOrWidgetAccess _widgetOrWidgetAccess_;
-    private final LinkedList<PWidgetOrWidgetAccessListWithPropertyPoint> _widgetOrWidgetAccessListWithPropertyPoint_ = new LinkedList<PWidgetOrWidgetAccessListWithPropertyPoint>();
 
     public AWidgetOrWidgetAccessListWithProperty()
     {
@@ -17,13 +16,13 @@ public final class AWidgetOrWidgetAccessListWithProperty extends PWidgetOrWidget
     }
 
     public AWidgetOrWidgetAccessListWithProperty(
-        @SuppressWarnings("hiding") PWidgetOrWidgetAccess _widgetOrWidgetAccess_,
-        @SuppressWarnings("hiding") List<PWidgetOrWidgetAccessListWithPropertyPoint> _widgetOrWidgetAccessListWithPropertyPoint_)
+        @SuppressWarnings("hiding") TPoint _p_,
+        @SuppressWarnings("hiding") PWidgetOrWidgetAccess _widgetOrWidgetAccess_)
     {
         // Constructor
-        setWidgetOrWidgetAccess(_widgetOrWidgetAccess_);
+        setP(_p_);
 
-        setWidgetOrWidgetAccessListWithPropertyPoint(_widgetOrWidgetAccessListWithPropertyPoint_);
+        setWidgetOrWidgetAccess(_widgetOrWidgetAccess_);
 
     }
 
@@ -31,13 +30,38 @@ public final class AWidgetOrWidgetAccessListWithProperty extends PWidgetOrWidget
     public Object clone()
     {
         return new AWidgetOrWidgetAccessListWithProperty(
-            cloneNode(this._widgetOrWidgetAccess_),
-            cloneList(this._widgetOrWidgetAccessListWithPropertyPoint_));
+            cloneNode(this._p_),
+            cloneNode(this._widgetOrWidgetAccess_));
     }
 
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAWidgetOrWidgetAccessListWithProperty(this);
+    }
+
+    public TPoint getP()
+    {
+        return this._p_;
+    }
+
+    public void setP(TPoint node)
+    {
+        if(this._p_ != null)
+        {
+            this._p_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._p_ = node;
     }
 
     public PWidgetOrWidgetAccess getWidgetOrWidgetAccess()
@@ -65,46 +89,27 @@ public final class AWidgetOrWidgetAccessListWithProperty extends PWidgetOrWidget
         this._widgetOrWidgetAccess_ = node;
     }
 
-    public LinkedList<PWidgetOrWidgetAccessListWithPropertyPoint> getWidgetOrWidgetAccessListWithPropertyPoint()
-    {
-        return this._widgetOrWidgetAccessListWithPropertyPoint_;
-    }
-
-    public void setWidgetOrWidgetAccessListWithPropertyPoint(List<PWidgetOrWidgetAccessListWithPropertyPoint> list)
-    {
-        this._widgetOrWidgetAccessListWithPropertyPoint_.clear();
-        this._widgetOrWidgetAccessListWithPropertyPoint_.addAll(list);
-        for(PWidgetOrWidgetAccessListWithPropertyPoint e : list)
-        {
-            if(e.parent() != null)
-            {
-                e.parent().removeChild(e);
-            }
-
-            e.parent(this);
-        }
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._widgetOrWidgetAccess_)
-            + toString(this._widgetOrWidgetAccessListWithPropertyPoint_);
+            + toString(this._p_)
+            + toString(this._widgetOrWidgetAccess_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._widgetOrWidgetAccess_ == child)
+        if(this._p_ == child)
         {
-            this._widgetOrWidgetAccess_ = null;
+            this._p_ = null;
             return;
         }
 
-        if(this._widgetOrWidgetAccessListWithPropertyPoint_.remove(child))
+        if(this._widgetOrWidgetAccess_ == child)
         {
+            this._widgetOrWidgetAccess_ = null;
             return;
         }
 
@@ -115,28 +120,16 @@ public final class AWidgetOrWidgetAccessListWithProperty extends PWidgetOrWidget
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._p_ == oldChild)
+        {
+            setP((TPoint) newChild);
+            return;
+        }
+
         if(this._widgetOrWidgetAccess_ == oldChild)
         {
             setWidgetOrWidgetAccess((PWidgetOrWidgetAccess) newChild);
             return;
-        }
-
-        for(ListIterator<PWidgetOrWidgetAccessListWithPropertyPoint> i = this._widgetOrWidgetAccessListWithPropertyPoint_.listIterator(); i.hasNext();)
-        {
-            if(i.next() == oldChild)
-            {
-                if(newChild != null)
-                {
-                    i.set((PWidgetOrWidgetAccessListWithPropertyPoint) newChild);
-                    newChild.parent(this);
-                    oldChild.parent(null);
-                    return;
-                }
-
-                i.remove();
-                oldChild.parent(null);
-                return;
-            }
         }
 
         throw new RuntimeException("Not a child.");

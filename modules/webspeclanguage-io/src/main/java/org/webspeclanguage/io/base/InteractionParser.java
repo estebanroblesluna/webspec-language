@@ -26,6 +26,8 @@ import org.xml.sax.Attributes;
  */
 public class InteractionParser extends AbstractElementParser {
 
+  private String invariant;
+
   public InteractionParser() {
     this.registerChild(Widget.class, "addWidget");
   }
@@ -34,9 +36,22 @@ public class InteractionParser extends AbstractElementParser {
    * {@inheritDoc}
    */
   public void parse(Attributes attributes, ParseContext context) {
-    Interaction interaction = new InteractionImpl(attributes.getValue("name"));
+    String starting = attributes.getValue("starting");
+    Interaction interaction = new InteractionImpl(
+            attributes.getValue("name"), 
+            starting != null && starting.equalsIgnoreCase("true"));
+    
+    interaction.setLocation(attributes.getValue("location"));
+    this.invariant = attributes.getValue("invariant");
     this.setResult(interaction);
     
     context.put(interaction.getName() + "-Interaction", interaction);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public void postProcess(Attributes attributes) {
+    ((Interaction) this.getResult()).setInvariant(this.invariant);
   }
 }

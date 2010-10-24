@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.webspeclanguage.api.Diagram;
+import org.webspeclanguage.api.WidgetProvider;
 import org.webspeclanguage.impl.expression.core.ConstantExpression;
 import org.webspeclanguage.impl.expression.core.Expression;
 import org.webspeclanguage.impl.expression.parser.ExpressionParser;
@@ -34,11 +34,11 @@ public final class ExpressionUtils {
 
   private ExpressionUtils() { }
   
-  public static Expression getExpression(String input, Diagram diagram) {
+  public static Expression getExpression(String input, WidgetProvider provider) {
     if (input == null || input.trim().equals("")) {
       return null;
     } else {
-      return parser.parseFor(input, diagram);
+      return parser.parseFor(input, provider);
     }
   }
   

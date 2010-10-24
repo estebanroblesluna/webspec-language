@@ -36,7 +36,11 @@ public abstract class Widget {
     if (this.getId() != null) {
       return "id=" + this.getId();
     } else {
-      return this.getLocation();
+      if (this.getLocation() == null) {
+        return "id=" + this.getName();
+      } else {
+        return this.getLocation();
+      }
     }
   }
 

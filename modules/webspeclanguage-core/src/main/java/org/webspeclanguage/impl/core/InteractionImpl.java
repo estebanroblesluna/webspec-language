@@ -13,9 +13,11 @@
 package org.webspeclanguage.impl.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.Interaction;
@@ -51,10 +53,16 @@ public class InteractionImpl implements Interaction {
   private Expression invariant;
   private Container root;
   private Diagram diagram;
+  private boolean starting;
 
   public InteractionImpl(String name) {
+    this(name, false);
+  }
+
+  public InteractionImpl(String name, boolean starting) {
     Validate.notNull(name);
 
+    this.starting = starting;
     this.name = name;
     this.forwardTransitions = new ArrayList<Transition>();
     this.backwardTransitions = new ArrayList<Transition>();
@@ -152,8 +160,26 @@ public class InteractionImpl implements Interaction {
     return root;
   }
 
-  public Widget getWidget(String widgetName) {
-    return this.getRoot().getWidgetNamed(widgetName);
+  public Widget getWidget(String widgetPath) {
+    Validate.notNull(widgetPath);
+    
+    String[] elements = StringUtils.split(widgetPath, '.');
+    if (elements[0].equals(this.getName())) {
+      elements = Arrays.copyOfRange(elements, 1, elements.length);
+    }
+    
+    Widget current = this.getRoot();
+    
+    for (int i = 0; i < elements.length - 1; i++) {
+      String element = elements[i];
+      current = ((Container) current).getWidgetNamed(element);
+    }
+    
+    if (current instanceof Container) {
+      return ((Container) current).getWidgetNamed(elements[elements.length - 1]);
+    } else {
+      return null;
+    }
   }
 
   public <T extends Transition> List<T> getForwardTransitionsTo(TransitionTarget target, Class<T> theClass) {
@@ -168,7 +194,7 @@ public class InteractionImpl implements Interaction {
   }
   
   public void setInvariant(String expressionString) {
-    Expression expression = ExpressionUtils.getExpression(expressionString, this.getDiagram());
+    Expression expression = ExpressionUtils.getExpression(expressionString, this);
     this.setInvariant(expression);
   }
 
@@ -194,5 +220,9 @@ public class InteractionImpl implements Interaction {
 
   public List<Transition> getBackwardTransitions() {
     return Collections.unmodifiableList(this.backwardTransitions);
+  }
+
+  public boolean isStarting() {
+    return starting;
   }
 }

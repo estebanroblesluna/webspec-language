@@ -48,6 +48,7 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
   protected void setUp() throws Exception {
     super.setUp();
     this.testGenerator = new SeleniumJavaWebTestGenerator();
+    this.testGenerator.setStopPolicy(new SeleniumWaitGenerationPolicy());
     this.diagram = new DiagramImpl("the diagram");
     
     homeInteraction = new InteractionImpl("Home");
@@ -106,8 +107,8 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
     webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true -> false"), ExpressionType.BOOLEAN));
     webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true && false && false"), ExpressionType.BOOLEAN));
 
-    webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi \" & \"esteban\""), ExpressionType.STRING));
-    webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("(\"hi \" & \"esteban\") & \" how are you\""), ExpressionType.STRING));
+    webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi \" # \"esteban\""), ExpressionType.STRING));
+    webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("(\"hi \" # \"esteban\") # \" how are you\""), ExpressionType.STRING));
 
     this.checkTestGeneration(webTest);
   }
@@ -139,5 +140,11 @@ public class SeleniumJavaWebTestGeneratorIntegrationTestCase extends WebTestGene
     webTest.addSetUpItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1"), ExpressionType.NUMBER));
 
     this.checkTestGeneration(webTest);
+  }
+  
+  @WebTestGeneration
+  public void testWebTestIOExampleGeneration() {
+    this.testGenerator.setPackageName("org.webspeclanguage.tests");
+    this.checkTestGenerationFromResource();
   }
 }

@@ -244,12 +244,7 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
-    public void caseAInterfactionPropertyValue(AInterfactionPropertyValue node)
-    {
-        defaultCase(node);
-    }
-
-    public void caseAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node)
+    public void caseAWidgetPathValue(AWidgetPathValue node)
     {
         defaultCase(node);
     }
@@ -275,11 +270,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     public void caseAWidgetOrWidgetAccessListWithProperty(AWidgetOrWidgetAccessListWithProperty node)
-    {
-        defaultCase(node);
-    }
-
-    public void caseAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node)
     {
         defaultCase(node);
     }

@@ -13,6 +13,7 @@
 package org.webspeclanguage.impl.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.webspeclanguage.api.Action;
 import org.webspeclanguage.api.Diagram;
@@ -146,6 +148,13 @@ public class DiagramImpl implements Diagram {
     } else {
       this.interactions.add(anInteraction);
       anInteraction.setDiagram(this);
+      if (anInteraction.isStarting()) {
+        if (this.startingInteraction == null) {
+          this.setStartingInteraction(anInteraction);
+        } else {
+          throw new IllegalStateException("Only one interaction can be starting");
+        }
+      }
     }
   }
 
@@ -175,13 +184,18 @@ public class DiagramImpl implements Diagram {
     return null;
   }
 
-  public Widget getWidget(String interactionName, String widgetName) {
-    for (Interaction interaction : this.interactions) {
-      if (interaction.getName().equals(interactionName)) {
-        return interaction.getWidget(widgetName);
-      }
+  public Widget getWidget(String widgetPath) {
+    Validate.notNull(widgetPath);
+    
+    String[] parts = StringUtils.split(widgetPath, '.');
+    
+    Interaction interaction = this.getInteractionNamed(parts[0]);
+    
+    if (interaction == null) {
+      return null;
+    } else {
+      return interaction.getWidget(StringUtils.join(Arrays.copyOfRange(parts, 1, parts.length), '.'));
     }
-    return null;
   }
 
   public Interaction getStartingInteraction() {

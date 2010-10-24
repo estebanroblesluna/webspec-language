@@ -19,7 +19,7 @@ import java.util.List;
  * 
  * @author Esteban Robles Luna
  */
-public interface TransitionTarget extends NamedObject, PathItem {
+public interface TransitionTarget extends NamedObject, PathItem, WidgetProvider {
 
   /**
    * @return the list of backward transitions

@@ -9,12 +9,12 @@ public final class TConcat extends Token
 {
     public TConcat()
     {
-        super.setText("&");
+        super.setText("#");
     }
 
     public TConcat(int line, int pos)
     {
-        super.setText("&");
+        super.setText("#");
         setLine(line);
         setPos(pos);
     }

@@ -14,8 +14,12 @@ package org.webspeclanguage.expression.parser;
 
 import junit.framework.TestCase;
 
+import org.webspeclanguage.api.WidgetProvider;
 import org.webspeclanguage.impl.core.DiagramImpl;
 import org.webspeclanguage.impl.core.InteractionImpl;
+import org.webspeclanguage.impl.expression.core.InteractionPropertyExpression;
+import org.webspeclanguage.impl.expression.core.WidgetPropertyReference;
+import org.webspeclanguage.impl.expression.core.WidgetReference;
 import org.webspeclanguage.impl.expression.parser.ExpressionParser;
 import org.webspeclanguage.impl.expression.parser.ParsingException;
 import org.webspeclanguage.impl.widget.Button;
@@ -30,13 +34,14 @@ public class ExpressionParserTestCase extends TestCase {
 
   private ExpressionParser parser;
   private DiagramImpl diagram;
+  private InteractionImpl interaction;
 
   public void setUp() throws Exception {
     super.setUp();
     this.parser = new ExpressionParser();
     this.diagram = new DiagramImpl("diagram");
     
-    InteractionImpl interaction = new InteractionImpl("Interaction");
+    interaction = new InteractionImpl("Interaction");
 
     TextField textField = new TextField();
     textField.setName("widget");
@@ -108,14 +113,20 @@ public class ExpressionParserTestCase extends TestCase {
     this.basicParse("${userAndPass}[123]");
     
     this.basicParse("${var}[1 + 2]");
-    this.basicParse("Interaction.property");
-    this.basicParse("Interaction.widget.property");
-    this.basicParse("Interaction.widgetList.property");
-    this.basicParse("Interaction.widgetList[1].widgetList.property");
-    this.basicParse("Interaction.widgetList[1].panel.button.property");
+    this.basicParse("Interaction.title", this.interaction, InteractionPropertyExpression.class);
+    this.basicParse("Interaction.widget.property", this.interaction, WidgetPropertyReference.class);
+    this.basicParse("Interaction.widget", this.interaction, WidgetReference.class);
+    this.basicParse("Interaction.widgetList.property", this.interaction, WidgetPropertyReference.class);
+    this.basicParse("Interaction.widgetList[1].widgetList.property", this.interaction, WidgetPropertyReference.class);
+    this.basicParse("Interaction.widgetList[1].widgetList", this.interaction, WidgetReference.class);
+    this.basicParse("Interaction.widgetList[1].panel.button.property", this.interaction, WidgetPropertyReference.class);
   }
 
   private void basicParse(String string) throws ParsingException {
     this.parser.parseFor(string, this.diagram);
+  }
+
+  private void basicParse(String string, WidgetProvider provider, Class<?> aClass) throws ParsingException {
+    assertTrue(aClass.isInstance(this.parser.parseFor(string, provider)));
   }
 }

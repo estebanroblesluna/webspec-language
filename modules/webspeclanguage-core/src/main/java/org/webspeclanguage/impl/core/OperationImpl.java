@@ -27,6 +27,7 @@ import org.webspeclanguage.api.RichBehavior;
 import org.webspeclanguage.api.Transition;
 import org.webspeclanguage.api.TransitionSource;
 import org.webspeclanguage.api.TransitionTarget;
+import org.webspeclanguage.impl.widget.Widget;
 
 /**
  * An operation represents a sequence of actions perform over
@@ -95,6 +96,31 @@ public class OperationImpl implements Operation {
         return null;
       }
     });
+  }
+
+  public Widget getWidget(String widgetPath) {
+    Validate.notNull(widgetPath);
+    
+    String interactionName = widgetPath.substring(0, widgetPath.indexOf('.'));
+    Interaction interaction = this.getInteractionNamed(interactionName);
+    
+    if (interaction == null) {
+      throw new IllegalArgumentException("Interaction: " + interactionName + " does not exists");
+    } else {
+      return interaction.getWidget(widgetPath.substring(widgetPath.indexOf('.') + 1));
+    }
+  }
+  
+  private Interaction getInteractionNamed(String interactionName) {
+    for (PathItem item : this.items) {
+      if (item instanceof Interaction) {
+        Interaction interaction = (Interaction) item;
+        if (interaction.getName().equals(interactionName)) {
+          return interaction;
+        }
+      }
+    }
+    return null;
   }
 
   public String getName() {

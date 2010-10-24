@@ -971,70 +971,33 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAArrayAccessValue(node);
     }
 
-    public void inAInterfactionPropertyValue(AInterfactionPropertyValue node)
+    public void inAWidgetPathValue(AWidgetPathValue node)
     {
         defaultIn(node);
     }
 
-    public void outAInterfactionPropertyValue(AInterfactionPropertyValue node)
+    public void outAWidgetPathValue(AWidgetPathValue node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAInterfactionPropertyValue(AInterfactionPropertyValue node)
+    public void caseAWidgetPathValue(AWidgetPathValue node)
     {
-        inAInterfactionPropertyValue(node);
-        if(node.getProperty() != null)
+        inAWidgetPathValue(node);
         {
-            node.getProperty().apply(this);
-        }
-        if(node.getPoint() != null)
-        {
-            node.getPoint().apply(this);
+            List<PWidgetOrWidgetAccessListWithProperty> copy = new ArrayList<PWidgetOrWidgetAccessListWithProperty>(node.getWidgets());
+            Collections.reverse(copy);
+            for(PWidgetOrWidgetAccessListWithProperty e : copy)
+            {
+                e.apply(this);
+            }
         }
         if(node.getInteraction() != null)
         {
             node.getInteraction().apply(this);
         }
-        outAInterfactionPropertyValue(node);
-    }
-
-    public void inAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node)
-    {
-        inAInterfactionWidgetPropertyValue(node);
-        if(node.getProperty() != null)
-        {
-            node.getProperty().apply(this);
-        }
-        if(node.getP2() != null)
-        {
-            node.getP2().apply(this);
-        }
-        if(node.getWidgets() != null)
-        {
-            node.getWidgets().apply(this);
-        }
-        if(node.getPoint() != null)
-        {
-            node.getPoint().apply(this);
-        }
-        if(node.getInteraction() != null)
-        {
-            node.getInteraction().apply(this);
-        }
-        outAInterfactionWidgetPropertyValue(node);
+        outAWidgetPathValue(node);
     }
 
     public void inAVariableVariableorliteralarray(AVariableVariableorliteralarray node)
@@ -1155,44 +1118,15 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAWidgetOrWidgetAccessListWithProperty(AWidgetOrWidgetAccessListWithProperty node)
     {
         inAWidgetOrWidgetAccessListWithProperty(node);
-        {
-            List<PWidgetOrWidgetAccessListWithPropertyPoint> copy = new ArrayList<PWidgetOrWidgetAccessListWithPropertyPoint>(node.getWidgetOrWidgetAccessListWithPropertyPoint());
-            Collections.reverse(copy);
-            for(PWidgetOrWidgetAccessListWithPropertyPoint e : copy)
-            {
-                e.apply(this);
-            }
-        }
         if(node.getWidgetOrWidgetAccess() != null)
         {
             node.getWidgetOrWidgetAccess().apply(this);
+        }
+        if(node.getP() != null)
+        {
+            node.getP().apply(this);
         }
         outAWidgetOrWidgetAccessListWithProperty(node);
-    }
-
-    public void inAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node)
-    {
-        inAWidgetOrWidgetAccessListWithPropertyPoint(node);
-        if(node.getWidgetOrWidgetAccess() != null)
-        {
-            node.getWidgetOrWidgetAccess().apply(this);
-        }
-        if(node.getPoint() != null)
-        {
-            node.getPoint().apply(this);
-        }
-        outAWidgetOrWidgetAccessListWithPropertyPoint(node);
     }
 
     public void inASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node)

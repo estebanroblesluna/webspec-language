@@ -32,6 +32,11 @@
       </dependency>
       <dependency>
         <groupId>org.webspeclanguage</groupId>
+        <artifactId>webspeclanguage-io</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.webspeclanguage</groupId>
         <artifactId>webspeclanguage-selenium-extension</artifactId>
         <version>${version}</version>
       </dependency>

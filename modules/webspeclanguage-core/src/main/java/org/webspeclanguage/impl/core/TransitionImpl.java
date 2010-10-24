@@ -58,7 +58,7 @@ public abstract class TransitionImpl implements Transition {
   public void setActions(String actionsString) {
     Validate.notNull(actionsString);
     
-    List<Action> parsedActions = ActionParser.getActions(actionsString, this.getDiagram());
+    List<Action> parsedActions = ActionParser.getActions(actionsString, this.getSource());
     for (Action action : parsedActions) {
       this.addAction(action);
     }

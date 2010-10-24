@@ -136,8 +136,8 @@ public class DiagramTestCase extends TestCase {
     interaction1.addWidget(button);
     this.diagram.addInteraction(interaction1);
 
-    assertNotNull(this.diagram.getWidget("i1", "aaa"));
-    assertNull(this.diagram.getWidget("i1", "bbb"));
+    assertNotNull(this.diagram.getWidget("i1.aaa"));
+    assertNull(this.diagram.getWidget("i1.bbb"));
   }
 
 }
