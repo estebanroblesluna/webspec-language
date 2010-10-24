@@ -59,7 +59,7 @@ public class SeleniumJavaExpressionGeneratorTestCase extends TestCase {
     this.basicTestExpression("true || false", "true || false");
     this.basicTestExpression("!true", "!true");
 
-    this.basicTestExpression("\"a\" + \"b\"", "\"a\" & \"b\"");
+    this.basicTestExpression("\"a\" + \"b\"", "\"a\" # \"b\"");
 
     this.basicTestExpression("new BigDecimal(\"1\").equals(new BigDecimal(\"2\"))", "1 = 2");
     this.basicTestExpression("!(new BigDecimal(\"1\").equals(new BigDecimal(\"2\")))", "1 != 2");

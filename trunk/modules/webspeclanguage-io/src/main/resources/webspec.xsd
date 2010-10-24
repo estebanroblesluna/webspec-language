@@ -26,6 +26,7 @@
       <attribute name="name" type="string"/>
       <attribute name="starting" type="boolean" default="false"/>
       <attribute name="invariant" type="string"/>
+      <attribute name="location" type="string"/>
     </complexType>
 
     <!-- TRANSITIONS -->

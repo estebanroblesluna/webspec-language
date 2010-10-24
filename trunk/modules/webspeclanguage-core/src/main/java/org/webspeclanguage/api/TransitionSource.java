@@ -20,7 +20,7 @@ import java.util.List;
  * 
  * @author Esteban Robles Luna
  */
-public interface TransitionSource extends NamedObject, PathItem {
+public interface TransitionSource extends NamedObject, PathItem, WidgetProvider {
 
   /**
    * @return the list of forward transitions

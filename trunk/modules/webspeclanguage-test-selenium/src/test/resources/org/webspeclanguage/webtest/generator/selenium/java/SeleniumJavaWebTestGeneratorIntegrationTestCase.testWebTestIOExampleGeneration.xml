@@ -1,0 +1,19 @@
+<diagram name="LoginAsUser"
+  xmlns="http://www.webspeclanguage.org/webspec" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.webspeclanguage.org/webspec webspec.xsd">
+ 
+  <one-of-strings-generator name="usernames" values="esteban" />
+  
+  <interaction name="Login" starting="true" location="http://localhost:8080">
+    <textfield name="username" />
+    <textfield name="password" />
+    <button name="login" />
+  </interaction>
+
+  <interaction name="Home" invariant="Home.message.text = 'Hello ' # ${username}">
+    <label name="message" />
+  </interaction>
+
+  <navigation from="Login" to="Home" actions="username := $usernames$; type(Login.username, ${username}); type(Login.password, 'hi'); click(Login.login)" />
+</diagram>

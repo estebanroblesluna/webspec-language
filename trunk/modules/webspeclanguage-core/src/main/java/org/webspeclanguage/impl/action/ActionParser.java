@@ -18,7 +18,7 @@ import java.io.StringReader;
 import java.util.List;
 
 import org.webspeclanguage.api.Action;
-import org.webspeclanguage.api.Diagram;
+import org.webspeclanguage.api.WidgetProvider;
 import org.webspeclanguage.impl.expression.parser.ExpressionTransformer;
 import org.webspeclanguage.impl.expression.parser.ParsingException;
 import org.webspeclanguage.impl.expression.parser.lexer.Lexer;
@@ -37,29 +37,29 @@ public class ActionParser {
   private static ActionParser parser = new ActionParser();
 
   /**
-   * Parses input in the context of diagram
+   * Parses input in the context of {@link WidgetProvider}
    * 
    * @param input the input
-   * @param diagram the diagram
+   * @param provider the provider
    * @return the list of actions as a result of the parsing process
    */
-  public static List<Action> getActions(String input, Diagram diagram) {
+  public static List<Action> getActions(String input, WidgetProvider provider) {
     if (input == null) {
       return null;
     } else {
-      return parser.parseFor(input, diagram);
+      return parser.parseFor(input, provider);
     }
   }
   
   /**
-   * Parses input in the context of diagram
+   * Parses input in the context of the {@link WidgetProvider}
    * 
    * @param input the input
-   * @param diagram the diagram
+   * @param provider the provider
    * @return the list of actions as a result of the parsing process
    * @throws ParsingException if an exception during parsing is thrown
    */
-  public List<Action> parseFor(String input, Diagram diagram) throws ParsingException {
+  public List<Action> parseFor(String input, WidgetProvider provider) throws ParsingException {
     String modifiedInput = input.replaceAll("\n", "");
 
     Lexer lexer = new Lexer(new PushbackReader(new StringReader(modifiedInput),
@@ -69,7 +69,7 @@ public class ActionParser {
 
     try {
       Start ast = sableParser.parse();
-      ExpressionTransformer transformer = new ExpressionTransformer(diagram);
+      ExpressionTransformer transformer = new ExpressionTransformer(provider);
       return transformer.transform(ast);
     } catch (ParserException e) {
       throw new ParsingException(e);

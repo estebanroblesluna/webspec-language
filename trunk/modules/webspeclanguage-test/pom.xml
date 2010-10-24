@@ -26,6 +26,10 @@
       <artifactId>webspeclanguage-core</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.webspeclanguage</groupId>
+      <artifactId>webspeclanguage-io</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-io</artifactId>
     </dependency>

@@ -21,7 +21,7 @@ import java.util.List;
  * 
  * @author Esteban Robles Luna
  */
-public interface Diagram extends NamedObject {
+public interface Diagram extends NamedObject, WidgetProvider {
 
   /**
    * Adds the interaction into the diagram

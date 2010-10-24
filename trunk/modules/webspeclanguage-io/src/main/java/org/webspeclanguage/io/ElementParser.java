@@ -40,4 +40,11 @@ public interface ElementParser {
    * @return the result of parsing this element
    */
   Object getResult();
+
+  /**
+   * Post process the current element with its corresponding attributes
+   * 
+   * @param attributes the attributes of the element
+   */
+  void postProcess(Attributes attributes);
 }

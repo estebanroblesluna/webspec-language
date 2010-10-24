@@ -15,7 +15,7 @@
   </one-of-arrays-generator>
   
   
-  <interaction name="Home" starting="true">
+  <interaction name="Home" starting="true" location="http://localhost:8080">
     <button name="search" />
     <textfield name="searchTF" />
   </interaction>

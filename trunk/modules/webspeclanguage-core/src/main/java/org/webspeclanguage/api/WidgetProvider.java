@@ -12,18 +12,20 @@
  */
 package org.webspeclanguage.api;
 
-import java.util.List;
+import org.webspeclanguage.impl.widget.Widget;
 
 /**
- * An operation represents a sequence of actions perform over
- * a sequence of {@link Interaction}s
+ * A widget provider can provide widgets from a widget path.
  * 
  * @author Esteban Robles Luna
  */
-public interface Operation extends NamedObject, WidgetProvider {
+public interface WidgetProvider {
 
   /**
-   * @return the list of items that this operation contains
+   * Returns the widget according to widgetPath or null if not found.
+   * 
+   * @param widgetPath a path separated by '.'. For example Home.login or simply login
+   * @return the widget or null
    */
-  List<PathItem> getItems();
+  Widget getWidget(String widgetPath);
 }

@@ -28,18 +28,23 @@ public class ParseHandler extends DefaultHandler {
   private WebSpecParser webSpecParser;
 
   private Stack<ElementParser> parsersStack;
-  
+
+  private Stack<Attributes> attributesStack;
+
   private ParseContext context;
 
   public ParseHandler(WebSpecParser webSpecParser) {
     this.webSpecParser = webSpecParser;
     this.parsersStack = new Stack<ElementParser>();
+    this.attributesStack = new Stack<Attributes>();
     this.context = new ParseContext();
   }
 
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
     ElementParser parser = this.parsersStack.pop();
+    Attributes attributes = this.attributesStack.pop();
+    parser.postProcess(attributes);
     
     if (!this.parsersStack.isEmpty()) {
       ElementParser parentParser = this.parsersStack.peek();
@@ -54,6 +59,7 @@ public class ParseHandler extends DefaultHandler {
   public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
     ElementParser parser = this.webSpecParser.getParserFor(qName);
     this.parsersStack.push(parser);
+    this.attributesStack.push(attributes);
     parser.parse(attributes, this.context);
   }
 }

@@ -22,15 +22,7 @@ import org.webspeclanguage.impl.widget.Widget;
  * 
  * @author Esteban Robles Luna
  */
-public interface Interaction extends NamedObject, TransitionSource, TransitionTarget, PathItem {
-
-  /**
-   * Obtains the widget whose name is widgetName or null if not found
-   * 
-   * @param widgetName the widget name
-   * @return the widget or null
-   */
-  Widget getWidget(String widgetName);
+public interface Interaction extends NamedObject, TransitionSource, TransitionTarget, PathItem, WidgetProvider {
 
   /**
    * Sets the diagram to be the container of this interaction
@@ -50,6 +42,20 @@ public interface Interaction extends NamedObject, TransitionSource, TransitionTa
   Expression getInvariant();
 
   /**
+   * Sets the invariant
+   * 
+   * @param newInvariantAsString the invariant as string
+   */
+  void setInvariant(String newInvariantAsString);
+
+  /**
+   * Sets the invariant
+   * 
+   * @param expression the new invariant
+   */
+  void setInvariant(Expression expression);
+
+  /**
    * @return the root {@link Widget}
    */
   Container getRoot();
@@ -63,4 +69,16 @@ public interface Interaction extends NamedObject, TransitionSource, TransitionTa
    * @return the location of the mockup associated with this interaction
    */
   String getMockupFile();
+  
+  /**
+   * @return whether the interaction is starting or not
+   */
+  boolean isStarting();
+
+  /**
+   * Sets the location of this interaction
+   * 
+   * @param value the new location of the interaction
+   */
+  void setLocation(String value);
 }

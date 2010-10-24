@@ -123,8 +123,8 @@ public class ExpressionsTestCase extends TestCase {
     this.basicOptimize("\"a\"", "\"a\"");
     this.basicOptimize("click(Home.register)", "click(Home.register)");
 
-    this.basicOptimize("\"a\" & \"b\"", "\"ab\"");
-    this.basicOptimize("\"a\" & $ss$", "\"a\" & $ss$");
+    this.basicOptimize("\"a\" # \"b\"", "\"ab\"");
+    this.basicOptimize("\"a\" # $ss$", "\"a\" # $ss$");
 
     this.basicOptimize("!true", "false");
     this.basicOptimize("!false", "true");
@@ -225,7 +225,7 @@ public class ExpressionsTestCase extends TestCase {
     this.basicTypecheck("toNumber(\"a\")", ExpressionType.NUMBER);
     this.basicTypecheck("toBoolean(\"true\")", ExpressionType.BOOLEAN);
 
-    this.basicTypecheck("\"a\" & \"b\"", ExpressionType.STRING);
+    this.basicTypecheck("\"a\" # \"b\"", ExpressionType.STRING);
 
     this.basicTypecheck("click(Home.register)", ExpressionType.VOID);
     this.basicTypecheck("%native()", ExpressionType.VOID);
@@ -240,7 +240,7 @@ public class ExpressionsTestCase extends TestCase {
     
     this.basicTypecheckError("1 + true");
     this.basicTypecheckError("true && $genI$");
-    this.basicTypecheckError("1 & true");
+    this.basicTypecheckError("1 # true");
     this.basicTypecheckError("Home.list[\"a\"].textField");
     this.basicTypecheckError("Home.list[true].textField");
 

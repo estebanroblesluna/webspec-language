@@ -193,9 +193,13 @@ public class SeleniumJavaExpressionGenerator {
     }
     
     public Object visitWidgetPropertyReference(WidgetPropertyReference widgetPropertyReference) {
-      return "selenium.getAttribute(" + "\""
+      if (widgetPropertyReference.getPropertyName().equals("text")) {
+        return "selenium.getText(\"" + widgetPropertyReference.getPreferedLocation() + "\")"; 
+      } else {
+        return "selenium.getAttribute(" + "\""
           + widgetPropertyReference.getPreferedLocation() + "@"
           + widgetPropertyReference.getPropertyName() + "\"" + ")";
+      }
     }
     
     public Object visitWidgetReference(WidgetReference widgetReference) {

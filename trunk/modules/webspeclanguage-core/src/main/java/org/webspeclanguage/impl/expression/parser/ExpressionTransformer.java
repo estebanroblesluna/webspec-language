@@ -14,14 +14,17 @@ package org.webspeclanguage.impl.expression.parser;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.webspeclanguage.api.Action;
 import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.Interaction;
+import org.webspeclanguage.api.WidgetProvider;
 import org.webspeclanguage.impl.action.ExpressionAction;
 import org.webspeclanguage.impl.action.LetVariable;
 import org.webspeclanguage.impl.expression.core.AbstractFunctionCallExpression;
@@ -79,8 +82,6 @@ import org.webspeclanguage.impl.expression.parser.node.AGeneratorValue;
 import org.webspeclanguage.impl.expression.parser.node.AGreaterCompExpr;
 import org.webspeclanguage.impl.expression.parser.node.AGreaterEqualCompExpr;
 import org.webspeclanguage.impl.expression.parser.node.AImpliesExpr;
-import org.webspeclanguage.impl.expression.parser.node.AInterfactionPropertyValue;
-import org.webspeclanguage.impl.expression.parser.node.AInterfactionWidgetPropertyValue;
 import org.webspeclanguage.impl.expression.parser.node.ALetAction;
 import org.webspeclanguage.impl.expression.parser.node.ALowerCompExpr;
 import org.webspeclanguage.impl.expression.parser.node.ALowerEqualCompExpr;
@@ -104,6 +105,7 @@ import org.webspeclanguage.impl.expression.parser.node.AValueFactor;
 import org.webspeclanguage.impl.expression.parser.node.AVariable;
 import org.webspeclanguage.impl.expression.parser.node.AVariableValue;
 import org.webspeclanguage.impl.expression.parser.node.AVariableVariableorliteralarray;
+import org.webspeclanguage.impl.expression.parser.node.AWidgetPathValue;
 import org.webspeclanguage.impl.expression.parser.node.AWidgetarrayaccessWidgetOrWidgetAccess;
 import org.webspeclanguage.impl.expression.parser.node.Start;
 import org.webspeclanguage.impl.expression.parser.node.TNumber;
@@ -120,10 +122,10 @@ import org.webspeclanguage.impl.widget.Widget;
 @SuppressWarnings("unchecked")
 public class ExpressionTransformer extends DepthFirstAdapter {
 
-  private Diagram diagram;
+  private WidgetProvider provider;
 
-  public ExpressionTransformer(Diagram diagram) {
-    this.diagram = diagram;
+  public ExpressionTransformer(WidgetProvider provider) {
+    this.provider = provider;
   }
 
   public List<Action> transform(Start start) {
@@ -464,76 +466,67 @@ public class ExpressionTransformer extends DepthFirstAdapter {
   }
 
   @Override
-  public void outAInterfactionPropertyValue(AInterfactionPropertyValue node) {
-    String iName = node.getInteraction().getText();
-    String propertyOrWidget = node.getProperty().getText();
-    
-    Interaction interaction = this.diagram.getInteractionNamed(iName);
-    Widget widget = interaction.getWidget(propertyOrWidget);
-    if (widget != null) {
-      this.setOut(node, new WidgetReference(widget));
-    } else {
-      this.setOut(node, new InteractionPropertyExpression(interaction, propertyOrWidget));
-    }
-  }
-
-  @Override
   public void outAVariable(AVariable node) {
     this.setOut(node, new VariableValue(node.getI().getText()));
   }
   
-  private Container currentContainer;
   private Map<String, Expression> currentVariables = new HashMap<String, Expression>();
-  private Widget lastWidget;
-  private String interactionName;
-  private String property;
+  private List<String> widgets = new ArrayList<String>();
   
   @Override
-  public void inAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node) {
+  public void inAWidgetPathValue(AWidgetPathValue node) {
     this.currentVariables.clear();
-    this.interactionName = node.getInteraction().getText();
-    Interaction interaction = this.diagram.getInteractionNamed(this.interactionName);
-    this.currentContainer = interaction.getRoot();
-    this.property = node.getProperty().getText();
+    this.widgets.clear();
   }
-
+  
   @Override
-  public void outASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node) {
-    String widgetName = node.getWidget().getText();
-    if (this.currentContainer != null && this.currentContainer.getWidgetNamed(widgetName) != null) {
-      this.lastWidget = this.currentContainer.getWidgetNamed(widgetName);
-      if (this.lastWidget instanceof Container) {
-        this.currentContainer = (Container) this.lastWidget;
+  public void outAWidgetPathValue(AWidgetPathValue node) {
+    String path = node.getInteraction().getText() + "." + StringUtils.join(widgets.toArray(), '.');
+    
+    if (this.widgets.size() == 1) {
+      //could be widget or property
+      Widget widget = this.provider.getWidget(path);
+      if (widget != null) {
+        this.setOut(node, new WidgetReference(widget, this.currentVariables));
+      } else {
+        Interaction interaction = null;
+        if (this.provider instanceof Interaction) {
+          interaction = (Interaction) provider;
+        } else {
+          interaction = ((Diagram) provider).getInteractionNamed(node.getInteraction().getText());
+        }
+        this.setOut(node, new InteractionPropertyExpression(interaction, this.widgets.get(0)));
       }
     } else {
-      throw new WidgetNotFoundException(this.interactionName, widgetName);
+      //test first if it is a widget from the full path
+      Widget widget = this.provider.getWidget(path);
+      if (widget != null) {
+        this.setOut(node, new WidgetReference(widget, this.currentVariables));
+      } else {
+        String pathWithoutLast = node.getInteraction().getText() + "." + StringUtils.join(Arrays.copyOfRange(this.widgets.toArray(), 0, this.widgets.size() - 1), '.');
+        Widget newWidget = this.provider.getWidget(pathWithoutLast);
+        this.setOut(node, new WidgetPropertyReference(newWidget, this.widgets.get(this.widgets.size() - 1), this.currentVariables));
+      }
+
     }
+  }
+  
+  @Override
+  public void outASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node) {
+    this.widgets.add(node.getWidget().getText());
   }
 
   @Override
   public void outAWidgetarrayaccessWidgetOrWidgetAccess(AWidgetarrayaccessWidgetOrWidgetAccess node) {
-    String widgetName = node.getWidget().getText();
-    if (this.currentContainer != null && this.currentContainer.getWidgetNamed(widgetName) != null) {
-      Widget widget = this.currentContainer.getWidgetNamed(widgetName);
-      if (!(widget instanceof ListOfContainer)) {
-        throw new IncompatibleWidgetException(this.interactionName, widgetName);
-      } else {
-        this.currentContainer = (Container) widget;
-        this.currentVariables.put(widgetName, (Expression) this.getOut(node.getExpr()));
-      }
-    } else {
-      throw new WidgetNotFoundException(this.interactionName, widgetName);
-    }
+    this.widgets.add(node.getWidget().getText());
+    this.currentVariables.put(node.getWidget().getText(), (Expression) this.getOut(node.getExpr()));
   }
 
-  @Override
-  public void outAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node) {
-    Widget widget = this.currentContainer.getWidgetNamed(this.property);
-    if (widget != null) {
-      this.setOut(node, new WidgetReference(widget, this.currentVariables));
+  private Diagram getDiagram() {
+    if (this.provider instanceof Diagram) {
+      return (Diagram) this.provider;
     } else {
-      WidgetPropertyReference widgetPropertyReference = new WidgetPropertyReference(this.lastWidget, this.property, this.currentVariables);
-      this.setOut(node, widgetPropertyReference);
+      throw new IllegalStateException("Invalid provider. Should be a Diagram");
     }
   }
 }

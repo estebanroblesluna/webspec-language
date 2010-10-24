@@ -47,14 +47,12 @@ public interface Analysis extends Switch
     void caseANativefunctioncallValue(ANativefunctioncallValue node);
     void caseAArrayValue(AArrayValue node);
     void caseAArrayAccessValue(AArrayAccessValue node);
-    void caseAInterfactionPropertyValue(AInterfactionPropertyValue node);
-    void caseAInterfactionWidgetPropertyValue(AInterfactionWidgetPropertyValue node);
+    void caseAWidgetPathValue(AWidgetPathValue node);
     void caseAVariableVariableorliteralarray(AVariableVariableorliteralarray node);
     void caseAArrayVariableorliteralarray(AArrayVariableorliteralarray node);
     void caseAArray(AArray node);
     void caseAVariable(AVariable node);
     void caseAWidgetOrWidgetAccessListWithProperty(AWidgetOrWidgetAccessListWithProperty node);
-    void caseAWidgetOrWidgetAccessListWithPropertyPoint(AWidgetOrWidgetAccessListWithPropertyPoint node);
     void caseASimplewidgetWidgetOrWidgetAccess(ASimplewidgetWidgetOrWidgetAccess node);
     void caseAWidgetarrayaccessWidgetOrWidgetAccess(AWidgetarrayaccessWidgetOrWidgetAccess node);
     void caseATrueBoolean(ATrueBoolean node);

@@ -15,6 +15,8 @@ package org.webspeclanguage.io;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.xml.sax.Attributes;
+
 
 /**
  * An abstract parser for XML elements
@@ -48,6 +50,13 @@ public abstract class AbstractElementParser implements ElementParser {
    */
   public Object getResult() {
     return this.result;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public void postProcess(Attributes attributes) {
+    
   }
   
   protected void registerChild(Class<?> theClass, String methodName) {

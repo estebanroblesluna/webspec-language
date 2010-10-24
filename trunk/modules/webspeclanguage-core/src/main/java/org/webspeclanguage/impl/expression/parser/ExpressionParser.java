@@ -18,7 +18,7 @@ import java.io.StringReader;
 import java.util.List;
 
 import org.webspeclanguage.api.Action;
-import org.webspeclanguage.api.Diagram;
+import org.webspeclanguage.api.WidgetProvider;
 import org.webspeclanguage.impl.action.ExpressionAction;
 import org.webspeclanguage.impl.expression.core.Expression;
 import org.webspeclanguage.impl.expression.parser.lexer.Lexer;
@@ -34,7 +34,7 @@ import org.webspeclanguage.impl.expression.parser.parser.ParserException;
  */
 public class ExpressionParser {
 
-  public Expression parseFor(String input, Diagram diagram)
+  public Expression parseFor(String input, WidgetProvider provider)
       throws ParsingException {
     String modifiedInput = input.replaceAll("\n", "");
 
@@ -45,7 +45,7 @@ public class ExpressionParser {
 
     try {
       Start ast = parser.parse();
-      ExpressionTransformer transformer = new ExpressionTransformer(diagram);
+      ExpressionTransformer transformer = new ExpressionTransformer(provider);
       List<Action> actions = transformer.transform(ast);
       if (actions.size() == 1) {
         if (actions.get(0) instanceof ExpressionAction) {

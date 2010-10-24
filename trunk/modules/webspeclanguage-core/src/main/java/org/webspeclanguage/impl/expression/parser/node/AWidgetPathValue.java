@@ -2,46 +2,42 @@
 
 package org.webspeclanguage.impl.expression.parser.node;
 
+import java.util.*;
 import org.webspeclanguage.impl.expression.parser.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AInterfactionPropertyValue extends PValue
+public final class AWidgetPathValue extends PValue
 {
     private TIdentifier _interaction_;
-    private TPoint _point_;
-    private TIdentifier _property_;
+    private final LinkedList<PWidgetOrWidgetAccessListWithProperty> _widgets_ = new LinkedList<PWidgetOrWidgetAccessListWithProperty>();
 
-    public AInterfactionPropertyValue()
+    public AWidgetPathValue()
     {
         // Constructor
     }
 
-    public AInterfactionPropertyValue(
+    public AWidgetPathValue(
         @SuppressWarnings("hiding") TIdentifier _interaction_,
-        @SuppressWarnings("hiding") TPoint _point_,
-        @SuppressWarnings("hiding") TIdentifier _property_)
+        @SuppressWarnings("hiding") List<PWidgetOrWidgetAccessListWithProperty> _widgets_)
     {
         // Constructor
         setInteraction(_interaction_);
 
-        setPoint(_point_);
-
-        setProperty(_property_);
+        setWidgets(_widgets_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AInterfactionPropertyValue(
+        return new AWidgetPathValue(
             cloneNode(this._interaction_),
-            cloneNode(this._point_),
-            cloneNode(this._property_));
+            cloneList(this._widgets_));
     }
 
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAInterfactionPropertyValue(this);
+        ((Analysis) sw).caseAWidgetPathValue(this);
     }
 
     public TIdentifier getInteraction()
@@ -69,54 +65,24 @@ public final class AInterfactionPropertyValue extends PValue
         this._interaction_ = node;
     }
 
-    public TPoint getPoint()
+    public LinkedList<PWidgetOrWidgetAccessListWithProperty> getWidgets()
     {
-        return this._point_;
+        return this._widgets_;
     }
 
-    public void setPoint(TPoint node)
+    public void setWidgets(List<PWidgetOrWidgetAccessListWithProperty> list)
     {
-        if(this._point_ != null)
+        this._widgets_.clear();
+        this._widgets_.addAll(list);
+        for(PWidgetOrWidgetAccessListWithProperty e : list)
         {
-            this._point_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
+            if(e.parent() != null)
             {
-                node.parent().removeChild(node);
+                e.parent().removeChild(e);
             }
 
-            node.parent(this);
+            e.parent(this);
         }
-
-        this._point_ = node;
-    }
-
-    public TIdentifier getProperty()
-    {
-        return this._property_;
-    }
-
-    public void setProperty(TIdentifier node)
-    {
-        if(this._property_ != null)
-        {
-            this._property_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._property_ = node;
     }
 
     @Override
@@ -124,8 +90,7 @@ public final class AInterfactionPropertyValue extends PValue
     {
         return ""
             + toString(this._interaction_)
-            + toString(this._point_)
-            + toString(this._property_);
+            + toString(this._widgets_);
     }
 
     @Override
@@ -138,15 +103,8 @@ public final class AInterfactionPropertyValue extends PValue
             return;
         }
 
-        if(this._point_ == child)
+        if(this._widgets_.remove(child))
         {
-            this._point_ = null;
-            return;
-        }
-
-        if(this._property_ == child)
-        {
-            this._property_ = null;
             return;
         }
 
@@ -163,16 +121,22 @@ public final class AInterfactionPropertyValue extends PValue
             return;
         }
 
-        if(this._point_ == oldChild)
+        for(ListIterator<PWidgetOrWidgetAccessListWithProperty> i = this._widgets_.listIterator(); i.hasNext();)
         {
-            setPoint((TPoint) newChild);
-            return;
-        }
+            if(i.next() == oldChild)
+            {
+                if(newChild != null)
+                {
+                    i.set((PWidgetOrWidgetAccessListWithProperty) newChild);
+                    newChild.parent(this);
+                    oldChild.parent(null);
+                    return;
+                }
 
-        if(this._property_ == oldChild)
-        {
-            setProperty((TIdentifier) newChild);
-            return;
+                i.remove();
+                oldChild.parent(null);
+                return;
+            }
         }
 
         throw new RuntimeException("Not a child.");
