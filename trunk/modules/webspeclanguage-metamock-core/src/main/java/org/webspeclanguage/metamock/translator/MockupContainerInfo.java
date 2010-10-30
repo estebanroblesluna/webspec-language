@@ -23,17 +23,17 @@ package org.webspeclanguage.metamock.translator;
 public class MockupContainerInfo {
 
   private String name;
-  private String sourceFilePath;
+  private String sourceUrl;
 
   public MockupContainerInfo(String name) {
     super();
     this.setName(name);
   }
 
-  public MockupContainerInfo(String name, String sourceFilename) {
+  public MockupContainerInfo(String name, String sourceUrl) {
     super();
     this.setName(name);
-    this.setSourceFilePath(sourceFilename);
+    this.setSourceUrl(sourceUrl);
   }
 
   public final void setName(String name) {
@@ -44,12 +44,12 @@ public class MockupContainerInfo {
     return name;
   }
 
-  private void setSourceFilePath(String filename) {
-    this.sourceFilePath = filename;
+  private void setSourceUrl(String filename) {
+    this.sourceUrl = filename;
   }
 
-  public String getSourceFilePath() {
-    return sourceFilePath;
+  public String getSourceUrl() {
+    return sourceUrl;
   }
 
 }

@@ -45,7 +45,7 @@ public class MetaMockModelImpl implements MetaMockModel {
     this.setTemplatesById(new HashMap<String, Template>());
   }
 
-  private void setPages(Collection<Page> pages) {
+  private final void setPages(Collection<Page> pages) {
     this.getPagesById().clear();
     for (Page p : pages) {
       this.addPage(p);

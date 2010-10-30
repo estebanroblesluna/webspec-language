@@ -70,7 +70,7 @@ public class AnnotationProcessor {
 		return nextProcessor;
 	}
 
-	public void processAnnotations(Collection<MetaMockAnnotation> annotations, MetaMockModel model) {
+	public final void processAnnotations(Collection<MetaMockAnnotation> annotations, MetaMockModel model) {
 		this.getInterpreter().startingAnnotationInterpretationIn(model);
 		for (MetaMockAnnotation a : annotations) {
 			this.getInterpreter().interpreteAnnotation(a, model);

@@ -45,7 +45,7 @@ public final class MetaMockUtil {
 	 * included into the control <code>c2</code>, <code>false</code> otherwise
 	 */
 	public static Boolean isVerticallyIncludedIn(UIControl c1, UIControl c2) {
-		if (c1 == c2) {
+		if (c1.equals(c2)) {
 			return false;
 		}
 		return
@@ -58,7 +58,7 @@ public final class MetaMockUtil {
    * included into the control <code>c2</code>, or <code>false</code> otherwise
    */
 	public static Boolean isHorizontallyIncludedIn(UIControl c1, UIControl c2) {
-		if (c1 == c2) {
+		if (c1.equals(c2)) {
 			return false;
 		}
 		return
@@ -71,7 +71,7 @@ public final class MetaMockUtil {
 	 * control <code>c2</code> or <code>false</code> otherwise
 	 */
 	public static Boolean isIncludedIn(UIControl c1, UIControl c2) {
-		if (c1 == c2) {
+		if (c1.equals(c2)) {
 			return false;
 		}
 		return

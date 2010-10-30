@@ -28,11 +28,11 @@ public abstract class AbstractAnnotationInterpreter extends DefaultControlAnnota
     super();
   }
 
-  protected void setCurrentModel(MetaMockModel currentModel) {
+  protected final void setCurrentModel(MetaMockModel currentModel) {
     this.currentModel = currentModel;
   }
 
-  protected MetaMockModel getCurrentModel() {
+  public final MetaMockModel getCurrentModel() {
     return currentModel;
   }
 

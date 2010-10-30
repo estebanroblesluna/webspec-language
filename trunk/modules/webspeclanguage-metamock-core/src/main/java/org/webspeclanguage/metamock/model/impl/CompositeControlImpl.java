@@ -50,15 +50,15 @@ public abstract class CompositeControlImpl extends UIControlImpl implements Comp
     this.controls = controls;
   }
 
-  public Collection<UIControl> getControls() {
+  public final Collection<UIControl> getControls() {
     return controls;
   }
 
-  public void setLayout(Layout layout) {
+  public final void setLayout(Layout layout) {
     this.layout = layout;
   }
 
-  public Layout getLayout() {
+  public final Layout getLayout() {
     return layout;
   }
 
@@ -74,17 +74,17 @@ public abstract class CompositeControlImpl extends UIControlImpl implements Comp
     this.containerId = containerId;
   }
 
-  public String getContainerId() {
+  public final String getContainerId() {
     return containerId;
   }
 
-  public void addChild(UIControl c) {
+  public final void addChild(UIControl c) {
     this.getControls().add(c);
     this.indexControl(c);
     c.setParent(this);
   }
 
-  public void removeChild(UIControl c) {
+  public final void removeChild(UIControl c) {
     this.getControls().remove(c);
     this.removeControlIndex(c);
     c.setParent(null);
@@ -110,11 +110,11 @@ public abstract class CompositeControlImpl extends UIControlImpl implements Comp
     }
   }
 
-  public UIControl getControlById(String id) {
+  public final UIControl getControlById(String id) {
     return this.getControlsById().get(id);
   }
 
-  public void setParent(CompositeControl parentControl) {
+  public final void setParent(CompositeControl parentControl) {
     if (this.getParent() != null) {
       this.removeControlIndexesParent();
     }
