@@ -45,7 +45,8 @@ import org.webspeclanguage.metamock.translator.MetaMockControlParser;
  */
 public class BalsamiqControlParser implements MetaMockControlParser<File> {
 
-	private MetaMockFactory factory;
+	private static final String CONTROL_PROPERTIES = "controlProperties";
+  private MetaMockFactory factory;
 	private File currentFile;
 
 	public BalsamiqControlParser(MetaMockFactory factory) {
@@ -214,7 +215,7 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 		return height;
 	}
 
-	public Button parseButton(Element e) {
+	public final Button parseButton(Element e) {
 		return this.getFactory().createButton(
 				this.getControlId(e),
 				this.getX(e),
@@ -224,14 +225,14 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 				this.urlDecode(this.getChildText(e)));
 	}
 
-	public Panel parsePanel(Element e) {
+	public final Panel parsePanel(Element e) {
 		return this.getFactory().createPanel(this.getControlId(e),
 				this.getX(e), this.getY(e), this.getWidth(e),
 				this.getHeight(e),
 				this.getCurrentFile().getName().split("\\.")[0]);
 	}
 
-	public Page parsePage(Element e) {
+	public final Page parsePage(Element e) {
 		return this.getFactory().createPage(
 				this.getControlId(e),
 				this.getX(e),
@@ -242,13 +243,13 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 				this.getCurrentFile().getName().split("\\.")[0]);
 	}
 
-	public TextBox parseTextBox(Element e) {
+	public final TextBox parseTextBox(Element e) {
 		return this.getFactory()
 				.createTextBox(this.getControlId(e), this.getX(e),
 						this.getY(e), this.getWidth(e), this.getHeight(e));
 	}
 
-	public Label parseLabel(Element e) {
+	public final Label parseLabel(Element e) {
 		return this.getFactory().createLabel(
 				this.getControlId(e),
 				this.getX(e),
@@ -258,16 +259,16 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 				this.urlDecode(this.getChildText(e)));
 	}
 
-	public DatePicker parseDatePicker(Element e) {
+	public final DatePicker parseDatePicker(Element e) {
 		return this.getFactory()
 				.createDatePicker(this.getControlId(e), this.getX(e),
 						this.getY(e), this.getWidth(e), this.getHeight(e));
 	}
 
-	public Image parseImage(Element e) {
+	public final Image parseImage(Element e) {
 		String src = null;
-		if (e.getChild("controlProperties") != null) {
-			src = e.getChild("controlProperties").getAttributeValue("src");
+		if (e.getChild(CONTROL_PROPERTIES) != null) {
+			src = e.getChild(CONTROL_PROPERTIES).getAttributeValue("src");
 		}
 		if (src == null) {
 			src = "";
@@ -279,12 +280,12 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 				this.getHeight(e), src);
 	}
 
-	public org.webspeclanguage.metamock.model.List parseList(Element e) {
+	public final org.webspeclanguage.metamock.model.List parseList(Element e) {
 		return this.getFactory().createList(this.getControlId(e), this.getX(e),
 				this.getY(e), this.getWidth(e), this.getHeight(e));
 	}
 
-	public ComboBox parseComboBox(Element e) {
+	public final ComboBox parseComboBox(Element e) {
 		return this.getFactory()
 				.createComboBox(this.getControlId(e), this.getX(e),
 						this.getY(e), this.getWidth(e), this.getHeight(e));
@@ -306,7 +307,7 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 	}
 
 	private String getChildText(Element e) {
-		return e.getChild("controlProperties").getChildText("text");
+		return e.getChild(CONTROL_PROPERTIES).getChildText("text");
 	}
 
 	private String urlDecode(String urlEncodedString) {
@@ -317,7 +318,7 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 		}
 	}
 
-	public Collection<MetaMockControlGroup> parseControls(File source) {
+	public final Collection<MetaMockControlGroup> parseControls(File source) {
 		DefaultMetaMockControlGroupImpl group = new DefaultMetaMockControlGroupImpl(
 				new ArrayList<UIControl>());
 		try {
@@ -343,7 +344,7 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 	}
 
 	private void addFriendlyIdIfPresent(UIControl c, Element e) {
-		Element idElem = e.getChild("controlProperties");
+		Element idElem = e.getChild(CONTROL_PROPERTIES);
 		if (idElem != null) {
 			idElem = idElem.getChild("customID");
 		}
@@ -353,7 +354,7 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 	}
 
 	private UIControl customData2Annotation(Element e, UIControl c) {
-		Element data = e.getChild("controlProperties");
+		Element data = e.getChild(CONTROL_PROPERTIES);
 		if (data != null) {
 			data = data.getChild("customData");
 		}

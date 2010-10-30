@@ -32,7 +32,7 @@ public class AnnotationImpl extends UIControlImpl implements Annotation {
     this.setContent(content);
   }
 
-  public UIControl getTargetElement() {
+  public final UIControl getTargetElement() {
     return this.targetElement;
   }
 
@@ -44,15 +44,15 @@ public class AnnotationImpl extends UIControlImpl implements Annotation {
     this.content = content;
   }
 
-  public String getContent() {
+  public final String getContent() {
     return content;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public final <T> T visit(MetaMockVisitor<T> v) {
     return v.visitAnnotation(this);
   }
 
-  public UIControl copyConcreteControl() {
+  public final UIControl copyConcreteControl() {
     return new AnnotationImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getTargetElement(), this.getContent());
   }
 

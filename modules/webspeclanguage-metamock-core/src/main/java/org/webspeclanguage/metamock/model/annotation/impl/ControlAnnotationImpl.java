@@ -31,7 +31,7 @@ public class ControlAnnotationImpl implements ControlAnnotation {
     this.id = id;
   }
 
-  public String getId() {
+  public final String getId() {
     return id;
   }
 
@@ -39,7 +39,7 @@ public class ControlAnnotationImpl implements ControlAnnotation {
     this.control = control;
   }
 
-  public UIControl getControl() {
+  public final UIControl getControl() {
     return control;
   }
 

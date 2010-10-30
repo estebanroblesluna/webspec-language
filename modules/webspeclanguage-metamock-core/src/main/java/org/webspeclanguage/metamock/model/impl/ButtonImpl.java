@@ -34,11 +34,11 @@ public class ButtonImpl extends SimpleControlImpl implements Button {
     this.text = text;
   }
 
-  public String getText() {
+  public final String getText() {
     return text;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public final <T> T visit(MetaMockVisitor<T> v) {
     return v.visitButton(this);
   }
 

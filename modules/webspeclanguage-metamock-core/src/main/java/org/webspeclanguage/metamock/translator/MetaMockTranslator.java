@@ -12,6 +12,7 @@
  */
 package org.webspeclanguage.metamock.translator;
 
+import org.webspeclanguage.metamock.codegen.generator.Mockup;
 import org.webspeclanguage.metamock.model.MetaMockModel;
 
 /**
@@ -22,10 +23,10 @@ import org.webspeclanguage.metamock.model.MetaMockModel;
 public abstract class MetaMockTranslator<TSource> {
 	
 	
-	public MetaMockModel translateModelFrom(TSource source, MockupContainerInfo info) throws MetaMockTranslationException {
+	public MetaMockModel translateModelFrom(Mockup<TSource> mockup) throws MetaMockTranslationException {
 		return 
 			this.applyAnnotationsAndInferLayouts(
-				this.getRawModel(source, info));
+				this.getRawModel(mockup.getRepresentation(), mockup.getContainerInfo()));
 	}
 
 	

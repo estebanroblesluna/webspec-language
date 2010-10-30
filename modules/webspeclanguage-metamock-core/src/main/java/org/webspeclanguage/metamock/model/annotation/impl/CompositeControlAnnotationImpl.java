@@ -37,7 +37,7 @@ public class CompositeControlAnnotationImpl extends ControlAnnotationImpl implem
     this.layoutAnnotation = layoutAnnotation;
   }
 
-  public LayoutAnnotation getLayoutAnnotation() {
+  public final LayoutAnnotation getLayoutAnnotation() {
     return layoutAnnotation;
   }
 
@@ -45,7 +45,7 @@ public class CompositeControlAnnotationImpl extends ControlAnnotationImpl implem
     this.templateInstantiationAnnotation = templateInstantiationAnnotation;
   }
 
-  public TemplateInstantiationAnnotation getTemplateInstantiationAnnotation() {
+  public final TemplateInstantiationAnnotation getTemplateInstantiationAnnotation() {
     return templateInstantiationAnnotation;
   }
 
@@ -53,11 +53,11 @@ public class CompositeControlAnnotationImpl extends ControlAnnotationImpl implem
     this.repetitionAnnotation = repetitionAnnotation;
   }
 
-  public RepetitionAnnotation getRepetitionAnnotation() {
+  public final RepetitionAnnotation getRepetitionAnnotation() {
     return repetitionAnnotation;
   }
 
-  public void visit(ControlAnnotationVisitor cav) {
+  public final void visit(ControlAnnotationVisitor cav) {
     cav.visitCompositeControlAnnotation(this);
   }
 
