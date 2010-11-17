@@ -1,0 +1,16 @@
+<mockups xmlns="http://www.webspeclanguage.org/metamock"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.webspeclanguage.org/metamock metamock.xsd ">
+  <ui title="Login screen" id="loginScreen">
+    <layout>
+      <flowLayout />
+    </layout>
+    <button id="loginButton" label="Login" />
+    <label id="usernameLabel" label="Username: " />
+    <textBox id="usernameTextbox" />
+    <label id="passwordLabel" label="Password: " />
+    <textBox id="passwordTextbox" />
+    <button id="loginButton" label="Login"/>
+    <checkbox id="rememberMeCheckbox" label="Remember me on this computer"/>
+  </ui>
+</mockups>
