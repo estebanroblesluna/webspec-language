@@ -15,11 +15,25 @@
   <element name="widget" type="tns:tWidget" abstract="true" />
 
   <complexType name="tWidget">
-    <sequence minOccurs="0" maxOccurs="1">
-      <element ref="tns:layoutInfo" />
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element ref="tns:layoutInfo" />
+      </sequence>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element ref="tns:originalPosition" />
+      </sequence>
     </sequence>
     <attribute name="id" type="string" use="required" />
     <attribute name="friendlyId" type="string" />
+  </complexType>
+
+  <element name="originalPosition" type="tns:tOriginalPosition" />
+  
+  <complexType name="tOriginalPosition">
+    <attribute name="x" type="integer" use="required" />
+    <attribute name="y" type="integer" use="required" />
+    <attribute name="width" type="integer" use="required" />
+    <attribute name="height" type="integer" use="required" />
   </complexType>
 
   <element name="layoutInfo">
@@ -174,6 +188,13 @@
       </extension>
     </complexContent>
   </complexType>
+  
+  <element name="absoluteLayout" type="tns:tGridBagLayout"
+    substitutionGroup="tns:abstractLayout" />
+
+  <complexType name="tAbsoluteLayout">
+
+  </complexType>
 
   <!-- LAYOUT INFO -->
   <element name="abstractLayoutInfo" type="tns:tLayoutInfo"
@@ -204,6 +225,20 @@
         <attribute name="row" type="integer" use="required" />
         <attribute name="colspan" type="integer" default="1" />
         <attribute name="rowspan" type="integer" default="1" />
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="absoluteLayoutInfo" type="tns:tAbsoluteLayoutInfo"
+    substitutionGroup="tns:abstractLayoutInfo" />
+
+  <complexType name="tAbsoluteLayoutInfo">
+    <complexContent>
+      <extension base="tns:tLayoutInfo">
+        <attribute name="x" type="integer" use="required" />
+        <attribute name="y" type="integer" use="required" />
+        <attribute name="width" type="integer" use="required" />
+        <attribute name="height" type="integer" use="required" />
       </extension>
     </complexContent>
   </complexType>
