@@ -12,12 +12,8 @@
  */
 package org.webspeclanguage.io.generators;
 
-import java.math.BigDecimal;
-
 import org.webspeclanguage.impl.expression.core.ArrayExpression;
 import org.webspeclanguage.impl.expression.core.StringConstant;
-import org.webspeclanguage.impl.generator.OneOfArrays;
-import org.webspeclanguage.impl.generator.OneOfNumbers;
 import org.webspeclanguage.io.AbstractElementParser;
 import org.webspeclanguage.io.ParseContext;
 import org.xml.sax.Attributes;
