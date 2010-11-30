@@ -15,7 +15,6 @@ package org.webspeclanguage.webtest.generator.selenium.java;
 import junit.framework.TestCase;
 
 import org.webspeclanguage.api.Diagram;
-import org.webspeclanguage.impl.core.DiagramImpl;
 import org.webspeclanguage.impl.core.WebSpecFactory;
 import org.webspeclanguage.webspec2test.TestGenerationResult;
 import org.webspeclanguage.webspec2test.WebSpec2WebTestTransformation;

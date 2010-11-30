@@ -22,7 +22,6 @@ import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.io.WebSpecParser;
 import org.webspeclanguage.webspec2test.TestGenerationResult;
 import org.webspeclanguage.webspec2test.WebSpec2WebTestTransformation;
-import org.webspeclanguage.webtest.action.WebOpenUrl;
 import org.webspeclanguage.webtest.base.WebTest;
 import org.webspeclanguage.webtest.base.WebTestGenerator;
 import org.webspeclanguage.webtest.base.WebTestSuite;
