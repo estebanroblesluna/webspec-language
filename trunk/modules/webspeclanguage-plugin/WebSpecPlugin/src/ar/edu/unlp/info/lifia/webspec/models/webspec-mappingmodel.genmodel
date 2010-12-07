@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/webspec-plugin/src/"
+    editDirectory="/webspec-plugin/src" editorDirectory="/webspec-plugin/src" modelPluginID="WebSpecPlugin"
+    modelName="Webspecmodel" modelPluginClass="" copyrightFields="false">
+  <genPackages prefix="Webspecmodel" basePackage="webspecplugin" disposableProviderFactory="true"
+      ecorePackage="webspec-domainmodel.ecore#/">
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Diagram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Diagram/transitions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Diagram/interactions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Diagram/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Diagram/generators"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Diagram/cycleAllowed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Diagram/actionsSetup"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Diagram/riaFeatures"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Interaction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Interaction/forwardTransitions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Interaction/root"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/invariant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/starting"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/mockupFile"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Transition/targetInteraction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Transition/sourceInteraction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Transition/precondition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Transition/actions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Transition/name"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Widget">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Widget/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Widget/location"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Generator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Generator/name"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Button"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//TextField"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//RadioButton"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//ListBox"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//ComboBox"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//CheckBox"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Container">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Container/widgets"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//OneOfStrings">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//OneOfStrings/strings"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//OneOfNumbers">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//OneOfNumbers/numbers"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//UniformNumberDistribution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//UniformNumberDistribution/min"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//UniformNumberDistribution/max"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Label"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//OneOfArray">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//OneOfArray/arrays"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//StringGenerator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//StringGenerator/maxLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//StringGenerator/minLength"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Link"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//ListOfContainer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//ListOfContainer/indexVariable"/>
+    </genClasses>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//PanelContainer"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//Navigation"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//RichBehavior"/>
+    <genClasses ecoreClass="webspec-domainmodel.ecore#//RIAFeature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//RIAFeature/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//RIAFeature/interactions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//RIAFeature/visible"/>
+    </genClasses>
+    <nestedGenPackages prefix="Webspecmodel" basePackage="webspecplugin" disposableProviderFactory="true"
+        ecorePackage="webspec-domainmodel.ecore#/">
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Diagram">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Diagram/transitions"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Diagram/interactions"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Diagram/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Diagram/generators"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Diagram/cycleAllowed"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Diagram/actionsSetup"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Diagram/riaFeatures"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Interaction">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Interaction/forwardTransitions"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Interaction/root"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/location"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/invariant"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/title"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/starting"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Interaction/mockupFile"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Transition">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Transition/targetInteraction"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Transition/sourceInteraction"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Transition/precondition"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Transition/actions"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Transition/name"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Widget">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Widget/name"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Widget/location"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Generator">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//Generator/name"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Button"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//TextField"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//RadioButton"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//ListBox"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//ComboBox"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//CheckBox"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Container">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//Container/widgets"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//OneOfStrings">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//OneOfStrings/strings"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//OneOfNumbers">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//OneOfNumbers/numbers"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//UniformNumberDistribution">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//UniformNumberDistribution/min"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//UniformNumberDistribution/max"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Label"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//OneOfArray">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//OneOfArray/arrays"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//StringGenerator">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//StringGenerator/maxLength"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//StringGenerator/minLength"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Link"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//ListOfContainer">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//ListOfContainer/indexVariable"/>
+      </genClasses>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//PanelContainer"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//Navigation"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//RichBehavior"/>
+      <genClasses ecoreClass="webspec-domainmodel.ecore#//RIAFeature">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//RIAFeature/name"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference webspec-domainmodel.ecore#//RIAFeature/interactions"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute webspec-domainmodel.ecore#//RIAFeature/visible"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>
