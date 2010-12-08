@@ -1,0 +1,15 @@
+require "rubygems"
+require "watir"
+require "test/unit"
+
+class TC_HomeNavigation < Test::Unit::TestCase
+
+	def setup
+		$browser = Watir::Browser.new()
+		message = "hi"
+	end
+
+	def testHomeNavigation
+	end
+
+end
