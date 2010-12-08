@@ -1,0 +1,29 @@
+require "rubygems"
+require "watir"
+require "test/unit"
+
+class TC_HomeNavigation < Test::Unit::TestCase
+
+	def setup
+		$browser = Watir::Browser.new()
+	end
+
+	def testHomeNavigation
+		message = "hi"
+		isQuery = true
+		money = 12305
+		money = 1 + 2
+		money = 1 - 2
+		money = 1 * 2
+		money = 1 / 2
+		money = 1 + money
+		isQuery = !true
+		isQuery = true and false
+		isQuery = true or false
+		isQuery = (!true) or false
+		isQuery = (true and false) and false
+		message = "hi " + "esteban"
+		message = ("hi " + "esteban") + " how are you"
+	end
+
+end
