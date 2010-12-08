@@ -142,18 +142,17 @@ public class WebspecmodelDiagramEditorUtil {
    * This method should be called within a workspace modify operation since it creates resources.
    * @generated
    */
-  public static Resource createDiagram(URI diagramURI, URI modelURI, IProgressMonitor progressMonitor) {
+  public static Resource createDiagram(URI diagramURI, IProgressMonitor progressMonitor) {
     TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE.createEditingDomain();
     progressMonitor.beginTask(Messages.WebspecmodelDiagramEditorUtil_CreateDiagramProgressTask, 3);
     final Resource diagramResource = editingDomain.getResourceSet().createResource(diagramURI);
-    final Resource modelResource = editingDomain.getResourceSet().createResource(modelURI);
     final String diagramName = diagramURI.lastSegment();
     AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain, Messages.WebspecmodelDiagramEditorUtil_CreateDiagramCommandLabel,
             Collections.EMPTY_LIST) {
 
       protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
         Diagram model = createInitialModel();
-        attachModelToResource(model, modelResource);
+        attachModelToResource(model, diagramResource);
 
         org.eclipse.gmf.runtime.notation.Diagram diagram = ViewService.createDiagram(model, DiagramEditPart.MODEL_ID,
                 WebspecmodelDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
@@ -164,7 +163,7 @@ public class WebspecmodelDiagramEditorUtil {
         }
 
         try {
-          modelResource.save(webspecplugin.webspecmodel.diagram.part.WebspecmodelDiagramEditorUtil.getSaveOptions());
+
           diagramResource.save(webspecplugin.webspecmodel.diagram.part.WebspecmodelDiagramEditorUtil.getSaveOptions());
         } catch (IOException e) {
 
@@ -178,7 +177,7 @@ public class WebspecmodelDiagramEditorUtil {
     } catch (ExecutionException e) {
       WebspecmodelDiagramEditorPlugin.getInstance().logError("Unable to create model and diagram", e); //$NON-NLS-1$
     }
-    setCharset(WorkspaceSynchronizer.getFile(modelResource));
+
     setCharset(WorkspaceSynchronizer.getFile(diagramResource));
     return diagramResource;
   }

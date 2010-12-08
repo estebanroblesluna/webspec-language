@@ -73,7 +73,7 @@ public class WebspecmodelNewDiagramFileWizard extends Wizard {
       throw new IllegalArgumentException("Unsupported URI: " + domainModelURI); //$NON-NLS-1$
     }
     myFileCreationPage.setContainerFullPath(filePath);
-    myFileCreationPage.setFileName(WebspecmodelDiagramEditorUtil.getUniqueFileName(filePath, fileName, "webspecmodel_diagram")); //$NON-NLS-1$
+    myFileCreationPage.setFileName(WebspecmodelDiagramEditorUtil.getUniqueFileName(filePath, fileName, "webspec")); //$NON-NLS-1$
 
     diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(Messages.WebspecmodelNewDiagramFileWizard_RootSelectionPageName);
     diagramRootElementSelectionPage.setTitle(Messages.WebspecmodelNewDiagramFileWizard_RootSelectionPageTitle);
@@ -113,6 +113,7 @@ public class WebspecmodelNewDiagramFileWizard extends Wizard {
         Diagram diagram = ViewService.createDiagram(diagramRootElementSelectionPage.getModelElement(), DiagramEditPart.MODEL_ID,
                 WebspecmodelDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
         diagramResource.getContents().add(diagram);
+        diagramResource.getContents().add(diagram.getElement());
         return CommandResult.newOKCommandResult();
       }
     };

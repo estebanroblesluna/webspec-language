@@ -1128,7 +1128,7 @@
     </preferencePages>
   </diagram>
   <plugin
-      iD="webspec-plugin">
+      iD="WebSpecPlugin.diagram">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>
     <requiredPlugins>org.eclipse.gmf.runtime.draw2d.ui</requiredPlugins>
   </plugin>

@@ -37,11 +37,6 @@ public class WebspecmodelCreationWizard extends Wizard implements INewWizard {
   /**
    * @generated
    */
-  protected WebspecmodelCreationWizardPage domainModelFilePage;
-
-  /**
-   * @generated
-   */
   protected Resource diagram;
 
   /**
@@ -99,25 +94,10 @@ public class WebspecmodelCreationWizard extends Wizard implements INewWizard {
    * @generated
    */
   public void addPages() {
-    diagramModelFilePage = new WebspecmodelCreationWizardPage("DiagramModelFile", getSelection(), "webspecmodel_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
+    diagramModelFilePage = new WebspecmodelCreationWizardPage("DiagramModelFile", getSelection(), "webspec"); //$NON-NLS-1$ //$NON-NLS-2$
     diagramModelFilePage.setTitle(Messages.WebspecmodelCreationWizard_DiagramModelFilePageTitle);
     diagramModelFilePage.setDescription(Messages.WebspecmodelCreationWizard_DiagramModelFilePageDescription);
     addPage(diagramModelFilePage);
-
-    domainModelFilePage = new WebspecmodelCreationWizardPage("DomainModelFile", getSelection(), "webspecmodel") { //$NON-NLS-1$ //$NON-NLS-2$
-
-      public void setVisible(boolean visible) {
-        if (visible) {
-          String fileName = diagramModelFilePage.getFileName();
-          fileName = fileName.substring(0, fileName.length() - ".webspecmodel_diagram".length()); //$NON-NLS-1$
-          setFileName(WebspecmodelDiagramEditorUtil.getUniqueFileName(getContainerFullPath(), fileName, "webspecmodel")); //$NON-NLS-1$
-        }
-        super.setVisible(visible);
-      }
-    };
-    domainModelFilePage.setTitle(Messages.WebspecmodelCreationWizard_DomainModelFilePageTitle);
-    domainModelFilePage.setDescription(Messages.WebspecmodelCreationWizard_DomainModelFilePageDescription);
-    addPage(domainModelFilePage);
   }
 
   /**
@@ -127,7 +107,7 @@ public class WebspecmodelCreationWizard extends Wizard implements INewWizard {
     IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
 
       protected void execute(IProgressMonitor monitor) throws CoreException, InterruptedException {
-        diagram = WebspecmodelDiagramEditorUtil.createDiagram(diagramModelFilePage.getURI(), domainModelFilePage.getURI(), monitor);
+        diagram = WebspecmodelDiagramEditorUtil.createDiagram(diagramModelFilePage.getURI(), monitor);
         if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
           try {
             WebspecmodelDiagramEditorUtil.openDiagram(diagram);
