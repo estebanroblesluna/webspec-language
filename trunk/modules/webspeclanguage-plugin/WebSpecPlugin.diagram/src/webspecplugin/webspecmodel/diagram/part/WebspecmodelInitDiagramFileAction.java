@@ -69,7 +69,7 @@ public class WebspecmodelInitDiagramFileAction implements IObjectActionDelegate 
    */
   public void run(IAction action) {
     TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE.createEditingDomain();
-    ResourceSet resourceSet = editingDomain.getResourceSet();
+    ResourceSet resourceSet = new ResourceSetImpl();
     EObject diagramRoot = null;
     try {
       Resource resource = resourceSet.getResource(domainModelURI, true);

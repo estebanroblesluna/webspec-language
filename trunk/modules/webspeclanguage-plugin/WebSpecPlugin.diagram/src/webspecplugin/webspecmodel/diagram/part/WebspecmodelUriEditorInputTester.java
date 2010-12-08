@@ -16,7 +16,7 @@ public class WebspecmodelUriEditorInputTester extends PropertyTester {
       return false;
     }
     URIEditorInput editorInput = (URIEditorInput) receiver;
-    return "webspecmodel_diagram".equals(editorInput.getURI().fileExtension()); //$NON-NLS-1$
+    return "webspec".equals(editorInput.getURI().fileExtension()); //$NON-NLS-1$
   }
 
 }
