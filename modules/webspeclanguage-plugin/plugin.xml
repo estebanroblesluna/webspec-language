@@ -75,11 +75,15 @@
   	  <wizard
   	     name="%newWizardName"
   	     icon="icons/obj16/WebspecmodelDiagramFile.gif"
-  	     category="org.eclipse.ui.Examples"
+  	     category="webspeclanguage-plugin.category"
   	     class="webspecplugin.webspecmodel.diagram.part.WebspecmodelCreationWizard"
   	     id="webspecplugin.webspecmodel.diagram.part.WebspecmodelCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
       </wizard>
+     <category
+           id="webspeclanguage-plugin.category"
+           name="WebSpec">
+     </category>
    </extension>
 
    <extension point="org.eclipse.ui.popupMenus" id="init-diagram-action">
