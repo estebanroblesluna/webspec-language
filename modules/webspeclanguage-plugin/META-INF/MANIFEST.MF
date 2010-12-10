@@ -50,11 +50,11 @@ Bundle-ClassPath: .,
  lib/webspeclanguage-simulation.jar,
  lib/webspeclanguage-test-selenium.jar,
  lib/webspeclanguage-test.jar
-Bundle-Activator: webspecplugin.webspecmodel.presentation.WebspecmodelEditorPlugin$Implementation
+Bundle-Activator: org.webspeclanguage.plugin.webspecmodel.presentation.WebspecmodelEditorPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: webspecplugin.webspecmodel.presentation;
+Export-Package: org.webspeclanguage.plugin.webspecmodel.presentation;
   uses:="org.eclipse.jface.viewers,
    org.eclipse.swt.events,
    org.eclipse.emf.edit.ui.action,
@@ -73,7 +73,7 @@ Export-Package: webspecplugin.webspecmodel.presentation;
    org.eclipse.emf.edit.provider,
    org.eclipse.core.resources,
    org.eclipse.emf.common.util,
-   webspecplugin.webspecmodel,
+   org.webspeclanguage.plugin.webspecmodel,
    org.eclipse.ui,
    org.eclipse.emf.ecore.util,
    org.eclipse.ui.part,
