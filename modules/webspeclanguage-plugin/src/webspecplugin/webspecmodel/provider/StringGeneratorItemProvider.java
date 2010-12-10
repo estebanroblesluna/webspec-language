@@ -115,7 +115,7 @@ public class StringGeneratorItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/StringGenerator"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/StringGenerator.bmp"));
 	}
 
 	/**

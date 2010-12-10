@@ -115,7 +115,7 @@ public class UniformNumberDistributionItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/UniformNumberDistribution"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/UniformNumberDistribution.bmp"));
 	}
 
 	/**

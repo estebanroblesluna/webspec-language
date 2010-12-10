@@ -92,7 +92,7 @@ public class OneOfStringsItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/OneOfStrings"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OneOfStrings.bmp"));
 	}
 
 	/**
