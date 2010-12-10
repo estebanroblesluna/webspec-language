@@ -1,7 +1,0 @@
-# Tracing options for the WebSpecPlugin.diagram plug-in
-
-# Common issues
-WebSpecPlugin.diagram/debug=false
-
-# Visual IDs
-WebSpecPlugin.diagram/debug/visualID=false
