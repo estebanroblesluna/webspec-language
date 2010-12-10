@@ -92,7 +92,7 @@ public class OneOfNumbersItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/OneOfNumbers"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OneOfNumbers.bmp"));
 	}
 
 	/**
