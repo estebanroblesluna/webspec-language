@@ -1,0 +1,33 @@
+<diagram name="example"
+  xmlns="http://www.webspeclanguage.org/webspec" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.webspeclanguage.org/webspec webspec.xsd">
+ 
+  <one-of-strings-generator name="products" values="hello,how,are,you" />
+  <one-of-numbers-generator name="numbers" values="1,2,3,4.5" />
+  <random-string-generator  name="randomString" minLength="2" maxLength="10" />
+  <random-boolean-generator name="boolean" />
+  <uniform-number-generator name="uniform" minValue="0" maxValue="1" />
+
+  <one-of-arrays-generator  name="arrays">
+    <arrayExpression values="1,2,3" />
+    <arrayExpression values="4,5,6" />
+  </one-of-arrays-generator>
+  
+  
+  <interaction name="Home" starting="true" location="http://localhost:8080">
+    <button name="search" />
+    <textfield name="searchTF" />
+  </interaction>
+
+  <interaction name="SearchResults" invariant="searchTitle.text = ${productName}">
+    <label name="searchTitle" />
+    <list-of name="books">
+      <label name="price" />
+    </list-of>
+  </interaction>
+
+  <navigation from="Home" to="SearchResults" actions="productName := $products$; type(Home.searchTF, ${productName}); click(Home.search)" />
+  
+  <rich-behavior from="Home" to="SearchResults" actions="click(Home.search)" />
+</diagram>

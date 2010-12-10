@@ -1,0 +1,21 @@
+package org.webspeclanguage.tests;
+
+import java.math.BigDecimal;
+import com.thoughtworks.selenium.SeleneseTestCase;
+
+public class LoginAsUserTestCase extends SeleneseTestCase {
+
+	public void setUp() throws Exception {
+		super.setUp();
+		selenium.open("http://localhost:8080");
+	}
+
+	public void testLogin_Home() throws Exception {
+		selenium.type("id=username", "esteban");
+		selenium.type("id=password", "hi");
+		selenium.click("id=login");
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.getText("id=message").equals("Hello esteban"));
+	}
+
+}

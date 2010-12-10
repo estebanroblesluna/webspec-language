@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="">
+  <eClassifiers xsi:type="ecore:EClass" name="WebSpecChange">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//WebSpecElementReference" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WebElementAdd" eSuperTypes="#//WebSpecChange"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WebElementDelete" eSuperTypes="#//WebSpecChange"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WebElementPropertyUpdate" eSuperTypes="#//WebSpecChange">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="property"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WebSpecChangeObject">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
+        eType="#//WebSpecChange" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="diagram" lowerBound="1"
+        eType="#//WebSpecDiagram"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WebSpecElementReference">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elementName"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WebSpecDiagram"/>
+</ecore:EPackage>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+  xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:tns="http://www.webspeclanguage.org/webspec" 
+  targetNamespace="http://www.webspeclanguage.org/webspec">
+    
+    <!-- DIAGRAMS -->
+    <element name="diagram" type="tns:tDiagram"/>
+    
+    <complexType name="tDiagram">
+      <choice minOccurs="0" maxOccurs="unbounded" >
+        <element ref="tns:interaction"/>
+        <element ref="tns:transition"/>
+        <element ref="tns:generator"/>
+      </choice>
+      <attribute name="name" type="string"/>
+    </complexType>
+    
+    <!-- INTERACTIONS -->
+    <element name="interaction" type="tns:tInteraction"/>
+    
+    <complexType name="tInteraction">
+      <sequence minOccurs="0" maxOccurs="unbounded" >
+        <element ref="tns:widget"/>
+      </sequence>
+      <attribute name="name" type="string"/>
+      <attribute name="starting" type="boolean" default="false"/>
+      <attribute name="invariant" type="string"/>
+      <attribute name="location" type="string"/>
+    </complexType>
+
+    <!-- TRANSITIONS -->
+    <element name="transition" type="tns:tTransition" abstract="true"/>
+
+    <complexType name="tTransition">
+      <attribute name="from" type="string"></attribute>
+      <attribute name="to" type="string"></attribute>
+      <attribute name="precondition" type="string"></attribute>
+      <attribute name="actions" type="string"></attribute>
+    </complexType>
+
+    <element name="navigation" type="tns:tNavigation" substitutionGroup="tns:transition"/>
+
+    <complexType name="tNavigation">
+      <complexContent>
+        <extension base="tns:tTransition"></extension>
+      </complexContent>
+    </complexType>
+
+    <element name="rich-behavior" type="tns:tRichBehavior" substitutionGroup="tns:transition"/>
+
+    <complexType name="tRichBehavior">
+      <complexContent>
+        <extension base="tns:tTransition"></extension>
+      </complexContent>
+    </complexType>
+
+
+
+    <!-- GENERATORS -->
+    <element name="generator" type="tns:tGenerator" abstract="true"/>
+    
+    <complexType name="tGenerator">
+      <attribute name="name" type="string"/>
+    </complexType>
+
+    <element name="random-boolean-generator" type="tns:tRandomBooleanGenerator" substitutionGroup="tns:generator"/>
+    
+    <complexType name="tRandomBooleanGenerator">
+      <complexContent>
+        <extension base="tns:tGenerator"></extension>
+      </complexContent>
+    </complexType>
+
+    <element name="one-of-arrays-generator" type="tns:tOneOfArraysGenerator" substitutionGroup="tns:generator"/>
+
+    <complexType name="tOneOfArraysGenerator">
+      <complexContent>
+        <extension base="tns:tGenerator">
+          <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="tns:arrayExpression"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+
+    <element name="arrayExpression" type="tns:tArray"/>
+    <complexType name="tArray">
+      <attribute name="values" type="string"/>
+    </complexType>
+
+    <element name="one-of-numbers-generator" type="tns:tOneOfNumbersGenerator" substitutionGroup="tns:generator"/>
+
+    <complexType name="tOneOfNumbersGenerator">
+      <complexContent>
+        <extension base="tns:tGenerator">
+          <attribute name="values" type="string"/>
+        </extension>
+      </complexContent>
+    </complexType>
+
+    <element name="one-of-strings-generator" type="tns:tOneOfStringsGenerator" substitutionGroup="tns:generator"/>
+
+    <complexType name="tOneOfStringsGenerator">
+      <complexContent>
+        <extension base="tns:tGenerator">
+          <attribute name="values" type="string"/>
+        </extension>
+      </complexContent>
+    </complexType>
+    
+    <element name="random-string-generator" type="tns:tRandomStringGenerator" substitutionGroup="tns:generator"/>
+
+    <complexType name="tRandomStringGenerator">
+      <complexContent>
+        <extension base="tns:tGenerator">
+          <attribute name="minLength" type="int" default="0"/>
+          <attribute name="maxLength" type="int" default="25"/>
+        </extension>
+      </complexContent>
+    </complexType>
+
+    <element name="uniform-number-generator" type="tns:tUniformNumberGenerator" substitutionGroup="tns:generator"/>
+
+    <complexType name="tUniformNumberGenerator">
+      <complexContent>
+        <extension base="tns:tGenerator">
+          <attribute name="minValue" type="double"/>
+          <attribute name="maxValue" type="double"/>
+        </extension>
+      </complexContent>
+    </complexType>
+
+
+
+    <!-- WIDGETS -->
+    <element name="widget" type="tns:tWidget" abstract="true"/>
+
+    <complexType name="tWidget">
+      <attribute name="name" type="string"></attribute>
+      <attribute name="location" type="string"></attribute>
+    </complexType>
+
+    <element name="button" type="tns:tButton" substitutionGroup="tns:widget"/>
+
+    <complexType name="tButton">
+      <complexContent>
+        <extension base="tns:tWidget"></extension>
+      </complexContent>
+    </complexType>
+
+    <element name="checkbox" type="tns:tCheckBox" substitutionGroup="tns:widget"/>
+
+    <complexType name="tCheckBox">
+      <complexContent>
+        <extension base="tns:tWidget"></extension>
+      </complexContent>
+    </complexType>
+
+    <element name="combobox" type="tns:tComboBox" substitutionGroup="tns:widget"/>
+
+    <complexType name="tComboBox">
+      <complexContent>
+        <extension base="tns:tWidget"></extension>
+      </complexContent>
+    </complexType>
+
+    <element name="label" type="tns:tLabel" substitutionGroup="tns:widget"/>
+
+    <complexType name="tLabel">
+      <complexContent>
+        <extension base="tns:tWidget"></extension>
+      </complexContent>
+    </complexType>
+
+    <element name="link" type="tns:tLink" substitutionGroup="tns:widget"/>
+
+    <complexType name="tLink">
+      <complexContent>
+        <extension base="tns:tWidget"></extension>
+      </complexContent>
+    </complexType>
+
+    <element name="listbox" type="tns:tListBox" substitutionGroup="tns:widget"/>
+
+    <complexType name="tListBox">
+      <complexContent>
+        <extension base="tns:tWidget"></extension>
+      </complexContent>
+    </complexType>
+    
+    <element name="radiobutton" type="tns:tRadioButton" substitutionGroup="tns:widget"/>
+
+    <complexType name="tRadioButton">
+      <complexContent>
+        <extension base="tns:tWidget"></extension>
+      </complexContent>
+    </complexType>
+    
+    <element name="textfield" type="tns:tTextField" substitutionGroup="tns:widget"/>
+
+    <complexType name="tTextField">
+      <complexContent>
+        <extension base="tns:tWidget"></extension>
+      </complexContent>
+    </complexType>
+
+    <!-- WIDGETS - CONTAINERS -->
+    <complexType name="tContainer">
+      <complexContent>
+        <extension base="tns:tWidget">
+          <sequence minOccurs="0" maxOccurs="unbounded" >
+            <element ref="tns:widget"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+
+    <element name="list-of" type="tns:tListOf" substitutionGroup="tns:widget"/>
+
+    <complexType name="tListOf">
+      <complexContent>
+        <extension base="tns:tContainer"></extension>
+      </complexContent>
+    </complexType>
+
+    <element name="panel" type="tns:tPanel" substitutionGroup="tns:widget"/>
+
+    <complexType name="tPanel">
+      <complexContent>
+        <extension base="tns:tContainer"></extension>
+      </complexContent>
+    </complexType>
+</schema>

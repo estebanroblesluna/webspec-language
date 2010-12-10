@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <Match>
+    <Package name="org.webspeclanguage.expression.parser.analysis" />
+    <Package name="org.webspeclanguage.expression.parser.lexer" />
+    <Package name="org.webspeclanguage.expression.parser.node" />
+    <Package name="org.webspeclanguage.expression.parser.parser" />
+  </Match>
+</FindBugsFilter>
