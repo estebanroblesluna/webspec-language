@@ -1,0 +1,7 @@
+package webspecplugin.webspecmodel.diagram.edit.helpers;
+
+/**
+ * @generated
+ */
+public class CheckBoxEditHelper extends WebspecmodelBaseEditHelper {
+}

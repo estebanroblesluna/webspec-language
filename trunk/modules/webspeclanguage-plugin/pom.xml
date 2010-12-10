@@ -48,6 +48,7 @@
     <finalName>${project.artifactId}</finalName>
     <sourceDirectory>src/main/java</sourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
+    
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -58,6 +59,7 @@
           <target>1.5</target>
         </configuration>
       </plugin>
+      
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
@@ -67,11 +69,20 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <outputDirectory>WebSpecPlugin.editor/lib</outputDirectory>
+              <outputDirectory>lib</outputDirectory>
             </configuration>
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      
     </plugins>
   </build>
 
