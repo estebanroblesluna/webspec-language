@@ -16,11 +16,23 @@
   <name>WebSpec Language - Webdriver test generation</name>
   <url>http://maven.apache.org</url>
 
+  <repositories>
+    <repository>
+      <id>selenium-repository</id>
+      <url>http://selenium.googlecode.com/svn/repository/</url>
+    </repository>
+  </repositories>
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium</artifactId>
+      <version>2.0a4</version>
     </dependency>
     <dependency>
       <groupId>org.webspeclanguage</groupId>
