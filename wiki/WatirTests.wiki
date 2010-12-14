@@ -1,0 +1,53 @@
+#summary One-sentence summary of this page.
+
+= Watir Tests =
+
+Watir steps to configure and execute Ruby Watir Test Cases.
+
+
+== What's needed? ==
+
+Ruby ([http://www.ruby-lang.org/]), it's needed the version 1.8.6 or 1.8.7, the 1.9.x version is not compatible with Watir.
+
+Watir ([http://www.watir.com]), after installing Ruby in the system it's needed to install Watir library, the following code installs Watir:
+
+{{{
+gem update --system
+gem install watir
+}}}
+
+The next step is install the addon for Firefox, the different version for each operating system can be found in the following link: http://watir.com/installation/
+
+
+== How to execute Ruby scripts ==
+
+The Ruby scripts can be executed with the following sentence:
+{{{
+ruby script.rb
+}}}
+
+The Ruby files must have the .rb extension.
+
+
+== Extra libraries ==
+
+Watir can be complemented with the Test/Unit library, it allows to have test and suites more organized.
+To implement a Test is required to extends the TestCase class, so the code could looks like this:
+
+{{{
+require "rubygems"
+require "test/unit"
+
+class TC_Example < Test::Unit::TestCase
+
+  def setup
+    # setup method
+  end
+
+  def testStep
+  end
+
+end
+}}}
+
+This scripts can be executed in the same way than any Ruby script, e.g.: ruby test.rb
