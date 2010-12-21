@@ -1,0 +1,525 @@
+{
+	"title":"Webspec",
+	"namespace":"http://code.google.com/p/webspec-language/#",
+	"description":"Simple stencil set for webspec diagrams.",
+	"stencils": [
+		{
+			"type":			"node",
+			"id":			"Diagram",
+			"title":		"Diagram",	
+			"groups":		["Diagram"],
+			"description":	"Let's Dance Diagram",
+			"view":			"node.diagram.svg",
+			"icon":			"diagram.png",
+			"roles":		[]
+		},
+	    {
+			"type":			"node",
+			"id":			"BasicInteraction",
+			"title":		"Interaction",	
+			"groups":		["Commons"],
+			"description":	"Representation of a Interaction",
+			"view":			"node.basicInteraction.svg",
+			"icon":			"Interaction.gif",
+			"layout":		[
+				{"type" : "layout.webspec.addWidget", "height": 20},
+				{"type" : "layout.webspec.handleChanges"}],
+			"roles":		["interaction"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Interaction",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameInteractionText",
+					"wrapLines":false
+				},
+				{
+					"id":		"Initial",
+					"type":		"Boolean",
+					"title":	"Initial",
+					"value": 	false,
+					"description":"Mark the initial interaction",
+					"optional":	false
+				}
+			]
+		},
+	    {
+			"type":			"node",
+			"id":			"Button",
+			"title":		"Button",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a Button",
+			"view":			"widgets/button.svg",
+			"icon":			"widgets/Button.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Button",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+        {
+			"type":			"node",
+			"id":			"CheckBox",
+			"title":		"CheckBox",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a CheckBox",
+			"view":			"widgets/checkBox.svg",
+			"icon":			"widgets/CheckBox.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "CheckBox",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"ComboBox",
+			"title":		"ComboBox",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a ComboBox",
+			"view":			"widgets/comboBox.svg",
+			"icon":			"widgets/ComboBox.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "ComboBox",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"Label",
+			"title":		"Label",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a Label",
+			"view":			"widgets/label.svg",
+			"icon":			"widgets/Label.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Label",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"Link",
+			"title":		"Link",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a Link",
+			"view":			"widgets/link.svg",
+			"icon":			"widgets/Link.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Link",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"ListBox",
+			"title":		"ListBox",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a ListBox",
+			"view":			"widgets/listBox.svg",
+			"icon":			"widgets/ListBox.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "ListBox",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"ListContainer",
+			"title":		"List container",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a List container",
+			"view":			"widgets/ListContainer.svg",
+			"icon":			"widgets/ListOfContainer.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "List container",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"PanelContainer",
+			"title":		"Panel",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a Panel",
+			"view":			"widgets/PanelContainer.svg",
+			"icon":			"widgets/PanelContainer.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Panel",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"RadioButton",
+			"title":		"RadioButton",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a RadioButton",
+			"view":			"widgets/radioButton.svg",
+			"icon":			"widgets/RadioButton.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "RadioButton",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"TextField",
+			"title":		"TextField",	
+			"groups":		["Widgets"],
+			"description":	"A representation of a TextField",
+			"view":			"widgets/textField.svg",
+			"icon":			"widgets/TextField.gif",
+			"roles":		["widget"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "TextField",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":false
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"OneOfStrings",
+			"title":		"One of strings",	
+			"groups":		["Generators"],
+			"description":	"One of strings",
+			"view":			"generators/generator.oneOfStrings.svg",
+			"icon":			"generators/OneOfStrings.gif",
+			"roles":		["generator"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "One of Strings",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":true
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"OneOfNumbers",
+			"title":		"One of numbers",	
+			"groups":		["Generators"],
+			"description":	"One of strings",
+			"view":			"generators/generator.oneOfNumbers.svg",
+			"icon":			"generators/OneOfNumbers.gif",
+			"roles":		["generator"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "One of Numbers",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":true
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"OneOfArray",
+			"title":		"Array generator",	
+			"groups":		["Generators"],
+			"description":	"One of strings",
+			"view":			"generators/generator.arrayGenerator.svg",
+			"icon":			"generators/OneOfArray.gif",
+			"roles":		["generator"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Array generator",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":true
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"uniformNumber",
+			"title":		"Uniform number",	
+			"groups":		["Generators"],
+			"description":	"One of strings",
+			"view":			"generators/generator.uniformNumber.svg",
+			"icon":			"generators/UniformNumberDistribution.gif",
+			"roles":		["generator"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Uniform number",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":true
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"stringGenerator",
+			"title":		"String generator",	
+			"groups":		["Generators"],
+			"description":	"One of strings",
+			"view":			"generators/generator.uniformNumber.svg",
+			"icon":			"generators/StringGenerator.gif",
+			"roles":		["generator"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "String generator",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":true
+				},
+			]
+		},
+		{
+			"type":			"edge",
+			"id":			"Flow",
+			"title":		"Flow",	
+			"groups":		["Commons"],
+			"description":	"Flow",
+			"view":			"edge.flow.svg",
+			"icon":			"edge.flow.png",
+			"roles":		["navigation"]
+		},
+		{
+			"type":			"node",
+			"id":			"Navigation",
+			"title":		"Navigation",	
+			"groups":		["Commons"],
+			"description":	"Navigation Flow",
+			"view":			"flow.navigation.svg",
+			"icon":			"Navigation.gif",
+			"roles":		["flow"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Navigation details",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":true
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"RichBehavior",
+			"title":		"RichBehavior",	
+			"groups":		["Commons"],
+			"description":	"Rich Behavior",
+			"view":			"flow.richBehavior.svg",
+			"icon":			"RichBehavior.gif",
+			"roles":		["flow"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "Rich Behavior details",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":true
+				},
+			]
+		},
+		{
+			"type":			"node",
+			"id":			"RIAFeature",
+			"title":		"RIAFeature",	
+			"groups":		["Commons"],
+			"description":	"RIA Feature",
+			"view":			"flow.RIAFeature.svg",
+			"icon":			"RIAFeature.gif",
+			"roles":		["flow"],
+			"properties": [
+				{
+					"id":		"name",
+					"type":		"String",
+					"title":	"Name",
+					"value":    "RIA Feature details",
+					"description":"",
+					"readonly": false,
+					"optional": false,
+					"length":	"",
+					"refToView":"nameText",
+					"wrapLines":true
+				},
+			]
+		},
+		
+	],
+	"rules":{
+		"connectionRules": [
+			{
+				"role": 	"navigation",
+				"connects": [
+					{
+						"from": "interaction",
+						"to":	"interaction"
+					}
+				],
+			}
+		],
+		"containmentRules":	[
+			{
+				"role":		"Diagram",
+				"contains": [
+							"interaction",
+							"generator",
+							"flow"
+				]
+			},
+			{
+				"role":		"interaction",
+				"contains": [
+							"widget"
+				]
+			}
+		]
+		
+	}
+}
