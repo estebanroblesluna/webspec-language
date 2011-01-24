@@ -1,11 +1,11 @@
 require "rubygems"
-require "watir"
+require "firewatir"
 require "test/unit"
 
 class TC_HomeNavigation < Test::Unit::TestCase
 
 	def setup
-		$browser = Watir::Browser.new()
+		$browser = FireWatir::Firefox.new()
 		message = "hi"
 	end
 
