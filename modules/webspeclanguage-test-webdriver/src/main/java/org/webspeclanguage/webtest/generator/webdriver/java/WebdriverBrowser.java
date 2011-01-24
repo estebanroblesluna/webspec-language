@@ -13,13 +13,16 @@
 package org.webspeclanguage.webtest.generator.webdriver.java;
 
 /**
- * A policy that waits for the page to load based on Selenium
+ * Interface for the different drivers for WebDriver
  * 
- * @author Esteban Robles Luna
+ * 
+ * @author Gonzalo G. Testa
+ *
  */
-public class WebdriverWaitGenerationPolicy implements NavigationStopGenerationPolicy {
 
-  public String generateStopStatement() {
-    return "selenium.waitForPageToLoad(\"30000\")";
-  }
+public interface WebdriverBrowser {
+
+  public String getDriver();
+ 
+  public String getImport();
 }

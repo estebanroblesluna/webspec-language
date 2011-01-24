@@ -15,7 +15,7 @@ package org.webspeclanguage.webtest.generator.webdriver.java;
 /**
  * A policy that waits for the page to load based on Java Thread
  * 
- * @author Esteban Robles Luna
+ * @author Gonzalo G. Testa
  */
 public class ThreadSleepGenerationPolicy implements NavigationStopGenerationPolicy {
 

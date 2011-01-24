@@ -15,8 +15,9 @@ package org.webspeclanguage.webtest.generator.webdriver.java;
 /**
  * A Java class builder
  * 
- * @author Esteban Robles Luna
+ * @author Gonzalo G. Testa
  */
+
 public class ClassBuilder {
 
   private StringBuffer classCodeBuffer;
@@ -30,7 +31,7 @@ public class ClassBuilder {
   }
 
   public void startClass(String packageName, String imports, String className,
-      String extendsImplements) {
+          String extendsImplements) {
     if (packageName != null && !packageName.isEmpty()) {
       this.getClassCodeBuffer().append("package ");
       this.getClassCodeBuffer().append(packageName);

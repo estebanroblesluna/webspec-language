@@ -12,24 +12,21 @@
  */
 package org.webspeclanguage.webtest.generator.webdriver.java;
 
-import org.webspeclanguage.impl.expression.core.Expression;
-
 /**
- * An exception thrown when an expression should be resolved but it is not
+ * Implementation for HtmlUnit Driver for WebDriver
+ * 
  * 
  * @author Gonzalo G. Testa
+ *
  */
-public class UnresolvedExpressionException extends RuntimeException {
 
-  private static final long serialVersionUID = 8634843075000392796L;
+public class WebdriverHtmlUnit implements WebdriverBrowser {
 
-  private Expression expression;
-  
-  public UnresolvedExpressionException(Expression expression) {
-    this.expression = expression;
+  public String getDriver() {
+    return "driver = new HtmlUnitDriver();";
   }
   
-  public Expression getExpression() {
-    return this.expression;
+  public String getImport(){
+    return "import org.openqa.selenium.htmlunit.HtmlUnitDriver;\n";
   }
 }
