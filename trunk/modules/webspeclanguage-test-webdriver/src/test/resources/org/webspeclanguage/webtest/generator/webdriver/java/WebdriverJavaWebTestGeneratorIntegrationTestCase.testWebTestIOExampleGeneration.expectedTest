@@ -20,6 +20,7 @@ public class LoginAsUserTestCase extends TestCase {
 		driver.findElement(By.id("username")).sendKeys("esteban");
 		driver.findElement(By.id("password")).sendKeys("hi");
 		driver.findElement(By.id("login")).click();
+		Thread.sleep(500);
 		assertTrue(driver.findElement(By.id("message")).getText().equals("Hello esteban"));
 	}
 

@@ -35,9 +35,9 @@ import org.webspeclanguage.webtest.base.WebTestSuite;
 import org.webspeclanguage.webtest.base.WebTestVisitor;
 
 /**
- * A {@link WebTest} writer
+ * A WebDriver Class writer
  * 
- * @author Gonzalo Testa
+ * @author Gonzalo G. Testa
  */
 public class WebdriverJavaWebTestGenerator implements WebTestGenerator {
 
@@ -45,30 +45,37 @@ public class WebdriverJavaWebTestGenerator implements WebTestGenerator {
   private String packageName;
 
   private Map<ExpressionType, String> expressionTypeToJavaMapping;
+ 
+  private NavigationStopGenerationPolicy stopPolicy;
 
-  //TODO: verify if the following is useful: 
-  //private NavigationStopGenerationPolicy stopPolicy;
-  
   private String baseClass;
 
   private Map<String, ExpressionType> alreadyDefinedVariables;
-  
+
   private WebdriverJavaExpressionGenerator expressionGenerator;
 
-  public WebdriverJavaWebTestGenerator() {
+  private WebdriverBrowser browser;
+  
+  public WebdriverJavaWebTestGenerator(){
+    //If Driver is not specified, Firefox is used by default
+    this(new WebdriverFirefox());
+  }
+  
+  public WebdriverJavaWebTestGenerator(WebdriverBrowser aBrowserDriver) {
+    this.browser = aBrowserDriver;
     this.alreadyDefinedVariables = new HashMap<String, ExpressionType>();
     this.classBuilder = new ClassBuilder();
     this.expressionGenerator = new WebdriverJavaExpressionGenerator();
     this.expressionTypeToJavaMapping = new HashMap<ExpressionType, String>();
 
     this.packageName = "org.webspeclanguage.webtest.webdriver.test.java";
-    
+
     this.baseClass = "import junit.framework.TestCase;\n";
     this.baseClass += "import org.openqa.selenium.By;\n";
-	this.baseClass += "import org.openqa.selenium.WebDriver;\n";
-	this.baseClass += "import org.openqa.selenium.WebElement;\n";
-	this.baseClass += "import org.openqa.selenium.firefox.FirefoxDriver;\n";
-//    this.stopPolicy = new ThreadSleepGenerationPolicy();
+    this.baseClass += "import org.openqa.selenium.WebDriver;\n";
+    this.baseClass += "import org.openqa.selenium.WebElement;\n";
+    this.baseClass += browser.getImport();
+    this.stopPolicy = new ThreadSleepGenerationPolicy();
 
     this.configureExpressionTypeMapping();
   }
@@ -79,9 +86,6 @@ public class WebdriverJavaWebTestGenerator implements WebTestGenerator {
     this.expressionTypeToJavaMapping.put(ExpressionType.BOOLEAN, "boolean");
   }
 
-  /**
-   * {@inheritDoc}
-   */
   public String generateTest(WebTest webTest) {
     return this.getClassCode(webTest);
   }
@@ -151,16 +155,13 @@ public class WebdriverJavaWebTestGenerator implements WebTestGenerator {
     String importString = "import java.math.BigDecimal;\n" + this.baseClass;
 
     this.classBuilder.startClass(this.getPackageName(), importString, aWebTest.getName() + "TestCase", "extends TestCase");
-    
+
     this.classBuilder.addStatementAndNewLine("WebDriver driver;\n");
-    
+
     this.classBuilder.startMethod("setUp", "Exception");
 
-    
-    //TODO: Change the following line to support different browsers
-    this.classBuilder.addStatementAndNewLine("driver = new FirefoxDriver();");
-    
-    
+    this.classBuilder.addStatementAndNewLine(browser.getDriver());
+
     for (WebTestItem item : aWebTest.getSetUpItems()) {
       this.computeStatementsFor(item);
     }
@@ -201,11 +202,11 @@ public class WebdriverJavaWebTestGenerator implements WebTestGenerator {
     this.packageName = packageName;
   }
 
-//  public void setStopPolicy(NavigationStopGenerationPolicy stopPolicy) {
-//    this.stopPolicy = stopPolicy;
-//  }
+  public void setStopPolicy(NavigationStopGenerationPolicy stopPolicy) {
+    this.stopPolicy = stopPolicy;
+  }
 
-  
+
   public String getPackageOfBaseClass() {
     int lastIndex = this.getBaseClass().lastIndexOf(".");
     return this.getBaseClass().substring(0, lastIndex);
@@ -223,7 +224,7 @@ public class WebdriverJavaWebTestGenerator implements WebTestGenerator {
   public void setBaseClass(String baseClass) {
     this.baseClass = baseClass;
   }
-  
+
   private final class WebTestItemGenerator implements WebTestItemVisitor {
 
     public Object visitWebAssertTitle(WebAssertTitle assertTitle) {
@@ -232,14 +233,14 @@ public class WebdriverJavaWebTestGenerator implements WebTestGenerator {
       classBuilder.addStatementAndNewLine(statement);
       return null;
     }
-    
+
     public Object visitWebAssertExpression(WebAssertExpression webAssertExpression) {
       String assertStatement = generateStatementFor(webAssertExpression.getExpression());
       String statement = "assertTrue(" + assertStatement + ");";
       classBuilder.addStatementAndNewLine(statement);
       return null;
     }
-    
+
     public Object visitWebCreateVariableFromExpression(WebCreateVariableFromExpression webCreateVariableFromExpression) {
       ExpressionType expressionType = webCreateVariableFromExpression.getType();
       String typeAsJavaString = expressionTypeToJavaMapping.get(expressionType);
@@ -262,25 +263,24 @@ public class WebdriverJavaWebTestGenerator implements WebTestGenerator {
       classBuilder.addStatementAndNewLine(statement);
       return null;
     }
-    
+
     public Object visitWebOpenUrl(WebOpenUrl webOpenUrl) {
       String statement = "driver.get(" + "\"" + webOpenUrl.getUrl() + "\"" + ");";
       classBuilder.addStatementAndNewLine(statement);
       return null;
     }
-    
+
     public Object visitWebExpression(WebExpression webExpression) {
-      
+
       String statement = generateStatementFor(webExpression.getExpression());
       if (!statement.isEmpty())
-    	  classBuilder.addStatementAndNewLine(statement + ";");
+        classBuilder.addStatementAndNewLine(statement + ";");
       return null;
     }
-    
+
     public Object visitWebWaitPageToLoad(WebWaitPageToLoad webWaitPageToLoad) {
-      //TODO: review if it's useful
-      //String statement = stopPolicy.generateStopStatement() + ";";
-      //classBuilder.addStatementAndNewLine(statement);
+      String statement = stopPolicy.generateStopStatement() + ";";
+      classBuilder.addStatementAndNewLine(statement);
       return null;
     }
   }

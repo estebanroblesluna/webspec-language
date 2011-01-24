@@ -16,7 +16,7 @@ package org.webspeclanguage.webtest.generator.webdriver.java;
  * A policy to generate the last statement after we execute
  * a set of actions as part of a navigation
  * 
- * @author Esteban Robles Luna
+ * @author Gonzalo G. Testa
  */
 public interface NavigationStopGenerationPolicy {
 

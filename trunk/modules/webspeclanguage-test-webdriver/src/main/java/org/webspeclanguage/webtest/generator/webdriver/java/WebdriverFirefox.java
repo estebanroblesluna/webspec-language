@@ -12,24 +12,23 @@
  */
 package org.webspeclanguage.webtest.generator.webdriver.java;
 
-import org.webspeclanguage.impl.expression.core.Expression;
-
 /**
- * An exception thrown when an expression should be resolved but it is not
+ * Implementation for Firefox Driver for WebDriver
+ * 
  * 
  * @author Gonzalo G. Testa
+ *
  */
-public class UnresolvedExpressionException extends RuntimeException {
 
-  private static final long serialVersionUID = 8634843075000392796L;
 
-  private Expression expression;
+public class WebdriverFirefox implements WebdriverBrowser{
   
-  public UnresolvedExpressionException(Expression expression) {
-    this.expression = expression;
+  public String getDriver() {
+    return "driver = new FirefoxDriver();";
   }
   
-  public Expression getExpression() {
-    return this.expression;
+  public String getImport(){
+    return "import org.openqa.selenium.firefox.FirefoxDriver;\n";
   }
+  
 }

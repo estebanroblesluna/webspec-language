@@ -30,12 +30,14 @@ import org.webspeclanguage.webtest.test.WebTestGeneration;
 import org.webspeclanguage.webtest.test.WebTestGenerationTestCase;
 
 /**
- * @author Gonzalo Testa
+ * Integration Test Case for WebDriver Test Geneator Class
+ * 
+ * @author Gonzalo G. Testa
  */
 public class WebdriverJavaWebTestGeneratorIntegrationTestCase extends WebTestGenerationTestCase {
 
   private WebdriverJavaWebTestGenerator testGenerator;
-  
+
   private DiagramImpl diagram;
 
   private Button searchButton;
@@ -43,22 +45,22 @@ public class WebdriverJavaWebTestGeneratorIntegrationTestCase extends WebTestGen
   private InteractionImpl homeInteraction;
 
   private TextField searchField;
-  
+
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.testGenerator = new WebdriverJavaWebTestGenerator();
-//    this.testGenerator.setStopPolicy();
+    this.testGenerator = new WebdriverJavaWebTestGenerator(new WebdriverFirefox());
+    this.testGenerator.setStopPolicy(new ThreadSleepGenerationPolicy());
     this.diagram = new DiagramImpl("the diagram");
-    
+
     homeInteraction = new InteractionImpl("Home");
     this.diagram.addInteraction(homeInteraction);
-    
+
     searchButton = new Button();
     searchButton.setId("searchButton");
     searchButton.setName("searchButton");
     homeInteraction.addWidget(searchButton);
-    
+
     searchField = new TextField();
     searchField.setId("searchField");
     searchField.setName("searchField");
@@ -76,14 +78,14 @@ public class WebdriverJavaWebTestGeneratorIntegrationTestCase extends WebTestGen
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
     this.checkTestGeneration(webTest);
   }
-  
+
   @WebTestGeneration
   public void testSetup() {
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
     webTest.addSetUpItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi\""), ExpressionType.STRING));
     this.checkTestGeneration(webTest);
   }
-  
+
   @WebTestGeneration
   public void testExpressions() {
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
@@ -91,7 +93,7 @@ public class WebdriverJavaWebTestGeneratorIntegrationTestCase extends WebTestGen
     webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi\""), ExpressionType.STRING));
     webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true"), ExpressionType.BOOLEAN));
     webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("12305"), ExpressionType.NUMBER));
-    
+
     webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 + 2"), ExpressionType.NUMBER));
     webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 - 2"), ExpressionType.NUMBER));
     webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 * 2"), ExpressionType.NUMBER));
@@ -110,7 +112,7 @@ public class WebdriverJavaWebTestGeneratorIntegrationTestCase extends WebTestGen
 
     this.checkTestGeneration(webTest);
   }
-  
+
   @WebTestGeneration
   public void testInteractive() {
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
@@ -137,7 +139,7 @@ public class WebdriverJavaWebTestGeneratorIntegrationTestCase extends WebTestGen
 
     this.checkTestGeneration(webTest);
   }
-  
+
   @WebTestGeneration
   public void testWebTestIOExampleGeneration() {
     this.checkTestGenerationFromResource();
