@@ -30,12 +30,14 @@ import org.webspeclanguage.webtest.test.WebTestGeneration;
 import org.webspeclanguage.webtest.test.WebTestGenerationTestCase;
 
 /**
+ * Integration Test Case for Watir Test Generator Class 
+ * 
  * @author Gonzalo Testa
  */
 public class WatirRubyWebTestGeneratorIntegrationTestCase extends WebTestGenerationTestCase {
 
   private WatirRubyWebTestGenerator testGenerator;
-  
+
   private DiagramImpl diagram;
 
   private Button searchButton;
@@ -43,22 +45,21 @@ public class WatirRubyWebTestGeneratorIntegrationTestCase extends WebTestGenerat
   private InteractionImpl homeInteraction;
 
   private TextField searchField;
-  
+
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.testGenerator = new WatirRubyWebTestGenerator();
-    this.testGenerator.setStopPolicy();
+    this.testGenerator = new WatirRubyWebTestGenerator(new WatirFirefox());
     this.diagram = new DiagramImpl("the diagram");
-    
+
     homeInteraction = new InteractionImpl("Home");
     this.diagram.addInteraction(homeInteraction);
-    
+
     searchButton = new Button();
     searchButton.setId("searchButton");
     searchButton.setName("searchButton");
     homeInteraction.addWidget(searchButton);
-    
+
     searchField = new TextField();
     searchField.setId("searchField");
     searchField.setName("searchField");
@@ -72,28 +73,25 @@ public class WatirRubyWebTestGeneratorIntegrationTestCase extends WebTestGenerat
 
   @WebTestGeneration
   public void testEmpty() {
-    this.testGenerator.setPackageName("org.webspeclanguage.tests");
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
     this.checkTestGeneration(webTest);
   }
-  
+
   @WebTestGeneration
   public void testSetup() {
-//    this.testGenerator.setPackageName("org.webspeclanguage.tests");
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
     webTest.addSetUpItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi\""), ExpressionType.STRING));
     this.checkTestGeneration(webTest);
   }
-  
+
   @WebTestGeneration
   public void testExpressions() {
-//    this.testGenerator.setPackageName("org.webspeclanguage.tests");
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
 
     webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("\"hi\""), ExpressionType.STRING));
     webTest.addItem(new WebCreateVariableFromExpression("isQuery", ExpressionUtils.getExpression("true"), ExpressionType.BOOLEAN));
     webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("12305"), ExpressionType.NUMBER));
-    
+
     webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 + 2"), ExpressionType.NUMBER));
     webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 - 2"), ExpressionType.NUMBER));
     webTest.addItem(new WebCreateVariableFromExpression("money", ExpressionUtils.getExpression("1 * 2"), ExpressionType.NUMBER));
@@ -112,10 +110,9 @@ public class WatirRubyWebTestGeneratorIntegrationTestCase extends WebTestGenerat
 
     this.checkTestGeneration(webTest);
   }
-  
+
   @WebTestGeneration
   public void testInteractive() {
-//    this.testGenerator.setPackageName("org.webspeclanguage.tests");
     SimpleWebTest webTest = new SimpleWebTest("HomeNavigation");
 
     webTest.addItem(new WebCreateVariableFromExpression("message", ExpressionUtils.getExpression("Home.searchField", this.diagram), ExpressionType.STRING));
@@ -125,7 +122,6 @@ public class WatirRubyWebTestGeneratorIntegrationTestCase extends WebTestGenerat
 
   @WebTestGeneration
   public void testWebTestSuiteGeneration() {
-//    this.testGenerator.setPackageName("org.webspeclanguage.tests");
     WebTestSuite webTest = new WebTestSuite("HomeNavigation");
 
     SimpleWebTest test1 = new SimpleWebTest("HomeNavigation");
@@ -141,10 +137,9 @@ public class WatirRubyWebTestGeneratorIntegrationTestCase extends WebTestGenerat
 
     this.checkTestGeneration(webTest);
   }
-  
+
   @WebTestGeneration
   public void testWebTestIOExampleGeneration() {
-//    this.testGenerator.setPackageName("org.webspeclanguage.tests");
     this.checkTestGenerationFromResource();
   }
 }
