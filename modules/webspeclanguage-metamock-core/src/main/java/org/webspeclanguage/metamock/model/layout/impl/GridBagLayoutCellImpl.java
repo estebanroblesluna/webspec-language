@@ -15,6 +15,7 @@ package org.webspeclanguage.metamock.model.layout.impl;
 import org.webspeclanguage.metamock.model.UIControl;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
+import org.webspeclanguage.metamock.utils.MetaMockVisitor;
 
 /**
  * Default implementation {@link GridBagLayoutCell}
@@ -28,7 +29,7 @@ public class GridBagLayoutCellImpl implements GridBagLayoutCell {
   private Integer rowSpan;
   private Integer columnSpan;
   private UIControl control;
-  private GridBagLayout gridBoxLayout;
+  private GridBagLayout gridBagLayout;
 
   public GridBagLayoutCellImpl(Integer row, Integer column, UIControl control) {
     this(row, column, 1, 1, control);
@@ -87,16 +88,25 @@ public class GridBagLayoutCellImpl implements GridBagLayoutCell {
     return columnSpan;
   }
 
-  public void setGridBoxLayout(GridBagLayout gridBoxLayout) {
-    this.gridBoxLayout = gridBoxLayout;
+  public void setGridBagLayout(GridBagLayout gridBoxLayout) {
+    this.gridBagLayout = gridBoxLayout;
   }
 
-  public GridBagLayout getGridBoxLayout() {
-    return gridBoxLayout;
+  public GridBagLayout getGridBagLayout() {
+    return gridBagLayout;
   }
 
   public GridBagLayoutCell copy() {
     return new GridBagLayoutCellImpl(this.getRow(), this.getColumn(), this.getRowSpan(), this.getColumnSpan(), (UIControl) this.getControl().copy());
+  }
+  
+  public String toString() {
+    return "(" + this.getRow() + ", " + this.getColumn() + ", " + this.getRowSpan() +
+    ", " + this.getColumnSpan() + ", " + this.getControl() + ")";
+  }
+
+  public <T> T visit(MetaMockVisitor<T> v) {
+    return v.visitGridBagLayoutCell(this);
   }
 
 }

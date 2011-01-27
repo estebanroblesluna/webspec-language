@@ -23,6 +23,8 @@ import org.webspeclanguage.metamock.translator.MetaMockControlParser;
 import org.webspeclanguage.metamock.translator.MetaMockProcessingEngine;
 import org.webspeclanguage.metamock.translator.MetaMockTranslationException;
 import org.webspeclanguage.metamock.translator.annotation.MetaMockControlAnnotationParser;
+import org.webspeclanguage.metamock.translator.logger.MetaMockLogging;
+import org.webspeclanguage.metamock.translator.logger.MetaMockProcessingLogger;
 
 /**
  * @author Jose Matias Rivero
@@ -74,14 +76,9 @@ public class MockupCodeGenerator<TMockupRepresentation, TGeneratedArtifact exten
         artifacts.add(this.getCodeGenerator().generateFrom(this.getProcessingEngine().translateModelFrom(mockup)));
       }
     } catch (MetaMockTranslationException e) {
+      MetaMockLogging.getDefaultLogger().logException(e);
     }
     return artifacts;
-  }
-
-  public void generateAndWrite(CodeWriter cw) {
-    for (TGeneratedArtifact codeArtifact : this.generateCodeArtifacts()) {
-      codeArtifact.writeOn(cw);
-    }
   }
 
 }

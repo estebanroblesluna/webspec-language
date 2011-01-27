@@ -15,38 +15,14 @@ package org.webspeclanguage.metamock.model.layout;
 import org.webspeclanguage.metamock.model.UIControl;
 
 /**
- * Represents a cell in a {@link GridBagLayout}. A GridBagLayoutCell has the row
- * and column number in which is placed in a {@link GridBagLayout}, and its row
- * and column span. Also, it holds a reference to the control being placed
- * 
  * @author Jose Matias Rivero
  */
-public interface GridBagLayoutCell extends LayoutInfo {
+public interface AbsoluteLayoutInfo extends LayoutInfo {
 
-  GridBagLayout getGridBagLayout();
-
-  Integer getRow();
-
-  Integer getColumn();
-
-  Integer getRowSpan();
-
-  Integer getColumnSpan();
-
+  int getX();
+  int getY();
+  int getWidth();
+  int getHeight();
   UIControl getControl();
-
-  Boolean hasControl();
-
-  void setRow(Integer i);
-
-  void setColumn(Integer i);
-
-  void setGridBagLayout(GridBagLayout cell);
-
-  void setColumnSpan(Integer cols);
-
-  void setRowSpan(Integer i);
-
-  GridBagLayoutCell copy();
 
 }

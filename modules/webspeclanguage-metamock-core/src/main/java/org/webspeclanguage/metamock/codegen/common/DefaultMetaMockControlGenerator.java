@@ -12,11 +12,13 @@
  */
 package org.webspeclanguage.metamock.codegen.common;
 
+import org.webspeclanguage.metamock.codegen.artifacts.CodeBlock;
 import org.webspeclanguage.metamock.codegen.framework.core.CodeArtifact;
 import org.webspeclanguage.metamock.model.Annotation;
 import org.webspeclanguage.metamock.model.Button;
 import org.webspeclanguage.metamock.model.CheckBox;
 import org.webspeclanguage.metamock.model.ComboBox;
+import org.webspeclanguage.metamock.model.CompositeControl;
 import org.webspeclanguage.metamock.model.DatePicker;
 import org.webspeclanguage.metamock.model.Image;
 import org.webspeclanguage.metamock.model.Label;
@@ -33,7 +35,12 @@ import org.webspeclanguage.metamock.model.Table;
 import org.webspeclanguage.metamock.model.TableColumn;
 import org.webspeclanguage.metamock.model.TextArea;
 import org.webspeclanguage.metamock.model.TextBox;
+import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
+import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
+import org.webspeclanguage.metamock.model.layout.Layout;
 import org.webspeclanguage.metamock.model.layout.VerticalBoxLayout;
 import org.webspeclanguage.metamock.utils.MetaMockVisitor;
 
@@ -94,7 +101,7 @@ public abstract class DefaultMetaMockControlGenerator<T extends CodeArtifact> im
     return this.getDefault();
   }
 
-  public T visitGridBoxLayout(GridBagLayout gbl) {
+  public T visitGridBagLayout(GridBagLayout gbl) {
     return this.getDefault();
   }
 
@@ -128,6 +135,26 @@ public abstract class DefaultMetaMockControlGenerator<T extends CodeArtifact> im
 
   public T visitRepetition(Repetition repetition) {
     return this.getDefault();
+  }
+
+  public T visitGridBagLayoutCell(GridBagLayoutCell gridBagLayoutCell) {
+    return this.getDefault();
+  }
+
+  public T visitAbsoluteLayoutInfo(AbsoluteLayoutInfo absoluteLayoutInfo) {
+    return this.getDefault();
+  }
+
+  public T visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
+    return this.getDefault();
+  }
+
+  public CodeBlock<CodeArtifact> generateBlockFromCompositeControl(CompositeControl cc) {
+    CodeBlock<CodeArtifact> cb = new CodeBlock<CodeArtifact>();
+    for (UIControl c : cc.getControls()) {
+      cb.add(c.visit(this));
+    }
+    return cb;
   }
 
   public abstract T getDefault();

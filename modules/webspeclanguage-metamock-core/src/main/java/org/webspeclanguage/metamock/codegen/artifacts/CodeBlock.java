@@ -107,4 +107,15 @@ public class CodeBlock<T extends CodeArtifact> implements CodeArtifact {
     this.getContent().add(this.getContent().indexOf(before) + 1, artifact);
   }
 
+  @Override
+  public String toString() {
+    StringBuffer sb = new StringBuffer();
+    for (T artifact : this.getContent()) {
+      sb.append(artifact.toString());
+    }
+    return sb.toString();
+  }
+  
+  
+
 }

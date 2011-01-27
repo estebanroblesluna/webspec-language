@@ -263,20 +263,50 @@ public class MetaMockUtilTestCase extends MetaMockTestCase {
     assertEquals(0, controlsNotExcluded.size());
   }
   
+  public void testGetAllVerticallyCollidingControls() {
+    List<UIControl> controls = Arrays.asList((UIControl) 
+      this.getFactory().createButton("c1", 0, 0, 50, 50, "button 1"), 
+      this.getFactory().createButton("c2", 30, 60, 50, 50, "button 2"), 
+      this.getFactory().createButton("c3", 50, 120, 50, 50, "button 3"),
+      this.getFactory().createButton("c4", 20, 180, 50, 50, "button 4")
+    );
+    Collection<UIControl> ctrls = MetaMockUtil.getAllVerticallyCollidingControls(controls, controls.get(0));
+    assertEquals(3, ctrls.size());
+    assertTrue(ctrls.contains(controls.get(1)));
+    assertTrue(ctrls.contains(controls.get(2)));
+    assertTrue(ctrls.contains(controls.get(3)));
+  }
+  
+  public void testGetAllHorizontallyCollidingControls() {
+    List<UIControl> controls = Arrays.asList((UIControl) 
+      this.getFactory().createButton("c1", 0, 0, 50, 50, "button 1"), 
+      this.getFactory().createButton("c2", 60, 30, 50, 50, "button 2"), 
+      this.getFactory().createButton("c3", 120, 50, 50, 50, "button 3"),
+      this.getFactory().createButton("c4", 180, 20, 50, 50, "button 4")
+    );
+    Collection<UIControl> ctrls = MetaMockUtil.getAllHorizontallyCollidingControls(controls, controls.get(0));
+    assertEquals(3, ctrls.size());
+    assertTrue(ctrls.contains(controls.get(1)));
+    assertTrue(ctrls.contains(controls.get(2)));
+    assertTrue(ctrls.contains(controls.get(3)));
+  }
+  
   public void testGetControlsGroupedInColumns() {
     List<UIControl> controls = Arrays.asList((UIControl) 
       this.getFactory().createButton("c1", 0, 0, 100, 50, "button 1"), 
       this.getFactory().createLabel("c2", 90, 100, 50, 50, "label 1"),
-      this.getFactory().createCheckBox("c3", 200, 200, 50, 50, "checkbox 1"),
-      this.getFactory().createLabel("c4", 190, 300, 50, 50, "label 2"),
-      this.getFactory().createButton("c5", 300, 400, 50, 110, "button 2"));
+      this.getFactory().createLabel("c3", 10, 110, 10, 10, "label 2"),
+      this.getFactory().createCheckBox("c4", 200, 200, 50, 50, "checkbox 1"),
+      this.getFactory().createLabel("c5", 190, 300, 50, 50, "label 3"),
+      this.getFactory().createButton("c6", 300, 400, 50, 110, "button 2"));
     List<ControlList> columns = MetaMockUtil.getControlsGroupedInColumns(controls);
     assertEquals(3, columns.size());
     assertTrue(columns.get(0).getControls().contains(controls.get(0)));
     assertTrue(columns.get(0).getControls().contains(controls.get(1)));
-    assertTrue(columns.get(1).getControls().contains(controls.get(2)));
+    assertTrue(columns.get(0).getControls().contains(controls.get(2)));
     assertTrue(columns.get(1).getControls().contains(controls.get(3)));
-    assertTrue(columns.get(2).getControls().contains(controls.get(4)));
+    assertTrue(columns.get(1).getControls().contains(controls.get(4)));
+    assertTrue(columns.get(2).getControls().contains(controls.get(5)));
   }
   
   public void testGetControlsGroupedInRows() {
@@ -316,6 +346,19 @@ public class MetaMockUtilTestCase extends MetaMockTestCase {
       this.getFactory().createButton("c2", 300, 300, 53, 98, "label 1"),
       2
     ));
+  }
+  
+  public void testGetSurroundingRectangle() {
+    Rectangle r = MetaMockUtil.getSurroundingRectangle(Arrays.asList((UIControl)
+      this.getFactory().createButton("c1", 100, 100, 50, 100, "button 1"),
+      this.getFactory().createButton("c2", 100, 300, 50, 100, "button 2"),
+      this.getFactory().createButton("c3", 300, 100, 50, 100, "button 3"),
+      this.getFactory().createButton("c4", 250, 250, 250, 50, "button 4"))
+      , 1);
+    assertEquals((Integer) 99, r.getLeft());
+    assertEquals((Integer) 501, r.getRight());
+    assertEquals((Integer) 99, r.getTop());
+    assertEquals((Integer) 401, r.getBottom());
   }
   
 }

@@ -19,7 +19,6 @@ import java.util.List;
 import org.webspeclanguage.metamock.model.UIControl;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
-import org.webspeclanguage.metamock.model.layout.GridBagLayoutException;
 import org.webspeclanguage.metamock.model.layout.LayoutFactory;
 import org.webspeclanguage.metamock.utils.ControlList;
 import org.webspeclanguage.metamock.utils.MetaMockUtil;
@@ -41,11 +40,9 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 
 	private GridBagLayout buildLayout(RecursiveGridBagLayoutInferenceState state) {
 		GridBagLayout gbl = new GridBagLayoutImpl();
-		try {
       for (UIControl c : state.getControls()) {
-      	gbl.add(state.getCellForControl(c));
-      }
-    } catch (GridBagLayoutException e) { }
+      	gbl.addAddShift(state.getCellForControl(c));
+      }     
 		return gbl;
 	}
 
@@ -56,7 +53,8 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 		Integer accumColspan = 0;
 		for (Integer childCol = 0; childCol < cols.size(); childCol++) {
 			accumColspan +=
-				this.inferColumnsRecursively(cols.get(childCol).getControls(), state, accumColspan + parentCol);
+				this.inferColumnsRecursively(cols.get(childCol).getControls(), state, 
+	        accumColspan + parentCol);
 		}
 		return accumColspan;
 	}
@@ -71,17 +69,25 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 		} else {
 			UIControl widerControl = null;
 			Collection<UIControl> maxCollidingControls = new ArrayList<UIControl>();
+			Integer minCollidingControlCount = Integer.MAX_VALUE;
 			for (UIControl c : controls) {
 				Collection<UIControl> collidingControls = 
 					MetaMockUtil.getVerticallyCollidingControls(controls, c);
 				if (collidingControls.size() > maxCollidingControls.size()) {
 					maxCollidingControls = collidingControls;
 					widerControl = c;
-				}	
+				}
+				if (minCollidingControlCount < collidingControls.size()) {
+				  minCollidingControlCount = collidingControls.size();
+				}
 			}
-			Integer colspan = this.inferColumns(maxCollidingControls, state, col);
-			state.getCellForControl(widerControl).setColumnSpan(colspan);
-			state.getCellForControl(widerControl).setColumn(col);
+			Collection<UIControl> remainingControls = new ArrayList<UIControl>(controls);
+      remainingControls.remove(widerControl);
+      Integer colspan = this.inferColumns(remainingControls, state, col);
+      state.getCellForControl(widerControl).setColumnSpan(colspan);
+			state.getCellForControl(widerControl).setColumn(
+        maxCollidingControls.size() == minCollidingControlCount ? col + 1 : col);
+			
 			return colspan;
 		}
 	}
@@ -93,7 +99,8 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 		Integer accumRowspan = 0;
 		for (Integer childRow = 0; childRow < rows.size(); childRow++) {
 			accumRowspan +=
-				this.inferRowsRecursively(rows.get(childRow).getControls(), state, accumRowspan + parentRow);
+				this.inferRowsRecursively(rows.get(childRow).getControls(), state, 
+	        accumRowspan + parentRow);
 		}
 		return accumRowspan;
 	}
@@ -116,7 +123,9 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 					widerControl = c;
 				}	
 			}
-			Integer colspan = this.inferRows(maxCollidingControls, state, row);
+			Collection<UIControl> remainingControls = new ArrayList<UIControl>(controls);
+			remainingControls.remove(widerControl);
+			Integer colspan = this.inferRows(remainingControls, state, row);
 			state.getCellForControl(widerControl).setRowSpan(colspan);
 			state.getCellForControl(widerControl).setRow(row);
 			return colspan;

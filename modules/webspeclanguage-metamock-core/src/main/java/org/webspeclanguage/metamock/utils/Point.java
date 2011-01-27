@@ -13,7 +13,7 @@
 package org.webspeclanguage.metamock.utils;
 
 /**
- * Class represnting a point in 2D space
+ * Class representing a point in 2D space
  * 
  * @author Jose Matias Rivero
  */
@@ -42,6 +42,20 @@ public class Point {
 
 	public Integer getX() {
 		return x;
+	}
+	
+	@Override
+	public boolean equals(Object point) {
+	  if (!(point instanceof Point)) {
+	    return false;
+	  }
+	  return 
+	    this.getX().equals(((Point)point).getX()) &&
+	    this.getY().equals(((Point)point).getY());
+	}
+	
+	public int hashCode() {
+	  return (this.getX() * 2) + ((this.getY() * 2) - 1);
 	}
 
 }

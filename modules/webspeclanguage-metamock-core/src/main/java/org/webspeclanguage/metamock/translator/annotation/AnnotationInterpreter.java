@@ -15,7 +15,6 @@ package org.webspeclanguage.metamock.translator.annotation;
 import org.webspeclanguage.metamock.model.MetaMockModel;
 import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
 
-
 /**
  * An interpreter/executor of {@link MetaMockAnnotation}s
  * 

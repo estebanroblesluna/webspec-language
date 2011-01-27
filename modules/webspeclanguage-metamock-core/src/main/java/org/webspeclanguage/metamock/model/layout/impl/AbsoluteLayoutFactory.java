@@ -10,39 +10,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.metamock.translator;
+package org.webspeclanguage.metamock.model.layout.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.layout.Layout;
+import org.webspeclanguage.metamock.model.layout.LayoutFactory;
 
 /**
- * Default {@link MetaMockControlGroup} implementation
- * 
  * @author Jose Matias Rivero
  */
-public class DefaultMetaMockControlGroupImpl implements
-		MetaMockControlGroup {
+public class AbsoluteLayoutFactory implements LayoutFactory {
 
-	private Collection<UIControl> controls;
-
-
-	public DefaultMetaMockControlGroupImpl(Collection<UIControl> controls) {
-		super();
-		this.setControls(new ArrayList<UIControl>(controls));
-	}
-
-	private void setControls(Collection<UIControl> controls) {
-		this.controls = controls;
-	}
-
-	public Collection<UIControl> getControls() {
-		return controls;
-	}
-
-	public void addControl(UIControl c) {
-		this.getControls().add(c);
-	}
+  public Layout createLayout(Collection<UIControl> controls) {
+    AbsoluteLayoutImpl layout = new AbsoluteLayoutImpl();
+    for (UIControl c : controls) {
+      layout.addControl(c, new AbsoluteLayoutInfoImpl(
+         c.getX(),
+         c.getY(),
+         c.getWidth(),
+         c.getHeight(),
+         c
+      ));
+    }
+    return layout;
+  }
 
 }

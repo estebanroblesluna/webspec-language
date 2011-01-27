@@ -17,7 +17,6 @@ import java.util.Collection;
 import org.webspeclanguage.metamock.model.MetaMockModel;
 import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
 
-
 /**
  * Allows chaining of {@link AnnotationInterpreter}s
  * 

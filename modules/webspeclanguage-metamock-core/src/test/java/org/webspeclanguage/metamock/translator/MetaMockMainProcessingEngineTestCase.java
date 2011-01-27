@@ -139,4 +139,28 @@ public class MetaMockMainProcessingEngineTestCase extends MetaMockProcessingEngi
 		assertSame(a.getTargetElement(), b);
 	}
 	
+	 public void testImplicitPageCreation() throws MetaMockTranslationException {
+	    Button b1;
+	    Panel pnl;
+	    Button b2;
+	    this.initializeProcessingEngine(Arrays.asList(
+	      this.getFactory().createControlGroup(Arrays.asList( 
+	        pnl = this.getFactory()
+	          .createPanel("pnl1", 50, 50, 200, 200, "cid"),
+	        b1 = this.getFactory()
+	          .createButton("b1", 100, 100, 50, 50, "button1"),
+	        b2 = this.getFactory()
+	          .createButton("b1", 300, 300, 50, 50, "button2")
+	      ))));
+	    MetaMockModel m = this.getRawModel();
+	    assertEquals(1, m.getPages().size());
+	    Page p = m.getPages().iterator().next();
+	    assertSame(b1.getPage(), p);  
+	    assertSame(b2.getPage(), p);
+	    assertSame(b2.getPage(), b2.getParent()); 
+	    assertSame(pnl.getPage(), p);
+	    assertTrue(pnl.getControls().contains(b1));
+	    assertSame(b1.getParent(), pnl);
+	  }
+	
 }

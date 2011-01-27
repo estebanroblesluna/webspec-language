@@ -77,4 +77,23 @@ public class DelimitedList<TSep extends CodeArtifact, TList extends CodeArtifact
     return false;
   }
 
+  @Override
+  public String toString() {
+    StringBuffer sb = new StringBuffer();
+    Boolean first = true;
+    for (CodeArtifact c : this.getList()) {
+      if (!c.hasContentToWrite()) {
+        continue;
+      }
+      if (first) {
+        first = false;
+      } else {
+        sb.append(this.getSeparator());
+      }
+      sb.append(c.toString());
+    }
+    return sb.toString();
+  }
+
+  
 }

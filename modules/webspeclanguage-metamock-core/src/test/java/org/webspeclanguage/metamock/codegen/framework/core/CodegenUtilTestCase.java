@@ -10,19 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.metamock.model.layout;
+package org.webspeclanguage.metamock.codegen.framework.core;
 
-import java.util.List;
+import junit.framework.TestCase;
 
 /**
- * A special {@link GridBagLayout} visitor interface
- * 
  * @author Jose Matias Rivero
  */
-public interface GridBagLayoutVisitor<TCell, TRow> {
+public class CodegenUtilTestCase extends TestCase {
 
-  TCell visitCell(GridBagLayoutCell c);
-
-  TRow visitRow(Integer columnIndex, List<TCell> visitedRowContent);
-
+  public void testCamelCaseToSpaces() {
+    assertEquals("Camel Cased String", CodegenUtil.camelCaseToSpaces("camelCasedString"));
+  }
+  
 }

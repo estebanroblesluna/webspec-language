@@ -52,4 +52,9 @@ public class ButtonImpl extends SimpleControlImpl implements Button {
   public UIControl copyConcreteControl() {
     return new ButtonImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getText());
   }
+  
+  @Override
+  protected String getProperties() {
+    return super.getProperties() + ", text:\"" + this.getText() + "\"";
+  }
 }

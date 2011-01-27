@@ -58,4 +58,13 @@ public class ConditionalBlock<T extends CodeArtifact> implements CodeArtifact {
 		return content;
 	}
 
+  @Override
+  public String toString() {
+    if (this.getWrite()) {
+      return this.getContent().toString();
+    }
+    return "";
+  }
+	
+
 }

@@ -39,6 +39,8 @@ import org.webspeclanguage.metamock.model.Table;
 import org.webspeclanguage.metamock.model.TextArea;
 import org.webspeclanguage.metamock.model.TextBox;
 import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutVisitor;
@@ -51,13 +53,12 @@ public class ExtJsJavaScriptGenerator extends
     DefaultMetaMockControlGenerator<CodeArtifact> implements 
 		MetaMockVisitor<CodeArtifact>,
 		GridBagLayoutVisitor<CodeArtifact, CodeArtifact>,
-    MetaMockPageCodeGenerator<CodeFile<CodeArtifact>> {
+    MetaMockPageCodeGenerator<CodeFile<CodeArtifact>>{
 
 	public CodeFile<CodeArtifact> generateFrom(Page p) {
 		String pageIdentifier = CodegenUtil.convertToIdentifier(p.getTitle());
 		String escapedTitle = CodegenUtil.escapeExcludingBlanks(p.getTitle());
-		GridBagLayout t = (GridBagLayout) p.getLayout();
-		List<CodeArtifact> ctrls = t.visitByRows(this);
+		CodeArtifact ctrls = p.getLayout().visit(this);
 		
 		return
   		Code.file(pageIdentifier + ".js",
@@ -65,12 +66,15 @@ public class ExtJsJavaScriptGenerator extends
     		Code.mixedBlock(
       			"Ext.onReady(function() {",
       			Code.indent(Code.block(ctrls), 1),
-      			"	new Ext.Panel({",
-      			"		contentEl: \"main\",",
-      			"		frame: \"true\",",
-      			"		renderTo: Ext.getBody(),",
-      			"		title: '" + escapedTitle + "'",
-      			"	});", 
+      			"   new Ext.Panel({",
+      			"      contentEl: 'main',",
+      			"      frame: 'true',",
+      			"      renderTo: Ext.getBody(),",
+      			"      title: '" + escapedTitle + "',",
+      			"      layout: 'absolute',",
+            "      width: " + p.getWidth() + ",",
+            "      height: " + p.getHeight(),
+      			"   });", 
       			"});"
     			)
   		);
@@ -79,7 +83,7 @@ public class ExtJsJavaScriptGenerator extends
 	public CodeBlock<CodeArtifact> visitButton(Button button) {
 		return 
 			this.extjsControl(button, "Button", Code.lBlock(
-				"text: \"" + CodegenUtil.escape(button.getText()) + "\""
+				"text: \"" + CodegenUtil.escapeExcludingBlanks(button.getText()) + "\""
 			));
 	}
 
@@ -141,7 +145,9 @@ public class ExtJsJavaScriptGenerator extends
 
 	public CodeBlock<CodeArtifact> visitTextBox(TextBox textBox) {
 		return 
-			this.extjsControl(textBox, "form.TextField", Code.lBlock());
+			this.extjsControl(textBox, "form.TextField", Code.lBlock(
+        "width: " + textBox.getWidth()
+			));
 	}
 	
 	public CodeBlock<CodeArtifact> visitTable(Table table) {
@@ -238,7 +244,26 @@ public class ExtJsJavaScriptGenerator extends
 				"})");
 	}
 	
-	private String getId(UIControl c) {
+	@Override
+  public CodeArtifact visitGridBagLayout(GridBagLayout gbl) {
+    return Code.block(gbl.visitByRows(this));
+  }
+
+  @Override
+  public CodeArtifact visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
+    CodeBlock<CodeArtifact> cb = Code.block();
+    for (UIControl c : absoluteLayout.getControls()) {
+      cb.add(c.visit(this));
+    }
+    return cb;
+  }
+  
+  @Override
+  public CodeArtifact visitAbsoluteLayoutInfo(AbsoluteLayoutInfo ali) {
+    return ali.getControl().visit(this);
+  }
+
+  private String getId(UIControl c) {
 		return "ctl" + c.getControlId() + "control";	
 	}
 	

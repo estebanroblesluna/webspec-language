@@ -27,6 +27,7 @@ import org.webspeclanguage.metamock.model.MetaMockFactory;
 import org.webspeclanguage.metamock.model.impl.MetaMockFactoryImpl;
 import org.webspeclanguage.metamock.translator.annotation.MetaMockJsonAnnotationParser;
 import org.webspeclanguage.metamock.translator.balsamiq.BalsamiqControlParser;
+import org.webspeclanguage.metamock.translator.logger.MetaMockProcessingLogger;
 
 /**
  * @author Jose Matias Rivero
@@ -58,7 +59,7 @@ public class MetaMockCodeGenerationFacade {
     cw.flush();
   }
 
-  private DefaultCodeWriter createCodeWriter() {
+  private CodeWriter createCodeWriter() {
     return new DefaultCodeWriter();
   }
   

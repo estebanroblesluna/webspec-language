@@ -40,7 +40,7 @@ public class FolderMockupCollector implements MockupCollector<File> {
     } else {
       List<Mockup<File>> mockups = new ArrayList<Mockup<File>>();
       for (File f : dir.listFiles(this.getFileFilter())) {
-        mockups.add(new Mockup<File>(f, new MockupContainerInfo(f.getName(), "file://" + f.getAbsolutePath())));
+        mockups.add(new Mockup<File>(f, new MockupContainerInfo(f.getName().split("\\.")[0], "file://" + f.getAbsolutePath())));
       }
       return mockups;
     }
