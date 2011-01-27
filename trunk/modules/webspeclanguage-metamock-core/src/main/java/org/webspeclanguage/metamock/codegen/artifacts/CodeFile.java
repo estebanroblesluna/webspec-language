@@ -96,4 +96,11 @@ public class CodeFile<T extends CodeArtifact> implements CodeArtifact {
     return true;
   }
 
+  @Override
+  public String toString() {
+    return "File(" + this.getFilePath() + ")[" + this.getArtifactToBind() + "]";
+  }
+  
+  
+
 }

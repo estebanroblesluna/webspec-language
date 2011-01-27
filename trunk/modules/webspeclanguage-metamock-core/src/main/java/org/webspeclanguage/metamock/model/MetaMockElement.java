@@ -16,7 +16,7 @@ import org.webspeclanguage.metamock.utils.MetaMockVisitor;
 
 /**
  * Abstract interface defining common features that must be present in any type
- * of widget
+ * of widget in our model
  * 
  * @author Jose Matias Rivero
  */

@@ -44,5 +44,10 @@ public class Text implements AppendableCodeArtifact {
 	public final Boolean hasContentToWrite() {
 		return this.getText().length() > 0;
 	}
+
+  @Override
+  public String toString() {
+    return this.getText();
+  }
 	
 }

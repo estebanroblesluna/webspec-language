@@ -180,7 +180,7 @@ public class MetaMockVisitorTestCase extends MetaMockTestCase {
   public void testVisitGridBoxLayout() {
     MetaMockVisitor v = createMock(MetaMockVisitor.class);
     GridBagLayout c = this.getFactory().createGridBagLayout();
-    expect(v.visitGridBoxLayout(c)).andReturn(null);
+    expect(v.visitGridBagLayout(c)).andReturn(null);
     verifyVisit(v, c);
   }
 

@@ -312,7 +312,9 @@ public class BalsamiqControlParser implements MetaMockControlParser<File> {
 
 	private String urlDecode(String urlEncodedString) {
 		try {
-			return URLDecoder.decode(urlEncodedString, "UTF-8");
+		  // Balsamiq bug: "+" character is not properly encoded
+			return URLDecoder.decode(
+			  urlEncodedString.replaceAll("\\+", "%2B"), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}

@@ -32,7 +32,10 @@ import org.webspeclanguage.metamock.model.Table;
 import org.webspeclanguage.metamock.model.TableColumn;
 import org.webspeclanguage.metamock.model.TextArea;
 import org.webspeclanguage.metamock.model.TextBox;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
+import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 import org.webspeclanguage.metamock.model.layout.VerticalBoxLayout;
 
 
@@ -66,7 +69,7 @@ public abstract class DefaultMetaMockVisitor<T> implements MetaMockVisitor<T> {
     return this.getDefaultValue();
   }
 
-  public T visitGridBoxLayout(GridBagLayout gbl) {
+  public T visitGridBagLayout(GridBagLayout gbl) {
     return this.getDefaultValue();
   }
 
@@ -133,4 +136,18 @@ public abstract class DefaultMetaMockVisitor<T> implements MetaMockVisitor<T> {
   public T visitRepetition(Repetition repetition) {
     return this.getDefaultValue();
   }
+
+  public T visitGridBagLayoutCell(GridBagLayoutCell gridBagLayoutCell) {
+    return this.getDefaultValue();
+  }
+
+  public T visitAbsoluteLayoutInfo(AbsoluteLayoutInfo absoluteLayoutInfo) {
+    return this.getDefaultValue();
+  }
+
+  public T visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
+    return this.getDefaultValue();
+  }
+  
+  
 }

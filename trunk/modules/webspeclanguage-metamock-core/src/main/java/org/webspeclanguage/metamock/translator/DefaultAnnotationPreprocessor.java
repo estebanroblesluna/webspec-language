@@ -22,7 +22,6 @@ import org.webspeclanguage.metamock.model.annotation.RepetitionAnnotation;
 import org.webspeclanguage.metamock.model.annotation.TemplateAnnotation;
 import org.webspeclanguage.metamock.translator.annotation.AnnotationInterpreter;
 
-
 /**
  * {@link AnnotationInterpreter} used in a first stage of annotation processing.
  * Takes into account template instantiation and repetition inferente 

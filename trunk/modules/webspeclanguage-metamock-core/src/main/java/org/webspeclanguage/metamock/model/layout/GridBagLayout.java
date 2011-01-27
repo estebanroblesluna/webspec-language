@@ -18,7 +18,7 @@ import java.util.List;
 import org.webspeclanguage.metamock.model.UIControl;
 
 /**
- * Represets a layout similar to an HTML table. A GridBagLayout has a specific
+ * Represents a layout similar to an HTML table. A GridBagLayout has a specific
  * number of rows and cells, and is composed by {@link GridBagLayoutCell}s
  * 
  * @author Jose Matias Rivero
@@ -40,5 +40,13 @@ public interface GridBagLayout extends Layout {
   <TCell, TRow> List<TRow> visitByRows(GridBagLayoutVisitor<TCell, TRow> v);
 
   void add(GridBagLayoutCell cell) throws GridBagLayoutException;
+  
+  Collection<GridBagLayoutCell> getCollidingCells(GridBagLayoutCell cell);
+
+  void insertRow(int i);
+
+  void insertColumn(int i);
+
+  void addAddShift(GridBagLayoutCell cell);
 
 }

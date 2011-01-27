@@ -24,12 +24,13 @@ import org.webspeclanguage.metamock.model.CompositeControl;
 import org.webspeclanguage.metamock.model.MetaMockElement;
 import org.webspeclanguage.metamock.model.UIControl;
 
+
 /**
- * @author Jose Matias Rivero
  * Provides some useful methods to check properties or features in a
  * MockSpec model or its components, avoiding pollution of language interfaces and 
+ * 
+ * @author Jose Matias Rivero
  */
-
 public final class MetaMockUtil {
 
 	private MetaMockUtil() {
@@ -253,22 +254,24 @@ public final class MetaMockUtil {
    * c1..cn exists, where c is vertically colliding with c1, ci is vertically colliding with c(i + 1), 
    * 1 <= i <= n - 1, and cn is vertically colliding with d
    */
-	private static Collection<UIControl> getAllVerticallyCollidingControls(
+	public static Collection<UIControl> getAllVerticallyCollidingControls(
 			Collection<UIControl> controls,
 			UIControl c) {
-		Collection<UIControl> ctrls = new HashSet<UIControl>();
-		for (UIControl cc : MetaMockUtil.getVerticallyCollidingControls(controls, c)) {
+		Collection<UIControl> ctrlQueue = new HashSet<UIControl>(
+		  MetaMockUtil.getVerticallyCollidingControls(controls, c));
+		Collection<UIControl> collidingControls = new HashSet<UIControl>();
+		while (ctrlQueue.iterator().hasNext()) {
+		  UIControl cc = ctrlQueue.iterator().next();
+		  ctrlQueue.remove(cc);
 			if (cc == c) {
 				continue;
 			}
-			ctrls.add(cc);
-			// removes itself to avoid infinite recursion
+			collidingControls.add(cc);
 			Collection<UIControl> recCtrls = new HashSet<UIControl>(controls);
-			recCtrls.remove(cc);
-			ctrls.addAll(MetaMockUtil.getVerticallyCollidingControls(recCtrls, cc));
+			recCtrls.removeAll(collidingControls);
+			ctrlQueue.addAll(MetaMockUtil.getVerticallyCollidingControls(recCtrls, cc));
 		}
-		return ctrls;
-			
+		return collidingControls;
 	}
 	
   /**
@@ -294,21 +297,23 @@ public final class MetaMockUtil {
    * c1..cn exists, where c is horizontally colliding with c1, ci is horizontally colliding with c(i + 1), 
    * 1 <= i <= n - 1, and cn is horizontally colliding with d
    */
-	private static Collection<UIControl> getAllHorizontallyCollidingControls(Collection<UIControl> controls,
+	public static Collection<UIControl> getAllHorizontallyCollidingControls(Collection<UIControl> controls,
 			UIControl c) {
-		Collection<UIControl> ctrls = new HashSet<UIControl>();
-		for (UIControl cc : MetaMockUtil.getHorizontallyCollidingControls(controls, c)) {
-			if (cc == c) {
-				continue;
-			}
-			ctrls.add(cc);
-			// removes itself to avoid infinite recursion
-			Collection<UIControl> recCtrls = new HashSet<UIControl>(controls);
-			recCtrls.remove(cc);
-			ctrls.addAll(MetaMockUtil.getAllHorizontallyCollidingControls(recCtrls, cc));
-		}
-		return ctrls;
-			
+    Collection<UIControl> ctrlQueue = new HashSet<UIControl>(
+      MetaMockUtil.getHorizontallyCollidingControls(controls, c));
+    Collection<UIControl> collidingControls = new HashSet<UIControl>();
+    while (ctrlQueue.iterator().hasNext()) {
+      UIControl cc = ctrlQueue.iterator().next();
+      ctrlQueue.remove(cc);
+      if (cc == c) {
+        continue;
+      }
+      collidingControls.add(cc);
+      Collection<UIControl> recCtrls = new HashSet<UIControl>(controls);
+      recCtrls.removeAll(collidingControls);
+      ctrlQueue.addAll(MetaMockUtil.getHorizontallyCollidingControls(recCtrls, cc));
+    }
+    return collidingControls;
 	}
 
 	
@@ -410,7 +415,7 @@ public final class MetaMockUtil {
 			collCtrls.add(c);
 			controlLists.add(
 				new ControlList(
-					MetaMockUtil.sortControlsByYCoord(collCtrls)));
+					MetaMockUtil.sortControlsByXCoord(collCtrls)));
 			processedControls.addAll(collCtrls);
 		}
 		return controlLists;
@@ -435,7 +440,7 @@ public final class MetaMockUtil {
 			collCtrls.add(c);
 			controlLists.add(
 				new ControlList(
-					MetaMockUtil.sortControlsByXCoord(collCtrls)));
+					MetaMockUtil.sortControlsByYCoord(collCtrls)));
 			processedControls.addAll(collCtrls);
 		}
 		return controlLists;
@@ -454,5 +459,26 @@ public final class MetaMockUtil {
 			Math.abs(c1.getWidth() - c2.getWidth()) <= maxDifference &&
 			Math.abs(c1.getHeight() - c2.getHeight()) <= maxDifference;
 	}
+
+	
+  /**
+   * Returns a rectangle surrounding all the controls provided in the 
+   * <code>controls</code> collection. Some extra <code>marginSize</code> can be
+   * provided to expand the returned rectangle from its original size.
+   */
+  public static Rectangle getSurroundingRectangle(Collection<UIControl> controls, Integer marginSize) {
+    MaxHolder<UIControl, Integer> rightBorder = new MaxHolder<UIControl, Integer>();
+    MaxHolder<UIControl, Integer> bottomBorder = new MaxHolder<UIControl, Integer>();
+    MinHolder<UIControl, Integer> leftBorder = new MinHolder<UIControl, Integer>();
+    MinHolder<UIControl, Integer> topBorder = new MinHolder<UIControl, Integer>();
+    for (UIControl c : controls) {
+      leftBorder.store(c, c.getX());
+      topBorder.store(c, c.getY());
+      rightBorder.store(c, c.getX() + c.getWidth());
+      bottomBorder.store(c, c.getY() + c.getHeight());
+    }
+    return new Rectangle(leftBorder.getMinValue() - 1, rightBorder.getMaxValue() + 1, 
+            topBorder.getMinValue() - 1, bottomBorder.getMaxValue() + 1);
+  }
 
 }

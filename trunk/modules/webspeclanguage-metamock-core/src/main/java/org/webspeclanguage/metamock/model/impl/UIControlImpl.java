@@ -96,7 +96,11 @@ public abstract class UIControlImpl implements UIControl {
   }
 
   public String toString() {
-    return this.getClass().getSimpleName() + "(id: " + this.getControlId() + ", page: \"" + this.getPage() + "\")";
+    return this.getClass().getSimpleName() + "(" + this.getProperties() + ")";
+  }
+  
+  protected String getProperties() {
+    return "id: " + this.getControlId() + ", page: \"" + this.getPage() + "\"";
   }
 
   public void setFriendlyId(String friendlyId) {

@@ -67,4 +67,9 @@ public class LabelImpl extends SimpleControlImpl implements Label {
     return new LabelImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getText());
   }
 
+  @Override
+  protected String getProperties() {
+    return super.getProperties() + ", text:\"" + this.getText() + "\"";
+  }
+
 }

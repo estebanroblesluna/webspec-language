@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import org.webspeclanguage.metamock.codegen.framework.core.CodegenUtil;
 import org.webspeclanguage.metamock.model.Annotation;
 import org.webspeclanguage.metamock.model.CompositeControl;
 import org.webspeclanguage.metamock.model.MetaMockElement;
@@ -27,10 +28,11 @@ import org.webspeclanguage.metamock.model.SimpleControl;
 import org.webspeclanguage.metamock.model.UIControl;
 import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
 import org.webspeclanguage.metamock.model.layout.LayoutFactory;
-import org.webspeclanguage.metamock.model.layout.impl.GridBagLayoutFactory;
+import org.webspeclanguage.metamock.model.layout.impl.AbsoluteLayoutFactory;
 import org.webspeclanguage.metamock.translator.annotation.AnnotationProcessor;
 import org.webspeclanguage.metamock.translator.annotation.MetaMockControlAnnotationParser;
 import org.webspeclanguage.metamock.utils.MetaMockUtil;
+import org.webspeclanguage.metamock.utils.Rectangle;
 
 
 /**
@@ -157,7 +159,8 @@ public class MetaMockProcessingEngine<TSource> extends
 			MetaMockModel model, MockupContainerInfo info)
 			throws MetaMockTranslationException {
 		this.detectCollisions(group.getControls(), model);
-		this.createControlHierarchy(group.getControls());
+		this.createPageIfNone(group.getControls(), info);
+		this.createControlHierarchy(group.getControls(), info);
 		this.assignExcludedControlsToModel(group, model);
 		this.addPagesToModel(group.getControls(), model, info);
 		this.associateAnnotations(group);
@@ -321,7 +324,7 @@ public class MetaMockProcessingEngine<TSource> extends
 	}
 
 	@SuppressWarnings("unchecked")
-  private void createControlHierarchy(Collection<UIControl> controls) {
+  private void createControlHierarchy(Collection<UIControl> controls, MockupContainerInfo info) {
 		Collection<UIControl> compositeControls = MetaMockUtil
 				.filterControlsByType(controls, CompositeControl.class);
 		compositeControls = 
@@ -334,6 +337,15 @@ public class MetaMockProcessingEngine<TSource> extends
 			}
 		}
 	}
+
+  @SuppressWarnings("unchecked")
+  private void createPageIfNone(Collection<UIControl> controls, MockupContainerInfo info) {
+    if (MetaMockUtil.filterControlsByType(controls, Page.class).size() == 0) {
+      Rectangle r = MetaMockUtil.getSurroundingRectangle(controls, 1);
+      Page p = this.getFactory().createPage(info.getName(), r.getLeft(), r.getTop(), r.getWidth(), r.getHeight(), CodegenUtil.camelCaseToSpaces(info.getName()), info.getName());
+      controls.add(p);
+    }
+  }
 
   private Collection<UIControl> excludeNonHierarchicalControls(Collection<UIControl> controls) {
 		return MetaMockUtil.excludeControlTypes(controls,
@@ -351,7 +363,7 @@ public class MetaMockProcessingEngine<TSource> extends
 	}
 	
 	private LayoutFactory getDefaultLayoutFactory() {
-		return new GridBagLayoutFactory();
+		return new AbsoluteLayoutFactory();
 	}
 
 }

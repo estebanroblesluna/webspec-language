@@ -66,4 +66,20 @@ public final class CodegenUtil {
 			.replace("\"", "\\\"");
 	}
 
+  public static String camelCaseToSpaces(String name) {
+    StringBuffer sb = new StringBuffer();
+    for (Integer iChar = 0; iChar < name.length(); iChar++) {
+      char c = name.charAt(iChar);
+      if (Character.isLowerCase(c) && iChar > 0) {
+        sb.append(c);
+      } else {
+        if (iChar > 0) {
+          sb.append(" ");
+        }
+        sb.append(Character.toUpperCase(c));
+      }
+    }
+    return sb.toString();
+  }
+
 }

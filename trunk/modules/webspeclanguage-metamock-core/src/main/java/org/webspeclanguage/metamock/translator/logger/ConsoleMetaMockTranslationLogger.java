@@ -10,19 +10,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.metamock.model.layout;
+package org.webspeclanguage.metamock.translator.logger;
 
-import java.util.List;
+import org.webspeclanguage.metamock.model.layout.GridBagLayoutException;
+import org.webspeclanguage.metamock.translator.MetaMockTranslationException;
 
 /**
- * A special {@link GridBagLayout} visitor interface
- * 
  * @author Jose Matias Rivero
  */
-public interface GridBagLayoutVisitor<TCell, TRow> {
+public class ConsoleMetaMockTranslationLogger implements MetaMockProcessingLogger {
 
-  TCell visitCell(GridBagLayoutCell c);
+  public void logException(MetaMockTranslationException exception) {
+    System.out.println("Translation exception: " + exception.getMessage());
+  }
 
-  TRow visitRow(Integer columnIndex, List<TCell> visitedRowContent);
+  public void logGridBagLayoutException(GridBagLayoutException e) {
+    System.out.println("GridBagLayoutException: " + e.getMessage());
+  }
 
 }

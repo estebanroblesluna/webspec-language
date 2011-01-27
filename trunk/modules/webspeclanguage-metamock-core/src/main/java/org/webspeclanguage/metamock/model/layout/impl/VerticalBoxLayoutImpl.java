@@ -22,7 +22,6 @@ import org.webspeclanguage.metamock.model.layout.VerticalBoxLayout;
 import org.webspeclanguage.metamock.utils.ControlList;
 import org.webspeclanguage.metamock.utils.MetaMockVisitor;
 
-
 /**
  * Default implementation for {@link VerticalBoxLayout}
  * 

@@ -52,4 +52,9 @@ public class RadioButtonImpl extends SimpleControlImpl implements RadioButton {
   public UIControl copyConcreteControl() {
     return new RadioButtonImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getText());
   }
+  
+  @Override
+  protected String getProperties() {
+    return super.getProperties() + ", text:\"" + this.getText() + "\"";
+  }
 }

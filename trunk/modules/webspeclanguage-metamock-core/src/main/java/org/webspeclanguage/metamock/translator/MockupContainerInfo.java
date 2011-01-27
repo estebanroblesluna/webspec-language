@@ -17,7 +17,7 @@ package org.webspeclanguage.metamock.translator;
  * This info is needed to give some context or details of containment to high
  * level models elements like Pages
  * 
- * @author matias
+ * @author Jose Matias Rivero
  * 
  */
 public class MockupContainerInfo {

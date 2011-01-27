@@ -10,39 +10,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.metamock.translator;
+package org.webspeclanguage.metamock.model.layout;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.webspeclanguage.metamock.model.UIControl;
 
 /**
- * Default {@link MetaMockControlGroup} implementation
- * 
  * @author Jose Matias Rivero
  */
-public class DefaultMetaMockControlGroupImpl implements
-		MetaMockControlGroup {
+public interface AbsoluteLayout extends Layout {
 
-	private Collection<UIControl> controls;
-
-
-	public DefaultMetaMockControlGroupImpl(Collection<UIControl> controls) {
-		super();
-		this.setControls(new ArrayList<UIControl>(controls));
-	}
-
-	private void setControls(Collection<UIControl> controls) {
-		this.controls = controls;
-	}
-
-	public Collection<UIControl> getControls() {
-		return controls;
-	}
-
-	public void addControl(UIControl c) {
-		this.getControls().add(c);
-	}
-
+  AbsoluteLayoutInfo getInfoForControl(UIControl c);
+  
+  Collection<AbsoluteLayoutInfo> getAllLayoutInfo();
+  
 }

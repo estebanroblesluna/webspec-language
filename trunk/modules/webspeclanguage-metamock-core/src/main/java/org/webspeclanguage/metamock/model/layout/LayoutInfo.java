@@ -12,17 +12,11 @@
  */
 package org.webspeclanguage.metamock.model.layout;
 
-import java.util.List;
+import org.webspeclanguage.metamock.model.MetaMockElement;
 
 /**
- * A special {@link GridBagLayout} visitor interface
- * 
  * @author Jose Matias Rivero
  */
-public interface GridBagLayoutVisitor<TCell, TRow> {
-
-  TCell visitCell(GridBagLayoutCell c);
-
-  TRow visitRow(Integer columnIndex, List<TCell> visitedRowContent);
+public interface LayoutInfo extends MetaMockElement {
 
 }

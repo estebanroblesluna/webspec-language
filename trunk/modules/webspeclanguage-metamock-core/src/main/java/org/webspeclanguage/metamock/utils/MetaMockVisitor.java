@@ -32,9 +32,11 @@ import org.webspeclanguage.metamock.model.Table;
 import org.webspeclanguage.metamock.model.TableColumn;
 import org.webspeclanguage.metamock.model.TextArea;
 import org.webspeclanguage.metamock.model.TextBox;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
+import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 import org.webspeclanguage.metamock.model.layout.VerticalBoxLayout;
-
 
 /**
  * Metamock control visitor interface
@@ -69,7 +71,7 @@ public interface MetaMockVisitor<T> {
 
 	T visitLink(Link link);
 	
-	T visitGridBoxLayout(GridBagLayout gbl);
+	T visitGridBagLayout(GridBagLayout gbl);
 
 	T visitVerticalBoxLayout(VerticalBoxLayout verticalBoxLayout);
 
@@ -86,6 +88,12 @@ public interface MetaMockVisitor<T> {
 	T visitTableColumn(TableColumn tableColumn);
 
 	T visitRepetition(Repetition repetitionImpl);
+
+  T visitGridBagLayoutCell(GridBagLayoutCell gridBagLayoutCell);
+
+  T visitAbsoluteLayoutInfo(AbsoluteLayoutInfo absoluteLayoutInfo);
+
+  T visitAbsoluteLayout(AbsoluteLayout absoluteLayout);
 
 	
 }

@@ -41,8 +41,10 @@ public class ExtJsGenerator implements
     String title = CodegenUtil.convertToIdentifier(p.getTitle());
     String escapedTitle = CodegenUtil.escapeExcludingBlanks(p.getTitle());
     CodeFile<CodeArtifact> jsFile = new ExtJsJavaScriptGenerator().generateFrom(p);
+    CodeFile<CodeArtifact> cssFile = new ExtJsCssGenerator().generateFrom(p);
     return Code.fileList(
       jsFile,
+      cssFile,
       Code.file(title + ".html",
         (CodeArtifact)
     	  Code.mixedBlock(
@@ -55,6 +57,8 @@ public class ExtJsGenerator implements
           "    <script type=\"text/javascript\" src=\"../extjs/ext-all-debug.js\"></script>",
           "    <link rel=\"stylesheet\" type=\"text/css\" href=\"../extjs/resources/css/ext-all.css\"></link>",
           "    <link rel=\"stylesheet\" type=\"text/css\" href=\"../extjs/ux/css/ux-all.css\"></link>",
+          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"../style/custom.css\"></link>",
+          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + title + ".css\"></link>",
           "    <script type=\"text/javascript\" src=\"../extjs/ux/ux-all.js\"></script>",
           "    <script type=\"text/javascript\" src=\"../extjs/ux/css/ux-all.css\"></script>",
           "    <script type=\"text/javascript\" src=\"" + jsFile.getFilePath() + "\"></script>",

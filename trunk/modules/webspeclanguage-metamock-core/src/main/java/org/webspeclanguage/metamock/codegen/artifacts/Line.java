@@ -67,5 +67,10 @@ public class Line implements AppendableCodeArtifact {
 	public Boolean hasContentToWrite() {
 		return true;
 	}
-	
+
+  @Override
+  public String toString() {
+    return this.getText() + "\n";
+  }
+
 }

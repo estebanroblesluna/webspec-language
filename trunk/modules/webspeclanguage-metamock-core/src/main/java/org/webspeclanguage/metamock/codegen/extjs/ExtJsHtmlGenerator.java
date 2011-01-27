@@ -13,20 +13,25 @@
 package org.webspeclanguage.metamock.codegen.extjs;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.webspeclanguage.metamock.codegen.artifacts.Code;
+import org.webspeclanguage.metamock.codegen.artifacts.CodeBlock;
 import org.webspeclanguage.metamock.codegen.common.DefaultMetaMockControlGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodeArtifact;
-import org.webspeclanguage.metamock.model.CompositeControl;
 import org.webspeclanguage.metamock.model.Page;
 import org.webspeclanguage.metamock.model.Panel;
 import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
+import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutVisitor;
 
 /**
+ * Generates HTML content to be enriched with ExtJS library
+ * 
  * @author Jose Matias Rivero
  */
 public class ExtJsHtmlGenerator extends 
@@ -40,13 +45,16 @@ public class ExtJsHtmlGenerator extends
 	}
 
 	public CodeArtifact generateFor(Page page) {
-		return this.generateTable(page, "main");
+	  return Code.mixedBlock(
+      "<div id=\"main\">",
+      page.getLayout().visit(this),
+      "</div>");
 	}
 	
-	private CodeArtifact generateTable(CompositeControl c, String id) {
+	private CodeArtifact generateTable(GridBagLayout gbl) {
 		return Code.mixedBlock(
-				"<table" + ((id != null) ? " id=\"main\"" : "") + ">",
-				Code.indent(Code.block(((GridBagLayout)c.getLayout()).visitByRows(this)), 1),
+				"<table>",
+				Code.indent(Code.block((gbl).visitByRows(this)), 1),
 				"</table>"
 		);
 	}
@@ -82,16 +90,42 @@ public class ExtJsHtmlGenerator extends
 		this.processedControls = processedControls;
 	}
 
+	
 	private List<UIControl> getProcessedControls() {
 		return processedControls;
 	}
 
+	@Override
 	public CodeArtifact visitPanel(Panel panel) {
-		return Code.indent(this.generateTable(panel, null), 1);
+		return Code.indent(panel.getLayout().visit(this), 1);
 	}
 
+	@Override
 	public CodeArtifact getDefault() {
 		return Code.nullCode();
 	}
+
+  @Override
+  public CodeArtifact visitGridBagLayout(GridBagLayout gbl) {
+    return this.generateTable(gbl);
+  }
+
+  @Override
+  public CodeArtifact visitAbsoluteLayoutInfo(AbsoluteLayoutInfo ali) {
+    return Code.mixedBlock(
+      "<div id=\"ctl" + ali.getControl().getControlId() + "-container\">",
+      Code.indent(ali.getControl().visit(this), 1),
+      "</div>"
+    );
+  }
+
+  @Override
+  public CodeArtifact visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
+    CodeBlock<CodeArtifact> cb = Code.block();
+    for (AbsoluteLayoutInfo ali : absoluteLayout.getAllLayoutInfo()) {
+      cb.add(ali.visit(this));
+    }
+    return cb;
+  }
 
 }

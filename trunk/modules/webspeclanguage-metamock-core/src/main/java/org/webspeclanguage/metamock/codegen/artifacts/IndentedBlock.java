@@ -60,4 +60,9 @@ public class IndentedBlock<T extends CodeArtifact> implements CodeArtifact {
 		return this.getArtifact().hasContentToWrite();
 	}
 
+  @Override
+  public String toString() {
+    return this.getArtifact().toString();
+  }
+
 }

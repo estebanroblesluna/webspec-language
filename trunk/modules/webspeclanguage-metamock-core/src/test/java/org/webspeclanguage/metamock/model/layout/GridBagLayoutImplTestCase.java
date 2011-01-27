@@ -12,17 +12,12 @@
  */
 package org.webspeclanguage.metamock.model.layout;
 
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-
 import java.util.Collection;
 import java.util.List;
 
 import org.webspeclanguage.metamock.model.MetaMockTestCase;
 import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.layout.impl.GridBagLayoutCellImpl;
 import org.webspeclanguage.metamock.model.layout.impl.GridBagLayoutImpl;
 import org.webspeclanguage.metamock.utils.ValueHolder;
 
@@ -155,19 +150,104 @@ public class GridBagLayoutImplTestCase extends MetaMockTestCase {
     assertTrue(visitedCoords.get(1).contains(10));
     assertEquals(3, (int)cellCounter.getValue());
   }
+  
+  public void testGetCollidingCellsIfExist() {
+    GridBagLayout l = this.getNewGridBagLayout();
+    GridBagLayoutCell cell1 = this.createCell(1, 2, 1, 1, this.getFactory().createButton("b1", 1, 1, 100, 100,"Button 1"), l);
+    GridBagLayoutCell cell2 = this.createCell(2, 1, 1, 2, this.getFactory().createButton("b2", 1, 1, 100, 100,"Button 2"), l);
+    GridBagLayoutCell cell3 = this.createCell(1, 1, 2, 2, this.getFactory().createButton("b3", 1, 1, 100, 100,"Button 3"), l);
+    
+    try {
+      l.add(cell1);
+      l.add(cell2);
+    } catch (GridBagLayoutException e) {
+      fail();
+    }
+    Collection<GridBagLayoutCell> collidingCells = l.getCollidingCells(cell3);
+    assertEquals(2, collidingCells.size());
+    assertTrue(collidingCells.contains(cell1));
+    assertTrue(collidingCells.contains(cell2));
+  }
+  
+  public void testInsertRow() {
+    try {
+      GridBagLayout l = this.getNewGridBagLayout();
+      GridBagLayoutCell cell1 = this.createCell(0, 2, 2, 1, this.getFactory().createButton("b1", 1, 1, 100, 100,"Button 1"), l);
+      GridBagLayoutCell cell2 = this.createCell(1, 0, 1, 2, this.getFactory().createButton("b2", 1, 1, 100, 100,"Button 2"), l);
+      l.add(cell1);
+      l.add(cell2);
+      l.insertRow(1);
+      assertNull(l.getCell(1, 0).getControl());
+      assertNull(l.getCell(1, 1).getControl());
+      assertEmptyCells(l, 0, 0, 2, 2);
+      assertEmptyCells(l, 3, 0, 1, 4);
+      assertEmptyCells(l, 0, 3, 4, 1);
+      assertCellPosition(cell2, 2, 0, 1, 2);
+      assertCellPosition(cell1, 0, 2, 3, 1);
+    } catch (GridBagLayoutException e) {
+      fail();
+    }    
+  }
+  
+  public void testInsertColumn() {
+    try {
+      GridBagLayout l = this.getNewGridBagLayout();
+      GridBagLayoutCell cell1 = this.createCell(0, 2, 2, 1, this.getFactory().createButton("b1", 1, 1, 100, 100,"Button 1"), l);
+      GridBagLayoutCell cell2 = this.createCell(1, 0, 1, 2, this.getFactory().createButton("b2", 1, 1, 100, 100,"Button 2"), l);
+      l.add(cell1);
+      l.add(cell2);
+      l.insertColumn(1);
+      assertEmptyCells(l, 0, 0, 1, 3);
+      assertEmptyCells(l, 2, 0, 1, 5);
+      assertEmptyCells(l, 0, 4, 3, 1);
+      assertCellPosition(l.getCell(0, 3), 0, 3, 2, 1);
+      assertCellPosition(l.getCell(1, 0), 1, 0, 1, 3);
+    } catch (GridBagLayoutException e) {
+      fail();
+    }
+  }
+  
+  private void assertCellPosition(GridBagLayoutCell cell, int row, int column, int rowSpan, int columnSpan) {
+    assertEquals(row, (int)cell.getRow());
+    assertEquals(column, (int)cell.getColumn());
+    assertEquals(columnSpan, (int)cell.getColumnSpan());
+    assertEquals(rowSpan, (int)cell.getRowSpan());
+    for (int iRow = row; iRow - row < rowSpan; iRow++) {
+      for (int iCol = column; iCol - column < columnSpan; iCol++) {
+        assertEquals(cell, cell.getGridBagLayout().getCell(iRow, iCol));
+      }
+    }
+  }
+  
+  private void assertEmptyCells(GridBagLayout gbl, int row, int column, int rowSpan, int columnSpan) {
+    for (int iRow = row; iRow - row < rowSpan; iRow++) {
+      for (int iCol = column; iCol - column < columnSpan; iCol++) {
+        assertNull(gbl.getCell(iRow, iCol).getControl());
+      }
+    }
+  }
 
-  private GridBagLayoutCell createCell(Integer row, Integer column, Integer rowspan, Integer colspan, UIControl control, GridBagLayout gridBoxLayout) {
-    GridBagLayoutCell c = createMock(GridBagLayoutCell.class);
-    expect(c.getColumn()).andStubReturn(column);
-    expect(c.getRow()).andStubReturn(row);
-    expect(c.getColumnSpan()).andStubReturn(colspan);
-    expect(c.getRowSpan()).andStubReturn(rowspan);
-    expect(c.getControl()).andStubReturn(control);
-    expect(c.getGridBoxLayout()).andStubReturn(gridBoxLayout);
-    c.setGridBoxLayout(anyObject(GridBagLayout.class));
-    expectLastCall().asStub();
-    replay(c);
-    return c;
+  public void testAddAndShift() {
+    GridBagLayout l = this.getNewGridBagLayout();
+    GridBagLayoutCell cell1 = this.createCell(1, 2, 1, 1, this.getFactory().createButton("b1", 1, 1, 100, 100,"Button 1"), l);
+    GridBagLayoutCell cell2 = this.createCell(2, 1, 1, 2, this.getFactory().createButton("b2", 1, 1, 100, 100,"Button 2"), l);
+    GridBagLayoutCell cell3 = this.createCell(0, 0, 3, 3, this.getFactory().createButton("b3", 1, 1, 100, 100,"Button 2"), l);
+    
+    try {
+      l.add(cell1);
+      l.add(cell2);
+      l.addAddShift(cell3);
+      this.assertCellPosition(cell3, 0, 0, 3, 3);
+      this.assertCellPosition(cell2, 3, 1, 1, 3);
+      this.assertCellPosition(cell1, 1, 3, 1, 1);
+      
+    } catch (GridBagLayoutException e) {
+      fail();
+    }
+  }
+  
+  private GridBagLayoutCell createCell(Integer row, Integer column, Integer rowspan, Integer colspan, UIControl control, GridBagLayout gridBoxLayout) {  
+    return new GridBagLayoutCellImpl(row, column, rowspan, colspan, control);
   }
 
 }

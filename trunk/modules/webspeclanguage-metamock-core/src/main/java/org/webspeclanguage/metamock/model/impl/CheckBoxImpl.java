@@ -52,5 +52,10 @@ public class CheckBoxImpl extends SimpleControlImpl implements CheckBox {
   public UIControl copyConcreteControl() {
     return new CheckBoxImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getText());
   }
+  
+  @Override
+  protected String getProperties() {
+    return super.getProperties() + ", text:\"" + this.getText() + "\"";
+  }
 
 }

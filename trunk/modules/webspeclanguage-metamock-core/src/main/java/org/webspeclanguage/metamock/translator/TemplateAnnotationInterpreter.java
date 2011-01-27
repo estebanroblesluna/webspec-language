@@ -18,7 +18,6 @@ import org.webspeclanguage.metamock.model.annotation.CompositeControlAnnotation;
 import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
 import org.webspeclanguage.metamock.model.annotation.TemplateInstantiationAnnotation;
 
-
 /**
  * Particular implementation of {@link AnnotationInterpreter} for {@link TemplateAnnotation}
  * 

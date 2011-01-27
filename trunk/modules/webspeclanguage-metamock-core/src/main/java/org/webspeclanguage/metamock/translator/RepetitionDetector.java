@@ -25,7 +25,6 @@ import org.webspeclanguage.metamock.model.UIControl;
 import org.webspeclanguage.metamock.utils.MetaMockUtil;
 import org.webspeclanguage.metamock.utils.Point;
 
-
 /**
  * Provides component repetition detection in {@link CompositeControl}s
  * 

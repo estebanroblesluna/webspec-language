@@ -15,6 +15,7 @@ package org.webspeclanguage.metamock.model.layout.impl;
 import java.util.Collection;
 
 import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.Layout;
 import org.webspeclanguage.metamock.model.layout.LayoutFactory;
 
