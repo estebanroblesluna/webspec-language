@@ -19,8 +19,6 @@ package org.webspeclanguage.webtest.generator.webdriver.java;
  * @author Gonzalo G. Testa
  *
  */
-
-
 public class WebdriverFirefox implements WebdriverBrowser{
   
   public String getDriver() {

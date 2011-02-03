@@ -13,13 +13,13 @@
 package org.webspeclanguage.webtest.generator.webdriver.java;
 
 /**
- * Expression comparator class, used to process the string received from elements.
- * It also implements the classes needed to generate the final locator.
+ * Expression comparator class, used to process the string received from
+ * elements. It also implements the classes needed to generate the final
+ * locator.
  * 
  * @author Gonzalo G. Testa
- *
+ * 
  */
-
 public class ExpressionComparator {
 
   String locator;
@@ -27,16 +27,11 @@ public class ExpressionComparator {
   ElementExpression how;
 
   public ExpressionComparator(String expr) {
-
-
-    if (expr.contains("//")){
+    if (expr.contains("//")) {
       how = new ExpressionXpath(expr);
-    }
-    else{
+    } else {
       how = new ExpressionHow(expr);
     }
-
-
   }
 
   public String locators() {
@@ -44,12 +39,11 @@ public class ExpressionComparator {
   }
 }
 
-abstract class ElementExpression{
+abstract class ElementExpression {
 
   String how;
   Locator locator;
   String expression;
-
 
   public ElementExpression(String expr) {
     how = new String();
@@ -65,23 +59,22 @@ abstract class ElementExpression{
 
 }
 
-final class ExpressionXpath extends ElementExpression{
+final class ExpressionXpath extends ElementExpression {
 
   public ExpressionXpath(String expr) {
-    super(expr);  
+    super(expr);
     this.how = new String("xpath");
   }
 
-  public String locator(){
+  public String locator() {
     return this.locator.locatorWithXpath();
   }
 
 }
 
+final class ExpressionHow extends ElementExpression {
 
-final class ExpressionHow extends ElementExpression{
-
-  public ExpressionHow(String expr){
+  public ExpressionHow(String expr) {
     super(expr);
     this.how = new String(expr.substring(0, expr.indexOf("=")));
 
@@ -92,30 +85,25 @@ final class ExpressionHow extends ElementExpression{
   }
 }
 
-
-class Locator{
+class Locator {
 
   String expression;
 
-  Locator(String expr){
+  Locator(String expr) {
     expression = new String(expr);
   }
 
-  public String locatorWithXpath(){
-    
+  public String locatorWithXpath() {
     if (expression.contains("[@") || (expression.contains("//") && !expression.contains("=")))
       return expression;
-    
-    return "//*[@" + expression.substring(0, expression.indexOf("=")) + "='" + expression.substring(expression.indexOf("=")+1, expression.length()) + "']";
+
+    return "//*[@" + expression.substring(0, expression.indexOf("=")) + "='" + expression.substring(expression.indexOf("=") + 1, expression.length()) + "']";
   }
 
-  public String locatorWithHow(){
+  public String locatorWithHow() {
     if (expression.contains("]"))
-      return expression.substring(expression.indexOf("=")+2, expression.indexOf("]")-1);
-    else 
-      return expression.substring(expression.indexOf("=")+1);
-
+      return expression.substring(expression.indexOf("=") + 2, expression.indexOf("]") - 1);
+    else
+      return expression.substring(expression.indexOf("=") + 1);
   }
-
 }
-

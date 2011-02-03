@@ -20,7 +20,6 @@ import junit.framework.TestCase;
  * 
  * @author Gonzalo G. Testa
  */
-
 public class ClassBuilderTestCase extends TestCase{
   public ClassBuilder classText;
   public static String classCode;
@@ -79,5 +78,4 @@ public class ClassBuilderTestCase extends TestCase{
     classCode = classCode + "}";
     assertEquals(classCode, classText.getClassCode());
   }
-
 }

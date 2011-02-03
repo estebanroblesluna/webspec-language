@@ -25,7 +25,6 @@ import junit.framework.TestCase;
  * 
  * @author Gonzalo G. Testa
  */
-
 public class WebdriverJavaWebTestGeneratorTestCase extends TestCase{
 
   private WebdriverJavaWebTestGenerator generator;
@@ -35,7 +34,6 @@ public class WebdriverJavaWebTestGeneratorTestCase extends TestCase{
     super.setUp();
     this.transformation = new WebSpec2WebTestTransformation();
     this.generator = new WebdriverJavaWebTestGenerator(new WebdriverFirefox());
-
   }
 
   public void testGeneratedClass() {
@@ -46,7 +44,6 @@ public class WebdriverJavaWebTestGeneratorTestCase extends TestCase{
     String classCode = generator.getClassCode(test1);
     assertNotNull(classCode);
     assertFalse(classCode.isEmpty());
-
   }
 
   public void testGeneratedClass2() {
@@ -63,7 +60,5 @@ public class WebdriverJavaWebTestGeneratorTestCase extends TestCase{
     String classCode2 = generator.getClassCode(test2);
     assertNotNull(classCode2);
     assertFalse(classCode2.isEmpty());
-
   }
-
 }
