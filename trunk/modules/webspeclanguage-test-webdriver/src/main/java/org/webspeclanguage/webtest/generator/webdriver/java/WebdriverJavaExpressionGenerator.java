@@ -57,7 +57,6 @@ import org.webspeclanguage.impl.expression.core.WidgetReference;
  * 
  * @author Gonzalo G. Testa
  */
-
 public class WebdriverJavaExpressionGenerator {
 
   private static final String COMPARE_TO = "compareTo";

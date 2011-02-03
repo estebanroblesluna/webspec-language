@@ -19,7 +19,6 @@ package org.webspeclanguage.webtest.generator.webdriver.java;
  * @author Gonzalo G. Testa
  *
  */
-
 public interface WebdriverBrowser {
 
   public String getDriver();

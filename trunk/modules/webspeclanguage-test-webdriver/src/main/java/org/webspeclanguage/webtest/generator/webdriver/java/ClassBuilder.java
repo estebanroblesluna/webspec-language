@@ -17,7 +17,6 @@ package org.webspeclanguage.webtest.generator.webdriver.java;
  * 
  * @author Gonzalo G. Testa
  */
-
 public class ClassBuilder {
 
   private StringBuffer classCodeBuffer;
