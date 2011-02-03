@@ -58,7 +58,6 @@ import org.webspeclanguage.webtest.generator.watir.java.ExpressionComparator;
  * 
  * @author Gonzalo G. Testa
  */
-
 public class WatirRubyExpressionGenerator {
 
   private Set<String> specialFunctionCalls;
@@ -315,5 +314,4 @@ public class WatirRubyExpressionGenerator {
       return "element_by_xpath(\"//*[@" + element.substring(0, element.indexOf("=")) +   "='" + interactionPropertyExpression.getProperty() +"']\")";
     }
   }
-
 }

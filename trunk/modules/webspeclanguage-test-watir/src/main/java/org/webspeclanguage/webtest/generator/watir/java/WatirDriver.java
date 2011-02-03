@@ -17,11 +17,10 @@ package org.webspeclanguage.webtest.generator.watir.java;
  * 
  * @author Gonzalo G. Testa
  */
-
 public interface WatirDriver {
 
-  public String getDriver();
+  String getDriver();
   
-  public String getImport();
+  String getImport();
   
 }

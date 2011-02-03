@@ -17,7 +17,6 @@ package org.webspeclanguage.webtest.generator.watir.java;
  * 
  * @author Gonzalo G. Testa
  */
-
 public class WatirCelerity implements WatirDriver {
 
   public String getDriver() {
@@ -27,5 +26,4 @@ public class WatirCelerity implements WatirDriver {
   public String getImport() {
     return "celerity";
   }
-
 }

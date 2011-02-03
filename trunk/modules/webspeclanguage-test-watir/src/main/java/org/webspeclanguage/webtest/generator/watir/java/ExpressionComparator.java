@@ -19,7 +19,6 @@ package org.webspeclanguage.webtest.generator.watir.java;
  * @author Gonzalo G. Testa
  *
  */
-
 public class ExpressionComparator {
 
   String locator;
@@ -29,9 +28,7 @@ public class ExpressionComparator {
   ExpressionElement element;
   
   public ExpressionComparator(String expression) {
-
     expr = expression;
-
   }
 
   public String locators() {
@@ -47,7 +44,6 @@ public class ExpressionComparator {
 
   
   protected abstract class ExpressionElement {
-   
     String what;
     String how;
     String locator;
@@ -63,10 +59,9 @@ public class ExpressionComparator {
     protected String returnExpression() {
       return what +  "(" + how + "\"" + locator + "\")" ;
     }
-    
   }
   
-  public class ExpressionElementSimple extends ExpressionElement{
+  public class ExpressionElementSimple extends ExpressionElement {
     
     public ExpressionElementSimple(String expr) {
       super();
@@ -76,7 +71,6 @@ public class ExpressionComparator {
       if (what.equals("input")){
         what = "text_field";
       } 
-      
     }
 
     @Override
@@ -118,7 +112,5 @@ public class ExpressionComparator {
       
       return this.returnExpression();
     }
-    
   }
-  
 }

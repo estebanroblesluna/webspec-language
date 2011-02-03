@@ -24,7 +24,6 @@ import junit.framework.TestCase;
  * 
  * @author Gonzalo G. Testa
  */
-
 public class WatirRubyWebTestGeneratorTestCase extends TestCase{
 
   private WatirRubyWebTestGenerator generator;
@@ -36,7 +35,6 @@ public class WatirRubyWebTestGeneratorTestCase extends TestCase{
     this.transformation = new WebSpec2WebTestTransformation();
 
     this.generator = new WatirRubyWebTestGenerator();
-    
   }
 
   public void testGeneratedClass() {
@@ -47,7 +45,6 @@ public class WatirRubyWebTestGeneratorTestCase extends TestCase{
     String classCode = generator.getClassCode(test1);
     assertNotNull(classCode);
     assertFalse(classCode.isEmpty());
-    
   }
   
   public void testGeneratedClass2() {
@@ -64,7 +61,5 @@ public class WatirRubyWebTestGeneratorTestCase extends TestCase{
     String classCode2 = generator.getClassCode(test2);
     assertNotNull(classCode2);
     assertFalse(classCode2.isEmpty());
-    
   }
-  
 }

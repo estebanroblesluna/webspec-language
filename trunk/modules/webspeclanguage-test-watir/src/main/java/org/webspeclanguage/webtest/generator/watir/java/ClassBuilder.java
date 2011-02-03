@@ -10,7 +10,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.webspeclanguage.webtest.generator.watir.java;
 
 /**
@@ -18,8 +17,6 @@ package org.webspeclanguage.webtest.generator.watir.java;
  * 
  * @author Gonzalo G. Testa
  */
-
-
 public class ClassBuilder {
   private StringBuffer classCodeBuffer;
 
@@ -137,10 +134,8 @@ public class ClassBuilder {
     }
   }
 
-
   public void addStatement(String statement) {
     this.getClassCodeBuffer().append("\t\t");
     this.getClassCodeBuffer().append(statement);
   }
-
 }
