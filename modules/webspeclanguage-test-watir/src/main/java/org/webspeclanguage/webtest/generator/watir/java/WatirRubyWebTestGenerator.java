@@ -36,7 +36,6 @@ import org.webspeclanguage.webtest.base.WebTestVisitor;
  * 
  * @author Gonzalo G. Testa
  */
-
 public class WatirRubyWebTestGenerator implements WebTestGenerator {
 
   private static final String BROWSER_OBJ = "$browser.";
@@ -82,8 +81,6 @@ public class WatirRubyWebTestGenerator implements WebTestGenerator {
     return this.classBuilder.getClassCode();
   }
 
-
-
   public void generateWebTestSuite(WebTestSuite webTestSuite) {
     this.startClassFor(webTestSuite);
     for (WebTest webTest : webTestSuite) {
@@ -125,8 +122,8 @@ public class WatirRubyWebTestGenerator implements WebTestGenerator {
     for (WebTestItem item : aWebTest.getSetUpItems()) {
       this.computeStatementsFor(item);
     }
+    
     this.classBuilder.endMethod();
-
   }
 
   public void generateSimpleWebTest(SimpleWebTest simpleWebTest) {
@@ -207,7 +204,6 @@ public class WatirRubyWebTestGenerator implements WebTestGenerator {
     }
 
     public Object visitWebOpenUrl(WebOpenUrl webOpenUrl) {
-
       String statement = BROWSER_OBJ + "goto(" + "\"" + webOpenUrl.getUrl() + "\"" + ")";
       classBuilder.addStatementAndNewLine(statement);
 
@@ -226,5 +222,4 @@ public class WatirRubyWebTestGenerator implements WebTestGenerator {
       return null;
     }
   }
-
 }
