@@ -12,6 +12,8 @@
  */
 package org.webspeclanguage.impl.widget;
 
+import org.webspeclanguage.api.utils.WidgetVisitor;
+
 /**
  * A class that represents a list of widgets with repetition
  * 
@@ -28,4 +30,9 @@ public class ListOfContainer extends Container {
   public void setIndexVariable(String indexVariable) {
     this.indexVariable = indexVariable;
   }
+  @Override
+	public void accept(WidgetVisitor visitor) {
+		visitor.visit(this);
+		
+	}
 }

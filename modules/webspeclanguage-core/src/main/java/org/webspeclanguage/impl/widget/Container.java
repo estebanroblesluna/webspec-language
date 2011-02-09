@@ -84,7 +84,7 @@ public abstract class Container extends Widget {
     return label;
   }
 
-  private List<Widget> getWidgets() {
+  public List<Widget> getWidgets() {
     return widgets;
   }
 }

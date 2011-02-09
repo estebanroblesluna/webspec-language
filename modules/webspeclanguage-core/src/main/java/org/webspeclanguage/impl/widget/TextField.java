@@ -12,11 +12,19 @@
  */
 package org.webspeclanguage.impl.widget;
 
+import org.webspeclanguage.api.utils.WidgetVisitor;
+
 /**
  * A class that represents textfields
  * 
  * @author Esteban Robles Luna
  */
 public class TextField extends Widget {
+
+	@Override
+	public void accept(WidgetVisitor visitor) {
+		visitor.visit(this);
+		
+	}
 
 }

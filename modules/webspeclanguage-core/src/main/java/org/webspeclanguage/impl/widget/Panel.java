@@ -12,11 +12,17 @@
  */
 package org.webspeclanguage.impl.widget;
 
+import org.webspeclanguage.api.utils.WidgetVisitor;
+
 /**
  * A class that represents a simple container of widgets
  * 
  * @author Esteban Robles Luna
  */
 public class Panel extends Container {
-
+	@Override
+	public void accept(WidgetVisitor visitor) {
+		visitor.visit(this);
+		
+	}
 }
