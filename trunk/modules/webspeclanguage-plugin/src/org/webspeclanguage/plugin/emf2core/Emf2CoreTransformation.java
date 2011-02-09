@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.webspeclanguage.api.Action;
 import org.webspeclanguage.api.Generator;
 import org.webspeclanguage.api.Interaction;
@@ -462,15 +463,20 @@ public class Emf2CoreTransformation {
 	}
 	
 	private void createDiagram(org.webspeclanguage.plugin.webspecmodel.Diagram diagram) {
+		if(StringUtils.isEmpty(diagram.getName())){
+		  addError("Diagram's name can't be empty.");
+		}
 		webSpecDiagram = new DiagramImpl(diagram.getName());
 		webSpecDiagram.setCyclesAllowed(diagram.getCycleAllowed());
 	}
 	
 	private void addActionsSetup(org.webspeclanguage.plugin.webspecmodel.Diagram diagram) {
     //actions
+	  String actionsSetup = diagram.getActionsSetup();
+	  if(StringUtils.isNotEmpty(actionsSetup)){
     try {
       List<Action> actions = ActionParser.getActions(
-          diagram.getActionsSetup(), 
+          actionsSetup, 
           webSpecDiagram);
       if (actions != null) {
         for (Action action : actions) {
@@ -489,7 +495,7 @@ public class Emf2CoreTransformation {
       }
     } catch (WidgetNotFoundException e) {
       this.addError("Widget " + e.getWidgetName() + " in interaction " + e.getInteractionName() + " not found");
-    }
+    }}
 	}
 
 	private void addError(String string) {

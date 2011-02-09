@@ -62,8 +62,7 @@ public class DiagramImpl implements Diagram {
   private List<Action> actionsSetup;
 
   public DiagramImpl(String name) {
-    Validate.notNull(name);
-    
+        
     this.name = name;
     this.interactions = new HashSet<Interaction>();
     this.generators = new HashMap<String, Generator>();
