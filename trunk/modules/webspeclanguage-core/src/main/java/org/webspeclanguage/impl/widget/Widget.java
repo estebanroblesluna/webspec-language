@@ -12,6 +12,8 @@
  */
 package org.webspeclanguage.impl.widget;
 
+import org.webspeclanguage.api.utils.WidgetVisitor;
+
 /**
  * An abstract class for widgets
  * 
@@ -70,4 +72,7 @@ public abstract class Widget {
   public void setName(String name) {
     this.name = name;
   }
+  
+  abstract public void accept(WidgetVisitor visitor);
+
 }

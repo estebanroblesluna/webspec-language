@@ -12,11 +12,17 @@
  */
 package org.webspeclanguage.impl.widget;
 
+import org.webspeclanguage.api.utils.WidgetVisitor;
+
 /**
  * A class that represents radiobuttons
  * 
  * @author Esteban Robles Luna
  */
 public class RadioButton extends Widget {
-
+	@Override
+	public void accept(WidgetVisitor visitor) {
+		visitor.visit(this);
+		
+	}
 }
