@@ -55,7 +55,7 @@ import org.webspeclanguage.metamock.model.annotation.impl.VerticalBoxLayoutAnnot
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.VerticalBoxLayout;
 import org.webspeclanguage.metamock.model.layout.impl.GridBagLayoutImpl;
-import org.webspeclanguage.metamock.model.layout.impl.RecursiveGridBagLayoutFactory;
+import org.webspeclanguage.metamock.model.layout.impl.ScanBasedGridBagLayoutFactory;
 import org.webspeclanguage.metamock.model.layout.impl.VerticalBoxLayoutImpl;
 import org.webspeclanguage.metamock.translator.DefaultMetaMockControlGroupImpl;
 import org.webspeclanguage.metamock.translator.MetaMockControlGroup;
@@ -109,7 +109,7 @@ public class MetaMockFactoryImpl implements MetaMockFactory {
   }
 
   public GridBagLayout createGridBagLayout(Collection<UIControl> controls) {
-    return new RecursiveGridBagLayoutFactory().createLayout(controls);
+    return new ScanBasedGridBagLayoutFactory().createLayout(controls);
   }
 
   public GridBagLayout createGridBagLayout() {

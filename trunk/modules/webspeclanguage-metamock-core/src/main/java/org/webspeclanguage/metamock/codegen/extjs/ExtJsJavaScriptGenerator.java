@@ -55,11 +55,18 @@ public class ExtJsJavaScriptGenerator extends
 		GridBagLayoutVisitor<CodeArtifact, CodeArtifact>,
     MetaMockPageCodeGenerator<CodeFile<CodeArtifact>>{
 
-	public CodeFile<CodeArtifact> generateFrom(Page p) {
+  private MainPanelAttributesGenerator mainPanelAttributesGenerator;
+  
+	public ExtJsJavaScriptGenerator() {
+    super();
+    this.mainPanelAttributesGenerator = new MainPanelAttributesGenerator();
+  }
+
+  public CodeFile<CodeArtifact> generateFrom(Page p) {
 		String pageIdentifier = CodegenUtil.convertToIdentifier(p.getTitle());
 		String escapedTitle = CodegenUtil.escapeExcludingBlanks(p.getTitle());
 		CodeArtifact ctrls = p.getLayout().visit(this);
-		
+		this.mainPanelAttributesGenerator.setControl(p);
 		return
   		Code.file(pageIdentifier + ".js",
   		  (CodeArtifact)
@@ -70,10 +77,8 @@ public class ExtJsJavaScriptGenerator extends
       			"      contentEl: 'main',",
       			"      frame: 'true',",
       			"      renderTo: Ext.getBody(),",
-      			"      title: '" + escapedTitle + "',",
-      			"      layout: 'absolute',",
-            "      width: " + p.getWidth() + ",",
-            "      height: " + p.getHeight(),
+      			"      title: '" + escapedTitle + "'",
+      			p.visit(this.mainPanelAttributesGenerator),
       			"   });", 
       			"});"
     			)
@@ -99,7 +104,7 @@ public class ExtJsJavaScriptGenerator extends
 
 	public CodeBlock<CodeArtifact> visitDatePicker(DatePicker datePicker) {
 		return 
-			this.extjsControl(datePicker, "DatePicker", Code.lBlock());
+			this.extjsControl(datePicker, "form.DateField", Code.lBlock());
 	}
 
 	public CodeBlock<CodeArtifact> visitLabel(Label label) {
@@ -273,6 +278,40 @@ public class ExtJsJavaScriptGenerator extends
 
 	public CodeArtifact getDefault() {
 		return Code.nullCode();
+	}
+	
+	private class MainPanelAttributesGenerator extends DefaultMetaMockControlGenerator<CodeArtifact> {
+
+	  private UIControl control;
+	  
+	  public MainPanelAttributesGenerator(UIControl control) {
+      super();
+      this.control = control;
+    }
+	  
+	  public MainPanelAttributesGenerator() {
+	    this(null);
+	  }
+	  
+	  public void setControl(UIControl control) {
+	    this.control = control;
+	  }
+
+    @Override
+    public CodeArtifact getDefault() {
+      return Code.block();
+    }
+
+    @Override
+    public CodeArtifact visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
+      AbsoluteLayoutInfo info = absoluteLayout.getInfoForControl(this.control);
+      return Code.mixedBlock(
+        "      layout: 'absolute',",
+        "      width: " + info.getWidth() + ",",
+        "      height: " + info.getHeight()
+      );
+    }
+
 	}
 
 }

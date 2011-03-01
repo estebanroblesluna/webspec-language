@@ -32,13 +32,13 @@ import org.webspeclanguage.metamock.utils.MetaMockUtil;
 public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 
 	public GridBagLayout createLayout(Collection<UIControl> controls) {
-		RecursiveGridBagLayoutInferenceState state = new RecursiveGridBagLayoutInferenceState();
+		GridBagLayoutInferenceState state = new GridBagLayoutInferenceState();
 		this.inferColumns(controls, state, 0);
 		this.inferRows(controls, state, 0);
 		return this.buildLayout(state);
 	}
 
-	private GridBagLayout buildLayout(RecursiveGridBagLayoutInferenceState state) {
+	private GridBagLayout buildLayout(GridBagLayoutInferenceState state) {
 		GridBagLayout gbl = new GridBagLayoutImpl();
       for (UIControl c : state.getControls()) {
       	gbl.addAddShift(state.getCellForControl(c));
@@ -47,7 +47,7 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 	}
 
 	private Integer inferColumns(Collection<UIControl> controls,
-			RecursiveGridBagLayoutInferenceState state,
+			GridBagLayoutInferenceState state,
 			Integer parentCol) {
 		List<ControlList> cols = MetaMockUtil.getControlsGroupedInColumns(controls);
 		Integer accumColspan = 0;
@@ -60,7 +60,7 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 	}
 
 	private Integer inferColumnsRecursively(Collection<UIControl> controls,
-			RecursiveGridBagLayoutInferenceState state, Integer col) {
+			GridBagLayoutInferenceState state, Integer col) {
 		if (controls.size() == 1) {
 			GridBagLayoutCell cell = state.getCellForControl(controls.iterator().next());
 			cell.setColumnSpan(1);
@@ -93,7 +93,7 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 	}
 	
 	private Integer inferRows(Collection<UIControl> controls,
-			RecursiveGridBagLayoutInferenceState state,
+			GridBagLayoutInferenceState state,
 			Integer parentRow) {
 		List<ControlList> rows = MetaMockUtil.getControlsGroupedInRows(controls);
 		Integer accumRowspan = 0;
@@ -106,7 +106,7 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 	}
 
 	private Integer inferRowsRecursively(Collection<UIControl> controls,
-			RecursiveGridBagLayoutInferenceState state, Integer row) {
+			GridBagLayoutInferenceState state, Integer row) {
 		if (controls.size() == 1) {
 			GridBagLayoutCell cell = state.getCellForControl(controls.iterator().next());
 			cell.setRowSpan(1);
