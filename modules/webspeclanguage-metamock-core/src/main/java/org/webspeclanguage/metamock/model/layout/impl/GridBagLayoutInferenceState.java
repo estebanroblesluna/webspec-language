@@ -24,11 +24,11 @@ import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
  * 
  * @author Jose Matias Rivero
  */
-public class RecursiveGridBagLayoutInferenceState {
+public class GridBagLayoutInferenceState {
 
 	private Map<UIControl, GridBagLayoutCell> cellsForControls;
 	
-	public RecursiveGridBagLayoutInferenceState() {
+	public GridBagLayoutInferenceState() {
 		super();
 		this.setCellsForControls(new HashMap<UIControl, GridBagLayoutCell>());
 	}

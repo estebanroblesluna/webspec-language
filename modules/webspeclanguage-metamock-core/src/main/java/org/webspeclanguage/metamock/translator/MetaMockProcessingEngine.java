@@ -28,7 +28,7 @@ import org.webspeclanguage.metamock.model.SimpleControl;
 import org.webspeclanguage.metamock.model.UIControl;
 import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
 import org.webspeclanguage.metamock.model.layout.LayoutFactory;
-import org.webspeclanguage.metamock.model.layout.impl.AbsoluteLayoutFactory;
+import org.webspeclanguage.metamock.model.layout.impl.ScanBasedGridBagLayoutFactory;
 import org.webspeclanguage.metamock.translator.annotation.AnnotationProcessor;
 import org.webspeclanguage.metamock.translator.annotation.MetaMockControlAnnotationParser;
 import org.webspeclanguage.metamock.utils.MetaMockUtil;
@@ -50,6 +50,7 @@ public class MetaMockProcessingEngine<TSource> extends
 	private AnnotationProcessor annotationPreprocessor;
 	private AnnotationProcessor annotationPostProcessor;
 	private Collection<MetaMockAnnotation> parsedAnnotations;
+	private LayoutFactory defaultLayoutFactory;
 
 	public MetaMockProcessingEngine(
 			MetaMockControlParser<TSource> parser,
@@ -69,6 +70,7 @@ public class MetaMockProcessingEngine<TSource> extends
 		this.setAnnotationPostProcessor(
 				new AnnotationProcessor(
 						new TemplateAnnotationInterpreter()));
+		this.setDefaultLayoutFactory(new ScanBasedGridBagLayoutFactory());
 	}
 
 	private void setParser(MetaMockControlParser<TSource> parser) {
@@ -137,7 +139,11 @@ public class MetaMockProcessingEngine<TSource> extends
 		return parsedAnnotations;
 	}
 
-	@Override
+	private void setDefaultLayoutFactory(LayoutFactory defaultLayoutFactory) {
+    this.defaultLayoutFactory = defaultLayoutFactory;
+  }
+
+  @Override
 	public MetaMockModel getRawModel(TSource source, 
 			MockupContainerInfo info) throws MetaMockTranslationException {
 		MetaMockModel model = this.getFactory().createMetaMockModel();
@@ -363,7 +369,7 @@ public class MetaMockProcessingEngine<TSource> extends
 	}
 	
 	private LayoutFactory getDefaultLayoutFactory() {
-		return new AbsoluteLayoutFactory();
+		return this.defaultLayoutFactory;
 	}
 
 }
