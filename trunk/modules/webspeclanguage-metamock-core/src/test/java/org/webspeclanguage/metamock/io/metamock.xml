@@ -3,7 +3,7 @@
   xsi:schemaLocation="http://www.webspeclanguage.org/metamock metamock.xsd ">
   <ui title="Login screen" id="loginScreen">
     <layout>
-      <gridBagLayout columns="2" rows="2" />
+      <flowLayout />
     </layout>
     <label id="usernameLabel" label="Username: ">
       <layoutInfo><gridBoxLayoutInfo column="1" row="1" /></layoutInfo>

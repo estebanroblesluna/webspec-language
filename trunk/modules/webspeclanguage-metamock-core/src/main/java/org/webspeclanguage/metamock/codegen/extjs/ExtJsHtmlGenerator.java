@@ -47,7 +47,7 @@ public class ExtJsHtmlGenerator extends
 	public CodeArtifact generateFor(Page page) {
 	  return Code.mixedBlock(
       "<div id=\"main\">",
-      page.getLayout().visit(this),
+      page.getLayout().accept(this),
       "</div>");
 	}
 	
@@ -67,7 +67,7 @@ public class ExtJsHtmlGenerator extends
 						"<td id=\"ctl" + c.getControl().getControlId() + "-container\" " +
 							(c.getColumnSpan() > 1 ? "colspan=\""  + c.getColumnSpan() + "\" " : "") +
 							(c.getRowSpan() > 1 ? "rowspan=\"" + c.getRowSpan() + "\" ": "")  + ">",
-						Code.indent(c.getControl().visit(this), 1),
+						Code.indent(c.getControl().accept(this), 1),
 						"</td>");
 			} else {
 				return Code.line("");
@@ -97,7 +97,7 @@ public class ExtJsHtmlGenerator extends
 
 	@Override
 	public CodeArtifact visitPanel(Panel panel) {
-		return Code.indent(panel.getLayout().visit(this), 1);
+		return Code.indent(panel.getLayout().accept(this), 1);
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class ExtJsHtmlGenerator extends
   public CodeArtifact visitAbsoluteLayoutInfo(AbsoluteLayoutInfo ali) {
     return Code.mixedBlock(
       "<div id=\"ctl" + ali.getControl().getControlId() + "-container\">",
-      Code.indent(ali.getControl().visit(this), 1),
+      Code.indent(ali.getControl().accept(this), 1),
       "</div>"
     );
   }
@@ -123,7 +123,7 @@ public class ExtJsHtmlGenerator extends
   public CodeArtifact visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
     CodeBlock<CodeArtifact> cb = Code.block();
     for (AbsoluteLayoutInfo ali : absoluteLayout.getAllLayoutInfo()) {
-      cb.add(ali.visit(this));
+      cb.add(ali.accept(this));
     }
     return cb;
   }

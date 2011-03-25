@@ -27,7 +27,7 @@ public class PanelImpl extends CompositeControlImpl implements Panel {
     super(controlID, x, y, width, height, containerId);
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitPanel(this);
   }
 

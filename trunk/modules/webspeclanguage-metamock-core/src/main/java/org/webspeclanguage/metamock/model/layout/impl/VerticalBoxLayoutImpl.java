@@ -75,7 +75,7 @@ public class VerticalBoxLayoutImpl implements VerticalBoxLayout {
     return this.getControlLists().get(i);
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitVerticalBoxLayout(this);
   }
 

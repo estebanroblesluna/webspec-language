@@ -30,7 +30,7 @@ public class LinkImpl extends SimpleControlImpl implements Link {
     this.setText(text);
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitLink(this);
   }
 

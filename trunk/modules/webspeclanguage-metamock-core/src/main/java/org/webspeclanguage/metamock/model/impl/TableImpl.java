@@ -34,7 +34,7 @@ public class TableImpl extends SimpleControlImpl implements Table {
     this.setColumns(new ArrayList<TableColumn>());
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitTable(this);
   }
 

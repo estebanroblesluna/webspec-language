@@ -279,7 +279,7 @@ public class GridBagLayoutImpl implements GridBagLayout {
     return cells;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitGridBagLayout(this);
   }
 

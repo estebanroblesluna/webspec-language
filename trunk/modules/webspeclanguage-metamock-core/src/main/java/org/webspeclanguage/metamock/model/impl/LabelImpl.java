@@ -44,7 +44,7 @@ public class LabelImpl extends SimpleControlImpl implements Label {
     return control;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitLabel(this);
   }
 

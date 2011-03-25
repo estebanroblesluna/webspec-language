@@ -29,9 +29,14 @@ public class MetaMockCodeGeneratorFactoryTest extends TestCase {
     return "src/test/resources/org/webspeclanguage/metamock/codegen/factory/";
   }
   
+  private static String getSiteFolder() {
+    return "src/test/resources/org/webspeclanguage/metamock/codegen/factory/dest/";
+    //return "../webspeclanguage-webapp/src/main/webapp/codegen/site";
+  }
+  
   private static String getDestinationFolder() {
-    //return "src/test/resources/org/webspeclanguage/metamock/codegen/factory/dest/"; 
-    return "../webspeclanguage-webapp/src/main/webapp/codegen/";
+    return "src/test/resources/org/webspeclanguage/metamock/codegen/factory/dest/"; 
+    //return "../webspeclanguage-webapp/src/main/webapp/codegen/";
   }
   
   @Override
@@ -43,15 +48,26 @@ public class MetaMockCodeGeneratorFactoryTest extends TestCase {
     this.cleanFolder("extjs/pages");
     MetaMockCodeGenerationFacade.getInstance().balsamiq2ExtJs(
       getSourceFolder() + "balsamiq",
-      getDestinationFolder() + "extjs/pages");
-    this.assertFiles("extjs/pages/newEvent.js", "extjs/pages/inviteFriendsToEvent.js",
-      "extjs/pages/taskManager.js", "extjs/pages/newEvent.html", "extjs/pages/inviteFriendsToEvent.html",
-      "extjs/pages/taskManager.html", "extjs/pages/editAlbum.html", "extjs/pages/editAlbum.js");
+      getDestinationFolder() + "extjs/pages",
+      getSiteFolder(),
+      "../extjs/pages");
+    this.assertFiles("extjs/pages", "newEvent.js", "inviteFriendsToEvent.js",
+            "taskManager.js", "newEvent.html", "inviteFriendsToEvent.html",
+            "taskManager.html", "editAlbum.html", "editAlbum.js");
   }
   
-  public void assertFiles(String... filenames) {
+  public void testBalsamiq2Xml() {
+    this.cleanFolder("xml/pages");
+    MetaMockCodeGenerationFacade.getInstance().balsamiq2Xml(
+      getSourceFolder() + "balsamiq",
+      getDestinationFolder() + "xml/pages");
+    this.assertFiles("xml/pages", "newEvent.xml", "inviteFriendsToEvent.xml",
+      "taskManager.xml", "editAlbum.xml");
+  }
+  
+  public void assertFiles(String folder, String... filenames) {
     for (String filename : filenames) {
-      assertTrue(new File(getDestinationFolder() + filename).exists());
+      assertTrue(new File(getDestinationFolder() + folder + "/" + filename).exists());
     }
   }
   

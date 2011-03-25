@@ -54,7 +54,7 @@ public class AbsoluteLayoutImpl implements AbsoluteLayout {
     return this.getLayoutInfoByControl().keySet();
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitAbsoluteLayout(this);
   }
 

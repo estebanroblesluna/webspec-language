@@ -38,7 +38,7 @@ public class ImageImpl extends SimpleControlImpl implements Image {
     return imageUrl;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitImage(this);
   }
 

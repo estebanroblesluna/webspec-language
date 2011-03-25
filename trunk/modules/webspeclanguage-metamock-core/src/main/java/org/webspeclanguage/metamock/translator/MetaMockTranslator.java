@@ -12,6 +12,8 @@
  */
 package org.webspeclanguage.metamock.translator;
 
+import java.util.Collection;
+
 import org.webspeclanguage.metamock.codegen.generator.Mockup;
 import org.webspeclanguage.metamock.model.MetaMockModel;
 
@@ -23,10 +25,10 @@ import org.webspeclanguage.metamock.model.MetaMockModel;
 public abstract class MetaMockTranslator<TSource> {
 	
 	
-	public MetaMockModel translateModelFrom(Mockup<TSource> mockup) throws MetaMockTranslationException {
+	public MetaMockModel translateModelFrom(Collection<Mockup<TSource>> mockups) throws MetaMockTranslationException {
 		return 
 			this.applyAnnotationsAndInferLayouts(
-				this.getRawModel(mockup.getRepresentation(), mockup.getContainerInfo()));
+				this.getRawModel(mockups));
 	}
 
 	
@@ -34,7 +36,7 @@ public abstract class MetaMockTranslator<TSource> {
 	 * Returns a {@link MetaMockModel} parsed and partially post-processed. Neither annotations and layouts 
 	 * arent't applied 
 	 */
-	public abstract MetaMockModel getRawModel(TSource source, MockupContainerInfo info)
+	public abstract MetaMockModel getRawModel(Collection<Mockup<TSource>> mockup)
 			throws MetaMockTranslationException;
 
 

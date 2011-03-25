@@ -27,7 +27,7 @@ public class ComboBoxImpl extends SimpleControlImpl implements ComboBox {
     super(controlID, x, y, width, height);
   }
 
-  public final <T> T visit(MetaMockVisitor<T> v) {
+  public final <T> T accept(MetaMockVisitor<T> v) {
     return v.visitComboBox(this);
   }
 

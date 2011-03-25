@@ -27,7 +27,7 @@ public class DatePickerImpl extends SimpleControlImpl implements DatePicker {
     super(controlID, x, y, width, height);
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitDatePicker(this);
   }
 

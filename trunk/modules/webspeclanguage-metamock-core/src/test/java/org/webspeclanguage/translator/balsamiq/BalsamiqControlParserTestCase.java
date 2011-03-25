@@ -13,6 +13,7 @@
 package org.webspeclanguage.translator.balsamiq;
 
 import java.io.File;
+import java.util.Arrays;
 
 import org.webspeclanguage.metamock.codegen.generator.Mockup;
 import org.webspeclanguage.metamock.model.MetaMockModel;
@@ -44,8 +45,11 @@ public class BalsamiqControlParserTestCase extends ControlParserTestCase {
 
   public void testModelTranslation() throws MetaMockTranslationException {
     MetaMockModel m = this.getBalsamiqTranslator().translateModelFrom(
-            new Mockup<File>(new File("src/test/resources/org/webspeclanguage/metamock/translator/balsamiq/model.bmml"),
-            new MockupContainerInfo("balsamiqModel", "file://src/test/resources/org/webspeclanguage/metamock/translator/balsamiq/model.bmml/")));
+      Arrays.asList(
+      (Mockup<File>)
+      new Mockup<File>(
+        new File("src/test/resources/org/webspeclanguage/metamock/translator/balsamiq/model.bmml"),
+        new MockupContainerInfo("balsamiqModel", "file://src/test/resources/org/webspeclanguage/metamock/translator/balsamiq/model.bmml/"))));
     for (Page page : m.getPages()) {
       if (page.getTitle().equals("New event"))
         this.assertOnNewEventPage(page);

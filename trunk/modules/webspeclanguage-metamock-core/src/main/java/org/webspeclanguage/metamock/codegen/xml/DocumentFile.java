@@ -10,15 +10,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.metamock.codegen.common;
+package org.webspeclanguage.metamock.codegen.xml;
 
-import org.webspeclanguage.metamock.model.MetaMockModel;
+import org.jdom.Document;
 
 /**
  * @author Jose Matias Rivero
  */
-public interface MetaMockCodeGenerator<T> {
+public class DocumentFile {
 
-	T generateFrom(MetaMockModel model);
-	
+  private String filename;
+  private Document document;
+
+  public DocumentFile(String filename, Document document) {
+    super();
+    this.setFilename(filename);
+    this.setDocument(document);
+  }
+
+  private void setFilename(String filename) {
+    this.filename = filename;
+  }
+
+  public String getFilename() {
+    return filename;
+  }
+
+  private void setDocument(Document document) {
+    this.document = document;
+  }
+
+  public Document getDocument() {
+    return document;
+  }
+
 }
