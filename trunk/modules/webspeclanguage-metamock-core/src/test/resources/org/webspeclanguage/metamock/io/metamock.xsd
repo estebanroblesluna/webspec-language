@@ -71,15 +71,24 @@
     </complexContent>
   </complexType>
 
-  <element name="checkbox" type="tns:tCheckbox"
+  <element name="checkBox" type="tns:tCheckBox"
     substitutionGroup="tns:labeledWidget" />
 
-  <complexType name="tCheckbox">
+  <complexType name="tCheckBox">
     <complexContent>
       <extension base="tns:tLabeledWidget"></extension>
     </complexContent>
   </complexType>
+  
+    <element name="comboBox" type="tns:tComboBox"
+    substitutionGroup="tns:labeledWidget" />
 
+  <complexType name="tComboBox">
+    <complexContent>
+      <extension base="tns:tLabeledWidget"></extension>
+    </complexContent>
+  </complexType>
+  
   <element name="radioButton" type="tns:tRadioButton"
     substitutionGroup="tns:labeledWidget" />
 
@@ -92,6 +101,14 @@
   <element name="textBox" type="tns:tTextBox" substitutionGroup="tns:widget" />
 
   <complexType name="tTextBox">
+    <complexContent>
+      <extension base="tns:tWidget" />
+    </complexContent>
+  </complexType>
+  
+  <element name="textArea" type="tns:tTextArea" substitutionGroup="tns:widget" />
+
+  <complexType name="tTextArea">
     <complexContent>
       <extension base="tns:tWidget" />
     </complexContent>
