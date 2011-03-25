@@ -31,7 +31,7 @@ public class ExtJsCssGenerator extends DefaultMetaMockControlGenerator<CodeArtif
   public CodeFile<CodeArtifact> generateFrom(Page page) {
     return 
       Code.file(CodegenUtil.convertToIdentifier(page.getTitle()) + ".css",
-        page.visit(this)
+        page.accept(this)
       );
   }
 
@@ -39,7 +39,7 @@ public class ExtJsCssGenerator extends DefaultMetaMockControlGenerator<CodeArtif
   public CodeArtifact visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
     CodeBlock<CodeArtifact> cb = new CodeBlock<CodeArtifact>();
     for (AbsoluteLayoutInfo ali : absoluteLayout.getAllLayoutInfo()) {
-      cb.add(ali.visit(this));
+      cb.add(ali.accept(this));
     }
     return cb;
   }
@@ -54,7 +54,7 @@ public class ExtJsCssGenerator extends DefaultMetaMockControlGenerator<CodeArtif
       "    width: " + ali.getWidth() + "px;",
       "    height: " + ali.getHeight() + "px;",
       "}",
-      ali.getControl().visit(this));
+      ali.getControl().accept(this));
   }
 
   @Override
@@ -64,18 +64,40 @@ public class ExtJsCssGenerator extends DefaultMetaMockControlGenerator<CodeArtif
 
   @Override
   public CodeArtifact visitPage(Page page) {
-    return Code.mixedBlock(
-            "body {",
-            "    left: " + page.getX() + "px;",
-            "    top: " + page.getY() + "px;",
-            "    position: fixed;",
-            "}",
-            page.getLayout().visit(this));
+    return Code.block(
+            page.getLayout().accept(new PageCssGenerator(page)),
+            page.getLayout().accept(this));
   }
 
   @Override
   public CodeArtifact visitPanel(Panel panel) {
-    return panel.getLayout().visit(this);
+    return panel.getLayout().accept(this);
+  }
+  
+  private class PageCssGenerator extends DefaultMetaMockControlGenerator<CodeArtifact> {
+
+    private Page page;
+    
+    public PageCssGenerator(Page page) {
+      super();
+      this.page = page;
+    }
+
+    @Override
+    public CodeArtifact visitAbsoluteLayout(AbsoluteLayout al) {
+      return Code.mixedBlock(
+        "body {",
+        "    left: " + this.page.getX() + "px;",
+        "    top: " + this.page.getY() + "px;",
+        "    position: fixed;",
+        "}");
+    }
+    
+    @Override
+    public CodeArtifact getDefault() {
+      return Code.nullCode();
+    }
+    
   }
   
 }

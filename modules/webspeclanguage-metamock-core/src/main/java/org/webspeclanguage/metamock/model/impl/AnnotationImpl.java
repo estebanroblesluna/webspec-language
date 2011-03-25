@@ -48,7 +48,7 @@ public class AnnotationImpl extends UIControlImpl implements Annotation {
     return content;
   }
 
-  public final <T> T visit(MetaMockVisitor<T> v) {
+  public final <T> T accept(MetaMockVisitor<T> v) {
     return v.visitAnnotation(this);
   }
 

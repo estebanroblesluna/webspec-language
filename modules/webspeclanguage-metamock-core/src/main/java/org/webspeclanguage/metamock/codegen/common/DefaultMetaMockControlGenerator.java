@@ -47,7 +47,7 @@ import org.webspeclanguage.metamock.utils.MetaMockVisitor;
 /**
  * @author Jose Matias Rivero
  */
-public abstract class DefaultMetaMockControlGenerator<T extends CodeArtifact> implements MetaMockVisitor<T> {
+public abstract class DefaultMetaMockControlGenerator<T> implements MetaMockVisitor<T> {
 
   public T visitButton(Button button) {
     return this.getDefault();
@@ -147,14 +147,6 @@ public abstract class DefaultMetaMockControlGenerator<T extends CodeArtifact> im
 
   public T visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
     return this.getDefault();
-  }
-
-  public CodeBlock<CodeArtifact> generateBlockFromCompositeControl(CompositeControl cc) {
-    CodeBlock<CodeArtifact> cb = new CodeBlock<CodeArtifact>();
-    for (UIControl c : cc.getControls()) {
-      cb.add(c.visit(this));
-    }
-    return cb;
   }
 
   public abstract T getDefault();

@@ -53,7 +53,7 @@ public class PageImpl extends CompositeControlImpl implements Page {
     return annotations;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitPage(this);
   }
 

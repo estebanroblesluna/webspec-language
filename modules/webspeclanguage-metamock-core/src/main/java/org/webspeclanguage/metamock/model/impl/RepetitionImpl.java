@@ -57,7 +57,7 @@ public class RepetitionImpl extends CompositeControlImpl implements Repetition {
             .getColumns(), this.getContainerId());
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitRepetition(this);
   }
 

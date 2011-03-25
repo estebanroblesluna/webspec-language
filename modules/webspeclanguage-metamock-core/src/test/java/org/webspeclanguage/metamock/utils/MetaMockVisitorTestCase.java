@@ -253,7 +253,7 @@ public class MetaMockVisitorTestCase extends MetaMockTestCase {
   @SuppressWarnings("unchecked")
   private void verifyVisit(MetaMockVisitor v, MetaMockElement b) {
     replay(v);
-    b.visit(v);
+    b.accept(v);
     verify(v);
   }
 

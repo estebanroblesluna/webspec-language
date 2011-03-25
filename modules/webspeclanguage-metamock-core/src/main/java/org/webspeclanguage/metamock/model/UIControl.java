@@ -49,7 +49,7 @@ public abstract interface UIControl extends MetaMockElement {
   Boolean equalInContent(UIControl control);
 
   /**
-   * checks if this <code>control</code> are the same component, even in
+   * checks if this <code>control</code> is the same component, even in
    * different versions of the model
    * 
    * @param parent

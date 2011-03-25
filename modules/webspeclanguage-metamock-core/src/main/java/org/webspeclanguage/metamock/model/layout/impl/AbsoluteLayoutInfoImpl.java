@@ -68,7 +68,7 @@ public class AbsoluteLayoutInfoImpl implements AbsoluteLayoutInfo {
     return height;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitAbsoluteLayoutInfo(this);
   }
 

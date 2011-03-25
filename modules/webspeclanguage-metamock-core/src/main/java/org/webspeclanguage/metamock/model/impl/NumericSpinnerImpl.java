@@ -48,7 +48,7 @@ public class NumericSpinnerImpl extends SimpleControlImpl implements NumericSpin
     this.maxValue = maxValue;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitNumericSpinner(this);
   }
 

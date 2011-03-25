@@ -38,7 +38,7 @@ public class RadioButtonImpl extends SimpleControlImpl implements RadioButton {
     this.text = text;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitRadioButton(this);
   }
 

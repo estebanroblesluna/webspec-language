@@ -30,7 +30,7 @@ public class CheckBoxImpl extends SimpleControlImpl implements CheckBox {
     this.setText(text);
   }
 
-  public final <T> T visit(MetaMockVisitor<T> v) {
+  public final <T> T accept(MetaMockVisitor<T> v) {
     return v.visitCheckBox(this);
   }
 

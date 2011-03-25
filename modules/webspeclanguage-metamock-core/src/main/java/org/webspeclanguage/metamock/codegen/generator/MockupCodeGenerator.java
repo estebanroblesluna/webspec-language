@@ -13,27 +13,28 @@
 package org.webspeclanguage.metamock.codegen.generator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.webspeclanguage.metamock.codegen.common.MetaMockCodeGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodeArtifact;
-import org.webspeclanguage.metamock.codegen.framework.core.CodeWriter;
 import org.webspeclanguage.metamock.model.MetaMockFactory;
+import org.webspeclanguage.metamock.model.MetaMockModel;
 import org.webspeclanguage.metamock.translator.MetaMockControlParser;
 import org.webspeclanguage.metamock.translator.MetaMockProcessingEngine;
 import org.webspeclanguage.metamock.translator.MetaMockTranslationException;
 import org.webspeclanguage.metamock.translator.annotation.MetaMockControlAnnotationParser;
 import org.webspeclanguage.metamock.translator.logger.MetaMockLogging;
-import org.webspeclanguage.metamock.translator.logger.MetaMockProcessingLogger;
 
 /**
  * @author Jose Matias Rivero
  */
-public class MockupCodeGenerator<TMockupRepresentation, TGeneratedArtifact extends CodeArtifact> {
+public class MockupCodeGenerator<TMockupRepresentation, TGeneratedArtifact> {
 
   private MockupCollector<TMockupRepresentation> mockupCollector;
   private MetaMockCodeGenerator<TGeneratedArtifact> codeGenerator;
   private MetaMockProcessingEngine<TMockupRepresentation> processingEngine;
+  private MetaMockModel translatedModel;
 
   public MockupCodeGenerator(MetaMockFactory factory, MetaMockControlParser<TMockupRepresentation> controlParser,
           MetaMockControlAnnotationParser controlAnnotationParser, MockupCollector<TMockupRepresentation> mockupCollector,
@@ -67,18 +68,28 @@ public class MockupCodeGenerator<TMockupRepresentation, TGeneratedArtifact exten
   private MetaMockProcessingEngine<TMockupRepresentation> getProcessingEngine() {
     return processingEngine;
   }
-
-  public List<TGeneratedArtifact> generateCodeArtifacts() {
-    List<TGeneratedArtifact> artifacts = new ArrayList<TGeneratedArtifact>();
-    try {
+  
+  private MetaMockModel getTranslatedModel() throws MetaMockTranslationException {
+    if (this.translatedModel == null) {
       List<Mockup<TMockupRepresentation>> mockups = this.getMockupCollector().collectMockups();
-      for (Mockup<TMockupRepresentation> mockup : mockups) {
-        artifacts.add(this.getCodeGenerator().generateFrom(this.getProcessingEngine().translateModelFrom(mockup)));
-      }
+      translatedModel = this.getProcessingEngine().translateModelFrom(mockups);
+    }
+    return translatedModel;
+  }
+
+  public TGeneratedArtifact generateCodeArtifacts() {
+    return this.generateArtifacts(this.getCodeGenerator());
+  }
+  
+  public TGeneratedArtifact generateArtifacts(MetaMockCodeGenerator<TGeneratedArtifact> generator) {
+    try {
+        return generator.generateFrom(this.getTranslatedModel());
     } catch (MetaMockTranslationException e) {
       MetaMockLogging.getDefaultLogger().logException(e);
     }
-    return artifacts;
+    return null;
   }
+  
+  
 
 }

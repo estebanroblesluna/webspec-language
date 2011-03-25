@@ -27,7 +27,7 @@ public class TextAreaImpl extends SimpleControlImpl implements TextArea {
     super(controlID, x, y, width, height);
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitTextArea(this);
   }
 

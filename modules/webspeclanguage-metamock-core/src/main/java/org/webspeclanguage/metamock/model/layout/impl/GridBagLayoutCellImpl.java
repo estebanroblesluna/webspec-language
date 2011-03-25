@@ -105,7 +105,7 @@ public class GridBagLayoutCellImpl implements GridBagLayoutCell {
     ", " + this.getColumnSpan() + ", " + this.getControl() + ")";
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitGridBagLayoutCell(this);
   }
 

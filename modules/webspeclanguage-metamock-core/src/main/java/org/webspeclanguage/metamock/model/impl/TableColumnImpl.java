@@ -37,7 +37,7 @@ public class TableColumnImpl implements TableColumn {
     this.label = label;
   }
 
-  public <T> T visit(MetaMockVisitor<T> v) {
+  public <T> T accept(MetaMockVisitor<T> v) {
     return v.visitTableColumn(this);
   }
 

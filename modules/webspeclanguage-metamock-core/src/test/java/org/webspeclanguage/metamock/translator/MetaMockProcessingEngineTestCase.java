@@ -16,8 +16,11 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
+import org.webspeclanguage.metamock.codegen.generator.Mockup;
 import org.webspeclanguage.metamock.model.MetaMockModel;
 import org.webspeclanguage.metamock.model.MetaMockTestCase;
 import org.webspeclanguage.metamock.translator.annotation.MetaMockControlAnnotationParser;
@@ -30,13 +33,22 @@ import org.webspeclanguage.metamock.utils.Pair;
 public abstract class MetaMockProcessingEngineTestCase extends MetaMockTestCase {
 
   private MetaMockProcessingEngine<Null> engine;
-
+  private Mockup<Null> mockup; 
+  
   private void setEngine(MetaMockProcessingEngine<Null> engine) {
     this.engine = engine;
   }
 
   private MetaMockProcessingEngine<Null> getEngine() {
     return engine;
+  }
+
+  private void setMockup(Mockup<Null> mockup) {
+    this.mockup = mockup;
+  }
+
+  private Mockup<Null> getMockup() {
+    return mockup;
   }
 
   protected void initializeProcessingEngine(Collection<MetaMockControlGroup> groups) {
@@ -47,6 +59,7 @@ public abstract class MetaMockProcessingEngineTestCase extends MetaMockTestCase 
 
   @SuppressWarnings("unchecked")
   protected Pair<MetaMockControlParser<Null>, MetaMockControlAnnotationParser> initializeProcessingEngineWithoutReplay(Collection<MetaMockControlGroup> groups) {
+    this.setMockup(new Mockup<Null>(Null.value(), (new MockupContainerInfo("containerInfo"))));
     MetaMockControlParser<Null> cp = createMock(MetaMockControlParser.class);
     MetaMockControlAnnotationParser cap = createMock(MetaMockControlAnnotationParser.class);
     this.setEngine(new MetaMockProcessingEngine<Null>(cp, cap, this.getFactory()));
@@ -55,10 +68,7 @@ public abstract class MetaMockProcessingEngineTestCase extends MetaMockTestCase 
   }
 
   protected MetaMockModel getRawModel() throws MetaMockTranslationException {
-    MockupContainerInfo info = createMock(MockupContainerInfo.class);
-    expect(info.getName()).andStubReturn("containerName");
-    replay(info);
-    return this.getEngine().getRawModel(Null.value(), info);
+    return this.getEngine().getRawModel(Arrays.asList(this.getMockup()));
   }
 
 }

@@ -38,7 +38,7 @@ public class ButtonImpl extends SimpleControlImpl implements Button {
     return text;
   }
 
-  public final <T> T visit(MetaMockVisitor<T> v) {
+  public final <T> T accept(MetaMockVisitor<T> v) {
     return v.visitButton(this);
   }
 

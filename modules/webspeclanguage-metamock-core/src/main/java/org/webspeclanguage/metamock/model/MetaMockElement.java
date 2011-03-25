@@ -22,7 +22,7 @@ import org.webspeclanguage.metamock.utils.MetaMockVisitor;
  */
 public interface MetaMockElement {
 
-  <T> T visit(MetaMockVisitor<T> v);
+  <T> T accept(MetaMockVisitor<T> v);
 
   Object copy();
 }

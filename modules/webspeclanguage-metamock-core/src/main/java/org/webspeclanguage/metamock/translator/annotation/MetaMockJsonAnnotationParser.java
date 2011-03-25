@@ -80,7 +80,7 @@ public class MetaMockJsonAnnotationParser extends DefaultMetaMockVisitor<Null> i
     JSONObject o = JSONObject.fromObject("{" + a.getContent() + "}");
     this.setCurrentJsonObject(o);
     this.setParsedAnnotation(this.getFactory().createControlAnnotation(a.getTargetElement(), this.getProperty(o, "id")));
-    a.getTargetElement().visit(this);
+    a.getTargetElement().accept(this);
     return this.getParsedAnnotation();
   }
 

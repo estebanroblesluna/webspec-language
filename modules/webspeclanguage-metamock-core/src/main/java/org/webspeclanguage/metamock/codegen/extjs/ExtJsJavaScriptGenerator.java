@@ -65,7 +65,7 @@ public class ExtJsJavaScriptGenerator extends
   public CodeFile<CodeArtifact> generateFrom(Page p) {
 		String pageIdentifier = CodegenUtil.convertToIdentifier(p.getTitle());
 		String escapedTitle = CodegenUtil.escapeExcludingBlanks(p.getTitle());
-		CodeArtifact ctrls = p.getLayout().visit(this);
+		CodeArtifact ctrls = p.getLayout().accept(this);
 		this.mainPanelAttributesGenerator.setControl(p);
 		return
   		Code.file(pageIdentifier + ".js",
@@ -78,7 +78,7 @@ public class ExtJsJavaScriptGenerator extends
       			"      frame: 'true',",
       			"      renderTo: Ext.getBody(),",
       			"      title: '" + escapedTitle + "'",
-      			p.visit(this.mainPanelAttributesGenerator),
+      			p.accept(this.mainPanelAttributesGenerator),
       			"   });", 
       			"});"
     			)
@@ -143,7 +143,7 @@ public class ExtJsJavaScriptGenerator extends
 				"href: \"#\"" +
 			"})"));
 		for (MetaMockElement c : panel.getControls()) {
-			cb.add(c.visit(this));
+			cb.add(c.accept(this));
 		}
 		return cb;
 	}
@@ -215,7 +215,7 @@ public class ExtJsJavaScriptGenerator extends
 
 	public CodeArtifact visitCell(GridBagLayoutCell c) {
 		if (c.hasControl()) {
-			return c.getControl().visit(this);
+			return c.getControl().accept(this);
 		} else {
 			return Code.nullCode();
 		}
@@ -258,14 +258,14 @@ public class ExtJsJavaScriptGenerator extends
   public CodeArtifact visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
     CodeBlock<CodeArtifact> cb = Code.block();
     for (UIControl c : absoluteLayout.getControls()) {
-      cb.add(c.visit(this));
+      cb.add(c.accept(this));
     }
     return cb;
   }
   
   @Override
   public CodeArtifact visitAbsoluteLayoutInfo(AbsoluteLayoutInfo ali) {
-    return ali.getControl().visit(this);
+    return ali.getControl().accept(this);
   }
 
   private String getId(UIControl c) {

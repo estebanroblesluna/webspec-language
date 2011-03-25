@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.webspeclanguage.metamock.codegen.framework.core.CodegenUtil;
+import org.webspeclanguage.metamock.codegen.generator.Mockup;
 import org.webspeclanguage.metamock.model.Annotation;
 import org.webspeclanguage.metamock.model.CompositeControl;
 import org.webspeclanguage.metamock.model.MetaMockElement;
@@ -144,11 +145,12 @@ public class MetaMockProcessingEngine<TSource> extends
   }
 
   @Override
-	public MetaMockModel getRawModel(TSource source, 
-			MockupContainerInfo info) throws MetaMockTranslationException {
+	public MetaMockModel getRawModel(Collection<Mockup<TSource>> mockups) throws MetaMockTranslationException {
 		MetaMockModel model = this.getFactory().createMetaMockModel();
-		for (MetaMockControlGroup g : this.getParser().parseControls(source)) {
-			this.preprocessModel(g, model, info);
+		for (Mockup<TSource> mockup : mockups) {
+  		for (MetaMockControlGroup g : this.getParser().parseControls(mockup.getRepresentation())) {
+  			this.preprocessModel(g, model, mockup.getContainerInfo());
+  		}
 		}
 		return model;
 	}
@@ -324,7 +326,7 @@ public class MetaMockProcessingEngine<TSource> extends
 			// adds the container name in order to differentiate
 			// between pages in different containers with the same
 			// id
-			p.setControlId(info.getName() + p.getControlId());
+			p.setControlId(info.getName() + "-" + CodegenUtil.convertToIdentifier(p.getTitle()));
 			model.addPage(p);
 		}
 	}
