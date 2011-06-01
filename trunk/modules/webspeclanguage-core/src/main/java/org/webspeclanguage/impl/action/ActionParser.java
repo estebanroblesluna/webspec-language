@@ -15,6 +15,7 @@ package org.webspeclanguage.impl.action;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.webspeclanguage.api.Action;
@@ -60,7 +61,8 @@ public class ActionParser {
    * @throws ParsingException if an exception during parsing is thrown
    */
   public List<Action> parseFor(String input, WidgetProvider provider) throws ParsingException {
-    String modifiedInput = input.replaceAll("\n", "");
+    String modifiedInput = input.replace(Character.valueOf((char) 8232).charValue(), '\n');
+    modifiedInput = modifiedInput.replaceAll("\n", "");
 
     Lexer lexer = new Lexer(new PushbackReader(new StringReader(modifiedInput),
         1024));

@@ -123,6 +123,7 @@ public class NavigationEditPart extends ConnectionNodeEditPart implements ITreeB
     private void createContents() {
 
       fFigureNavigationActionsAndPreconditionsFigure = new WrapLabel();
+      fFigureNavigationActionsAndPreconditionsFigure.setTextWrap(true);
       fFigureNavigationActionsAndPreconditionsFigure.setText("");
 
       this.add(fFigureNavigationActionsAndPreconditionsFigure);

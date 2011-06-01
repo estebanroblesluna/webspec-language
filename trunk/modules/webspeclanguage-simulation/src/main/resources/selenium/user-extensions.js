@@ -4,7 +4,7 @@ Selenium.prototype.doLoadSimulation = function() {
 	var fileref = _doc.createElement('link');
   	fileref.setAttribute("type","text/css");
   	fileref.setAttribute("rel","stylesheet");
-  	fileref.setAttribute("href", "file:///media/disk/Doctorado/WebSpec/main/WebSpec Model/webspec-simulation/src/main/resources/selenium/tip.css");
+  	fileref.setAttribute("href", "file:///Users/estebanroblesluna/Documents/workspaceWebSpecAll2/trunk4/modules/webspeclanguage-simulation/src/main/resources/selenium/tip.css");
   	
 	var fileref2 = _doc.createElement('script');
   	fileref2.setAttribute("type","text/javascript");
