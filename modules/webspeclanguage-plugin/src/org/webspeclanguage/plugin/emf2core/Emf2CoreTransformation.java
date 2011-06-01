@@ -189,7 +189,7 @@ public class Emf2CoreTransformation {
 		generatorsDeclared = new HashSet<String>();
 
 		for (Object obj : diagram.getGenerators()) {
-			Generator generator = (Generator) obj;
+		  org.webspeclanguage.plugin.webspecmodel.impl.GeneratorImpl generator = (org.webspeclanguage.plugin.webspecmodel.impl.GeneratorImpl) obj;
 			
 			Generator webSpecGenerator = null;
 			

@@ -122,7 +122,7 @@ public class NavigationNamePreconditionActionsEditPart extends LabelEditPart imp
    */
   protected String getLabelTextHelper(IFigure figure) {
     if (figure instanceof WrappingLabel) {
-      return ((WrappingLabel) figure).getText();
+      return fixProblem(((WrappingLabel) figure).getText());
     } else {
       return ((Label) figure).getText();
     }
@@ -216,13 +216,18 @@ public class NavigationNamePreconditionActionsEditPart extends LabelEditPart imp
     if (text == null || text.length() == 0) {
       text = defaultText;
     }
-    return text;
+    return fixProblem(text);
   }
 
+  public String fixProblem(String text) {
+	  return text.replace(Character.valueOf((char) 8232).charValue(), '\n');
+  }
+  
   /**
    * @generated
    */
   public void setLabelText(String text) {
+	text = fixProblem(text);
     setLabelTextHelper(getFigure(), text);
     Object pdEditPolicy = getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
     if (pdEditPolicy instanceof WebspecmodelTextSelectionEditPolicy) {

@@ -36,7 +36,7 @@ public class ListOfContainerListOfCompartmentEditPart extends ShapeCompartmentEd
    * @generated
    */
   public String getCompartmentName() {
-    return Messages.ListOfContainerListOfCompartmentEditPart_title;
+    return "";//Messages.ListOfContainerListOfCompartmentEditPart_title;
   }
 
   public IFigure createFigure() {

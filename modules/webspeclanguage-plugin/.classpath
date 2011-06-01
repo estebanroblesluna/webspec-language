@@ -43,11 +43,14 @@
 	<classpathentry kind="lib" path="lib/xml-apis-1.3.04.jar"/>
 	<classpathentry kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
 	<classpathentry kind="lib" path="lib/xstream-1.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/webspeclanguage-core.jar"/>
-	<classpathentry kind="lib" path="lib/webspeclanguage-io.jar"/>
-	<classpathentry kind="lib" path="lib/webspeclanguage-selenium-extension.jar"/>
-	<classpathentry kind="lib" path="lib/webspeclanguage-simulation.jar"/>
-	<classpathentry kind="lib" path="lib/webspeclanguage-test-selenium.jar"/>
-	<classpathentry kind="lib" path="lib/webspeclanguage-test.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-io"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-metamock-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-selenium-extension"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-simulation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-test-selenium"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-test-watir"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/webspeclanguage-test-webdriver"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
