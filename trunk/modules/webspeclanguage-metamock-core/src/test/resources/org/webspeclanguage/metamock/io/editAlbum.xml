@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mockups xmlns="http://www.webspeclanguage.org/metamock" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.webspeclanguage.org/metamock ../metamock.xsd">
+  <ui id="editAlbum-editAlbum" title="Edit Album">
+    <layout>
+      <flowLayout />
+    </layout>
+    <panel id="control0">
+      <originalPosition x="95" y="24" width="563" height="69" />
+      <layout>
+        <flowLayout />
+      </layout>
+    </panel>
+    <panel id="control3">
+      <originalPosition x="95" y="96" width="563" height="347" />
+      <layout>
+        <flowLayout />
+      </layout>
+      <textBox id="control6">
+        <originalPosition x="250" y="107" width="277" height="29" />
+      </textBox>
+      <panel id="control17">
+        <originalPosition x="310" y="168" width="163" height="37" />
+        <layout>
+          <flowLayout />
+        </layout>
+      </panel>
+      <panel id="control28">
+        <originalPosition x="256" y="234" width="377" height="129" />
+        <layout>
+          <flowLayout />
+        </layout>
+        <textBox id="control16">
+          <originalPosition x="339" y="320" width="254" height="29" />
+        </textBox>
+        <textBox id="control11">
+          <originalPosition x="266" y="243" width="52" height="29" />
+        </textBox>
+        <textBox id="control15">
+          <originalPosition x="266" y="319" width="52" height="29" />
+        </textBox>
+        <textBox id="control13">
+          <originalPosition x="266" y="281" width="52" height="29" />
+        </textBox>
+        <textBox id="control12">
+          <originalPosition x="339" y="244" width="254" height="29" />
+        </textBox>
+        <textBox id="control14">
+          <originalPosition x="339" y="282" width="254" height="29" />
+        </textBox>
+      </panel>
+      <textBox id="control8">
+        <originalPosition x="560" y="107" width="44" height="29" />
+      </textBox>
+    </panel>
+  </ui>
+</mockups>
+

@@ -26,4 +26,6 @@ public interface Layout extends MetaMockElement {
 
   Collection<UIControl> getControls();
 
+  void replaceControl(UIControl controlToReplace, UIControl replacingControl);
+
 }

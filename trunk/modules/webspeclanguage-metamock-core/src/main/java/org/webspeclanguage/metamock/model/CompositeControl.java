@@ -13,6 +13,7 @@
 package org.webspeclanguage.metamock.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.webspeclanguage.metamock.model.layout.Layout;
 
@@ -28,6 +29,8 @@ public interface CompositeControl extends UIControl {
   Layout getLayout();
 
   void addChild(UIControl c);
+  
+  void addAll(Collection<UIControl> controls);
 
   void removeChild(UIControl c);
 
@@ -40,5 +43,7 @@ public interface CompositeControl extends UIControl {
   String getContainerId();
 
   void removeAllChildren();
+  
+  void replaceControl(UIControl controlToReplace, UIControl replacingControl);
 
 }

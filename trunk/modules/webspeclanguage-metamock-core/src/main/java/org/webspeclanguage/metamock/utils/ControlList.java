@@ -14,7 +14,10 @@ package org.webspeclanguage.metamock.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.webspeclanguage.metamock.model.UIControl;
 
@@ -26,7 +29,7 @@ import org.webspeclanguage.metamock.model.UIControl;
 public class ControlList {
 
   private List<UIControl> controls;
-
+ 
   public ControlList(List<UIControl> controls) {
     this.setControls(controls);
   }
@@ -40,27 +43,39 @@ public class ControlList {
   }
 
   public List<UIControl> getControls() {
-    return controls;
+    return Collections.unmodifiableList(this.controls);
   }
 
   public UIControl getControlAt(Integer i) {
-    return this.getControls().get(i);
+    return this.controls.get(i);
   }
 
   public void addControl(UIControl c) {
-    this.getControls().add(c);
+    this.controls.add(c);
   }
 
   public Integer controlCount() {
-    return this.getControls().size();
+    return this.controls.size();
   }
 
   public ControlList copy() {
     List<UIControl> l = new ArrayList<UIControl>();
-    for (UIControl c : this.getControls()) {
+    for (UIControl c : this.controls) {
       l.add((UIControl) c.copy());
     }
     return new ControlList(l);
+  }
+  
+  public int indexOf(UIControl control) {
+    return this.getControls().indexOf(control);
+  }
+  
+  public boolean replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+    if (this.indexOf(controlToReplace) == -1) {
+      return false;
+    }
+    this.controls.set(this.indexOf(controlToReplace), replacingControl);
+    return true;
   }
 
 }

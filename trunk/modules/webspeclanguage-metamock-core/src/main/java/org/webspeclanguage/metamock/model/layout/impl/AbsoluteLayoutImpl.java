@@ -71,4 +71,10 @@ public class AbsoluteLayoutImpl implements AbsoluteLayout {
     return this.getLayoutInfoByControl().values();
   }
 
+  public void replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+    AbsoluteLayoutInfo info = this.getLayoutInfoByControl().get(controlToReplace);
+    this.getLayoutInfoByControl().remove(controlToReplace);
+    this.getLayoutInfoByControl().put(replacingControl, info);
+  }
+
 }

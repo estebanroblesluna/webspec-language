@@ -436,4 +436,8 @@ public class GridBagLayoutImpl implements GridBagLayout {
     }
 
   }
+
+  public void replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+    this.getCell(controlToReplace).setControl(replacingControl);
+  }
 }

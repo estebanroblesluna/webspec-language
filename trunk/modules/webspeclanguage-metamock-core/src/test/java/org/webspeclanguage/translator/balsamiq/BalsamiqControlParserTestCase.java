@@ -13,8 +13,10 @@
 package org.webspeclanguage.translator.balsamiq;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
+import org.apache.commons.io.FileUtils;
 import org.webspeclanguage.metamock.codegen.generator.Mockup;
 import org.webspeclanguage.metamock.model.MetaMockModel;
 import org.webspeclanguage.metamock.model.Page;
@@ -31,43 +33,44 @@ import org.webspeclanguage.translator.common.ControlParserTestCase;
  */
 public class BalsamiqControlParserTestCase extends ControlParserTestCase {
 
-  private MetaMockTranslator<File> balsamiqTranslator;
+  private MetaMockTranslator<String> balsamiqTranslator;
 
   public void setUp() throws Exception {
     super.setUp();
     this.setBalsamiqTranslator(
-      new MetaMockProcessingEngine<File>(
+      new MetaMockProcessingEngine<String>(
         new BalsamiqControlParser(
           this.getFactory()), 
           new MetaMockJsonAnnotationParser(this.getFactory()), 
         this.getFactory()));
   }
 
-  public void testModelTranslation() throws MetaMockTranslationException {
+  public void testModelTranslation() throws Exception{
     MetaMockModel m = this.getBalsamiqTranslator().translateModelFrom(
       Arrays.asList(
-      (Mockup<File>)
-      new Mockup<File>(
-        new File("src/test/resources/org/webspeclanguage/metamock/translator/balsamiq/model.bmml"),
+      (Mockup<String>)
+      new Mockup<String>(
+        FileUtils.readFileToString(new File("src/test/resources/org/webspeclanguage/metamock/translator/balsamiq/model.bmml")),
         new MockupContainerInfo("balsamiqModel", "file://src/test/resources/org/webspeclanguage/metamock/translator/balsamiq/model.bmml/"))));
     for (Page page : m.getPages()) {
-      if (page.getTitle().equals("New event"))
+      if (page.getTitle().equals("New event")) {
         this.assertOnNewEventPage(page);
-      else if (page.getTitle().equals("Invite friends to event"))
+      } else if (page.getTitle().equals("Invite friends to event")) {
         this.assertConditionsOnInviteFriendsPage(page);
-      else if (page.getTitle().equals("Task Manager"))
+      } else if (page.getTitle().equals("Task Manager")) {
         this.assertConditionsOnTaskManagerPage(page);
-      else
+      } else {
         fail("Invalid page name");
+      }
     }
     this.assertModelFeatures(m);
   }
 
-  void setBalsamiqTranslator(MetaMockTranslator<File> translator) {
+  void setBalsamiqTranslator(MetaMockTranslator<String> translator) {
     this.balsamiqTranslator = translator;
   }
 
-  MetaMockTranslator<File> getBalsamiqTranslator() {
+  MetaMockTranslator<String> getBalsamiqTranslator() {
     return balsamiqTranslator;
   }
 

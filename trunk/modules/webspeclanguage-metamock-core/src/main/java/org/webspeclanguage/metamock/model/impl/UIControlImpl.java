@@ -100,7 +100,11 @@ public abstract class UIControlImpl implements UIControl {
   }
   
   protected String getProperties() {
-    return "id: " + this.getControlId() + ", page: \"" + this.getPage() + "\"";
+    return 
+      "id: " + this.getControlId() + ", " +
+      "page: \"" + this.getPage() + "\"" +
+      "x: " + this.getX() + ", " +
+      "y: " + this.getY();
   }
 
   public void setFriendlyId(String friendlyId) {

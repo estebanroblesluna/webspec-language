@@ -22,9 +22,9 @@ import java.util.Map;
 
 import org.webspeclanguage.metamock.model.UIControl;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
-import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutException;
 import org.webspeclanguage.metamock.model.layout.LayoutFactory;
+import org.webspeclanguage.metamock.translator.logger.MetaMockLogging;
 import org.webspeclanguage.metamock.utils.HorizontalOrientationStrategy;
 import org.webspeclanguage.metamock.utils.UIControlOrientationStrategy;
 import org.webspeclanguage.metamock.utils.VerticalOrientationStrategy;
@@ -53,7 +53,7 @@ public class ScanBasedGridBagLayoutFactory implements LayoutFactory {
     try {
       this.buildGridBagLayout(gbl, state);
     } catch (GridBagLayoutException e) {
-      e.printStackTrace();
+      MetaMockLogging.getDefaultLogger().logGridBagLayoutException(e);
     }
     return gbl;
   }

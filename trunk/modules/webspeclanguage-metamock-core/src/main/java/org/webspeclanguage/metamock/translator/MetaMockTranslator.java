@@ -25,7 +25,7 @@ import org.webspeclanguage.metamock.model.MetaMockModel;
 public abstract class MetaMockTranslator<TSource> {
 	
 	
-	public MetaMockModel translateModelFrom(Collection<Mockup<TSource>> mockups) throws MetaMockTranslationException {
+	public MetaMockModel translateModelFrom(Collection<Mockup<TSource>> mockups) throws MetaMockTranslationException, MockupSourceParsingException {
 		return 
 			this.applyAnnotationsAndInferLayouts(
 				this.getRawModel(mockups));
@@ -37,7 +37,7 @@ public abstract class MetaMockTranslator<TSource> {
 	 * arent't applied 
 	 */
 	public abstract MetaMockModel getRawModel(Collection<Mockup<TSource>> mockup)
-			throws MetaMockTranslationException;
+			throws MetaMockTranslationException, MockupSourceParsingException;
 
 
 	/**

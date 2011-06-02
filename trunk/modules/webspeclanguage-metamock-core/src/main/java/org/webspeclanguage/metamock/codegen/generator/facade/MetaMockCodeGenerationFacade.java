@@ -12,7 +12,6 @@
  */
 package org.webspeclanguage.metamock.codegen.generator.facade;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -31,11 +30,11 @@ import org.webspeclanguage.metamock.codegen.generator.RegularExpressionFileFilte
 import org.webspeclanguage.metamock.codegen.web.MockupHtmlListGenerator;
 import org.webspeclanguage.metamock.codegen.xml.DocumentFile;
 import org.webspeclanguage.metamock.codegen.xml.MockupXmlGenerator;
+import org.webspeclanguage.metamock.config.MetaMockDefaultConfig;
 import org.webspeclanguage.metamock.model.MetaMockFactory;
-import org.webspeclanguage.metamock.model.impl.MetaMockFactoryImpl;
+import org.webspeclanguage.metamock.translator.annotation.MetaMockControlAnnotationParser;
 import org.webspeclanguage.metamock.translator.annotation.MetaMockJsonAnnotationParser;
 import org.webspeclanguage.metamock.translator.balsamiq.BalsamiqControlParser;
-import org.webspeclanguage.metamock.translator.logger.MetaMockLogging;
 
 /**
  * @author Jose Matias Rivero
@@ -52,14 +51,12 @@ public class MetaMockCodeGenerationFacade {
     return instance;
   }
   
-  public MetaMockCodeGenerationFacade() {
-    super();
-    this.setMetaMockFactory(new MetaMockFactoryImpl());
+  private MetaMockCodeGenerationFacade() {
   }
 
   public void balsamiq2ExtJs(String balsamiqMockupsFolder, String destinationFolder, String mockupListFolder, String mockupLocationPath) {
     CodeWriter cw = this.createCodeWriter();
-    MockupCodeGenerator<File, CodeFileList<CodeArtifact>> codegen = this.createBalsamiq2ExtJsCodegen(balsamiqMockupsFolder);
+    MockupCodeGenerator<String, CodeFileList<CodeArtifact>> codegen = this.createBalsamiq2ExtJsCodegen(balsamiqMockupsFolder);
     CodeFileList<CodeArtifact> artifacts = codegen.generateCodeArtifacts();
     artifacts.setFolderPathForFiles(destinationFolder);
     artifacts.writeOn(cw);
@@ -73,7 +70,7 @@ public class MetaMockCodeGenerationFacade {
   
   public void balsamiq2Xml(String balsamiqMockupsFolder, String destinationFolder) {
     try {
-      MockupCodeGenerator<File, Collection<DocumentFile>> codegen = this.createBalsamiq2XmlCodegen(balsamiqMockupsFolder);
+      MockupCodeGenerator<String, Collection<DocumentFile>> codegen = this.createBalsamiq2XmlCodegen(balsamiqMockupsFolder);
       Collection<DocumentFile> artifacts = codegen.generateCodeArtifacts();
       XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
       for (DocumentFile df : artifacts) {
@@ -88,29 +85,29 @@ public class MetaMockCodeGenerationFacade {
     return new DefaultCodeWriter();
   }
   
-  public MockupCodeGenerator<File, CodeFileList<CodeArtifact>> createBalsamiq2ExtJsCodegen(String balsamiqMockupsFolder) {
-    return new MockupCodeGenerator<File, CodeFileList<CodeArtifact>>(
+  public MockupCodeGenerator<String, CodeFileList<CodeArtifact>> createBalsamiq2ExtJsCodegen(String balsamiqMockupsFolder) {
+    return new MockupCodeGenerator<String, CodeFileList<CodeArtifact>>(
       this.getMetaMockFactory(),
       new BalsamiqControlParser(this.getMetaMockFactory()),
-      new MetaMockJsonAnnotationParser(this.getMetaMockFactory()),
+      this.getAnnotationParser(),
       new FolderMockupCollector(balsamiqMockupsFolder, new RegularExpressionFileFilter(".*\\.bmml")),
       new ExtJsGenerator());
   }
+
+  private MetaMockControlAnnotationParser getAnnotationParser() {
+    return MetaMockDefaultConfig.getInstance().getAnnotationParser();
+  }
   
-  public MockupCodeGenerator<File, Collection<DocumentFile>> createBalsamiq2XmlCodegen(String balsamiqMockupsFolder) {
-    return new MockupCodeGenerator<File, Collection<DocumentFile>>(
+  public MockupCodeGenerator<String, Collection<DocumentFile>> createBalsamiq2XmlCodegen(String balsamiqMockupsFolder) {
+    return new MockupCodeGenerator<String, Collection<DocumentFile>>(
       this.getMetaMockFactory(),
       new BalsamiqControlParser(this.getMetaMockFactory()),
-      new MetaMockJsonAnnotationParser(this.getMetaMockFactory()),
+      this.getAnnotationParser(),
       new FolderMockupCollector(balsamiqMockupsFolder, new RegularExpressionFileFilter(".*\\.bmml")),
       new MockupXmlGenerator());
   }
 
-  private void setMetaMockFactory(MetaMockFactory factory) {
-    this.metaMockFactory = factory;
-  }
-
   private MetaMockFactory getMetaMockFactory() {
-    return metaMockFactory;
+    return MetaMockDefaultConfig.getInstance().getFactory();
   }
 }

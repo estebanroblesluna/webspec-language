@@ -14,14 +14,17 @@ package org.webspeclanguage.metamock.translator.logger;
 
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutException;
 import org.webspeclanguage.metamock.translator.MetaMockTranslationException;
+import org.webspeclanguage.metamock.translator.MockupSourceParsingException;
 
 /**
  * @author Jose Matias Rivero
  */
 public interface MetaMockProcessingLogger {
 
-  void logException(MetaMockTranslationException exception);
+  void logTranslationException(MetaMockTranslationException exception);
 
   void logGridBagLayoutException(GridBagLayoutException e);
+
+  void logSourceParsingException(MockupSourceParsingException e);
 
 }
