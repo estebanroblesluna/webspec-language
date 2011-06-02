@@ -99,4 +99,12 @@ public class VerticalBoxLayoutImpl implements VerticalBoxLayout {
     this.getControlLists().add(cl);
   }
 
+  public void replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+    for (ControlList controlList : this.getControlLists()) {
+      if (controlList.replaceControl(controlToReplace, replacingControl)) {
+        return;
+      }
+    }
+  }
+
 }

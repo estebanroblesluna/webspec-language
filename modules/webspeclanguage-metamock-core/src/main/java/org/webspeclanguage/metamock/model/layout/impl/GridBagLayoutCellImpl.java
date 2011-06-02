@@ -60,7 +60,7 @@ public class GridBagLayoutCellImpl implements GridBagLayoutCell {
     return column;
   }
 
-  private void setControl(UIControl control) {
+  public void setControl(UIControl control) {
     this.control = control;
   }
 

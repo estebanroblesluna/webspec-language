@@ -10,18 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.metamock.translator;
+package org.webspeclanguage.metamock.io;
 
-import java.util.Collection;
+import org.webspeclanguage.metamock.model.MetaMockModel;
 
 /**
- * Represents a class that takes a source mockup and returns a plain list of non-sorted
- * widget groups. Every group represents a set of widgets in a common graphical space (e.g., a page)
- *
  * @author Jose Matias Rivero
  */
-public interface MetaMockControlParser<TSource> {
+public interface MetaMockSerializer {
 
-	Collection<MetaMockControlGroup> parseControls(TSource source)  throws MockupSourceParsingException;
-	
+  public String serialize(MetaMockModel model);
+
+  public MetaMockModel desrialize(String serializedModel) throws Exception;
+
 }

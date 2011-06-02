@@ -49,4 +49,6 @@ public interface GridBagLayoutCell extends LayoutInfo {
 
   GridBagLayoutCell copy();
 
+  void setControl(UIControl replacingControl);
+
 }

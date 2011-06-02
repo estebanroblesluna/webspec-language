@@ -51,14 +51,14 @@ public abstract class MetaMockProcessingEngineTestCase extends MetaMockTestCase 
     return mockup;
   }
 
-  protected void initializeProcessingEngine(Collection<MetaMockControlGroup> groups) {
+  protected void initializeProcessingEngine(Collection<MetaMockControlGroup> groups) throws Exception {
     Pair<MetaMockControlParser<Null>, MetaMockControlAnnotationParser> p = this.initializeProcessingEngineWithoutReplay(groups);
     replay(p.getObject1());
     replay(p.getObject2());
   }
 
   @SuppressWarnings("unchecked")
-  protected Pair<MetaMockControlParser<Null>, MetaMockControlAnnotationParser> initializeProcessingEngineWithoutReplay(Collection<MetaMockControlGroup> groups) {
+  protected Pair<MetaMockControlParser<Null>, MetaMockControlAnnotationParser> initializeProcessingEngineWithoutReplay(Collection<MetaMockControlGroup> groups) throws Exception {
     this.setMockup(new Mockup<Null>(Null.value(), (new MockupContainerInfo("containerInfo"))));
     MetaMockControlParser<Null> cp = createMock(MetaMockControlParser.class);
     MetaMockControlAnnotationParser cap = createMock(MetaMockControlAnnotationParser.class);
@@ -67,7 +67,7 @@ public abstract class MetaMockProcessingEngineTestCase extends MetaMockTestCase 
     return new Pair<MetaMockControlParser<Null>, MetaMockControlAnnotationParser>(cp, cap);
   }
 
-  protected MetaMockModel getRawModel() throws MetaMockTranslationException {
+  protected MetaMockModel getRawModel() throws MetaMockTranslationException, MockupSourceParsingException {
     return this.getEngine().getRawModel(Arrays.asList(this.getMockup()));
   }
 

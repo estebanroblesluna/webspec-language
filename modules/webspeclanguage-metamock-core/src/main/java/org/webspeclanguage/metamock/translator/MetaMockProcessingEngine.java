@@ -25,6 +25,8 @@ import org.webspeclanguage.metamock.model.MetaMockElement;
 import org.webspeclanguage.metamock.model.MetaMockFactory;
 import org.webspeclanguage.metamock.model.MetaMockModel;
 import org.webspeclanguage.metamock.model.Page;
+import org.webspeclanguage.metamock.model.Panel;
+import org.webspeclanguage.metamock.model.Repetition;
 import org.webspeclanguage.metamock.model.SimpleControl;
 import org.webspeclanguage.metamock.model.UIControl;
 import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
@@ -50,6 +52,7 @@ public class MetaMockProcessingEngine<TSource> extends
 	private AnnotationProcessor annotationProcessor;
 	private AnnotationProcessor annotationPreprocessor;
 	private AnnotationProcessor annotationPostProcessor;
+	private RepetitionDetector repetitionDetector;
 	private Collection<MetaMockAnnotation> parsedAnnotations;
 	private LayoutFactory defaultLayoutFactory;
 
@@ -72,6 +75,7 @@ public class MetaMockProcessingEngine<TSource> extends
 				new AnnotationProcessor(
 						new TemplateAnnotationInterpreter()));
 		this.setDefaultLayoutFactory(new ScanBasedGridBagLayoutFactory());
+		this.setRepetitionDetector(new RepetitionDetector(factory));
 	}
 
 	private void setParser(MetaMockControlParser<TSource> parser) {
@@ -143,9 +147,21 @@ public class MetaMockProcessingEngine<TSource> extends
 	private void setDefaultLayoutFactory(LayoutFactory defaultLayoutFactory) {
     this.defaultLayoutFactory = defaultLayoutFactory;
   }
+	
+  private LayoutFactory getDefaultLayoutFactory() {
+    return this.defaultLayoutFactory;
+  }
+
+  private void setRepetitionDetector(RepetitionDetector repetitionDetector) {
+    this.repetitionDetector = repetitionDetector;
+  }
+
+  private RepetitionDetector getRepetitionDetector() {
+    return repetitionDetector;
+  }
 
   @Override
-	public MetaMockModel getRawModel(Collection<Mockup<TSource>> mockups) throws MetaMockTranslationException {
+	public MetaMockModel getRawModel(Collection<Mockup<TSource>> mockups) throws MetaMockTranslationException, MockupSourceParsingException {
 		MetaMockModel model = this.getFactory().createMetaMockModel();
 		for (Mockup<TSource> mockup : mockups) {
   		for (MetaMockControlGroup g : this.getParser().parseControls(mockup.getRepresentation())) {
@@ -174,10 +190,24 @@ public class MetaMockProcessingEngine<TSource> extends
 		this.associateAnnotations(group);
 		this.setParsedAnnotations(this.parseAnnotations(model));
 		this.registerControls(model);
+		this.detectRepetitions(model);
 		this.preprocessAnnotations(model);
 	}
 
 	@SuppressWarnings("unchecked")
+  private void detectRepetitions(MetaMockModel model) {
+	  for (Page page : model.getPages()) {
+	    for (UIControl panel :
+	      MetaMockUtil.filterControlsByType(MetaMockUtil.getAllControlsRecursively(page), Panel.class)) {
+	      Repetition r = this.getRepetitionDetector().detectRepetition((Panel) panel);
+	      if (r != null) {
+	        panel.getParent().replaceControl(panel, r);
+	      }
+	    }
+	  }
+  }
+
+  @SuppressWarnings("unchecked")
   private Collection<MetaMockAnnotation> parseAnnotations(MetaMockModel model) {
 		List<MetaMockAnnotation> annotations = new ArrayList<MetaMockAnnotation>();
 		for (UIControl c : 
@@ -368,10 +398,6 @@ public class MetaMockProcessingEngine<TSource> extends
 	@SuppressWarnings("unchecked")
   private Class<? extends UIControl>[] controlsExcludedFromHierarchyComposition() {
 		return new Class[]{ Annotation.class };
-	}
-	
-	private LayoutFactory getDefaultLayoutFactory() {
-		return this.defaultLayoutFactory;
 	}
 
 }

@@ -39,7 +39,7 @@ import org.webspeclanguage.metamock.utils.MetaMockUtil;
  */
 public abstract class ControlParserTestCase extends MetaMockTestCase {
 
-  public abstract void testModelTranslation() throws MetaMockTranslationException;
+  public abstract void testModelTranslation() throws MetaMockTranslationException, Exception;
 
   @SuppressWarnings("unchecked")
   protected void assertConditionsOnInviteFriendsPage(Page page) {

@@ -156,6 +156,18 @@ public abstract class CompositeControlImpl extends UIControlImpl implements Comp
       this.removeChild(c);
     }
   }
+  
+  public void addAll(Collection<UIControl> controls) {
+    this.getControls().addAll(controls);
+  }
+ 
+  public void replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+    this.removeChild(controlToReplace);
+    this.addChild(replacingControl);
+    if (this.getLayout() != null) {
+      this.getLayout().replaceControl(controlToReplace, replacingControl);
+    }
+  }
 
   protected abstract CompositeControl createNewInstance();
 }

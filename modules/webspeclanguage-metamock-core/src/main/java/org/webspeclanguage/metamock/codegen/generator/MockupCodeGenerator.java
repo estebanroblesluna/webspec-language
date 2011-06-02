@@ -23,6 +23,7 @@ import org.webspeclanguage.metamock.model.MetaMockModel;
 import org.webspeclanguage.metamock.translator.MetaMockControlParser;
 import org.webspeclanguage.metamock.translator.MetaMockProcessingEngine;
 import org.webspeclanguage.metamock.translator.MetaMockTranslationException;
+import org.webspeclanguage.metamock.translator.MockupSourceParsingException;
 import org.webspeclanguage.metamock.translator.annotation.MetaMockControlAnnotationParser;
 import org.webspeclanguage.metamock.translator.logger.MetaMockLogging;
 
@@ -69,7 +70,7 @@ public class MockupCodeGenerator<TMockupRepresentation, TGeneratedArtifact> {
     return processingEngine;
   }
   
-  private MetaMockModel getTranslatedModel() throws MetaMockTranslationException {
+  private MetaMockModel getTranslatedModel() throws MetaMockTranslationException, MockupSourceParsingException {
     if (this.translatedModel == null) {
       List<Mockup<TMockupRepresentation>> mockups = this.getMockupCollector().collectMockups();
       translatedModel = this.getProcessingEngine().translateModelFrom(mockups);
@@ -85,7 +86,9 @@ public class MockupCodeGenerator<TMockupRepresentation, TGeneratedArtifact> {
     try {
         return generator.generateFrom(this.getTranslatedModel());
     } catch (MetaMockTranslationException e) {
-      MetaMockLogging.getDefaultLogger().logException(e);
+      MetaMockLogging.getDefaultLogger().logTranslationException(e);
+    } catch (MockupSourceParsingException e) {
+      MetaMockLogging.getDefaultLogger().logSourceParsingException(e);
     }
     return null;
   }

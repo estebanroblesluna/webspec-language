@@ -44,6 +44,12 @@ public class Point {
 		return x;
 	}
 	
+	public boolean isNear(Point point, Integer pixelTolerance) {
+	  return
+	    this.getX() - pixelTolerance <= point.getX() && point.getX() <= this.getX() + pixelTolerance && 
+	    this.getY() - pixelTolerance <= point.getY() && point.getY() <= this.getY() + pixelTolerance;
+	}
+	
 	@Override
 	public boolean equals(Object point) {
 	  if (!(point instanceof Point)) {
@@ -56,6 +62,10 @@ public class Point {
 	
 	public int hashCode() {
 	  return (this.getX() * 2) + ((this.getY() * 2) - 1);
+	}
+	
+	public String toString() {
+	  return "(" + this.getX() + ", " + this.getY() + ")";
 	}
 
 }

@@ -12,7 +12,12 @@
         <map>%3Carea%20shape%3D%22rect%22%20coords%3D%227%2C8%2C176%2C60%22%20href%3D%22Welcome.bmml%22%20alt%3D%22Welcome%22%20id%3D%222%22/%3E</map>
       </controlProperties>
     </control>
-    <control controlID="3" controlTypeID="com.balsamiq.mockups::Canvas" x="95" y="96" w="563" h="347" measuredW="100" measuredH="70" zOrder="3" locked="false" isInGroup="-1"/>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Canvas" x="95" y="96" w="563" h="347" measuredW="100" measuredH="70" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <customData/>
+        <customID>album</customID>
+      </controlProperties>
+    </control>
     <control controlID="4" controlTypeID="com.balsamiq.mockups::Image" x="108" y="102" w="104" h="103" measuredW="77" measuredH="79" zOrder="4" locked="false" isInGroup="-1"/>
     <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="250" y="172" w="-1" h="-1" measuredW="58" measuredH="26" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
@@ -22,11 +27,13 @@
     </control>
     <control controlID="6" controlTypeID="com.balsamiq.mockups::TextInput" x="250" y="107" w="277" h="-1" measuredW="125" measuredH="29" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
+        <customID>title</customID>
         <text>Return%20to%20Forever</text>
       </controlProperties>
     </control>
     <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="251" y="141" w="108" h="26" measuredW="108" measuredH="26" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
+        <customID>artistName</customID>
         <href>Performer%26bm%3BPerformer.bmml%26bm%3BPerformer.bmml%26bm%3BPerformer.bmml</href>
         <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22156%2C117%2C264%2C143%22%20href%3D%22Performer.bmml%22%20alt%3D%22Performer%22%20id%3D%227%22/%3E</map>
         <size>14</size>
@@ -35,6 +42,7 @@
     </control>
     <control controlID="8" controlTypeID="com.balsamiq.mockups::TextInput" x="560" y="107" w="44" h="-1" measuredW="30" measuredH="29" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
+        <customID>price</customID>
         <text>15</text>
       </controlProperties>
     </control>
@@ -45,11 +53,13 @@
     </control>
     <control controlID="11" controlTypeID="com.balsamiq.mockups::TextInput" x="266" y="243" w="52" h="-1" measuredW="22" measuredH="29" zOrder="19" locked="false" isInGroup="-1">
       <controlProperties>
+        <customID>number</customID>
         <text>1</text>
       </controlProperties>
     </control>
     <control controlID="12" controlTypeID="com.balsamiq.mockups::TextInput" x="339" y="244" w="254" h="-1" measuredW="125" measuredH="29" zOrder="20" locked="false" isInGroup="-1">
       <controlProperties>
+        <customID>name</customID>
         <text>Return%20to%20Forever</text>
       </controlProperties>
     </control>
@@ -73,7 +83,12 @@
         <text>Sometime%20Ago/La%20Fiesta</text>
       </controlProperties>
     </control>
-    <control controlID="17" controlTypeID="com.balsamiq.mockups::Canvas" x="310" y="168" w="163" h="37" measuredW="100" measuredH="70" zOrder="10" locked="false" isInGroup="-1"/>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::Canvas" x="310" y="168" w="163" h="37" measuredW="100" measuredH="70" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <customData/>
+        <customID>genres</customID>
+      </controlProperties>
+    </control>
     <control controlID="18" controlTypeID="com.balsamiq.mockups::Link" x="315" y="174" w="-1" h="-1" measuredW="35" measuredH="25" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <href>AlbumsFound%26bm%3BAlbumsFound.bmml%26bm%3BAlbumsFound.bmml%26bm%3BAlbumsFound.bmml</href>
@@ -128,7 +143,12 @@
         <text>Add%20song</text>
       </controlProperties>
     </control>
-    <control controlID="28" controlTypeID="com.balsamiq.mockups::Canvas" x="256" y="234" w="377" h="129" measuredW="100" measuredH="70" zOrder="18" locked="false" isInGroup="-1"/>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Canvas" x="256" y="234" w="377" h="129" measuredW="100" measuredH="70" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <customData/>
+        <customID>trackList</customID>
+      </controlProperties>
+    </control>
     <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="257" y="208" w="-1" h="-1" measuredW="74" measuredH="25" zOrder="28" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Track%20list%3A</text>

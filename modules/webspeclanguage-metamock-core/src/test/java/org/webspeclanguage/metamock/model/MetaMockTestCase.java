@@ -14,6 +14,7 @@ package org.webspeclanguage.metamock.model;
 
 import junit.framework.TestCase;
 
+import org.webspeclanguage.metamock.config.MetaMockDefaultConfig;
 import org.webspeclanguage.metamock.model.impl.MetaMockFactoryImpl;
 
 /**
@@ -38,7 +39,7 @@ public abstract class MetaMockTestCase extends TestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.setFactory(new MetaMockFactoryImpl());
+    this.setFactory(MetaMockDefaultConfig.getInstance().getFactory());
   }
   
 }

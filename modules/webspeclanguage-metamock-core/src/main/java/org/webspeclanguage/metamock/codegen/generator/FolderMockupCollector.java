@@ -14,15 +14,17 @@ package org.webspeclanguage.metamock.codegen.generator;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.webspeclanguage.metamock.translator.MockupContainerInfo;
 
 /**
  * @author Jose Matias Rivero
  */
-public class FolderMockupCollector implements MockupCollector<File> {
+public class FolderMockupCollector implements MockupCollector<String> {
 
   private String mockupSourceFolder;
   private FileFilter fileFilter;
@@ -33,14 +35,18 @@ public class FolderMockupCollector implements MockupCollector<File> {
     this.setFileFilter(fileFilter);
   }
 
-  public List<Mockup<File>> collectMockups() {
+  public List<Mockup<String>> collectMockups() {
     File dir = new File(this.getMockupSourceFolder());
     if (!dir.isDirectory()) {
-      return new ArrayList<Mockup<File>>();
+      return new ArrayList<Mockup<String>>();
     } else {
-      List<Mockup<File>> mockups = new ArrayList<Mockup<File>>();
+      List<Mockup<String>> mockups = new ArrayList<Mockup<String>>();
       for (File f : dir.listFiles(this.getFileFilter())) {
-        mockups.add(new Mockup<File>(f, new MockupContainerInfo(f.getName().split("\\.")[0], "file://" + f.getAbsolutePath())));
+        try {
+          mockups.add(new Mockup<String>(FileUtils.readFileToString(f), new MockupContainerInfo(f.getName().split("\\.")[0], "file://" + f.getAbsolutePath())));
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
       return mockups;
     }

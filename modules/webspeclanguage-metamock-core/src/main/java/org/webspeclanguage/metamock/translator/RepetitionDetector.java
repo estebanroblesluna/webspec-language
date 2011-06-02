@@ -33,19 +33,20 @@ import org.webspeclanguage.metamock.utils.Point;
 public class RepetitionDetector {
 
 	private static final int DEFAULT_TOLERANCE = 10;
+	private static final int DEFAULT_MIN_CONTROLS = 3;
 	private MetaMockFactory factory;
 	private Integer pixelTolerance;
+	private Integer minControls;
 
-	public RepetitionDetector(MetaMockFactory factory, Integer pixelTolerance) {
+	public RepetitionDetector(MetaMockFactory factory, Integer pixelTolerance, Integer minControls) {
 		super();
 		this.setFactory(factory);
 		this.setPixelTolerance(pixelTolerance);
+		this.setMinControls(minControls);
 	}
 	
 	public RepetitionDetector(MetaMockFactory factory) {
-		super();
-		this.setFactory(factory);
-		this.setPixelTolerance(pixelTolerance);
+		this(factory, DEFAULT_TOLERANCE, DEFAULT_MIN_CONTROLS);
 	}
 
 	private void setFactory(MetaMockFactory factory) {
@@ -64,7 +65,15 @@ public class RepetitionDetector {
 		return pixelTolerance;
 	}
 
-	public Repetition detectRepetition(CompositeControl cc) {
+	private void setMinControls(Integer minControls) {
+    this.minControls = minControls;
+  }
+
+  private Integer getMinControls() {
+    return minControls;
+  }
+
+  public Repetition detectRepetition(CompositeControl cc) {
 		List<UIControl> controlsToProcess = new ArrayList<UIControl>(cc.getControls());
 		Collection<UIControl> repetitionControls = new ArrayList<UIControl>();
 		List<Point> offsets = null;
@@ -81,11 +90,15 @@ public class RepetitionDetector {
 			}
 			if (offsets == null) {
 				offsets = this.getOffsets(c, similarControls);
+				if (offsets.size() == 0 || offsets.size() < this.getMinControls() - 1) {
+				  return null;
+				}
 			}
-			else
-				if(!this.checkOffsets(offsets, c, similarControls, DEFAULT_TOLERANCE)) {
+			else {
+				if(!this.checkOffsets(offsets, c, similarControls, this.getPixelTolerance())) {
 					return null;
 				}
+			}
 			controlsToProcess.remove(c);
 			controlsToProcess.removeAll(similarControls);
 			repetitionControls.add(c);
@@ -108,7 +121,7 @@ public class RepetitionDetector {
 			
 		});
 		for (Integer i = 1; i < sortedOffsets.size(); i++) {
-			if (sortedOffsets.get(i).getX() - sortedOffsets.get(i - 1).getX() > DEFAULT_TOLERANCE) {
+			if (sortedOffsets.get(i).getX() - sortedOffsets.get(i - 1).getX() > this.getPixelTolerance()) {
 				columns++;
 			}
 		}
@@ -126,7 +139,7 @@ public class RepetitionDetector {
 			
 		});
 		for (Integer i = 1; i < sortedOffsets.size(); i++) {
-			if (sortedOffsets.get(i).getY() - sortedOffsets.get(i - 1).getY() > DEFAULT_TOLERANCE) {
+			if (sortedOffsets.get(i).getY() - sortedOffsets.get(i - 1).getY() > this.getPixelTolerance()) {
 				rows++;
 			}
 		}
@@ -145,14 +158,13 @@ public class RepetitionDetector {
 	}
 
 	private boolean checkOffsets(List<Point> offsets,
-			UIControl offsetReferenceControl,
+			UIControl referenceControl,
 			Collection<UIControl> similarControls, Integer pixelTolerance) {
 		for (UIControl c : similarControls) {
 			Boolean offsetMatches = false;
-			for (Point p : offsets) {
-				if (
-						Math.abs(c.getX() - p.getX() - offsetReferenceControl.getX()) < pixelTolerance &&
-						Math.abs(c.getY() - p.getY() - offsetReferenceControl.getY()) < pixelTolerance) {
+			for (Point offset : offsets) {
+			  Point offsetLocation = new Point(referenceControl.getX() + offset.getX(), referenceControl.getY() + offset.getY());
+				if (offsetLocation.isNear(new Point(c.getX(), c.getY()), pixelTolerance)) {
 					offsetMatches = true;
 					break;
 				}
@@ -176,14 +188,14 @@ public class RepetitionDetector {
 
 	@SuppressWarnings("unchecked")
   private Collection<UIControl> getSimilarControls(List<UIControl> controls, UIControl c) {
-		Collection<UIControl> similarControls = 
+		Collection<UIControl> controlsOfTheSameType = 
 			MetaMockUtil.filterControlsByType(controls, c.getClass());
-		similarControls.remove(c);
-		for (UIControl cs : similarControls) {
-			if (!MetaMockUtil.areGraphicallySimilar(c, cs, DEFAULT_TOLERANCE)) {
-				similarControls.remove(cs);
-			}
-		}
+		Collection<UIControl> similarControls = new ArrayList<UIControl>();
+    for (UIControl cs : controlsOfTheSameType) {
+      if (c != cs && MetaMockUtil.areGraphicallySimilar(c, cs, this.getPixelTolerance())) {
+        similarControls.add(cs);
+      }
+    }
 		return similarControls;
 	}
 

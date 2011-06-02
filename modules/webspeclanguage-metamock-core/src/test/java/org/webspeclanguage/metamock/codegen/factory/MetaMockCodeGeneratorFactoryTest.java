@@ -30,13 +30,13 @@ public class MetaMockCodeGeneratorFactoryTest extends TestCase {
   }
   
   private static String getSiteFolder() {
-    return "src/test/resources/org/webspeclanguage/metamock/codegen/factory/dest/";
-    //return "../webspeclanguage-webapp/src/main/webapp/codegen/site";
+    //return "src/test/resources/org/webspeclanguage/metamock/codegen/factory/dest/";
+    return "../webspeclanguage-webapp/src/main/webapp/codegen/site";
   }
   
   private static String getDestinationFolder() {
-    return "src/test/resources/org/webspeclanguage/metamock/codegen/factory/dest/"; 
-    //return "../webspeclanguage-webapp/src/main/webapp/codegen/";
+    //return "src/test/resources/org/webspeclanguage/metamock/codegen/factory/dest/"; 
+    return "../webspeclanguage-webapp/src/main/webapp/codegen/";
   }
   
   @Override

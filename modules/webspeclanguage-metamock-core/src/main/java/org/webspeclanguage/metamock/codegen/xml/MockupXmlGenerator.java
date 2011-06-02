@@ -23,10 +23,12 @@ import org.webspeclanguage.metamock.codegen.common.MetaMockCodeGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodegenUtil;
 import org.webspeclanguage.metamock.model.CheckBox;
 import org.webspeclanguage.metamock.model.ComboBox;
+import org.webspeclanguage.metamock.model.CompositeControl;
 import org.webspeclanguage.metamock.model.MetaMockModel;
 import org.webspeclanguage.metamock.model.Page;
 import org.webspeclanguage.metamock.model.Panel;
 import org.webspeclanguage.metamock.model.RadioButton;
+import org.webspeclanguage.metamock.model.Repetition;
 import org.webspeclanguage.metamock.model.TextArea;
 import org.webspeclanguage.metamock.model.TextBox;
 import org.webspeclanguage.metamock.model.UIControl;
@@ -43,6 +45,14 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
     this.setNamespace(Namespace.getNamespace("http://www.webspeclanguage.org/metamock"));
   }
   
+  public Document generateInSingleDocument(MetaMockModel model) {
+    Element mockups = this.createElement("mockups");
+    for (Page p : model.getPages()) {
+      mockups.addContent(p.accept(this)); 
+    };
+    return this.createDocument(mockups);
+  }
+  
   public Collection<DocumentFile> generateFrom(MetaMockModel model) {
     Collection<DocumentFile> generatedFiles = new ArrayList<DocumentFile>();
     for (Page p : model.getPages()) {
@@ -54,8 +64,7 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
   }
 
   private Document generateDocumentForPage(Page p) {
-    return new Document(
-            this.addSchemaReference(this.createElement("mockups").addContent(p.accept(this))));
+    return this.createDocument(this.createElement("mockups").addContent(p.accept(this)));
   }
 
   @Override
@@ -80,12 +89,12 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
         .addContent(this.generateCompositeControlContent(page.getLayout().getControls())));      
   }
 
-  private Element addSchemaReference(Element element) {
+  private Document createDocument(Element root) {
     Namespace xsiNs = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-    element.addNamespaceDeclaration(xsiNs);
-    element.setNamespace(Namespace.getNamespace("http://www.webspeclanguage.org/metamock"));
-    return element
-      .setAttribute("schemaLocation", "http://www.webspeclanguage.org/metamock ../metamock.xsd", xsiNs);
+    root.addNamespaceDeclaration(xsiNs);
+    root.setNamespace(Namespace.getNamespace("http://www.webspeclanguage.org/metamock"));
+    return new Document(root
+      .setAttribute("schemaLocation", "http://www.webspeclanguage.org/metamock ../metamock.xsd", xsiNs));
   }
 
   private Collection<Element> generateCompositeControlContent(Collection<UIControl> controls) {
@@ -101,11 +110,19 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
 
   @Override
   public Element visitPanel(Panel panel) {
-    return 
-      this.addFlowLayout(1, 
-      this.addCommonAttributes(
-        this.createElement("panel"), panel)
-        .addContent(this.generateCompositeControlContent(panel.getLayout().getControls())));
+    return this.generateSimpleCompositeControl(panel, "panel");
+  }
+
+  private Element generateSimpleCompositeControl(CompositeControl control, String controlName) {
+    return this.addFlowLayout(1, 
+    this.addCommonAttributes(
+      this.createElement(controlName), control)
+      .addContent(this.generateCompositeControlContent(control.getLayout().getControls())));
+  }
+  
+  @Override
+  public Element visitRepetition(Repetition repetition) {
+    return this.generateSimpleCompositeControl(repetition, "repetition");
   }
 
   @Override
@@ -137,13 +154,21 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
   
   private Element addCommonAttributes(Element element, UIControl control) {
     return element
-      .setAttribute("id", "control" + control.getControlId())
+      .setAttribute("id", this.getControlId(control))
       .addContent(this.createElement("originalPosition")
         .setAttribute("x", control.getX().toString())
         .setAttribute("y", control.getY().toString())
         .setAttribute("width", control.getWidth().toString())
         .setAttribute("height", control.getHeight().toString())
       );
+  }
+
+  private String getControlId(UIControl control) {
+    if (control.getFriendlyId().matches("^\\d*$")) {
+      return "control" + control.getFriendlyId();
+    } else {
+      return control.getFriendlyId();
+    }
   }
   
   private Element addFlowLayout(int position, Element compositeWidgetElement) {
