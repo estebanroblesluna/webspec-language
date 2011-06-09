@@ -14,7 +14,7 @@ package org.webspeclanguage.metamock.model.layout;
 
 import java.util.Collection;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 
 /**
  * Defines a strategy for creating a layout from a collection of controls
@@ -23,6 +23,6 @@ import org.webspeclanguage.metamock.model.UIControl;
  */
 public interface LayoutFactory {
 
-  Layout createLayout(Collection<UIControl> controls);
+  Layout createLayout(Collection<Widget> controls);
 
 }

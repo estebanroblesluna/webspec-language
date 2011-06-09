@@ -17,11 +17,11 @@ package org.webspeclanguage.metamock.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface Annotation extends UIControl {
+public interface Annotation extends Widget {
 
-  UIControl getTargetElement();
+  Widget getTargetElement();
 
-  void setTargetElement(UIControl c);
+  void setTargetElement(Widget c);
 
   String getContent();
 

@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 
 /**
  * Represents a list of widgets
@@ -28,29 +28,29 @@ import org.webspeclanguage.metamock.model.UIControl;
  */
 public class ControlList {
 
-  private List<UIControl> controls;
+  private List<Widget> controls;
  
-  public ControlList(List<UIControl> controls) {
+  public ControlList(List<Widget> controls) {
     this.setControls(controls);
   }
 
-  public ControlList(UIControl... controls) {
-    this.setControls(new ArrayList<UIControl>(Arrays.asList(controls)));
+  public ControlList(Widget... controls) {
+    this.setControls(new ArrayList<Widget>(Arrays.asList(controls)));
   }
 
-  final void setControls(List<UIControl> controls) {
+  final void setControls(List<Widget> controls) {
     this.controls = controls;
   }
 
-  public List<UIControl> getControls() {
+  public List<Widget> getControls() {
     return Collections.unmodifiableList(this.controls);
   }
 
-  public UIControl getControlAt(Integer i) {
+  public Widget getControlAt(Integer i) {
     return this.controls.get(i);
   }
 
-  public void addControl(UIControl c) {
+  public void addControl(Widget c) {
     this.controls.add(c);
   }
 
@@ -59,18 +59,18 @@ public class ControlList {
   }
 
   public ControlList copy() {
-    List<UIControl> l = new ArrayList<UIControl>();
-    for (UIControl c : this.controls) {
-      l.add((UIControl) c.copy());
+    List<Widget> l = new ArrayList<Widget>();
+    for (Widget c : this.controls) {
+      l.add((Widget) c.copy());
     }
     return new ControlList(l);
   }
   
-  public int indexOf(UIControl control) {
+  public int indexOf(Widget control) {
     return this.getControls().indexOf(control);
   }
   
-  public boolean replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+  public boolean replaceControl(Widget controlToReplace, Widget replacingControl) {
     if (this.indexOf(controlToReplace) == -1) {
       return false;
     }

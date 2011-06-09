@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 import org.webspeclanguage.metamock.model.layout.LayoutFactory;
 import org.webspeclanguage.metamock.utils.ControlList;
-import org.webspeclanguage.metamock.utils.MetaMockUtil;
+import org.webspeclanguage.metamock.utils.SuiUtil;
 
 /**
  * A {@link LayoutFactory} that applies a recursive algorithm to infer a 
@@ -31,7 +31,7 @@ import org.webspeclanguage.metamock.utils.MetaMockUtil;
  */
 public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 
-	public GridBagLayout createLayout(Collection<UIControl> controls) {
+	public GridBagLayout createLayout(Collection<Widget> controls) {
 		GridBagLayoutInferenceState state = new GridBagLayoutInferenceState();
 		this.inferColumns(controls, state, 0);
 		this.inferRows(controls, state, 0);
@@ -40,16 +40,16 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 
 	private GridBagLayout buildLayout(GridBagLayoutInferenceState state) {
 		GridBagLayout gbl = new GridBagLayoutImpl();
-      for (UIControl c : state.getControls()) {
+      for (Widget c : state.getControls()) {
       	gbl.addAddShift(state.getCellForControl(c));
       }     
 		return gbl;
 	}
 
-	private Integer inferColumns(Collection<UIControl> controls,
+	private Integer inferColumns(Collection<Widget> controls,
 			GridBagLayoutInferenceState state,
 			Integer parentCol) {
-		List<ControlList> cols = MetaMockUtil.getControlsGroupedInColumns(controls);
+		List<ControlList> cols = SuiUtil.getControlsGroupedInColumns(controls);
 		Integer accumColspan = 0;
 		for (Integer childCol = 0; childCol < cols.size(); childCol++) {
 			accumColspan +=
@@ -59,7 +59,7 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 		return accumColspan;
 	}
 
-	private Integer inferColumnsRecursively(Collection<UIControl> controls,
+	private Integer inferColumnsRecursively(Collection<Widget> controls,
 			GridBagLayoutInferenceState state, Integer col) {
 		if (controls.size() == 1) {
 			GridBagLayoutCell cell = state.getCellForControl(controls.iterator().next());
@@ -67,12 +67,12 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 			cell.setColumn(col);
 			return 1;
 		} else {
-			UIControl widerControl = null;
-			Collection<UIControl> maxCollidingControls = new ArrayList<UIControl>();
+			Widget widerControl = null;
+			Collection<Widget> maxCollidingControls = new ArrayList<Widget>();
 			Integer minCollidingControlCount = Integer.MAX_VALUE;
-			for (UIControl c : controls) {
-				Collection<UIControl> collidingControls = 
-					MetaMockUtil.getVerticallyCollidingControls(controls, c);
+			for (Widget c : controls) {
+				Collection<Widget> collidingControls = 
+					SuiUtil.getVerticallyCollidingControls(controls, c);
 				if (collidingControls.size() > maxCollidingControls.size()) {
 					maxCollidingControls = collidingControls;
 					widerControl = c;
@@ -81,7 +81,7 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 				  minCollidingControlCount = collidingControls.size();
 				}
 			}
-			Collection<UIControl> remainingControls = new ArrayList<UIControl>(controls);
+			Collection<Widget> remainingControls = new ArrayList<Widget>(controls);
       remainingControls.remove(widerControl);
       Integer colspan = this.inferColumns(remainingControls, state, col);
       state.getCellForControl(widerControl).setColumnSpan(colspan);
@@ -92,10 +92,10 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 		}
 	}
 	
-	private Integer inferRows(Collection<UIControl> controls,
+	private Integer inferRows(Collection<Widget> controls,
 			GridBagLayoutInferenceState state,
 			Integer parentRow) {
-		List<ControlList> rows = MetaMockUtil.getControlsGroupedInRows(controls);
+		List<ControlList> rows = SuiUtil.getControlsGroupedInRows(controls);
 		Integer accumRowspan = 0;
 		for (Integer childRow = 0; childRow < rows.size(); childRow++) {
 			accumRowspan +=
@@ -105,7 +105,7 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 		return accumRowspan;
 	}
 
-	private Integer inferRowsRecursively(Collection<UIControl> controls,
+	private Integer inferRowsRecursively(Collection<Widget> controls,
 			GridBagLayoutInferenceState state, Integer row) {
 		if (controls.size() == 1) {
 			GridBagLayoutCell cell = state.getCellForControl(controls.iterator().next());
@@ -113,17 +113,17 @@ public class RecursiveGridBagLayoutFactory implements LayoutFactory {
 			cell.setRow(row);
 			return 1;
 		} else {
-			UIControl widerControl = null;
-			Collection<UIControl> maxCollidingControls = new ArrayList<UIControl>();
-			for (UIControl c : controls) {
-				Collection<UIControl> collidingControls = 
-					MetaMockUtil.getHorizontallyCollidingControls(controls, c);
+			Widget widerControl = null;
+			Collection<Widget> maxCollidingControls = new ArrayList<Widget>();
+			for (Widget c : controls) {
+				Collection<Widget> collidingControls = 
+					SuiUtil.getHorizontallyCollidingControls(controls, c);
 				if (collidingControls.size() > maxCollidingControls.size()) {
 					maxCollidingControls = collidingControls;
 					widerControl = c;
 				}	
 			}
-			Collection<UIControl> remainingControls = new ArrayList<UIControl>(controls);
+			Collection<Widget> remainingControls = new ArrayList<Widget>(controls);
 			remainingControls.remove(widerControl);
 			Integer colspan = this.inferRows(remainingControls, state, row);
 			state.getCellForControl(widerControl).setRowSpan(colspan);

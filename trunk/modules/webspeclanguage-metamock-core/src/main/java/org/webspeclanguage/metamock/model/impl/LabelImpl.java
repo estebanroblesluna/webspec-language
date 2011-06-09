@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.Label;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Label}
@@ -23,28 +23,28 @@ import org.webspeclanguage.metamock.utils.MetaMockVisitor;
  */
 public class LabelImpl extends SimpleControlImpl implements Label {
 
-  private UIControl control;
+  private Widget control;
   private String text;
 
   public LabelImpl(String controlID, Integer x, Integer y, Integer width, Integer height, String text) {
     this(controlID, x, y, width, height, text, null);
   }
 
-  public LabelImpl(String controlID, Integer x, Integer y, Integer width, Integer height, String text, UIControl control) {
+  public LabelImpl(String controlID, Integer x, Integer y, Integer width, Integer height, String text, Widget control) {
     super(controlID, x, y, width, height);
     this.setControl(control);
     this.setText(text);
   }
 
-  public final void setControl(UIControl control) {
+  public final void setControl(Widget control) {
     this.control = control;
   }
 
-  public UIControl getControl() {
+  public Widget getControl() {
     return control;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitLabel(this);
   }
 
@@ -57,13 +57,13 @@ public class LabelImpl extends SimpleControlImpl implements Label {
   }
 
   @Override
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     Label other = (Label) control;
     return super.equalInContent(other) && this.getText().equals(other.getText());
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new LabelImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getText());
   }
 

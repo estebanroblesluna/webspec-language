@@ -15,8 +15,8 @@ package org.webspeclanguage.metamock.model.layout;
 import java.util.Collection;
 import java.util.List;
 
-import org.webspeclanguage.metamock.model.MetaMockTestCase;
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.SuiTestCase;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.impl.GridBagLayoutCellImpl;
 import org.webspeclanguage.metamock.model.layout.impl.GridBagLayoutImpl;
 import org.webspeclanguage.metamock.utils.ValueHolder;
@@ -24,7 +24,7 @@ import org.webspeclanguage.metamock.utils.ValueHolder;
 /**
  * @author Jose Matias Rivero
  */
-public class GridBagLayoutImplTestCase extends MetaMockTestCase {
+public class GridBagLayoutImplTestCase extends SuiTestCase {
 
   public void setUp() throws Exception {
     super.setUp();
@@ -51,7 +51,7 @@ public class GridBagLayoutImplTestCase extends MetaMockTestCase {
     assertSame(gbl.getCell(1, 0), cell3);
     assertSame(gbl.getCell(1, 1), cell3);
     
-    Collection<UIControl> controls = gbl.getRowContent(0);
+    Collection<Widget> controls = gbl.getRowContent(0);
     assertTrue(controls.contains(cell1.getControl()));
     assertTrue(controls.contains(cell2.getControl()));
     assertFalse(controls.contains(cell3.getControl()));
@@ -246,7 +246,7 @@ public class GridBagLayoutImplTestCase extends MetaMockTestCase {
     }
   }
   
-  private GridBagLayoutCell createCell(Integer row, Integer column, Integer rowspan, Integer colspan, UIControl control, GridBagLayout gridBoxLayout) {  
+  private GridBagLayoutCell createCell(Integer row, Integer column, Integer rowspan, Integer colspan, Widget control, GridBagLayout gridBoxLayout) {  
     return new GridBagLayoutCellImpl(row, column, rowspan, colspan, control);
   }
 

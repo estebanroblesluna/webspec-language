@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.Link;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Link}
@@ -30,7 +30,7 @@ public class LinkImpl extends SimpleControlImpl implements Link {
     this.setText(text);
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitLink(this);
   }
 
@@ -43,13 +43,13 @@ public class LinkImpl extends SimpleControlImpl implements Link {
   }
 
   @Override
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     Link other = (Link) control;
     return super.equalInContent(other) && this.getText().equals(other.getText());
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new LinkImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getText());
   }
 

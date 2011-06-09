@@ -12,17 +12,17 @@
  */
 package org.webspeclanguage.metamock.model.annotation.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.model.annotation.ControlAnnotationVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.model.annotation.WidgetAnnotationVisitor;
 import org.webspeclanguage.metamock.model.annotation.RepetitionAnnotation;
 
-public class RepetitionAnnotationImpl extends MetaMockAnnotationImpl implements RepetitionAnnotation {
+public class RepetitionAnnotationImpl extends ControlAnnotationImpl implements RepetitionAnnotation {
 
-  public RepetitionAnnotationImpl(UIControl control) {
+  public RepetitionAnnotationImpl(Widget control) {
     super(control);
   }
 
-  public void visit(ControlAnnotationVisitor cav) {
+  public void visit(WidgetAnnotationVisitor cav) {
     cav.visitRepetitionAnnotation(this);
   }
 

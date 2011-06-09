@@ -18,15 +18,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.webspeclanguage.metamock.model.CompositeControl;
-import org.webspeclanguage.metamock.model.MetaMockFactory;
+import org.webspeclanguage.metamock.model.CompositeWidget;
+import org.webspeclanguage.metamock.model.SuiFactory;
 import org.webspeclanguage.metamock.model.Repetition;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockUtil;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiUtil;
 import org.webspeclanguage.metamock.utils.Point;
 
 /**
- * Provides component repetition detection in {@link CompositeControl}s
+ * Provides component repetition detection in {@link CompositeWidget}s
  * 
  * @author Jose Matias Rivero
  */
@@ -34,26 +34,26 @@ public class RepetitionDetector {
 
 	private static final int DEFAULT_TOLERANCE = 10;
 	private static final int DEFAULT_MIN_CONTROLS = 3;
-	private MetaMockFactory factory;
+	private SuiFactory factory;
 	private Integer pixelTolerance;
 	private Integer minControls;
 
-	public RepetitionDetector(MetaMockFactory factory, Integer pixelTolerance, Integer minControls) {
+	public RepetitionDetector(SuiFactory factory, Integer pixelTolerance, Integer minControls) {
 		super();
 		this.setFactory(factory);
 		this.setPixelTolerance(pixelTolerance);
 		this.setMinControls(minControls);
 	}
 	
-	public RepetitionDetector(MetaMockFactory factory) {
+	public RepetitionDetector(SuiFactory factory) {
 		this(factory, DEFAULT_TOLERANCE, DEFAULT_MIN_CONTROLS);
 	}
 
-	private void setFactory(MetaMockFactory factory) {
+	private void setFactory(SuiFactory factory) {
 		this.factory = factory;
 	}
 
-	private MetaMockFactory getFactory() {
+	private SuiFactory getFactory() {
 		return factory;
 	}
 
@@ -73,17 +73,17 @@ public class RepetitionDetector {
     return minControls;
   }
 
-  public Repetition detectRepetition(CompositeControl cc) {
-		List<UIControl> controlsToProcess = new ArrayList<UIControl>(cc.getControls());
-		Collection<UIControl> repetitionControls = new ArrayList<UIControl>();
+  public Repetition detectRepetition(CompositeWidget cc) {
+		List<Widget> controlsToProcess = new ArrayList<Widget>(cc.getControls());
+		Collection<Widget> repetitionControls = new ArrayList<Widget>();
 		List<Point> offsets = null;
 		this.sortByTopLeftBorderProximity(controlsToProcess);
 		if (controlsToProcess.size() == 0) {
 			return null;
 		}
 		while (controlsToProcess.size() > 0) {
-			UIControl c = controlsToProcess.get(0);
-			Collection<UIControl> similarControls = 
+			Widget c = controlsToProcess.get(0);
+			Collection<Widget> similarControls = 
 				this.getSimilarControls(controlsToProcess, c);
 			if (similarControls.size() == 0) {
 				return null;
@@ -146,10 +146,10 @@ public class RepetitionDetector {
 		return rows;
 	}
 
-	private void sortByTopLeftBorderProximity(List<UIControl> controlsToProcess) {
-		Collections.sort(controlsToProcess, new Comparator<UIControl>() {
+	private void sortByTopLeftBorderProximity(List<Widget> controlsToProcess) {
+		Collections.sort(controlsToProcess, new Comparator<Widget>() {
 
-			public int compare(UIControl c1, UIControl c2) {
+			public int compare(Widget c1, Widget c2) {
 				return c1.getX() + c1.getY() - (c2.getX() + c2.getY());
 			}
 			
@@ -158,9 +158,9 @@ public class RepetitionDetector {
 	}
 
 	private boolean checkOffsets(List<Point> offsets,
-			UIControl referenceControl,
-			Collection<UIControl> similarControls, Integer pixelTolerance) {
-		for (UIControl c : similarControls) {
+			Widget referenceControl,
+			Collection<Widget> similarControls, Integer pixelTolerance) {
+		for (Widget c : similarControls) {
 			Boolean offsetMatches = false;
 			for (Point offset : offsets) {
 			  Point offsetLocation = new Point(referenceControl.getX() + offset.getX(), referenceControl.getY() + offset.getY());
@@ -176,9 +176,9 @@ public class RepetitionDetector {
 		return true;
 	}
 
-	private List<Point> getOffsets(UIControl c, Collection<UIControl> controls) {
+	private List<Point> getOffsets(Widget c, Collection<Widget> controls) {
 		List<Point> offsets = new ArrayList<Point>();
-		for (UIControl c2 : controls) {
+		for (Widget c2 : controls) {
 			if (c2 != c) {
 				offsets.add(new Point(c2.getX() - c.getX(), c2.getY() - c.getY()));
 			}
@@ -187,12 +187,12 @@ public class RepetitionDetector {
 	}
 
 	@SuppressWarnings("unchecked")
-  private Collection<UIControl> getSimilarControls(List<UIControl> controls, UIControl c) {
-		Collection<UIControl> controlsOfTheSameType = 
-			MetaMockUtil.filterControlsByType(controls, c.getClass());
-		Collection<UIControl> similarControls = new ArrayList<UIControl>();
-    for (UIControl cs : controlsOfTheSameType) {
-      if (c != cs && MetaMockUtil.areGraphicallySimilar(c, cs, this.getPixelTolerance())) {
+  private Collection<Widget> getSimilarControls(List<Widget> controls, Widget c) {
+		Collection<Widget> controlsOfTheSameType = 
+			SuiUtil.filterControlsByType(controls, c.getClass());
+		Collection<Widget> similarControls = new ArrayList<Widget>();
+    for (Widget cs : controlsOfTheSameType) {
+      if (c != cs && SuiUtil.areGraphicallySimilar(c, cs, this.getPixelTolerance())) {
         similarControls.add(cs);
       }
     }

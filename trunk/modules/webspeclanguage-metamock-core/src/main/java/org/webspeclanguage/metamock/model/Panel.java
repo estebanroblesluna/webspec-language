@@ -17,6 +17,6 @@ package org.webspeclanguage.metamock.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface Panel extends CompositeControl {
+public interface Panel extends CompositeWidget {
 
 }

@@ -18,14 +18,14 @@ import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
 import org.webspeclanguage.metamock.codegen.generator.Mockup;
-import org.webspeclanguage.metamock.model.MetaMockModel;
+import org.webspeclanguage.metamock.model.SuiModel;
 import org.webspeclanguage.metamock.model.Page;
-import org.webspeclanguage.metamock.translator.MetaMockProcessingEngine;
-import org.webspeclanguage.metamock.translator.MetaMockTranslationException;
-import org.webspeclanguage.metamock.translator.MetaMockTranslator;
+import org.webspeclanguage.metamock.translator.MockupProcessingEngine;
+import org.webspeclanguage.metamock.translator.SuiTranslationException;
+import org.webspeclanguage.metamock.translator.SuiTranslator;
 import org.webspeclanguage.metamock.translator.MockupContainerInfo;
-import org.webspeclanguage.metamock.translator.annotation.MetaMockJsonAnnotationParser;
-import org.webspeclanguage.metamock.translator.balsamiq.BalsamiqControlParser;
+import org.webspeclanguage.metamock.translator.annotation.JsonAnnotationParser;
+import org.webspeclanguage.metamock.translator.balsamiq.BalsamiqWidgetParser;
 import org.webspeclanguage.translator.common.ControlParserTestCase;
 
 /**
@@ -33,20 +33,20 @@ import org.webspeclanguage.translator.common.ControlParserTestCase;
  */
 public class BalsamiqControlParserTestCase extends ControlParserTestCase {
 
-  private MetaMockTranslator<String> balsamiqTranslator;
+  private SuiTranslator<String> balsamiqTranslator;
 
   public void setUp() throws Exception {
     super.setUp();
     this.setBalsamiqTranslator(
-      new MetaMockProcessingEngine<String>(
-        new BalsamiqControlParser(
+      new MockupProcessingEngine<String>(
+        new BalsamiqWidgetParser(
           this.getFactory()), 
-          new MetaMockJsonAnnotationParser(this.getFactory()), 
+          new JsonAnnotationParser(this.getFactory()), 
         this.getFactory()));
   }
 
   public void testModelTranslation() throws Exception{
-    MetaMockModel m = this.getBalsamiqTranslator().translateModelFrom(
+    SuiModel m = this.getBalsamiqTranslator().translateModelFrom(
       Arrays.asList(
       (Mockup<String>)
       new Mockup<String>(
@@ -66,11 +66,11 @@ public class BalsamiqControlParserTestCase extends ControlParserTestCase {
     this.assertModelFeatures(m);
   }
 
-  void setBalsamiqTranslator(MetaMockTranslator<String> translator) {
+  void setBalsamiqTranslator(SuiTranslator<String> translator) {
     this.balsamiqTranslator = translator;
   }
 
-  MetaMockTranslator<String> getBalsamiqTranslator() {
+  SuiTranslator<String> getBalsamiqTranslator() {
     return balsamiqTranslator;
   }
 

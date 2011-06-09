@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.Image;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Image}
@@ -38,18 +38,18 @@ public class ImageImpl extends SimpleControlImpl implements Image {
     return imageUrl;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitImage(this);
   }
 
   @Override
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     Image other = (Image) control;
     return super.equalInContent(other) && this.getImageUrl().equals(other.getImageUrl());
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new ImageImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getImageUrl());
   }
 

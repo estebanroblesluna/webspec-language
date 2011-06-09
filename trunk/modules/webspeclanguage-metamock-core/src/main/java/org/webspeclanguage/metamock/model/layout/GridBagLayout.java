@@ -15,7 +15,7 @@ package org.webspeclanguage.metamock.model.layout;
 import java.util.Collection;
 import java.util.List;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 
 /**
  * Represents a layout similar to an HTML table. A GridBagLayout has a specific
@@ -29,13 +29,13 @@ public interface GridBagLayout extends Layout {
 
   Integer getRowCount();
 
-  Collection<UIControl> getRowContent(Integer i);
+  Collection<Widget> getRowContent(Integer i);
 
-  Collection<UIControl> getColumnContent(Integer i);
+  Collection<Widget> getColumnContent(Integer i);
 
   GridBagLayoutCell getCell(Integer rowIndex, Integer columnIndex);
 
-  GridBagLayoutCell getControlCell(UIControl c);
+  GridBagLayoutCell getControlCell(Widget c);
 
   <TCell, TRow> List<TRow> visitByRows(GridBagLayoutVisitor<TCell, TRow> v);
 

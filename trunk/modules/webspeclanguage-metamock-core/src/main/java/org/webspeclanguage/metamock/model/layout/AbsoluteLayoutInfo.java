@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.metamock.model.layout;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 
 /**
  * @author Jose Matias Rivero
@@ -23,6 +23,6 @@ public interface AbsoluteLayoutInfo extends LayoutInfo {
   int getY();
   int getWidth();
   int getHeight();
-  UIControl getControl();
+  Widget getControl();
 
 }

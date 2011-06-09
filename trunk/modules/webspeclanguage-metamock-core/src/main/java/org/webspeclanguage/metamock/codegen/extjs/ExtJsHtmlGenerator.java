@@ -18,11 +18,11 @@ import java.util.List;
 
 import org.webspeclanguage.metamock.codegen.artifacts.Code;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeBlock;
-import org.webspeclanguage.metamock.codegen.common.DefaultMetaMockControlGenerator;
+import org.webspeclanguage.metamock.codegen.common.DefaultWidgetGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodeArtifact;
 import org.webspeclanguage.metamock.model.Page;
 import org.webspeclanguage.metamock.model.Panel;
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
 import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
@@ -35,13 +35,13 @@ import org.webspeclanguage.metamock.model.layout.GridBagLayoutVisitor;
  * @author Jose Matias Rivero
  */
 public class ExtJsHtmlGenerator extends 
-    DefaultMetaMockControlGenerator<CodeArtifact> implements
+    DefaultWidgetGenerator<CodeArtifact> implements
 		GridBagLayoutVisitor<CodeArtifact, CodeArtifact> {
 
-	private List<UIControl> processedControls;
+	private List<Widget> processedControls;
 
 	public ExtJsHtmlGenerator() {
-		this.setProcessedControls(new ArrayList<UIControl>());
+		this.setProcessedControls(new ArrayList<Widget>());
 	}
 
 	public CodeArtifact generateFor(Page page) {
@@ -86,12 +86,12 @@ public class ExtJsHtmlGenerator extends
 				"</tr>");
 	}
 
-	private void setProcessedControls(List<UIControl> processedControls) {
+	private void setProcessedControls(List<Widget> processedControls) {
 		this.processedControls = processedControls;
 	}
 
 	
-	private List<UIControl> getProcessedControls() {
+	private List<Widget> getProcessedControls() {
 		return processedControls;
 	}
 

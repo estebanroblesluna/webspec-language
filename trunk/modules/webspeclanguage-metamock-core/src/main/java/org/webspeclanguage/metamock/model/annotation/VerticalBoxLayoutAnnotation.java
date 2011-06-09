@@ -15,7 +15,7 @@ package org.webspeclanguage.metamock.model.annotation;
 /**
  * Annotation that enforces to infer a
  * {@link org.webspeclanguage.metamock.model.layout.VerticalBoxLayout} as layout
- * for a {@link org.webspeclanguage.metamock.model.CompositeControl}
+ * for a {@link org.webspeclanguage.metamock.model.CompositeWidget}
  * 
  * @author Jose Matias Rivero
  */

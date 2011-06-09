@@ -19,7 +19,7 @@ import org.webspeclanguage.metamock.model.SimpleControl;
  * 
  * @author Jose Matias Rivero
  */
-public abstract class SimpleControlImpl extends UIControlImpl implements SimpleControl {
+public abstract class SimpleControlImpl extends WidgetImpl implements SimpleControl {
 
   public SimpleControlImpl(String controlID, int x, int y, int width, int height) {
     super(controlID, x, y, width, height);

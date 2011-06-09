@@ -15,20 +15,20 @@ package org.webspeclanguage.metamock.model.layout;
 import java.util.Arrays;
 import java.util.List;
 
-import org.webspeclanguage.metamock.model.MetaMockTestCase;
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.SuiTestCase;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.impl.RecursiveGridBagLayoutFactory;
-import org.webspeclanguage.metamock.utils.MetaMockUtil;
+import org.webspeclanguage.metamock.utils.SuiUtil;
 
 
-public class ScanBasedGridBagLayoutFactoryTest extends MetaMockTestCase {
+public class ScanBasedGridBagLayoutFactoryTest extends SuiTestCase {
   public void setUp() throws Exception {
     super.setUp();
   }
   
   public void testGridBagLayoutInference() {
-    List<UIControl> controls = Arrays.asList(
-      (UIControl)
+    List<Widget> controls = Arrays.asList(
+      (Widget)
       this.getFactory().createButton("b1", 0, 0, 200, 50, "button 1"),
       this.getFactory().createButton("b2", 0, 60, 50, 50, "button 2"),
       this.getFactory().createButton("b3", 60, 60, 50, 50, "button 3"),
@@ -38,8 +38,8 @@ public class ScanBasedGridBagLayoutFactoryTest extends MetaMockTestCase {
       
     GridBagLayout gbl = new RecursiveGridBagLayoutFactory().createLayout(controls);
     
-    for (UIControl c : controls)
-      assertEquals(0, MetaMockUtil.getCollidingControls(controls, c).size());
+    for (Widget c : controls)
+      assertEquals(0, SuiUtil.getCollidingControls(controls, c).size());
     
     assertEquals((Integer)3, gbl.getRowCount());
     assertEquals((Integer)3, gbl.getColumnCount());

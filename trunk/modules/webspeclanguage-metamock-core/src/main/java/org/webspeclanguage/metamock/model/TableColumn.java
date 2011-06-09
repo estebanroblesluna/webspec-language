@@ -17,7 +17,7 @@ package org.webspeclanguage.metamock.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface TableColumn extends MetaMockElement {
+public interface TableColumn extends SuiModelElement {
 
   String getLabel();
 

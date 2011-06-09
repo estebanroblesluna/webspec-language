@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.ComboBox;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link ComboBox}
@@ -27,12 +27,12 @@ public class ComboBoxImpl extends SimpleControlImpl implements ComboBox {
     super(controlID, x, y, width, height);
   }
 
-  public final <T> T accept(MetaMockVisitor<T> v) {
+  public final <T> T accept(SuiVisitor<T> v) {
     return v.visitComboBox(this);
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new ComboBoxImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
   }
 }

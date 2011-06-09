@@ -17,8 +17,8 @@ import java.util.List;
 
 import org.webspeclanguage.metamock.model.Table;
 import org.webspeclanguage.metamock.model.TableColumn;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Table}
@@ -34,7 +34,7 @@ public class TableImpl extends SimpleControlImpl implements Table {
     this.setColumns(new ArrayList<TableColumn>());
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitTable(this);
   }
 
@@ -50,7 +50,7 @@ public class TableImpl extends SimpleControlImpl implements Table {
     this.getColumns().add(tableColumn);
   }
 
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     Table other = (Table) control;
     return super.equalInContent(other) && this.columnsAreEqual(other);
   }
@@ -67,7 +67,7 @@ public class TableImpl extends SimpleControlImpl implements Table {
     return true;
   }
 
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     TableImpl t = new TableImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
     for (TableColumn tc : this.getColumns()) {
       t.addColumn(tc);

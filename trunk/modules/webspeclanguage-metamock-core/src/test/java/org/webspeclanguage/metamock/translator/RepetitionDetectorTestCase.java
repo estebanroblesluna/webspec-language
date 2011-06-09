@@ -17,17 +17,17 @@ import java.util.Arrays;
 import org.webspeclanguage.metamock.model.Button;
 import org.webspeclanguage.metamock.model.Label;
 import org.webspeclanguage.metamock.model.Link;
-import org.webspeclanguage.metamock.model.MetaMockTestCase;
+import org.webspeclanguage.metamock.model.SuiTestCase;
 import org.webspeclanguage.metamock.model.Panel;
 import org.webspeclanguage.metamock.model.Repetition;
 import org.webspeclanguage.metamock.model.TextBox;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockUtil;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiUtil;
 
 /**
  * @author Jose Matias Rivero
  */
-public class RepetitionDetectorTestCase extends MetaMockTestCase {
+public class RepetitionDetectorTestCase extends SuiTestCase {
 
   private static final int RANDOM_TOLERANCE_TEST_COUNT = 10;
   private static final int TOLERANCE = 10;
@@ -54,10 +54,10 @@ public class RepetitionDetectorTestCase extends MetaMockTestCase {
     ));
     assertNotNull(r);
     assertEquals(4, r.getControls().size());
-    assertEquals(1, MetaMockUtil.filterControlsByType(r.getControls(), Button.class).size());
-    assertEquals(1, MetaMockUtil.filterControlsByType(r.getControls(), TextBox.class).size());
-    assertEquals(1, MetaMockUtil.filterControlsByType(r.getControls(), Label.class).size());
-    assertEquals(1, MetaMockUtil.filterControlsByType(r.getControls(), Link.class).size());
+    assertEquals(1, SuiUtil.filterControlsByType(r.getControls(), Button.class).size());
+    assertEquals(1, SuiUtil.filterControlsByType(r.getControls(), TextBox.class).size());
+    assertEquals(1, SuiUtil.filterControlsByType(r.getControls(), Label.class).size());
+    assertEquals(1, SuiUtil.filterControlsByType(r.getControls(), Link.class).size());
   }
   
   public void testRepetitionDetectionTolerance() {
@@ -75,10 +75,10 @@ public class RepetitionDetectorTestCase extends MetaMockTestCase {
       Repetition r = this.repetitionDetector.detectRepetition(p);
       assertNotNull(r);
       assertEquals(4, r.getControls().size());
-      assertEquals(1, MetaMockUtil.filterControlsByType(r.getControls(), Button.class).size());
-      assertEquals(1, MetaMockUtil.filterControlsByType(r.getControls(), TextBox.class).size());
-      assertEquals(1, MetaMockUtil.filterControlsByType(r.getControls(), Label.class).size());
-      assertEquals(1, MetaMockUtil.filterControlsByType(r.getControls(), Link.class).size());
+      assertEquals(1, SuiUtil.filterControlsByType(r.getControls(), Button.class).size());
+      assertEquals(1, SuiUtil.filterControlsByType(r.getControls(), TextBox.class).size());
+      assertEquals(1, SuiUtil.filterControlsByType(r.getControls(), Label.class).size());
+      assertEquals(1, SuiUtil.filterControlsByType(r.getControls(), Link.class).size());
     }
   }
   
@@ -87,7 +87,7 @@ public class RepetitionDetectorTestCase extends MetaMockTestCase {
     return x;
   }
 
-  private Panel createPanelWith(UIControl... controls) {
+  private Panel createPanelWith(Widget... controls) {
     Panel p = this.getFactory().createPanel("panel", 1, 1, 100, 100, "");
     p.addAll(Arrays.asList(controls));
     return p;

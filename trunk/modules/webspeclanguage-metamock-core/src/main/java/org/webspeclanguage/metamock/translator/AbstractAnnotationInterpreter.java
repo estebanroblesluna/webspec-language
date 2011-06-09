@@ -12,31 +12,31 @@
  */
 package org.webspeclanguage.metamock.translator;
 
-import org.webspeclanguage.metamock.model.MetaMockModel;
+import org.webspeclanguage.metamock.model.SuiModel;
 import org.webspeclanguage.metamock.translator.annotation.AnnotationInterpreter;
 
 /**
- * Interpretation strategy for {@link ControlAnnotation}s
+ * Interpretation strategy for {@link WidgetAnnotation}s
  * 
  * @author Jose Matias Rivero
  */
-public abstract class AbstractAnnotationInterpreter extends DefaultControlAnnotationVisitor implements AnnotationInterpreter {
+public abstract class AbstractAnnotationInterpreter extends DefaultWidgetAnnotationVisitor implements AnnotationInterpreter {
 
-  private MetaMockModel currentModel;
+  private SuiModel currentModel;
 
   public AbstractAnnotationInterpreter() {
     super();
   }
 
-  protected final void setCurrentModel(MetaMockModel currentModel) {
+  protected final void setCurrentModel(SuiModel currentModel) {
     this.currentModel = currentModel;
   }
 
-  public final MetaMockModel getCurrentModel() {
+  public final SuiModel getCurrentModel() {
     return currentModel;
   }
 
-  public void startingAnnotationInterpretationIn(MetaMockModel model) {
+  public void startingAnnotationInterpretationIn(SuiModel model) {
     this.setCurrentModel(model);
   }
 

@@ -15,20 +15,20 @@ package org.webspeclanguage.metamock.codegen.extjs;
 import org.webspeclanguage.metamock.codegen.artifacts.Code;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeFileList;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeFile;
-import org.webspeclanguage.metamock.codegen.common.MetaMockCodeGenerator;
+import org.webspeclanguage.metamock.codegen.common.SuiCodeGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodeArtifact;
 import org.webspeclanguage.metamock.codegen.framework.core.CodegenUtil;
-import org.webspeclanguage.metamock.model.MetaMockModel;
+import org.webspeclanguage.metamock.model.SuiModel;
 import org.webspeclanguage.metamock.model.Page;
 
 /**
  * @author Jose Matias Rivero
  */
 public class ExtJsGenerator implements
-		MetaMockCodeGenerator<CodeFileList<CodeArtifact>> {
+		SuiCodeGenerator<CodeFileList<CodeArtifact>> {
 
   @SuppressWarnings("unchecked")
-  public CodeFileList<CodeArtifact> generateFrom(MetaMockModel m) {
+  public CodeFileList<CodeArtifact> generateFrom(SuiModel m) {
 	  CodeFileList<CodeArtifact> fileList = Code.fileList();
 	  for (Page p: m.getPages()) {
   		fileList.combine(generatePage(p));

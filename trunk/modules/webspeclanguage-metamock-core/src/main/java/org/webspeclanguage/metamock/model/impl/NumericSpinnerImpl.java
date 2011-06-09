@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.NumericSpinner;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link NumericSpinner}
@@ -48,16 +48,16 @@ public class NumericSpinnerImpl extends SimpleControlImpl implements NumericSpin
     this.maxValue = maxValue;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitNumericSpinner(this);
   }
 
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     NumericSpinner other = (NumericSpinner) control;
     return super.equalInContent(other) && this.getMinValue().equals(other.getMinValue()) && this.getMaxValue().equals(other.getMaxValue());
   }
 
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new NumericSpinnerImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getMinValue(), this.getMaxValue());
   }
 

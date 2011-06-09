@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.metamock.utils;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 
 
@@ -29,11 +29,11 @@ public class VerticalOrientationStrategy implements UIControlOrientationStrategy
   private VerticalOrientationStrategy() {
   }
   
-  public int getPosition(UIControl control) {
+  public int getPosition(Widget control) {
     return control.getX();
   }
 
-  public int getLength(UIControl control) {
+  public int getLength(Widget control) {
     return control.getWidth();
   }
   

@@ -12,8 +12,8 @@
  */
 package org.webspeclanguage.metamock.model.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link org.webspeclanguage.metamock.model.List}
@@ -26,12 +26,12 @@ public class ListImpl extends SimpleControlImpl implements org.webspeclanguage.m
     super(controlID, x, y, width, height);
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitList(this);
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new ListImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
   }
 }

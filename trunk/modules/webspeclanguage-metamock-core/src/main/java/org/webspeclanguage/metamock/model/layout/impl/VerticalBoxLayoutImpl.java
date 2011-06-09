@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GroupedLinearLayoutVisitor;
 import org.webspeclanguage.metamock.model.layout.VerticalBoxLayout;
 import org.webspeclanguage.metamock.utils.ControlList;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation for {@link VerticalBoxLayout}
@@ -31,7 +31,7 @@ public class VerticalBoxLayoutImpl implements VerticalBoxLayout {
 
   private List<ControlList> controlLists;
 
-  public static VerticalBoxLayoutImpl fromList(List<UIControl> controls) {
+  public static VerticalBoxLayoutImpl fromList(List<Widget> controls) {
     VerticalBoxLayoutImpl vbli = new VerticalBoxLayoutImpl();
     vbli.setControlLists(createControlsList(controls));
     return vbli;
@@ -47,16 +47,16 @@ public class VerticalBoxLayoutImpl implements VerticalBoxLayout {
     this.setControlLists(controlLists);
   }
 
-  private static List<ControlList> createControlsList(List<UIControl> ctrls) {
+  private static List<ControlList> createControlsList(List<Widget> ctrls) {
     List<ControlList> controls = new ArrayList<ControlList>();
-    for (UIControl c : ctrls) {
+    for (Widget c : ctrls) {
       controls.add(new ControlList(c));
     }
     return controls;
   }
 
-  public Collection<UIControl> getControls() {
-    List<UIControl> ctrls = new ArrayList<UIControl>();
+  public Collection<Widget> getControls() {
+    List<Widget> ctrls = new ArrayList<Widget>();
     for (ControlList cl : this.getControlLists()) {
       ctrls.addAll(cl.getControls());
     }
@@ -75,7 +75,7 @@ public class VerticalBoxLayoutImpl implements VerticalBoxLayout {
     return this.getControlLists().get(i);
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitVerticalBoxLayout(this);
   }
 
@@ -99,7 +99,7 @@ public class VerticalBoxLayoutImpl implements VerticalBoxLayout {
     this.getControlLists().add(cl);
   }
 
-  public void replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+  public void replaceControl(Widget controlToReplace, Widget replacingControl) {
     for (ControlList controlList : this.getControlLists()) {
       if (controlList.replaceControl(controlToReplace, replacingControl)) {
         return;

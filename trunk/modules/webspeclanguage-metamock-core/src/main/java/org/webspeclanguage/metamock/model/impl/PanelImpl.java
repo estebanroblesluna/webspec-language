@@ -12,27 +12,27 @@
  */
 package org.webspeclanguage.metamock.model.impl;
 
-import org.webspeclanguage.metamock.model.CompositeControl;
+import org.webspeclanguage.metamock.model.CompositeWidget;
 import org.webspeclanguage.metamock.model.Panel;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Panel}
  * 
  * @author Jose Matias Rivero
  */
-public class PanelImpl extends CompositeControlImpl implements Panel {
+public class PanelImpl extends CompositeWidgetImpl implements Panel {
 
   protected PanelImpl(String controlID, Integer x, Integer y, Integer width, Integer height, String containerId) {
     super(controlID, x, y, width, height, containerId);
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitPanel(this);
   }
 
   @Override
-  protected CompositeControl createNewInstance() {
+  protected CompositeWidget createNewInstance() {
     return new PanelImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getContainerId());
   }
 

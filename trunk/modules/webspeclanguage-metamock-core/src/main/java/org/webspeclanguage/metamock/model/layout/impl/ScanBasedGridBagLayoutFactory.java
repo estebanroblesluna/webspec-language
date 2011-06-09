@@ -20,11 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutException;
 import org.webspeclanguage.metamock.model.layout.LayoutFactory;
-import org.webspeclanguage.metamock.translator.logger.MetaMockLogging;
+import org.webspeclanguage.metamock.translator.logger.SuiLogging;
 import org.webspeclanguage.metamock.utils.HorizontalOrientationStrategy;
 import org.webspeclanguage.metamock.utils.UIControlOrientationStrategy;
 import org.webspeclanguage.metamock.utils.VerticalOrientationStrategy;
@@ -45,7 +45,7 @@ public class ScanBasedGridBagLayoutFactory implements LayoutFactory {
     this.setComparator(new UIControlMilestoneComparator());
   }
 
-  public GridBagLayout createLayout(Collection<UIControl> controls) {
+  public GridBagLayout createLayout(Collection<Widget> controls) {
     GridBagLayoutInferenceState state = new GridBagLayoutInferenceState();
     GridBagLayout gbl = new GridBagLayoutImpl();
     this.inferPositions(controls, state, HorizontalOrientationStrategy.getInstance());
@@ -53,36 +53,36 @@ public class ScanBasedGridBagLayoutFactory implements LayoutFactory {
     try {
       this.buildGridBagLayout(gbl, state);
     } catch (GridBagLayoutException e) {
-      MetaMockLogging.getDefaultLogger().logGridBagLayoutException(e);
+      SuiLogging.getDefaultLogger().logGridBagLayoutException(e);
     }
     return gbl;
   }
   
   private void buildGridBagLayout(GridBagLayout gbl, GridBagLayoutInferenceState state) throws GridBagLayoutException {
-    for (UIControl c : state.getControls()) {
+    for (Widget c : state.getControls()) {
       gbl.add(state.getCellForControl(c));
     }
   }
 
-  private void inferPositions(Collection<UIControl> controls, GridBagLayoutInferenceState state, UIControlOrientationStrategy strategy) {
-    List<UIControlMilestone> milestones = this.createMilestones(controls, strategy);
+  private void inferPositions(Collection<Widget> controls, GridBagLayoutInferenceState state, UIControlOrientationStrategy strategy) {
+    List<WidgetMilestone> milestones = this.createMilestones(controls, strategy);
     int currentPosition = 1;
-    List<UIControl> currentControls = new ArrayList<UIControl>();
-    Map<UIControl, Integer> controlsSpan = new HashMap<UIControl, Integer>();
+    List<Widget> currentControls = new ArrayList<Widget>();
+    Map<Widget, Integer> controlsSpan = new HashMap<Widget, Integer>();
     boolean lastWasControlEnd = false;
     Collections.sort(milestones, this.getComparator());
-    for (UIControlMilestone m : milestones) {
-      if (m.getType().equals(UIControlMilestone.MilestoneType.UIControlStart)) {
+    for (WidgetMilestone m : milestones) {
+      if (m.getType().equals(WidgetMilestone.MilestoneType.WidgetStart)) {
         currentControls.add(m.getControl());
         controlsSpan.put(m.getControl(), 0);
         strategy.setPosition(state.getCellForControl(m.getControl()), currentPosition);
         if (lastWasControlEnd) {
-          for (UIControl c : currentControls) {
+          for (Widget c : currentControls) {
             controlsSpan.put(c, controlsSpan.get(c) + 1);
           }
         }
         lastWasControlEnd = false;
-      } else if (m.getType().equals(UIControlMilestone.MilestoneType.UIControlEnd)) {
+      } else if (m.getType().equals(WidgetMilestone.MilestoneType.WidgetEnd)) {
         if (!lastWasControlEnd) {
           currentPosition++;
         }
@@ -101,18 +101,18 @@ public class ScanBasedGridBagLayoutFactory implements LayoutFactory {
     }
   }
 
-  private List<UIControlMilestone> createMilestones(Collection<UIControl> controls, UIControlOrientationStrategy strategy) {
-    List<UIControlMilestone> milestones = new ArrayList<UIControlMilestone>();
-    for (UIControl c : controls) {
-      milestones.add(new UIControlMilestone(strategy.getPosition(c), c, UIControlMilestone.MilestoneType.UIControlStart));
-      milestones.add(new UIControlMilestone(strategy.getPosition(c) + strategy.getLength(c), c, UIControlMilestone.MilestoneType.UIControlEnd));
+  private List<WidgetMilestone> createMilestones(Collection<Widget> controls, UIControlOrientationStrategy strategy) {
+    List<WidgetMilestone> milestones = new ArrayList<WidgetMilestone>();
+    for (Widget c : controls) {
+      milestones.add(new WidgetMilestone(strategy.getPosition(c), c, WidgetMilestone.MilestoneType.WidgetStart));
+      milestones.add(new WidgetMilestone(strategy.getPosition(c) + strategy.getLength(c), c, WidgetMilestone.MilestoneType.WidgetEnd));
     }
     return milestones;
   }
 
-  private class UIControlMilestoneComparator implements Comparator<UIControlMilestone> {
+  private class UIControlMilestoneComparator implements Comparator<WidgetMilestone> {
 
-    public int compare(UIControlMilestone m1, UIControlMilestone m2) {
+    public int compare(WidgetMilestone m1, WidgetMilestone m2) {
       return m1.getPosition() - m2.getPosition();
     }
 

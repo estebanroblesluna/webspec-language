@@ -12,17 +12,17 @@
  */
 package org.webspeclanguage.metamock.model.annotation.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.model.annotation.ControlAnnotationVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.model.annotation.WidgetAnnotationVisitor;
 import org.webspeclanguage.metamock.model.annotation.GridBagLayoutAnnotation;
 
-public class GridBagLayoutAnnotationImpl extends MetaMockAnnotationImpl implements GridBagLayoutAnnotation {
+public class GridBagLayoutAnnotationImpl extends ControlAnnotationImpl implements GridBagLayoutAnnotation {
 
-  public GridBagLayoutAnnotationImpl(UIControl control) {
+  public GridBagLayoutAnnotationImpl(Widget control) {
     super(control);
   }
 
-  public void visit(ControlAnnotationVisitor cav) {
+  public void visit(WidgetAnnotationVisitor cav) {
     cav.visitGridBagLayoutAnnotation(this);
   }
 

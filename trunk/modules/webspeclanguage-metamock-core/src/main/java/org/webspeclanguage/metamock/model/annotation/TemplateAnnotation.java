@@ -13,12 +13,12 @@
 package org.webspeclanguage.metamock.model.annotation;
 
 /**
- * Defines an {@link org.webspeclanguage.metamock.model.CompositeControl} as a
+ * Defines an {@link org.webspeclanguage.metamock.model.CompositeWidget} as a
  * template with an unique id
  * 
  * @author Jose Matias Rivero
  */
-public interface TemplateAnnotation extends MetaMockAnnotation {
+public interface TemplateAnnotation extends SuiAnnotation {
 
   String getTemplateId();
 

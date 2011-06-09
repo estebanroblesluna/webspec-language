@@ -13,7 +13,7 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.TableColumn;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link TableColumn}
@@ -37,7 +37,7 @@ public class TableColumnImpl implements TableColumn {
     this.label = label;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitTableColumn(this);
   }
 

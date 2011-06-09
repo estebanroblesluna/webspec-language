@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.DatePicker;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link DatePicker}
@@ -27,12 +27,12 @@ public class DatePickerImpl extends SimpleControlImpl implements DatePicker {
     super(controlID, x, y, width, height);
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitDatePicker(this);
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new DatePickerImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
   }
 

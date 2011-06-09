@@ -15,16 +15,16 @@ package org.webspeclanguage.metamock.codegen.web;
 import org.webspeclanguage.metamock.codegen.artifacts.Code;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeBlock;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeFileList;
-import org.webspeclanguage.metamock.codegen.common.MetaMockCodeGenerator;
+import org.webspeclanguage.metamock.codegen.common.SuiCodeGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodeArtifact;
 import org.webspeclanguage.metamock.codegen.framework.core.CodegenUtil;
-import org.webspeclanguage.metamock.model.MetaMockModel;
+import org.webspeclanguage.metamock.model.SuiModel;
 import org.webspeclanguage.metamock.model.Page;
 
 /**
  * @author Jose Matias Rivero
  */
-public class MockupHtmlListGenerator implements MetaMockCodeGenerator<CodeFileList<CodeArtifact>> {
+public class MockupHtmlListGenerator implements SuiCodeGenerator<CodeFileList<CodeArtifact>> {
 
   private String folder;
 
@@ -33,7 +33,7 @@ public class MockupHtmlListGenerator implements MetaMockCodeGenerator<CodeFileLi
     this.folder = folder;
   }
 
-  public CodeFileList<CodeArtifact> generateFrom(MetaMockModel model) {
+  public CodeFileList<CodeArtifact> generateFrom(SuiModel model) {
     return 
       Code.fileList(
         Code.file("mockupList.html", 
@@ -44,7 +44,7 @@ public class MockupHtmlListGenerator implements MetaMockCodeGenerator<CodeFileLi
             "</ul>")));
   }
 
-  private CodeBlock<CodeArtifact> createList(MetaMockModel model) {
+  private CodeBlock<CodeArtifact> createList(SuiModel model) {
       CodeBlock<CodeArtifact> block = Code.block();
       for (Page p : model.getPages()) {
         block.add(Code.line(

@@ -12,17 +12,17 @@
  */
 package org.webspeclanguage.metamock.model.annotation.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.model.annotation.ControlAnnotationVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.model.annotation.WidgetAnnotationVisitor;
 import org.webspeclanguage.metamock.model.annotation.VerticalBoxLayoutAnnotation;
 
-public class VerticalBoxLayoutAnnotationImpl extends MetaMockAnnotationImpl implements VerticalBoxLayoutAnnotation {
+public class VerticalBoxLayoutAnnotationImpl extends ControlAnnotationImpl implements VerticalBoxLayoutAnnotation {
 
-  public VerticalBoxLayoutAnnotationImpl(UIControl control) {
+  public VerticalBoxLayoutAnnotationImpl(Widget control) {
     super(control);
   }
 
-  public void visit(ControlAnnotationVisitor cav) {
+  public void visit(WidgetAnnotationVisitor cav) {
     cav.visitVerticalBoxLayoutAnnotation(this);
   }
 

@@ -18,8 +18,8 @@ import org.webspeclanguage.metamock.codegen.artifacts.Code;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeBlock;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeFile;
 import org.webspeclanguage.metamock.codegen.artifacts.Line;
-import org.webspeclanguage.metamock.codegen.common.DefaultMetaMockControlGenerator;
-import org.webspeclanguage.metamock.codegen.common.MetaMockPageCodeGenerator;
+import org.webspeclanguage.metamock.codegen.common.DefaultWidgetGenerator;
+import org.webspeclanguage.metamock.codegen.common.PageCodeGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodeArtifact;
 import org.webspeclanguage.metamock.codegen.framework.core.CodegenUtil;
 import org.webspeclanguage.metamock.model.Button;
@@ -29,7 +29,7 @@ import org.webspeclanguage.metamock.model.DatePicker;
 import org.webspeclanguage.metamock.model.Image;
 import org.webspeclanguage.metamock.model.Label;
 import org.webspeclanguage.metamock.model.Link;
-import org.webspeclanguage.metamock.model.MetaMockElement;
+import org.webspeclanguage.metamock.model.SuiModelElement;
 import org.webspeclanguage.metamock.model.NumericSpinner;
 import org.webspeclanguage.metamock.model.Page;
 import org.webspeclanguage.metamock.model.Panel;
@@ -38,22 +38,22 @@ import org.webspeclanguage.metamock.model.SelectableList;
 import org.webspeclanguage.metamock.model.Table;
 import org.webspeclanguage.metamock.model.TextArea;
 import org.webspeclanguage.metamock.model.TextBox;
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
 import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutVisitor;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * @author Jose Matias Rivero
  */
 public class ExtJsJavaScriptGenerator extends 
-    DefaultMetaMockControlGenerator<CodeArtifact> implements 
-		MetaMockVisitor<CodeArtifact>,
+    DefaultWidgetGenerator<CodeArtifact> implements 
+		SuiVisitor<CodeArtifact>,
 		GridBagLayoutVisitor<CodeArtifact, CodeArtifact>,
-    MetaMockPageCodeGenerator<CodeFile<CodeArtifact>>{
+    PageCodeGenerator<CodeFile<CodeArtifact>>{
 
   private MainPanelAttributesGenerator mainPanelAttributesGenerator;
   
@@ -142,7 +142,7 @@ public class ExtJsJavaScriptGenerator extends
 				"tag:\"div\", " +
 				"href: \"#\"" +
 			"})"));
-		for (MetaMockElement c : panel.getControls()) {
+		for (SuiModelElement c : panel.getControls()) {
 			cb.add(c.accept(this));
 		}
 		return cb;
@@ -201,7 +201,7 @@ public class ExtJsJavaScriptGenerator extends
 			));
 	}
 
-	private CodeBlock<CodeArtifact> extjsControl(UIControl c, String controlName, CodeBlock<Line> lBlock) {
+	private CodeBlock<CodeArtifact> extjsControl(Widget c, String controlName, CodeBlock<Line> lBlock) {
 		return Code.mixedBlock(
       "var " + this.getId(c) + " = new Ext." + controlName + "({",
       Code.indent(Code.mixedBlock(
@@ -257,7 +257,7 @@ public class ExtJsJavaScriptGenerator extends
   @Override
   public CodeArtifact visitAbsoluteLayout(AbsoluteLayout absoluteLayout) {
     CodeBlock<CodeArtifact> cb = Code.block();
-    for (UIControl c : absoluteLayout.getControls()) {
+    for (Widget c : absoluteLayout.getControls()) {
       cb.add(c.accept(this));
     }
     return cb;
@@ -268,11 +268,11 @@ public class ExtJsJavaScriptGenerator extends
     return ali.getControl().accept(this);
   }
 
-  private String getId(UIControl c) {
+  private String getId(Widget c) {
 		return "ctl" + c.getControlId() + "control";	
 	}
 	
-	private String getContainerId(UIControl c) {
+	private String getContainerId(Widget c) {
 		return "ctl" + c.getControlId() + "-container";	
 	}
 
@@ -280,11 +280,11 @@ public class ExtJsJavaScriptGenerator extends
 		return Code.nullCode();
 	}
 	
-	private class MainPanelAttributesGenerator extends DefaultMetaMockControlGenerator<CodeArtifact> {
+	private class MainPanelAttributesGenerator extends DefaultWidgetGenerator<CodeArtifact> {
 
-	  private UIControl control;
+	  private Widget control;
 	  
-	  public MainPanelAttributesGenerator(UIControl control) {
+	  public MainPanelAttributesGenerator(Widget control) {
       super();
       this.control = control;
     }
@@ -293,7 +293,7 @@ public class ExtJsJavaScriptGenerator extends
 	    this(null);
 	  }
 	  
-	  public void setControl(UIControl control) {
+	  public void setControl(Widget control) {
 	    this.control = control;
 	  }
 

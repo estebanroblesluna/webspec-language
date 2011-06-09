@@ -14,10 +14,10 @@ package org.webspeclanguage.metamock.model.annotation;
 
 /**
  * Annotation suggesting a specific layout inferente for a
- * {@link org.webspeclanguage.metamock.model.CompositeControl}
+ * {@link org.webspeclanguage.metamock.model.CompositeWidget}
  * 
  * @author Jose Matias Rivero
  */
-public interface LayoutAnnotation extends MetaMockAnnotation {
+public interface LayoutAnnotation extends SuiAnnotation {
 
 }

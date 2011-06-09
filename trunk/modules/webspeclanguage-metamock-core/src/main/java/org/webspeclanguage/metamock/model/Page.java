@@ -18,7 +18,7 @@ package org.webspeclanguage.metamock.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface Page extends CompositeControl {
+public interface Page extends CompositeWidget {
 
   String getTitle();
 

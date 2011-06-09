@@ -12,10 +12,10 @@
  */
 package org.webspeclanguage.metamock.translator;
 
-import org.webspeclanguage.metamock.model.CompositeControl;
-import org.webspeclanguage.metamock.model.MetaMockModel;
-import org.webspeclanguage.metamock.model.annotation.CompositeControlAnnotation;
-import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
+import org.webspeclanguage.metamock.model.CompositeWidget;
+import org.webspeclanguage.metamock.model.SuiModel;
+import org.webspeclanguage.metamock.model.annotation.CompositeWidgetAnnotation;
+import org.webspeclanguage.metamock.model.annotation.SuiAnnotation;
 import org.webspeclanguage.metamock.model.annotation.TemplateInstantiationAnnotation;
 
 /**
@@ -28,17 +28,17 @@ public class TemplateAnnotationInterpreter extends AbstractAnnotationInterpreter
 	@Override
 	public void visitTemplateInstantiation(TemplateInstantiationAnnotation ti) {
 		this.getCurrentModel().getTemplate(ti.getTemplateId(), ti.getTemplateContainerId())
-			.instantiateIn((CompositeControl) ti.getControl());
+			.instantiateIn((CompositeWidget) ti.getControl());
 	}
 
-	public void interpreteAnnotation(MetaMockAnnotation annotation,
-			MetaMockModel model) {
+	public void interpreteAnnotation(SuiAnnotation annotation,
+			SuiModel model) {
 		annotation.visit(this);		
 	}
 	
 	@Override
 	public void visitCompositeControlAnnotation(
-			CompositeControlAnnotation cca) {
+			CompositeWidgetAnnotation cca) {
 		if (cca.getTemplateInstantiationAnnotation() != null) {
 			cca.getTemplateInstantiationAnnotation().visit(this);
 		}

@@ -12,12 +12,12 @@
  */
 package org.webspeclanguage.metamock.translator;
 
-import org.webspeclanguage.metamock.model.CompositeControl;
-import org.webspeclanguage.metamock.model.MetaMockFactory;
-import org.webspeclanguage.metamock.model.MetaMockModel;
+import org.webspeclanguage.metamock.model.CompositeWidget;
+import org.webspeclanguage.metamock.model.SuiFactory;
+import org.webspeclanguage.metamock.model.SuiModel;
 import org.webspeclanguage.metamock.model.Repetition;
-import org.webspeclanguage.metamock.model.annotation.CompositeControlAnnotation;
-import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
+import org.webspeclanguage.metamock.model.annotation.CompositeWidgetAnnotation;
+import org.webspeclanguage.metamock.model.annotation.SuiAnnotation;
 import org.webspeclanguage.metamock.model.annotation.RepetitionAnnotation;
 import org.webspeclanguage.metamock.model.annotation.TemplateAnnotation;
 import org.webspeclanguage.metamock.translator.annotation.AnnotationInterpreter;
@@ -30,25 +30,25 @@ import org.webspeclanguage.metamock.translator.annotation.AnnotationInterpreter;
  */
 public class DefaultAnnotationPreprocessor extends AbstractAnnotationInterpreter implements AnnotationInterpreter {
 
-  private MetaMockFactory factory;
+  private SuiFactory factory;
   private RepetitionDetector repetitionDetector;
 
-  public DefaultAnnotationPreprocessor(MetaMockFactory factory, RepetitionDetector repetitionDetector) {
+  public DefaultAnnotationPreprocessor(SuiFactory factory, RepetitionDetector repetitionDetector) {
     super();
     this.setFactory(factory);
     this.setRepetitionDetector(repetitionDetector);
   }
 
-  public void interpreteAnnotation(MetaMockAnnotation annotation, MetaMockModel model) {
+  public void interpreteAnnotation(SuiAnnotation annotation, SuiModel model) {
     this.setCurrentModel(model);
     annotation.visit(this);
   }
 
-  private void setFactory(MetaMockFactory factory) {
+  private void setFactory(SuiFactory factory) {
     this.factory = factory;
   }
 
-  private MetaMockFactory getFactory() {
+  private SuiFactory getFactory() {
     return factory;
   }
 
@@ -62,12 +62,12 @@ public class DefaultAnnotationPreprocessor extends AbstractAnnotationInterpreter
 
   @Override
   public void visitTemplateAnnotation(TemplateAnnotation templateAnnotation) {
-    this.getCurrentModel().addTemplate(new Template((CompositeControl) templateAnnotation.getControl(), templateAnnotation.getTemplateId(), this.getFactory()));
+    this.getCurrentModel().addTemplate(new Template((CompositeWidget) templateAnnotation.getControl(), templateAnnotation.getTemplateId(), this.getFactory()));
   }
 
   @Override
   public void visitRepetitionAnnotation(RepetitionAnnotation repetitionAnnotation) {
-    CompositeControl cc = (CompositeControl) repetitionAnnotation.getControl();
+    CompositeWidget cc = (CompositeWidget) repetitionAnnotation.getControl();
     Repetition r = this.getRepetitionDetector().detectRepetition(cc);
     if (r != null) {
       cc.removeAllChildren();
@@ -76,14 +76,14 @@ public class DefaultAnnotationPreprocessor extends AbstractAnnotationInterpreter
   }
 
   @Override
-  public void visitCompositeControlAnnotation(CompositeControlAnnotation cca) {
+  public void visitCompositeControlAnnotation(CompositeWidgetAnnotation cca) {
     if (cca.getRepetitionAnnotation() != null) {
       cca.getRepetitionAnnotation().visit(this);
     }
   }
 
   @Override
-  public void startingAnnotationInterpretationIn(MetaMockModel model) {
+  public void startingAnnotationInterpretationIn(SuiModel model) {
 
   }
 

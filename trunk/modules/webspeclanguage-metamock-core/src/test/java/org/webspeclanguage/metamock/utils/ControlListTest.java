@@ -16,21 +16,21 @@ package org.webspeclanguage.metamock.utils;
 import java.util.Arrays;
 import java.util.List;
 
-import org.webspeclanguage.metamock.model.MetaMockTestCase;
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.SuiTestCase;
+import org.webspeclanguage.metamock.model.Widget;
 
 /**
  * @author Jose Matias Rivero
  */
-public class ControlListTest extends MetaMockTestCase {
+public class ControlListTest extends SuiTestCase {
 
   private ControlList controlList;
-  private List<UIControl> controls;
+  private List<Widget> controls;
 
   public void setUp() throws Exception {
     super.setUp();
     this.controls = Arrays.asList(
-      (UIControl)
+      (Widget)
       this.getFactory().createButton("b1", 10, 10, 20, 20, "button 1"),
       this.getFactory().createButton("b2", 40, 40, 30, 30, "button 2")
     );
@@ -38,7 +38,7 @@ public class ControlListTest extends MetaMockTestCase {
   
   public void testControlList1() {
     this.controlList = new ControlList();
-    for (UIControl c : this.controls)
+    for (Widget c : this.controls)
       this.controlList.addControl(c);
     this.assertControlInclusion(controls);   
   }
@@ -48,8 +48,8 @@ public class ControlListTest extends MetaMockTestCase {
     this.assertControlInclusion(controls);   
   }
 
-  private void assertControlInclusion(List<UIControl> controlsToAssert) {
-    for (UIControl c : controlsToAssert)
+  private void assertControlInclusion(List<Widget> controlsToAssert) {
+    for (Widget c : controlsToAssert)
       assertTrue(this.controlList.getControls().contains(c));
   }
 }

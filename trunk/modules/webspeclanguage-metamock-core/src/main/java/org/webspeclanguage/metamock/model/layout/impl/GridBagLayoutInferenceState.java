@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 
 /**
@@ -26,29 +26,29 @@ import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
  */
 public class GridBagLayoutInferenceState {
 
-	private Map<UIControl, GridBagLayoutCell> cellsForControls;
+	private Map<Widget, GridBagLayoutCell> cellsForControls;
 	
 	public GridBagLayoutInferenceState() {
 		super();
-		this.setCellsForControls(new HashMap<UIControl, GridBagLayoutCell>());
+		this.setCellsForControls(new HashMap<Widget, GridBagLayoutCell>());
 	}
 
-	private void setCellsForControls(Map<UIControl, GridBagLayoutCell> cellsForControls) {
+	private void setCellsForControls(Map<Widget, GridBagLayoutCell> cellsForControls) {
 		this.cellsForControls = cellsForControls;
 	}
 
-	private Map<UIControl, GridBagLayoutCell> getCellsForControls() {
+	private Map<Widget, GridBagLayoutCell> getCellsForControls() {
 		return cellsForControls;
 	}
 
-	public GridBagLayoutCell getCellForControl(UIControl c) {
+	public GridBagLayoutCell getCellForControl(Widget c) {
 		if (!this.getCellsForControls().containsKey(c)) {
 			this.getCellsForControls().put(c, new GridBagLayoutCellImpl(1, 1, 1, 1, c));
 		}
 		return this.getCellsForControls().get(c);
 	}
 
-	public Collection<UIControl> getControls() {
+	public Collection<Widget> getControls() {
 		return this.getCellsForControls().keySet();
 	}
 	

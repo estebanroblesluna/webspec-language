@@ -14,8 +14,8 @@ package org.webspeclanguage.metamock.translator.annotation;
 
 import java.util.Collection;
 
-import org.webspeclanguage.metamock.model.MetaMockModel;
-import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
+import org.webspeclanguage.metamock.model.SuiModel;
+import org.webspeclanguage.metamock.model.annotation.SuiAnnotation;
 
 /**
  * Allows chaining of {@link AnnotationInterpreter}s
@@ -69,9 +69,9 @@ public class AnnotationProcessor {
 		return nextProcessor;
 	}
 
-	public final void processAnnotations(Collection<MetaMockAnnotation> annotations, MetaMockModel model) {
+	public final void processAnnotations(Collection<SuiAnnotation> annotations, SuiModel model) {
 		this.getInterpreter().startingAnnotationInterpretationIn(model);
-		for (MetaMockAnnotation a : annotations) {
+		for (SuiAnnotation a : annotations) {
 			this.getInterpreter().interpreteAnnotation(a, model);
 		}
 		if (this.getNextProcessor() != null) {
