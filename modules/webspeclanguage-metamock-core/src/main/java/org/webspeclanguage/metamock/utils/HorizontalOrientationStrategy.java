@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.metamock.utils;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 
 
@@ -26,11 +26,11 @@ public class HorizontalOrientationStrategy implements UIControlOrientationStrate
     return instance;
   }
   
-  public int getPosition(UIControl control) {
+  public int getPosition(Widget control) {
     return control.getY();
   }
 
-  public int getLength(UIControl control) {
+  public int getLength(Widget control) {
     return control.getHeight();
   }
 

@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.webspeclanguage.metamock.model.MetaMockElement;
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.SuiModelElement;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutException;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutVisitor;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link GridBagLayout}
@@ -40,14 +40,14 @@ public class GridBagLayoutImpl implements GridBagLayout {
   private Map<Integer, Map<Integer, GridBagLayoutCell>> columnsMap;
   private Integer rowCount;
   private Integer columnCount;
-  private Map<UIControl, GridBagLayoutCell> controlCellMap;
+  private Map<Widget, GridBagLayoutCell> controlCellMap;
 
   public GridBagLayoutImpl() {
     super();
     this.setColumnsMap(new HashMap<Integer, Map<Integer, GridBagLayoutCell>>());
     this.setRowCount(0);
     this.setColumnCount(0);
-    this.setControlCellMap(new HashMap<UIControl, GridBagLayoutCell>());
+    this.setControlCellMap(new HashMap<Widget, GridBagLayoutCell>());
   }
 
   private void setColumnsMap(Map<Integer, Map<Integer, GridBagLayoutCell>> columnsMap) {
@@ -68,17 +68,17 @@ public class GridBagLayoutImpl implements GridBagLayout {
     return sb.toString();
   }
 
-  public Collection<UIControl> getColumnContent(Integer i) {
+  public Collection<Widget> getColumnContent(Integer i) {
     Map<Integer, GridBagLayoutCell> col = this.getColumnsMap().get(i);
     if (col == null) {
-      return new ArrayList<UIControl>();
+      return new ArrayList<Widget>();
     } else {
       return this.getControlsFromCells(col.values());
     }
   }
 
-  private Collection<UIControl> getControlsFromCells(Collection<GridBagLayoutCell> cells) {
-    List<UIControl> ctrls = new ArrayList<UIControl>();
+  private Collection<Widget> getControlsFromCells(Collection<GridBagLayoutCell> cells) {
+    List<Widget> ctrls = new ArrayList<Widget>();
     for (GridBagLayoutCell c : cells) {
       if (c.getControl() != null) {
         ctrls.add(c.getControl());
@@ -105,8 +105,8 @@ public class GridBagLayoutImpl implements GridBagLayout {
     return cell;
   }
 
-  public Collection<UIControl> getRowContent(Integer i) {
-    Set<UIControl> controls = new HashSet<UIControl>();
+  public Collection<Widget> getRowContent(Integer i) {
+    Set<Widget> controls = new HashSet<Widget>();
     for (Map<Integer, GridBagLayoutCell> m : this.getColumnsMap().values()) {
       if (m.get(i) != null) {
         if (m.get(i).getControl() != null) {
@@ -117,10 +117,10 @@ public class GridBagLayoutImpl implements GridBagLayout {
     return controls;
   }
 
-  public Collection<UIControl> getControls() {
-    Set<UIControl> controls = new HashSet<UIControl>();
+  public Collection<Widget> getControls() {
+    Set<Widget> controls = new HashSet<Widget>();
     for (Map<Integer, GridBagLayoutCell> m : this.getColumnsMap().values()) {
-      for (UIControl c : this.getControlsFromCells(m.values())) {
+      for (Widget c : this.getControlsFromCells(m.values())) {
         controls.add(c);
       }
     }
@@ -143,15 +143,15 @@ public class GridBagLayoutImpl implements GridBagLayout {
     this.columnCount = columns;
   }
 
-  private void setControlCellMap(Map<UIControl, GridBagLayoutCell> controlCell) {
+  private void setControlCellMap(Map<Widget, GridBagLayoutCell> controlCell) {
     this.controlCellMap = controlCell;
   }
 
-  private Map<UIControl, GridBagLayoutCell> getControlCellMap() {
+  private Map<Widget, GridBagLayoutCell> getControlCellMap() {
     return controlCellMap;
   }
 
-  private void addControl(Integer rowIndex, Integer columnIndex, UIControl c) throws GridBagLayoutException {
+  private void addControl(Integer rowIndex, Integer columnIndex, Widget c) throws GridBagLayoutException {
     this.add(new GridBagLayoutCellImpl(rowIndex, columnIndex, c));
   }
 
@@ -195,7 +195,7 @@ public class GridBagLayoutImpl implements GridBagLayout {
     }
   }
 
-  public GridBagLayoutCell getCell(MetaMockElement c) {
+  public GridBagLayoutCell getCell(SuiModelElement c) {
     return this.getControlCellMap().get(c);
   }
 
@@ -205,7 +205,7 @@ public class GridBagLayoutImpl implements GridBagLayout {
     }
   }
 
-  public void removeControl(UIControl c) {
+  public void removeControl(Widget c) {
     if (!this.getControlCellMap().containsKey(c)) {
       return;
     }
@@ -223,7 +223,7 @@ public class GridBagLayoutImpl implements GridBagLayout {
     cell.setGridBagLayout(null);
   }
 
-  private void removeControlEntry(MetaMockElement control) {
+  private void removeControlEntry(SuiModelElement control) {
     this.getControlCellMap().remove(control);
   }
 
@@ -231,13 +231,13 @@ public class GridBagLayoutImpl implements GridBagLayout {
     this.getColumnsMap().get(columnIndex).remove(rowIndex);
   }
 
-  void addRow(Integer iRow, List<UIControl> controls) throws GridBagLayoutException {
+  void addRow(Integer iRow, List<Widget> controls) throws GridBagLayoutException {
     for (Integer iCol = 0; iCol < controls.size(); iCol++) {
       this.addControl(iRow, iCol, controls.get(iCol));
     }
   }
 
-  public GridBagLayoutCell getControlCell(UIControl c) {
+  public GridBagLayoutCell getControlCell(Widget c) {
     return this.getControlCellMap().get(c);
   }
 
@@ -259,8 +259,8 @@ public class GridBagLayoutImpl implements GridBagLayout {
     return rowResults;
   }
 
-  public Collection<UIControl> getControlsInRange(Integer row, Integer col, Integer rowspan, Integer colspan) {
-    Set<UIControl> controls = new HashSet<UIControl>();
+  public Collection<Widget> getControlsInRange(Integer row, Integer col, Integer rowspan, Integer colspan) {
+    Set<Widget> controls = new HashSet<Widget>();
     for (Integer iRow = 0; iRow < rowspan; iRow++) {
       for (Integer iCol = 0; iCol < colspan; iCol++) {
         if (this.getCell(row + iRow, col + iCol).getControl() != null) {
@@ -273,13 +273,13 @@ public class GridBagLayoutImpl implements GridBagLayout {
 
   private Collection<GridBagLayoutCell> getCells() {
     List<GridBagLayoutCell> cells = new ArrayList<GridBagLayoutCell>();
-    for (UIControl c : this.getControls()) {
+    for (Widget c : this.getControls()) {
       cells.add(this.getCell(c));
     }
     return cells;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitGridBagLayout(this);
   }
 
@@ -437,7 +437,7 @@ public class GridBagLayoutImpl implements GridBagLayout {
 
   }
 
-  public void replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+  public void replaceControl(Widget controlToReplace, Widget replacingControl) {
     this.getCell(controlToReplace).setControl(replacingControl);
   }
 }

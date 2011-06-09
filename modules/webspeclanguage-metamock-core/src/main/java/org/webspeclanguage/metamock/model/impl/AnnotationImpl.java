@@ -13,30 +13,30 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.Annotation;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Annotation}
  * 
  * @author Jose Matias Rivero
  */
-public class AnnotationImpl extends UIControlImpl implements Annotation {
+public class AnnotationImpl extends WidgetImpl implements Annotation {
 
-  private UIControl targetElement;
+  private Widget targetElement;
   private String content;
 
-  public AnnotationImpl(String controlID, Integer x, Integer y, Integer width, Integer height, UIControl targetElement, String content) {
+  public AnnotationImpl(String controlID, Integer x, Integer y, Integer width, Integer height, Widget targetElement, String content) {
     super(controlID, x, y, width, height);
     this.setTargetElement(targetElement);
     this.setContent(content);
   }
 
-  public final UIControl getTargetElement() {
+  public final Widget getTargetElement() {
     return this.targetElement;
   }
 
-  public final void setTargetElement(UIControl targetElement) {
+  public final void setTargetElement(Widget targetElement) {
     this.targetElement = targetElement;
   }
 
@@ -48,11 +48,11 @@ public class AnnotationImpl extends UIControlImpl implements Annotation {
     return content;
   }
 
-  public final <T> T accept(MetaMockVisitor<T> v) {
+  public final <T> T accept(SuiVisitor<T> v) {
     return v.visitAnnotation(this);
   }
 
-  public final UIControl copyConcreteControl() {
+  public final Widget copyConcreteControl() {
     return new AnnotationImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getTargetElement(), this.getContent());
   }
 

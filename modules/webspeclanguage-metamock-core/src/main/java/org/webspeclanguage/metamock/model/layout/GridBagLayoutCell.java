@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.metamock.model.layout;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 
 /**
  * Represents a cell in a {@link GridBagLayout}. A GridBagLayoutCell has the row
@@ -33,7 +33,7 @@ public interface GridBagLayoutCell extends LayoutInfo {
 
   Integer getColumnSpan();
 
-  UIControl getControl();
+  Widget getControl();
 
   Boolean hasControl();
 
@@ -49,6 +49,6 @@ public interface GridBagLayoutCell extends LayoutInfo {
 
   GridBagLayoutCell copy();
 
-  void setControl(UIControl replacingControl);
+  void setControl(Widget replacingControl);
 
 }

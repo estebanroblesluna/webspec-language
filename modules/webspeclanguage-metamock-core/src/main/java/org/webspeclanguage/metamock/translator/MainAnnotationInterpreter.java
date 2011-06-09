@@ -12,14 +12,14 @@
  */
 package org.webspeclanguage.metamock.translator;
 
-import org.webspeclanguage.metamock.model.CompositeControl;
-import org.webspeclanguage.metamock.model.MetaMockFactory;
-import org.webspeclanguage.metamock.model.MetaMockModel;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.model.annotation.CompositeControlAnnotation;
-import org.webspeclanguage.metamock.model.annotation.ControlAnnotation;
+import org.webspeclanguage.metamock.model.CompositeWidget;
+import org.webspeclanguage.metamock.model.SuiFactory;
+import org.webspeclanguage.metamock.model.SuiModel;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.model.annotation.CompositeWidgetAnnotation;
+import org.webspeclanguage.metamock.model.annotation.WidgetAnnotation;
 import org.webspeclanguage.metamock.model.annotation.GridBagLayoutAnnotation;
-import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
+import org.webspeclanguage.metamock.model.annotation.SuiAnnotation;
 import org.webspeclanguage.metamock.model.annotation.VerticalBoxLayoutAnnotation;
 import org.webspeclanguage.metamock.translator.annotation.AnnotationInterpreter;
 
@@ -31,31 +31,31 @@ import org.webspeclanguage.metamock.translator.annotation.AnnotationInterpreter;
  */
 public class MainAnnotationInterpreter extends AbstractAnnotationInterpreter implements AnnotationInterpreter {
 
-  private MetaMockFactory factory;
-  private UIControl currentControl;
+  private SuiFactory factory;
+  private Widget currentControl;
 
-  public MainAnnotationInterpreter(MetaMockFactory factory) {
+  public MainAnnotationInterpreter(SuiFactory factory) {
     this.setFactory(factory);
   }
 
-  private void setFactory(MetaMockFactory factory) {
+  private void setFactory(SuiFactory factory) {
     this.factory = factory;
   }
 
-  private MetaMockFactory getFactory() {
+  private SuiFactory getFactory() {
     return factory;
   }
 
-  private void setCurrentControl(UIControl c) {
+  private void setCurrentControl(Widget c) {
     this.currentControl = c;
   }
 
-  private UIControl getCurrentControl() {
+  private Widget getCurrentControl() {
     return currentControl;
   }
 
   @Override
-  public void visitControlAnnotation(ControlAnnotation ca) {
+  public void visitControlAnnotation(WidgetAnnotation ca) {
     this.setCurrentControl(ca.getControl());
     if (ca.getId() != null) {
       ca.getControl().setFriendlyId(ca.getId());
@@ -64,22 +64,22 @@ public class MainAnnotationInterpreter extends AbstractAnnotationInterpreter imp
 
   @Override
   public void visitGridBagLayoutAnnotation(GridBagLayoutAnnotation gridBagLayoutAnnotation) {
-    CompositeControl c = (CompositeControl) this.getCurrentControl();
+    CompositeWidget c = (CompositeWidget) this.getCurrentControl();
     c.setLayout(this.getFactory().createGridBagLayout(c.getControls()));
   }
 
   @Override
   public void visitVerticalBoxLayoutAnnotation(VerticalBoxLayoutAnnotation verticalBoxLayoutAnnotation) {
-    CompositeControl c = (CompositeControl) this.getCurrentControl();
+    CompositeWidget c = (CompositeWidget) this.getCurrentControl();
     c.setLayout(this.getFactory().createVerticalBoxLayout(c.getControls()));
   }
 
-  public void interpreteAnnotation(MetaMockAnnotation annotation, MetaMockModel model) {
+  public void interpreteAnnotation(SuiAnnotation annotation, SuiModel model) {
     annotation.visit(this);
   }
 
   @Override
-  public void visitCompositeControlAnnotation(CompositeControlAnnotation cca) {
+  public void visitCompositeControlAnnotation(CompositeWidgetAnnotation cca) {
     this.visitControlAnnotation(cca);
     if (cca.getLayoutAnnotation() != null) {
       cca.getLayoutAnnotation().visit(this);

@@ -17,10 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
 import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * @author Jose Matias Rivero
@@ -29,38 +29,38 @@ public class AbsoluteLayoutImpl implements AbsoluteLayout {
 
   public AbsoluteLayoutImpl() {
     super();
-    this.setLayoutInfoByControl(new HashMap<UIControl, AbsoluteLayoutInfo>());
+    this.setLayoutInfoByControl(new HashMap<Widget, AbsoluteLayoutInfo>());
   }
 
-  private Map<UIControl, AbsoluteLayoutInfo> layoutInfoByControl;
+  private Map<Widget, AbsoluteLayoutInfo> layoutInfoByControl;
 
-  private void setLayoutInfoByControl(Map<UIControl, AbsoluteLayoutInfo> layoutInfoByControl) {
+  private void setLayoutInfoByControl(Map<Widget, AbsoluteLayoutInfo> layoutInfoByControl) {
     this.layoutInfoByControl = layoutInfoByControl;
   }
 
-  private Map<UIControl, AbsoluteLayoutInfo> getLayoutInfoByControl() {
+  private Map<Widget, AbsoluteLayoutInfo> getLayoutInfoByControl() {
     return layoutInfoByControl;
   }
 
-  public AbsoluteLayoutInfo getInfoForControl(UIControl c) {
+  public AbsoluteLayoutInfo getInfoForControl(Widget c) {
     return this.getLayoutInfoByControl().get(c);
   }
 
-  public void addControl(UIControl c, AbsoluteLayoutInfo layoutInfo) {
+  public void addControl(Widget c, AbsoluteLayoutInfo layoutInfo) {
     this.getLayoutInfoByControl().put(c, layoutInfo);
   }
 
-  public Collection<UIControl> getControls() {
+  public Collection<Widget> getControls() {
     return this.getLayoutInfoByControl().keySet();
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitAbsoluteLayout(this);
   }
 
   public Object copy() {
     AbsoluteLayoutImpl layout = new AbsoluteLayoutImpl();
-    for (UIControl c : layout.getControls()) {
+    for (Widget c : layout.getControls()) {
       AbsoluteLayoutInfo info = (AbsoluteLayoutInfo) this.getInfoForControl(c).copy();
       layout.addControl(info.getControl(), info); 
     }
@@ -71,7 +71,7 @@ public class AbsoluteLayoutImpl implements AbsoluteLayout {
     return this.getLayoutInfoByControl().values();
   }
 
-  public void replaceControl(UIControl controlToReplace, UIControl replacingControl) {
+  public void replaceControl(Widget controlToReplace, Widget replacingControl) {
     AbsoluteLayoutInfo info = this.getLayoutInfoByControl().get(controlToReplace);
     this.getLayoutInfoByControl().remove(controlToReplace);
     this.getLayoutInfoByControl().put(replacingControl, info);

@@ -16,17 +16,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.webspeclanguage.metamock.model.Annotation;
-import org.webspeclanguage.metamock.model.CompositeControl;
+import org.webspeclanguage.metamock.model.CompositeWidget;
 import org.webspeclanguage.metamock.model.Page;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Page}
  * 
  * @author Jose Matias Rivero
  */
-public class PageImpl extends CompositeControlImpl implements Page {
+public class PageImpl extends CompositeWidgetImpl implements Page {
 
   private String title;
   private Set<Annotation> annotations;
@@ -53,7 +53,7 @@ public class PageImpl extends CompositeControlImpl implements Page {
     return annotations;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitPage(this);
   }
 
@@ -67,13 +67,13 @@ public class PageImpl extends CompositeControlImpl implements Page {
   }
 
   @Override
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     PageImpl other = (PageImpl) control;
     return this.getTitle().equals(other.getTitle());
   }
 
   @Override
-  protected CompositeControl createNewInstance() {
+  protected CompositeWidget createNewInstance() {
     return new PageImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getTitle(), this.getContainerId());
   }
 

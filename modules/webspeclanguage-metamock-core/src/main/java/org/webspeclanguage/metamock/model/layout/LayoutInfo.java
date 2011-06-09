@@ -12,11 +12,11 @@
  */
 package org.webspeclanguage.metamock.model.layout;
 
-import org.webspeclanguage.metamock.model.MetaMockElement;
+import org.webspeclanguage.metamock.model.SuiModelElement;
 
 /**
  * @author Jose Matias Rivero
  */
-public interface LayoutInfo extends MetaMockElement {
+public interface LayoutInfo extends SuiModelElement {
 
 }

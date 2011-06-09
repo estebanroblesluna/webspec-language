@@ -14,14 +14,14 @@ package org.webspeclanguage.metamock.model.layout;
 
 import java.util.Collection;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 
 /**
  * @author Jose Matias Rivero
  */
 public interface AbsoluteLayout extends Layout {
 
-  AbsoluteLayoutInfo getInfoForControl(UIControl c);
+  AbsoluteLayoutInfo getInfoForControl(Widget c);
   
   Collection<AbsoluteLayoutInfo> getAllLayoutInfo();
   

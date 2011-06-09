@@ -19,9 +19,9 @@ package org.webspeclanguage.metamock.model;
  */
 public interface Label extends SimpleControl {
 
-  UIControl getControl();
+  Widget getControl();
 
-  void setControl(UIControl control);
+  void setControl(Widget control);
 
   String getText();
 

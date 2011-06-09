@@ -12,39 +12,24 @@
  */
 package org.webspeclanguage.metamock.model.annotation.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.model.annotation.ControlAnnotation;
-import org.webspeclanguage.metamock.model.annotation.ControlAnnotationVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.model.annotation.SuiAnnotation;
 
-public class ControlAnnotationImpl implements ControlAnnotation {
+public abstract class ControlAnnotationImpl implements SuiAnnotation {
 
-  private UIControl control;
-  private String id;
+  private Widget control;
 
-  public ControlAnnotationImpl(UIControl control, String id) {
+  public ControlAnnotationImpl(Widget control) {
     super();
     this.setControl(control);
-    this.setId(id);
   }
 
-  public final void setId(String id) {
-    this.id = id;
-  }
-
-  public final String getId() {
-    return id;
-  }
-
-  private void setControl(UIControl control) {
+  private void setControl(Widget control) {
     this.control = control;
   }
 
-  public final UIControl getControl() {
+  public Widget getControl() {
     return control;
-  }
-
-  public void visit(ControlAnnotationVisitor cav) {
-    cav.visitControlAnnotation(this);
   }
 
 }

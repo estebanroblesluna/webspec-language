@@ -19,7 +19,7 @@ package org.webspeclanguage.metamock.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface Repetition extends CompositeControl {
+public interface Repetition extends CompositeWidget {
 
   Integer getRows();
 

@@ -17,6 +17,6 @@ package org.webspeclanguage.metamock.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface SimpleControl extends UIControl {
+public interface SimpleControl extends Widget {
 
 }

@@ -12,17 +12,17 @@
  */
 package org.webspeclanguage.metamock.model.annotation.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.model.annotation.ControlAnnotationVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.model.annotation.WidgetAnnotationVisitor;
 import org.webspeclanguage.metamock.model.annotation.TemplateInstantiationAnnotation;
 
-public class TemplateInstantiationAnnotationImpl extends MetaMockAnnotationImpl implements TemplateInstantiationAnnotation {
+public class TemplateInstantiationAnnotationImpl extends ControlAnnotationImpl implements TemplateInstantiationAnnotation {
 
   private String templateId;
   private String templateContainerId;
   private String placeholderId;
 
-  public TemplateInstantiationAnnotationImpl(UIControl control, String templateId, String templateContainerId, String placeholderId) {
+  public TemplateInstantiationAnnotationImpl(Widget control, String templateId, String templateContainerId, String placeholderId) {
     super(control);
     this.setTemplateId(templateId);
     this.setTemplateContainerId(templateContainerId);
@@ -53,7 +53,7 @@ public class TemplateInstantiationAnnotationImpl extends MetaMockAnnotationImpl 
     return templateContainerId;
   }
 
-  public void visit(ControlAnnotationVisitor cav) {
+  public void visit(WidgetAnnotationVisitor cav) {
     cav.visitTemplateInstantiation(this);
   }
 

@@ -14,22 +14,22 @@ package org.webspeclanguage.metamock.model.impl;
 
 import java.util.Collection;
 
-import org.webspeclanguage.metamock.model.CompositeControl;
+import org.webspeclanguage.metamock.model.CompositeWidget;
 import org.webspeclanguage.metamock.model.Repetition;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Repetition}
  * 
  * @author Jose Matias Rivero
  */
-public class RepetitionImpl extends CompositeControlImpl implements Repetition {
+public class RepetitionImpl extends CompositeWidgetImpl implements Repetition {
 
   private Integer rows;
   private Integer columns;
 
-  public RepetitionImpl(String controlID, Integer x, Integer y, Integer width, Integer height, Collection<UIControl> controls, Integer rows, Integer colums,
+  public RepetitionImpl(String controlID, Integer x, Integer y, Integer width, Integer height, Collection<Widget> controls, Integer rows, Integer colums,
           String containerId) {
     super(controlID, x, y, width, height, controls, containerId);
     this.setRows(rows);
@@ -52,12 +52,12 @@ public class RepetitionImpl extends CompositeControlImpl implements Repetition {
     return columns;
   }
 
-  protected CompositeControl createNewInstance() {
+  protected CompositeWidget createNewInstance() {
     return new RepetitionImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getControls(), this.getRows(), this
             .getColumns(), this.getContainerId());
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitRepetition(this);
   }
 

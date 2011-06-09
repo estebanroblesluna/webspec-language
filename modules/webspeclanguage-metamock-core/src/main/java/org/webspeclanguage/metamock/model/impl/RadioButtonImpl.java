@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.RadioButton;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link RadioButton}
@@ -38,18 +38,18 @@ public class RadioButtonImpl extends SimpleControlImpl implements RadioButton {
     this.text = text;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitRadioButton(this);
   }
 
   @Override
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     RadioButton other = (RadioButton) control;
     return super.equalInContent(other) && this.getText().equals(other.getText());
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new RadioButtonImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getText());
   }
   

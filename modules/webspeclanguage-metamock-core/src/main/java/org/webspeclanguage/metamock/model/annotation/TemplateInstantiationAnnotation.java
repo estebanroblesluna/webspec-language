@@ -14,11 +14,11 @@ package org.webspeclanguage.metamock.model.annotation;
 
 /**
  * Indicates a previously defined template content instantiation in a
- * {@link org.webspeclanguage.metamock.model.CompositeControl} associated
+ * {@link org.webspeclanguage.metamock.model.CompositeWidget} associated
  * 
  * @author Jose Matias Rivero
  */
-public interface TemplateInstantiationAnnotation extends MetaMockAnnotation {
+public interface TemplateInstantiationAnnotation extends SuiAnnotation {
 
   String getTemplateId();
 

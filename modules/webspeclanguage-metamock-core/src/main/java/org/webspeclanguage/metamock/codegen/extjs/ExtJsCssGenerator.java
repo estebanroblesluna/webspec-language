@@ -15,7 +15,7 @@ package org.webspeclanguage.metamock.codegen.extjs;
 import org.webspeclanguage.metamock.codegen.artifacts.Code;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeBlock;
 import org.webspeclanguage.metamock.codegen.artifacts.CodeFile;
-import org.webspeclanguage.metamock.codegen.common.DefaultMetaMockControlGenerator;
+import org.webspeclanguage.metamock.codegen.common.DefaultWidgetGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodeArtifact;
 import org.webspeclanguage.metamock.codegen.framework.core.CodegenUtil;
 import org.webspeclanguage.metamock.model.Page;
@@ -26,7 +26,7 @@ import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
 /**
  * @author Jose Matias Rivero
  */
-public class ExtJsCssGenerator extends DefaultMetaMockControlGenerator<CodeArtifact> {
+public class ExtJsCssGenerator extends DefaultWidgetGenerator<CodeArtifact> {
 
   public CodeFile<CodeArtifact> generateFrom(Page page) {
     return 
@@ -74,7 +74,7 @@ public class ExtJsCssGenerator extends DefaultMetaMockControlGenerator<CodeArtif
     return panel.getLayout().accept(this);
   }
   
-  private class PageCssGenerator extends DefaultMetaMockControlGenerator<CodeArtifact> {
+  private class PageCssGenerator extends DefaultWidgetGenerator<CodeArtifact> {
 
     private Page page;
     

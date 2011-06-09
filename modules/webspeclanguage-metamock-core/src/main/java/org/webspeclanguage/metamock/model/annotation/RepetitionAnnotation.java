@@ -14,10 +14,10 @@ package org.webspeclanguage.metamock.model.annotation;
 
 /**
  * Suggests the inference of a repetition in a
- * {@link org.webspeclanguage.metamock.model.CompositeControl}
+ * {@link org.webspeclanguage.metamock.model.CompositeWidget}
  * 
  * @author Jose Matias Rivero
  */
-public interface RepetitionAnnotation extends MetaMockAnnotation {
+public interface RepetitionAnnotation extends SuiAnnotation {
 
 }

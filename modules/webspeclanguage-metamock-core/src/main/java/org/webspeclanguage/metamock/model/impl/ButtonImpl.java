@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.Button;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link Button}
@@ -38,18 +38,18 @@ public class ButtonImpl extends SimpleControlImpl implements Button {
     return text;
   }
 
-  public final <T> T accept(MetaMockVisitor<T> v) {
+  public final <T> T accept(SuiVisitor<T> v) {
     return v.visitButton(this);
   }
 
   @Override
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     Button other = (Button) control;
     return super.equalInContent(other) && this.getText().equals(other.getText());
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new ButtonImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getText());
   }
   

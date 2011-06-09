@@ -12,10 +12,10 @@
  */
 package org.webspeclanguage.metamock.model.layout.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GridBagLayout;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation {@link GridBagLayoutCell}
@@ -28,14 +28,14 @@ public class GridBagLayoutCellImpl implements GridBagLayoutCell {
   private Integer column;
   private Integer rowSpan;
   private Integer columnSpan;
-  private UIControl control;
+  private Widget control;
   private GridBagLayout gridBagLayout;
 
-  public GridBagLayoutCellImpl(Integer row, Integer column, UIControl control) {
+  public GridBagLayoutCellImpl(Integer row, Integer column, Widget control) {
     this(row, column, 1, 1, control);
   }
 
-  public GridBagLayoutCellImpl(Integer row, Integer column, Integer rowSpan, Integer columnSpan, UIControl control) {
+  public GridBagLayoutCellImpl(Integer row, Integer column, Integer rowSpan, Integer columnSpan, Widget control) {
     super();
     this.setRow(row);
     this.setColumn(column);
@@ -60,11 +60,11 @@ public class GridBagLayoutCellImpl implements GridBagLayoutCell {
     return column;
   }
 
-  public void setControl(UIControl control) {
+  public void setControl(Widget control) {
     this.control = control;
   }
 
-  public UIControl getControl() {
+  public Widget getControl() {
     return control;
   }
 
@@ -97,7 +97,7 @@ public class GridBagLayoutCellImpl implements GridBagLayoutCell {
   }
 
   public GridBagLayoutCell copy() {
-    return new GridBagLayoutCellImpl(this.getRow(), this.getColumn(), this.getRowSpan(), this.getColumnSpan(), (UIControl) this.getControl().copy());
+    return new GridBagLayoutCellImpl(this.getRow(), this.getColumn(), this.getRowSpan(), this.getColumnSpan(), (Widget) this.getControl().copy());
   }
   
   public String toString() {
@@ -105,7 +105,7 @@ public class GridBagLayoutCellImpl implements GridBagLayoutCell {
     ", " + this.getColumnSpan() + ", " + this.getControl() + ")";
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitGridBagLayoutCell(this);
   }
 

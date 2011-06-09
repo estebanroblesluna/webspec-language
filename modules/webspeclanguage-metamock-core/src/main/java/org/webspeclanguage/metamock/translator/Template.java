@@ -13,52 +13,52 @@
 package org.webspeclanguage.metamock.translator;
 
 import org.webspeclanguage.codegen.framework.core.CodegenUtil;
-import org.webspeclanguage.metamock.model.CompositeControl;
-import org.webspeclanguage.metamock.model.MetaMockFactory;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockUtil;
+import org.webspeclanguage.metamock.model.CompositeWidget;
+import org.webspeclanguage.metamock.model.SuiFactory;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiUtil;
 
 
 /**
- * Represents a template which content is expressed through an {@link CompositeControl}.
+ * Represents a template which content is expressed through an {@link CompositeWidget}.
  * 
  * @author Jose Matias Rivero
  */
 public class Template {
 
-	private CompositeControl contents;
+	private CompositeWidget contents;
 	private String templateId;
-	private MetaMockFactory factory;
+	private SuiFactory factory;
 	
-	public Template(CompositeControl contents, String templateId, MetaMockFactory factory) {
+	public Template(CompositeWidget contents, String templateId, SuiFactory factory) {
 		super();
 		this.setContents(contents);
 		this.setTemplateId(templateId);
 		this.setFactory(factory);
 	}
 
-	public void instantiateIn(CompositeControl cc) {
-		CompositeControl newCc = (CompositeControl) this.getContents().copy();
-		for (UIControl c : MetaMockUtil.getAllControlsRecursively(newCc)) {
+	public void instantiateIn(CompositeWidget cc) {
+		CompositeWidget newCc = (CompositeWidget) this.getContents().copy();
+		for (Widget c : SuiUtil.getAllControlsRecursively(newCc)) {
 			c.setFriendlyId(cc.getFriendlyId() + CodegenUtil.firstToUpper(c.getFriendlyId()));
 		}
 		cc.setLayout(newCc.getLayout());
 		cc.setControls(newCc.getControls());
 	}
 
-	private void setContents(CompositeControl contents) {
+	private void setContents(CompositeWidget contents) {
 		this.contents = contents;
 	}
 
-	public CompositeControl getContents() {
+	public CompositeWidget getContents() {
 		return contents;
 	}
 
-	private void setFactory(MetaMockFactory factory) {
+	private void setFactory(SuiFactory factory) {
 		this.factory = factory;
 	}
 
-	public MetaMockFactory getFactory() {
+	public SuiFactory getFactory() {
 		return factory;
 	}
 

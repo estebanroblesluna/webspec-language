@@ -21,8 +21,8 @@ import org.webspeclanguage.metamock.model.Button;
 import org.webspeclanguage.metamock.model.Image;
 import org.webspeclanguage.metamock.model.Label;
 import org.webspeclanguage.metamock.model.Link;
-import org.webspeclanguage.metamock.model.MetaMockModel;
-import org.webspeclanguage.metamock.model.MetaMockTestCase;
+import org.webspeclanguage.metamock.model.SuiModel;
+import org.webspeclanguage.metamock.model.SuiTestCase;
 import org.webspeclanguage.metamock.model.NumericSpinner;
 import org.webspeclanguage.metamock.model.Page;
 import org.webspeclanguage.metamock.model.Panel;
@@ -30,29 +30,29 @@ import org.webspeclanguage.metamock.model.RadioButton;
 import org.webspeclanguage.metamock.model.SelectableList;
 import org.webspeclanguage.metamock.model.Table;
 import org.webspeclanguage.metamock.model.TextArea;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.translator.MetaMockTranslationException;
-import org.webspeclanguage.metamock.utils.MetaMockUtil;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.translator.SuiTranslationException;
+import org.webspeclanguage.metamock.utils.SuiUtil;
 
 /**
  * @author Jose Matias Rivero
  */
-public abstract class ControlParserTestCase extends MetaMockTestCase {
+public abstract class ControlParserTestCase extends SuiTestCase {
 
-  public abstract void testModelTranslation() throws MetaMockTranslationException, Exception;
+  public abstract void testModelTranslation() throws SuiTranslationException, Exception;
 
   @SuppressWarnings("unchecked")
   protected void assertConditionsOnInviteFriendsPage(Page page) {
-    Collection<UIControl> controls = MetaMockUtil.filterControlsByType(page.getControls(), Label.class);
+    Collection<Widget> controls = SuiUtil.filterControlsByType(page.getControls(), Label.class);
 
     assertEquals(controls.size(), 1);
     assertEquals(((Label) controls.iterator().next()).getText(), "Event: Chris' birthday party");
 
-    controls = MetaMockUtil.filterControlsByType(page.getControls(), org.webspeclanguage.metamock.model.List.class);
+    controls = SuiUtil.filterControlsByType(page.getControls(), org.webspeclanguage.metamock.model.List.class);
 
     assertEquals(controls.size(), 1);
 
-    List<UIControl> controlList = MetaMockUtil.sortControlsByXCoord(MetaMockUtil.filterControlsByType(page.getControls(), Button.class));
+    List<Widget> controlList = SuiUtil.sortControlsByXCoord(SuiUtil.filterControlsByType(page.getControls(), Button.class));
 
     assertEquals(controlList.size(), 2);
     assertEquals(((Button) controlList.get(0)).getText(), "Return");
@@ -62,7 +62,7 @@ public abstract class ControlParserTestCase extends MetaMockTestCase {
 
   @SuppressWarnings("unchecked")
   protected void assertOnNewEventPage(Page page) {
-    List<UIControl> controls = MetaMockUtil.sortControlsByYCoord(MetaMockUtil.filterControlsByType(page.getControls(), Label.class));
+    List<Widget> controls = SuiUtil.sortControlsByYCoord(SuiUtil.filterControlsByType(page.getControls(), Label.class));
 
     assertEquals(controls.size(), 5);
 
@@ -81,13 +81,13 @@ public abstract class ControlParserTestCase extends MetaMockTestCase {
     l = (Label) controls.get(4);
     assertEquals(l.getText(), "Visibility:");
 
-    controls = MetaMockUtil.sortControlsByXCoord(MetaMockUtil.filterControlsByType(page.getControls(), Button.class));
+    controls = SuiUtil.sortControlsByXCoord(SuiUtil.filterControlsByType(page.getControls(), Button.class));
 
     assertEquals(controls.size(), 2);
     assertEquals(((Button) controls.get(0)).getText(), "Cancel");
     assertEquals(((Button) controls.get(1)).getText(), "Ok");
 
-    controls = MetaMockUtil.sortControlsByYCoord(MetaMockUtil.filterControlsByType(page.getControls(), RadioButton.class));
+    controls = SuiUtil.sortControlsByYCoord(SuiUtil.filterControlsByType(page.getControls(), RadioButton.class));
 
     assertEquals(controls.size(), 2);
     assertEquals(((RadioButton) controls.get(0)).getText(), "Private");
@@ -95,14 +95,14 @@ public abstract class ControlParserTestCase extends MetaMockTestCase {
   }
 
   @SuppressWarnings("unchecked")
-  protected void assertModelFeatures(MetaMockModel model) {
-    Collection<UIControl> annotations = MetaMockUtil.filterControlsByType(model.getControlsOutsidePages(), Annotation.class);
+  protected void assertModelFeatures(SuiModel model) {
+    Collection<Widget> annotations = SuiUtil.filterControlsByType(model.getControlsOutsidePages(), Annotation.class);
     
     assertEquals(2, annotations.size());
     
     for (Iterator iterator = annotations.iterator(); iterator.hasNext();) {
       Annotation a = (Annotation) iterator.next();
-      assertTrue(MetaMockUtil.controlIsKindOf(a.getTargetElement(), Page.class));
+      assertTrue(SuiUtil.controlIsKindOf(a.getTargetElement(), Page.class));
       if (a.getContent().equals("layout: \"vbox\""))
         assertTrue(((Page) a.getTargetElement()).getTitle().equals("Invite friends to event"));
       else if (a.getContent().equals("layout: \"gridbag\""))
@@ -115,36 +115,36 @@ public abstract class ControlParserTestCase extends MetaMockTestCase {
 
   @SuppressWarnings("unchecked")
   protected void assertConditionsOnTaskManagerPage(Page page) {
-    Collection<UIControl> controls = MetaMockUtil.filterControlsByType(page.getControls(), Table.class);
+    Collection<Widget> controls = SuiUtil.filterControlsByType(page.getControls(), Table.class);
     assertEquals(1, controls.size());
     
-    assertEquals(1, MetaMockUtil.filterControlsByType(page.getControls(), Image.class).size());
+    assertEquals(1, SuiUtil.filterControlsByType(page.getControls(), Image.class).size());
     
     Table t = (Table) controls.iterator().next();
     assertEquals(2, t.getColumns().size());
     assertEquals("Priority", t.getColumns().get(0).getLabel());
     assertEquals("Description", t.getColumns().get(1).getLabel());
     
-    controls = MetaMockUtil.filterControlsByType(page.getControls(), Panel.class);
+    controls = SuiUtil.filterControlsByType(page.getControls(), Panel.class);
     assertEquals(1, controls.size());
     Panel p = (Panel) controls.iterator().next();
     
-    controls = MetaMockUtil.filterControlsByType(p.getControls(), Link.class);
+    controls = SuiUtil.filterControlsByType(p.getControls(), Link.class);
     assertEquals(1, controls.size());
     Link link = (Link) controls.iterator().next();
     assertEquals("Add Task", link.getText());
     
-    assertEquals(1, MetaMockUtil.filterControlsByType(p.getControls(), TextArea.class).size());
-    assertEquals(1, MetaMockUtil.filterControlsByType(p.getControls(), NumericSpinner.class).size());
-    assertEquals(1, MetaMockUtil.filterControlsByType(p.getControls(), SelectableList.class).size());
+    assertEquals(1, SuiUtil.filterControlsByType(p.getControls(), TextArea.class).size());
+    assertEquals(1, SuiUtil.filterControlsByType(p.getControls(), NumericSpinner.class).size());
+    assertEquals(1, SuiUtil.filterControlsByType(p.getControls(), SelectableList.class).size());
 
-    controls = MetaMockUtil.filterControlsByType(page.getControls(), Label.class);
+    controls = SuiUtil.filterControlsByType(page.getControls(), Label.class);
     assertEquals(1, controls.size());
     Label label = (Label) controls.iterator().next();
     assertEquals("New task", label.getText());
     
-    List<UIControl> controlList = MetaMockUtil.sortControlsByYCoord(
-    	MetaMockUtil.filterControlsByType(p.getControls(), Label.class));
+    List<Widget> controlList = SuiUtil.sortControlsByYCoord(
+    	SuiUtil.filterControlsByType(p.getControls(), Label.class));
     assertEquals(3, controlList.size());
     
     assertEquals("Description:", ((Label) controlList.get(0)).getText());

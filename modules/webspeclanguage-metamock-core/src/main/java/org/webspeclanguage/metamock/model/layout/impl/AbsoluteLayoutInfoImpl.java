@@ -12,9 +12,9 @@
  */
 package org.webspeclanguage.metamock.model.layout.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.AbsoluteLayoutInfo;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * @author Jose Matias Rivero
@@ -25,9 +25,9 @@ public class AbsoluteLayoutInfoImpl implements AbsoluteLayoutInfo {
   private int y;
   private int width;
   private int height;
-  private UIControl control;
+  private Widget control;
 
-  public AbsoluteLayoutInfoImpl(int x, int y, int width, int height, UIControl control) {
+  public AbsoluteLayoutInfoImpl(int x, int y, int width, int height, Widget control) {
     super();
     this.setX(x);
     this.setY(y);
@@ -68,19 +68,19 @@ public class AbsoluteLayoutInfoImpl implements AbsoluteLayoutInfo {
     return height;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitAbsoluteLayoutInfo(this);
   }
 
   public Object copy() {
-    return new AbsoluteLayoutInfoImpl(this.getX(), this.getY(), this.getWidth(), this.getHeight(), (UIControl) this.getControl().copy());
+    return new AbsoluteLayoutInfoImpl(this.getX(), this.getY(), this.getWidth(), this.getHeight(), (Widget) this.getControl().copy());
   }
 
-  private void setControl(UIControl control) {
+  private void setControl(Widget control) {
     this.control = control;
   }
 
-  public UIControl getControl() {
+  public Widget getControl() {
     return control;
   }
 

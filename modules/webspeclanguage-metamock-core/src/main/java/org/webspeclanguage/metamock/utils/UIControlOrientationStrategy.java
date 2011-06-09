@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.metamock.utils;
 
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
 
 /**
@@ -26,9 +26,9 @@ import org.webspeclanguage.metamock.model.layout.GridBagLayoutCell;
  */
 public interface UIControlOrientationStrategy {
 
-  int getPosition(UIControl control);
+  int getPosition(Widget control);
 
-  int getLength(UIControl control);
+  int getLength(Widget control);
   
   void setPosition(GridBagLayoutCell cell, int position);
   

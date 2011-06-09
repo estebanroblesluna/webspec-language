@@ -18,26 +18,26 @@ import java.util.Collection;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
-import org.webspeclanguage.metamock.codegen.common.DefaultMetaMockControlGenerator;
-import org.webspeclanguage.metamock.codegen.common.MetaMockCodeGenerator;
+import org.webspeclanguage.metamock.codegen.common.DefaultWidgetGenerator;
+import org.webspeclanguage.metamock.codegen.common.SuiCodeGenerator;
 import org.webspeclanguage.metamock.codegen.framework.core.CodegenUtil;
 import org.webspeclanguage.metamock.model.CheckBox;
 import org.webspeclanguage.metamock.model.ComboBox;
-import org.webspeclanguage.metamock.model.CompositeControl;
-import org.webspeclanguage.metamock.model.MetaMockModel;
+import org.webspeclanguage.metamock.model.CompositeWidget;
+import org.webspeclanguage.metamock.model.SuiModel;
 import org.webspeclanguage.metamock.model.Page;
 import org.webspeclanguage.metamock.model.Panel;
 import org.webspeclanguage.metamock.model.RadioButton;
 import org.webspeclanguage.metamock.model.Repetition;
 import org.webspeclanguage.metamock.model.TextArea;
 import org.webspeclanguage.metamock.model.TextBox;
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.Widget;
 import org.webspeclanguage.metamock.model.layout.AbsoluteLayout;
 
 /**
  * @author Jose Matias Rivero
  */
-public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element> implements MetaMockCodeGenerator<Collection<DocumentFile>> {
+public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implements SuiCodeGenerator<Collection<DocumentFile>> {
 
   private Namespace namespace;
   
@@ -45,7 +45,7 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
     this.setNamespace(Namespace.getNamespace("http://www.webspeclanguage.org/metamock"));
   }
   
-  public Document generateInSingleDocument(MetaMockModel model) {
+  public Document generateInSingleDocument(SuiModel model) {
     Element mockups = this.createElement("mockups");
     for (Page p : model.getPages()) {
       mockups.addContent(p.accept(this)); 
@@ -53,7 +53,7 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
     return this.createDocument(mockups);
   }
   
-  public Collection<DocumentFile> generateFrom(MetaMockModel model) {
+  public Collection<DocumentFile> generateFrom(SuiModel model) {
     Collection<DocumentFile> generatedFiles = new ArrayList<DocumentFile>();
     for (Page p : model.getPages()) {
       generatedFiles.add(
@@ -97,9 +97,9 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
       .setAttribute("schemaLocation", "http://www.webspeclanguage.org/metamock ../metamock.xsd", xsiNs));
   }
 
-  private Collection<Element> generateCompositeControlContent(Collection<UIControl> controls) {
+  private Collection<Element> generateCompositeControlContent(Collection<Widget> controls) {
     Collection<Element> generatedElements = new ArrayList<Element>();
-    for (UIControl c : controls) {
+    for (Widget c : controls) {
       Element e = c.accept(this);
       if (e != null) {
         generatedElements.add(e);
@@ -113,7 +113,7 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
     return this.generateSimpleCompositeControl(panel, "panel");
   }
 
-  private Element generateSimpleCompositeControl(CompositeControl control, String controlName) {
+  private Element generateSimpleCompositeControl(CompositeWidget control, String controlName) {
     return this.addFlowLayout(1, 
     this.addCommonAttributes(
       this.createElement(controlName), control)
@@ -152,7 +152,7 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
     return null;
   }
   
-  private Element addCommonAttributes(Element element, UIControl control) {
+  private Element addCommonAttributes(Element element, Widget control) {
     return element
       .setAttribute("id", this.getControlId(control))
       .addContent(this.createElement("originalPosition")
@@ -163,7 +163,7 @@ public class MockupXmlGenerator extends DefaultMetaMockControlGenerator<Element>
       );
   }
 
-  private String getControlId(UIControl control) {
+  private String getControlId(Widget control) {
     if (control.getFriendlyId().matches("^\\d*$")) {
       return "control" + control.getFriendlyId();
     } else {

@@ -13,8 +13,8 @@
 package org.webspeclanguage.metamock.model.impl;
 
 import org.webspeclanguage.metamock.model.SelectableList;
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.utils.MetaMockVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link SelectableList}
@@ -38,17 +38,17 @@ public class SelectableListImpl extends ListImpl implements SelectableList {
     this.multipleSelection = multipleSelection;
   }
 
-  public <T> T accept(MetaMockVisitor<T> v) {
+  public <T> T accept(SuiVisitor<T> v) {
     return v.visitSelectableList(this);
   }
 
-  public Boolean equalInContent(UIControl control) {
+  public Boolean equalInContent(Widget control) {
     SelectableList other = (SelectableList) control;
     return super.equalInContent(other) && this.getMultipleSelection().equals(other.getMultipleSelection());
   }
 
   @Override
-  public UIControl copyConcreteControl() {
+  public Widget copyConcreteControl() {
     return new SelectableListImpl(this.getControlId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getMultipleSelection());
   }
 }

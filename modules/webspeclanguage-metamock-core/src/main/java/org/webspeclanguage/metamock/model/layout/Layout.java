@@ -14,18 +14,18 @@ package org.webspeclanguage.metamock.model.layout;
 
 import java.util.Collection;
 
-import org.webspeclanguage.metamock.model.MetaMockElement;
-import org.webspeclanguage.metamock.model.UIControl;
+import org.webspeclanguage.metamock.model.SuiModelElement;
+import org.webspeclanguage.metamock.model.Widget;
 
 /**
  * Defines a common interface for all layouts
  * 
  * @author Jose Matias Rivero
  */
-public interface Layout extends MetaMockElement {
+public interface Layout extends SuiModelElement {
 
-  Collection<UIControl> getControls();
+  Collection<Widget> getControls();
 
-  void replaceControl(UIControl controlToReplace, UIControl replacingControl);
+  void replaceControl(Widget controlToReplace, Widget replacingControl);
 
 }

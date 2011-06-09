@@ -12,20 +12,20 @@
  */
 package org.webspeclanguage.metamock.model.annotation.impl;
 
-import org.webspeclanguage.metamock.model.UIControl;
-import org.webspeclanguage.metamock.model.annotation.ControlAnnotationVisitor;
+import org.webspeclanguage.metamock.model.Widget;
+import org.webspeclanguage.metamock.model.annotation.WidgetAnnotationVisitor;
 import org.webspeclanguage.metamock.model.annotation.TemplateAnnotation;
 
-public class TemplateAnnotationImpl extends MetaMockAnnotationImpl implements TemplateAnnotation {
+public class TemplateAnnotationImpl extends ControlAnnotationImpl implements TemplateAnnotation {
 
   private String customCompositeId;
 
-  public TemplateAnnotationImpl(UIControl control, String customCompositeId) {
+  public TemplateAnnotationImpl(Widget control, String customCompositeId) {
     super(control);
     this.setCustomCompositeId(customCompositeId);
   }
 
-  public void visit(ControlAnnotationVisitor cav) {
+  public void visit(WidgetAnnotationVisitor cav) {
     cav.visitTemplateAnnotation(this);
   }
 

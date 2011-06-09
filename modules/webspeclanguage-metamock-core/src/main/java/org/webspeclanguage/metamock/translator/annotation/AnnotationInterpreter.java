@@ -12,19 +12,19 @@
  */
 package org.webspeclanguage.metamock.translator.annotation;
 
-import org.webspeclanguage.metamock.model.MetaMockModel;
-import org.webspeclanguage.metamock.model.annotation.MetaMockAnnotation;
+import org.webspeclanguage.metamock.model.SuiModel;
+import org.webspeclanguage.metamock.model.annotation.SuiAnnotation;
 
 /**
- * An interpreter/executor of {@link MetaMockAnnotation}s
+ * An interpreter/executor of {@link SuiAnnotation}s
  * 
  * @author Jose Matias Rivero
  */
 public interface AnnotationInterpreter {
 
-	void startingAnnotationInterpretationIn(MetaMockModel model);
+	void startingAnnotationInterpretationIn(SuiModel model);
 	
 	void interpreteAnnotation(
-			MetaMockAnnotation annotation, MetaMockModel model);
+			SuiAnnotation annotation, SuiModel model);
 
 }
