@@ -13,6 +13,8 @@
 package org.webspeclanguage.mockupdd.sui.model.impl.tags;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
@@ -24,11 +26,19 @@ public class TagSetImpl implements TagSet {
 
   private String name;
   private Collection<Tag> tags;
+  private Map<String, Tag> tagsByName;
 
   public TagSetImpl(String name, Collection<Tag> tags) {
     super();
     this.setName(name);
-    this.setTags(tags);
+    this.initializeTags(tags);
+  }
+
+  private void initializeTags(Collection<Tag> tags) {
+    this.setTagsByName(new HashMap<String, Tag>());
+    for (Tag t : tags) {
+      this.addTag(t);
+    }
   }
 
   private void setName(String name) {
@@ -40,11 +50,27 @@ public class TagSetImpl implements TagSet {
   }
 
   private void setTags(Collection<Tag> tags) {
-    this.tags = tags;
+    this.initializeTags(tags);
   }
 
   public Collection<Tag> getTags() {
     return tags;
+  }
+
+  private void setTagsByName(Map<String, Tag> tagsByName) {
+    this.tagsByName = tagsByName;
+  }
+
+  private Map<String, Tag> getTagsByName() {
+    return tagsByName;
+  }
+
+  public Tag getTagByName(String tagName) {
+    return this.getTagsByName().get(tagName);
+  }
+
+  public void addTag(Tag tag) {
+    this.getTagsByName().put(tag.getName(), tag);
   }
 
 }

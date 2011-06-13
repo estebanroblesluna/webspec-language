@@ -14,7 +14,9 @@ package org.webspeclanguage.mockupdd.sui.model;
 
 import java.util.Collection;
 
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagApplicationImpl;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 
 /**
  * Abstract interface containing all the common features present in a widget
@@ -25,23 +27,33 @@ public abstract interface Widget extends SuiModelElement {
 
   String getWidgetId();
 
+  void setWidgetId(String id);
+  
   String getFriendlyId();
 
+  void setFriendlyId(String id);
+  
   Integer getHeight();
+  
+  void setHeight(Integer height);
 
   Integer getWidth();
+  
+  void setWidth(Integer width);
 
   Integer getX();
+  
+  void setX(Integer x);
 
   Integer getY();
+  
+  void setY(Integer y);
 
   CompositeWidget getParent();
 
   void setParent(CompositeWidget c);
 
   Page getPage();
-
-  void setWidgetId(String id);
 
   /**
    * checks if this and <code>widget</code> have the same properties (e.g.,
@@ -60,9 +72,9 @@ public abstract interface Widget extends SuiModelElement {
    * @return true if this is the same widget than <code>widget</code>
    */
   Boolean isTheSameAs(CompositeWidget parent);
-
-  void setFriendlyId(String id);
   
   Collection <TagApplication> getAppliedTags();
+
+  void addTagApplication(TagApplication tagApplication) throws TagApplicationException;
 
 }

@@ -13,16 +13,17 @@
 package org.webspeclanguage.mockupdd.sui.model.impl.tags;
 
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
 
 /**
  * @author Jose Matias Rivero
  */
-public class TagParameterValue implements org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue {
+public class TagParameterValueImpl implements TagParameterValue {
 
   private TagParameter tagParameter;
   private String value;
 
-  public TagParameterValue(TagParameter tagParameter, String value) {
+  public TagParameterValueImpl(TagParameter tagParameter, String value) {
     super();
     this.setTagParameter(tagParameter);
     this.setValue(value);

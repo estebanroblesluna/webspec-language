@@ -24,6 +24,10 @@ import org.webspeclanguage.mockupdd.sui.model.annotation.VerticalBoxLayoutAnnota
 import org.webspeclanguage.mockupdd.sui.model.annotation.WidgetAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.layout.GridBagLayout;
 import org.webspeclanguage.mockupdd.sui.model.layout.VerticalBoxLayout;
+import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 
 /**
@@ -96,5 +100,13 @@ public interface SuiFactory {
           Integer columns, String containerId);
 
   RepetitionAnnotation createRepetitionAnnotation(Widget widget);
-
+  
+  TagSet createTagSet(String tagSetName, Tag... tags);
+  
+  Tag createTag(String tagName, java.util.List<TagParameter> tagParameters, Class<? extends Widget>... applicableOver);
+  
+  TagParameter createTagParameter(String parameterName);
+  
+  TagParameterValue createTagParameterValue(TagParameter tagParameter, String value);
+  
 }

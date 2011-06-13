@@ -12,9 +12,15 @@
  */
 package org.webspeclanguage.mockupdd.io;
 
+import java.io.StringReader;
+
+import org.jdom.Document;
+import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.webspeclanguage.mockupdd.codegen.xml.MockupXmlGenerator;
+import org.webspeclanguage.mockupdd.io.parser.xml.SuiParserContext;
+import org.webspeclanguage.mockupdd.io.parser.xml.XmlSuiParser;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 
 /**
@@ -22,14 +28,23 @@ import org.webspeclanguage.mockupdd.sui.model.SuiModel;
  */
 public class SuiXmlSerializer implements SuiSerializer {
 
-  public String serialize(SuiModel model) {
-    XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
-    return xo.outputString(
-      new MockupXmlGenerator().generateInSingleDocument(model));
+  public XMLOutputter outputter;
+  public XmlSuiParser parser;
+  
+  public SuiXmlSerializer() {
+    super();
+    this.outputter = new XMLOutputter(Format.getPrettyFormat());
+    this.parser = new XmlSuiParser();
   }
 
-  public SuiModel desrialize(String serializedModel) throws Exception {
-    throw new Exception("MustBeImplemented");
+  public String serialize(SuiModel model) {
+    return this.outputter.outputString(new MockupXmlGenerator().generateInSingleDocument(model));
+  }
+
+  public SuiModel deserialize(String serializedModel) throws Exception {
+    SAXBuilder builder = new SAXBuilder();
+    Document d = builder.build(new StringReader(serializedModel));
+    return (SuiModel) this.parser.parse(d.getRootElement(), new SuiParserContext(), null);
   }
 
 }

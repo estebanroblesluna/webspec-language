@@ -22,5 +22,9 @@ public interface TagSet {
   String getName();
   
   Collection<Tag> getTags();
+
+  Tag getTagByName(String tagName);
+  
+  void addTag(Tag tag);
   
 }

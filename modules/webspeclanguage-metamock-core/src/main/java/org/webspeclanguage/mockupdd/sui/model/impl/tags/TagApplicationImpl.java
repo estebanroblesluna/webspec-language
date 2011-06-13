@@ -35,18 +35,26 @@ public class TagApplicationImpl implements TagApplication {
   }
 
   private void validateParams(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
-    if (!tag.applicableOver().contains(widget.getClass())) {
+    if (!this.tagIsApplicableOver(tag, widget.getClass())) {
       throw new TagApplicationException(widget, tag, parameterValues, "Tag " + tag.getName() + " not applicable for widget class " + widget.getClass());
     }
     if (parameterValues.size() != tag.getParameters().size()) {
-      throw new TagApplicationException(widget, tag, parameterValues, "Parameter names provided don't matches for tag " + tag.getName());
+      throw new TagApplicationException(widget, tag, parameterValues, "Parameter names provided does not match for tag " + tag.getName());
     }
-    int i = 0;
-    while (i < parameterValues.size()) {
-      if (tag.getParameters().get(i).equals(parameterValues.get(i).getTagParameter())) {
-        throw new TagApplicationException(widget, tag, parameterValues, "Parameter " + i + " don't matches for tag " + tag.getName());
+    for (int i = 0; i < parameterValues.size(); i++) {
+      if (!tag.getParameters().get(i).equals(parameterValues.get(i).getTagParameter())) {
+        throw new TagApplicationException(widget, tag, parameterValues, "Parameter " + i + " does not match for tag " + tag.getName());
       }
     }
+  }
+  
+  private boolean tagIsApplicableOver(Tag tag, Class<? extends Widget> widgetClassToCheck) {
+    for (Class<? extends Widget> widgetClass : tag.applicableOver()) {
+      if (widgetClass.isAssignableFrom(widgetClassToCheck)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void setWidget(Widget widget) {
