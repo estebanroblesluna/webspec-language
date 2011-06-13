@@ -19,6 +19,7 @@ import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 
 /**
  * Default implementation of {@link Widget}
@@ -54,7 +55,7 @@ public abstract class WidgetImpl implements Widget {
     return widgetdId;
   }
 
-  private void setX(Integer x) {
+  public void setX(Integer x) {
     this.x = x;
   }
 
@@ -62,7 +63,7 @@ public abstract class WidgetImpl implements Widget {
     return x;
   }
 
-  private void setY(Integer y) {
+  public void setY(Integer y) {
     this.y = y;
   }
 
@@ -70,7 +71,7 @@ public abstract class WidgetImpl implements Widget {
     return y;
   }
 
-  private void setWidth(Integer width) {
+  public void setWidth(Integer width) {
     this.width = width;
   }
 
@@ -78,7 +79,7 @@ public abstract class WidgetImpl implements Widget {
     return width;
   }
 
-  private void setHeight(Integer height) {
+  public void setHeight(Integer height) {
     this.height = height;
   }
 
@@ -156,6 +157,13 @@ public abstract class WidgetImpl implements Widget {
     Widget c = this.copyConcreteWidget();
     c.setFriendlyId(this.friendlyId);
     return c;
+  }
+  
+  public void addTagApplication(TagApplication tagApplication) throws TagApplicationException {
+    if (!tagApplication.getWidget().equals(this)) {
+      throw new TagApplicationException(this, tagApplication.getTag(), tagApplication.getParameterValues(), "TagApplication instance added to wrong widget");
+    }
+    this.getAppliedTags().add(tagApplication);
   }
 
 }

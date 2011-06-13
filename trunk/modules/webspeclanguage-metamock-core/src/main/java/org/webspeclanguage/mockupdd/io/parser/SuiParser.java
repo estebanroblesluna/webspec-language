@@ -10,17 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.mockupdd.io;
+package org.webspeclanguage.mockupdd.io.parser;
 
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 
 /**
  * @author Jose Matias Rivero
  */
-public interface SuiSerializer {
+public interface SuiParser<TSourceElement, TParserContext> {
 
-  public String serialize(SuiModel model);
-
-  public SuiModel deserialize(String serializedModel) throws Exception;
+  Object parse(TSourceElement source, TParserContext parserContext, Object partiallyParsedObject) throws SuiParsingException;
 
 }

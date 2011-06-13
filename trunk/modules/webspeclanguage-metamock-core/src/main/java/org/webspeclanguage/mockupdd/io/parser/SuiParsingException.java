@@ -10,17 +10,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.mockupdd.io;
-
-import org.webspeclanguage.mockupdd.sui.model.SuiModel;
+package org.webspeclanguage.mockupdd.io.parser;
 
 /**
  * @author Jose Matias Rivero
  */
-public interface SuiSerializer {
+public class SuiParsingException extends Exception {
 
-  public String serialize(SuiModel model);
+  private static final long serialVersionUID = 1L;
+  
+  private Object objectBeingParsed;
 
-  public SuiModel deserialize(String serializedModel) throws Exception;
+  public SuiParsingException(String message, Object objectBeingParsed) {
+    super(message);
+    this.setObjectBeingParsed(objectBeingParsed);
+  }
 
+  private void setObjectBeingParsed(Object objectBeingParsed) {
+    this.objectBeingParsed = objectBeingParsed;
+  }
+
+  public Object getObjectBeingParsed() {
+    return objectBeingParsed;
+  }
+  
 }

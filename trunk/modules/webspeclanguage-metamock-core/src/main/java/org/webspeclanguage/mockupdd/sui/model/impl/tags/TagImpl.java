@@ -63,7 +63,9 @@ public class TagImpl implements Tag {
   }
 
   public TagApplication applyOver(Widget widget, List<TagParameterValue> parameterValues) throws TagApplicationException {
-    return new TagApplicationImpl(widget, this, parameterValues);
+    TagApplicationImpl tagApplication = new TagApplicationImpl(widget, this, parameterValues);
+    widget.addTagApplication(tagApplication);
+    return tagApplication;
   }
   
 }

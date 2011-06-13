@@ -10,17 +10,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.mockupdd.io;
+package org.webspeclanguage.mockupdd.io.parser.xml;
 
-import org.webspeclanguage.mockupdd.sui.model.SuiModel;
+import org.jdom.Element;
+import org.webspeclanguage.mockupdd.io.parser.SuiParser;
+import org.webspeclanguage.mockupdd.sui.model.RadioButton;
+import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
  * @author Jose Matias Rivero
  */
-public interface SuiSerializer {
+public class RadioButtonParser implements SuiParser<Element, SuiParserContext> {
 
-  public String serialize(SuiModel model);
-
-  public SuiModel deserialize(String serializedModel) throws Exception;
+  public Object parse(Element source, SuiParserContext parserContext, Object partiallyParsedObject) {
+    return (RadioButton) parserContext.buildWidget(RadioButton.class, source, source.getAttributeValue("label"));
+  }
 
 }

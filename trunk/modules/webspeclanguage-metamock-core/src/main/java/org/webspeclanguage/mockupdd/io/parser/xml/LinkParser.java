@@ -10,17 +10,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.mockupdd.io;
+package org.webspeclanguage.mockupdd.io.parser.xml;
 
-import org.webspeclanguage.mockupdd.sui.model.SuiModel;
+import org.jdom.Element;
+import org.webspeclanguage.mockupdd.io.parser.SuiParser;
+import org.webspeclanguage.mockupdd.sui.model.Link;
 
 /**
  * @author Jose Matias Rivero
  */
-public interface SuiSerializer {
+public class LinkParser implements SuiParser<Element, SuiParserContext> {
 
-  public String serialize(SuiModel model);
-
-  public SuiModel deserialize(String serializedModel) throws Exception;
+  public Object parse(Element source, SuiParserContext parserContext, Object partiallyParsedObject) {
+    return (Link) parserContext.buildWidget(Link.class, source, source.getAttributeValue("label"));
+  }
 
 }

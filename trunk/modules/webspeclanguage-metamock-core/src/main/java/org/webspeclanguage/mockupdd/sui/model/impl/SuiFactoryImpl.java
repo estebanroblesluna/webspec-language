@@ -13,6 +13,7 @@
 package org.webspeclanguage.mockupdd.sui.model.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.webspeclanguage.mockupdd.sui.model.Annotation;
@@ -52,11 +53,19 @@ import org.webspeclanguage.mockupdd.sui.model.annotation.impl.TemplateAnnotation
 import org.webspeclanguage.mockupdd.sui.model.annotation.impl.TemplateInstantiationAnnotationImpl;
 import org.webspeclanguage.mockupdd.sui.model.annotation.impl.VerticalBoxLayoutAnnotationImpl;
 import org.webspeclanguage.mockupdd.sui.model.annotation.impl.WidgetAnnotationImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagParameterImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagParameterValueImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagSetImpl;
 import org.webspeclanguage.mockupdd.sui.model.layout.GridBagLayout;
 import org.webspeclanguage.mockupdd.sui.model.layout.VerticalBoxLayout;
 import org.webspeclanguage.mockupdd.sui.model.layout.impl.GridBagLayoutImpl;
 import org.webspeclanguage.mockupdd.sui.model.layout.impl.ScanBasedGridBagLayoutFactory;
 import org.webspeclanguage.mockupdd.sui.model.layout.impl.VerticalBoxLayoutImpl;
+import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 import org.webspeclanguage.mockupdd.translator.DefaultWidgetGroupImpl;
 import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 import org.webspeclanguage.mockupdd.utils.SuiUtil;
@@ -192,6 +201,22 @@ public class SuiFactoryImpl implements SuiFactory {
 
   public RepetitionAnnotation createRepetitionAnnotation(Widget c) {
     return new RepetitionAnnotationImpl(c);
+  }
+
+  public TagSet createTagSet(String tagSetName, Tag... tags) {
+    return new TagSetImpl(tagSetName, Arrays.asList(tags));
+  }
+
+  public Tag createTag(String tagName, java.util.List<TagParameter> tagParameters, Class<? extends Widget>... applicableOver) {
+    return new TagImpl(tagName, tagParameters, Arrays.asList(applicableOver));
+  }
+
+  public TagParameter createTagParameter(String parameterName) {
+    return new TagParameterImpl(parameterName);
+  }
+
+  public TagParameterValue createTagParameterValue(TagParameter tagParameter, String value) {
+    return new TagParameterValueImpl(tagParameter, value);
   }
 
 }

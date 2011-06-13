@@ -12,8 +12,17 @@
  */
 package org.webspeclanguage.mockupdd.config;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.webspeclanguage.mockupdd.sui.model.Button;
+import org.webspeclanguage.mockupdd.sui.model.Link;
+import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
+import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.impl.SuiFactoryImpl;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 import org.webspeclanguage.mockupdd.translator.annotation.JsonAnnotationParser;
 import org.webspeclanguage.mockupdd.translator.annotation.WidgetAnnotationParser;
 
@@ -32,10 +41,32 @@ public class SuiDefaultConfig {
 
   private SuiFactory factory;
   private WidgetAnnotationParser annotationParser;
+  private Map<String, TagSet> tagSetsByName;
   
   private SuiDefaultConfig() {
     this.setFactory(new SuiFactoryImpl());
     this.setAnnotationParser(new JsonAnnotationParser(this.getFactory()));
+    this.initializeTagSets();
+  }
+
+  @SuppressWarnings("unchecked")
+  private void initializeTagSets() {
+    this.tagSetsByName = new HashMap<String, TagSet>();
+    this.tagSetsByName.put("Nav", 
+      this.getFactory().createTagSet("Nav",
+              this.getFactory().createTag("Link", 
+                      Arrays.asList(this.getFactory().createTagParameter("nodeId")),
+                      Button.class, Link.class),
+              this.getFactory().createTag("Node", 
+                      Arrays.asList(this.getFactory().createTagParameter("nodeId")),
+                      Page.class) 
+      ));
+    this.tagSetsByName.put("Data", 
+      this.getFactory().createTagSet("Data",
+              this.getFactory().createTag("Data", 
+                      Arrays.asList(this.getFactory().createTagParameter("typeId")),
+                      Widget.class) 
+    ));
   }
 
   private void setFactory(SuiFactory factory) {
@@ -54,6 +85,8 @@ public class SuiDefaultConfig {
     return annotationParser;
   }
   
-  
-  
+  public TagSet getTagSetByName(String tagSetName) {
+    return this.tagSetsByName.get(tagSetName);
+  }
+
 }
