@@ -24,5 +24,7 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
 public interface WidgetGroup {
 
   Collection<Widget> getWidgets();
+  
+  void addWidget(Widget w);
 
 }

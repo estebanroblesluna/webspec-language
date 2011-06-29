@@ -10,10 +10,10 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.webspeclanguage</groupId>
-  <artifactId>webspeclanguage-metamock-core</artifactId>
+  <artifactId>webspeclanguage-mockupdd-core</artifactId>
   <version>0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>Metamock Language - Core</name>
+  <name>MockupDD - Core</name>
   <url>http://maven.apache.org</url>
 
   <dependencies>

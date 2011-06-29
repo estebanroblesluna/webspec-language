@@ -12,36 +12,13 @@
  */
 package org.webspeclanguage.mockupdd.translator;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.webspeclanguage.mockupdd.sui.model.Widget;
+import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 
 /**
- * Default {@link WidgetGroup} implementation
- * 
  * @author Jose Matias Rivero
  */
-public class DefaultWidgetGroupImpl implements WidgetGroup {
+public interface MockupProcessor {
 
-	private Collection<Widget> widgets;
-
-
-	public DefaultWidgetGroupImpl(Collection<Widget> widgets) {
-		super();
-		this.setWidgets(new ArrayList<Widget>(widgets));
-	}
-
-	private void setWidgets(Collection<Widget> widgets) {
-		this.widgets = widgets;
-	}
-
-	public Collection<Widget> getWidgets() {
-		return widgets;
-	}
-
-	public void addWidget(Widget c) {
-		this.getWidgets().add(c);
-	}
-
+  <TSource> void  process(WidgetGroup widgetGroup, SuiModel model, MockupContainerInfo containerInfo, MockupProcessingEngine<TSource> engine) throws SuiTranslationException;
+  
 }
