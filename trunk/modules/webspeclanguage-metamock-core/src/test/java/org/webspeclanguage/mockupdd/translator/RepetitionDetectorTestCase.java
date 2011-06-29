@@ -22,7 +22,7 @@ import org.webspeclanguage.mockupdd.sui.model.Repetition;
 import org.webspeclanguage.mockupdd.sui.model.SuiTestCase;
 import org.webspeclanguage.mockupdd.sui.model.TextBox;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
-import org.webspeclanguage.mockupdd.translator.RepetitionDetector;
+import org.webspeclanguage.mockupdd.translator.DefaultRepetitionDetectorImpl;
 import org.webspeclanguage.mockupdd.utils.SuiUtil;
 
 /**
@@ -38,7 +38,7 @@ public class RepetitionDetectorTestCase extends SuiTestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.repetitionDetector = new RepetitionDetector(this.getFactory(), TOLERANCE, MIN_CONTROLS);
+    this.repetitionDetector = new DefaultRepetitionDetectorImpl(this.getFactory(), TOLERANCE, MIN_CONTROLS);
   }
   
   public void testRepetitionDetection() {

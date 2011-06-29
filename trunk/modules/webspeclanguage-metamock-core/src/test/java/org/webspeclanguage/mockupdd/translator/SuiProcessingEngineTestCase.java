@@ -16,19 +16,12 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.webspeclanguage.mockupdd.codegen.generator.Mockup;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.sui.model.SuiTestCase;
-import org.webspeclanguage.mockupdd.translator.MockupContainerInfo;
-import org.webspeclanguage.mockupdd.translator.MockupProcessingEngine;
-import org.webspeclanguage.mockupdd.translator.MockupSourceParsingException;
-import org.webspeclanguage.mockupdd.translator.SuiTranslationException;
-import org.webspeclanguage.mockupdd.translator.WidgetGroup;
-import org.webspeclanguage.mockupdd.translator.WidgetParser;
 import org.webspeclanguage.mockupdd.translator.annotation.WidgetAnnotationParser;
 import org.webspeclanguage.mockupdd.utils.Null;
 import org.webspeclanguage.mockupdd.utils.Pair;
