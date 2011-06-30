@@ -12,17 +12,18 @@
  */
 package org.webspeclanguage.mockupdd.translator.balsamiq;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.webspeclanguage.mockupdd.sui.model.Button;
 import org.webspeclanguage.mockupdd.sui.model.ComboBox;
@@ -42,7 +43,7 @@ import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 import org.webspeclanguage.mockupdd.translator.WidgetParser;
 
 /**
- * {@link WidgetParser} implementation for parsing mockup widgets from
+ * {@link WidgetParser} implementation for mockup widget parsing from
  * Balsamiq files
  * 
  * @author Jose Matias Rivero
@@ -51,9 +52,34 @@ public class BalsamiqWidgetParser implements WidgetParser<String> {
 
   private static final String CONTROL_PROPERTIES = "controlProperties";
   private SuiFactory factory;
+  private Map<String, Method> parserMapping;
 
   public BalsamiqWidgetParser(SuiFactory factory) {
     this.setFactory(factory);
+    this.setParserMapping(new HashMap<String, Method>());
+    this.initializeParsingMethods();
+  }
+
+  private void initializeParsingMethods() {
+    this.addParserMapping("com.balsamiq.mockups::Button", "parseButton");
+    this.addParserMapping("com.balsamiq.mockups::TextInput", "parseTextBox");
+    this.addParserMapping("com.balsamiq.mockups::SearchBox", "parseTextBox");
+    this.addParserMapping("com.balsamiq.mockups::TextArea", "parseTextArea");
+    this.addParserMapping("com.balsamiq.mockups::NumericStepper", "parseNumericSpinner");
+    this.addParserMapping("com.balsamiq.mockups::Label", "parseLabel");
+    this.addParserMapping("com.balsamiq.mockups::Canvas", "parsePanel");
+    this.addParserMapping("com.balsamiq.mockups::DateChooser", "parseDatePicker");
+    this.addParserMapping("com.balsamiq.mockups::List", "parseList");
+    this.addParserMapping("com.balsamiq.mockups::CheckBoxGroup", "parseSelectableList");
+    this.addParserMapping("com.balsamiq.mockups::ComboBox", "parseComboBox");
+    this.addParserMapping("com.balsamiq.mockups::DataGrid", "parseTable");
+    this.addParserMapping("com.balsamiq.mockups::Image", "parseImage");
+    this.addParserMapping("com.balsamiq.mockups::LineChart", "parseImage");
+    this.addParserMapping("com.balsamiq.mockups::CheckBox", "parseCheckBox");
+    this.addParserMapping("com.balsamiq.mockups::RadioButton", "parseRadioButton");
+    this.addParserMapping("com.balsamiq.mockups::TitleWindow", "parsePage");
+    this.addParserMapping("com.balsamiq.mockups::Link", "parseLink");
+    this.addParserMapping("com.balsamiq.mockups::CallOut", "parseAnnotation");
   }
 
   private void setFactory(SuiFactory factory) {
@@ -64,99 +90,116 @@ public class BalsamiqWidgetParser implements WidgetParser<String> {
     return factory;
   }
 
+  private void setParserMapping(Map<String, Method> parsingMethodsMapping) {
+    this.parserMapping = parsingMethodsMapping;
+  }
+
+  private Map<String, Method> getParserMapping() {
+    return parserMapping;
+  }
+
   private String getWidgetId(Element e) {
     return e.getAttributeValue("controlID");
   }
-
-  private Widget parseElement(Element e) {
-    String widgetType = e.getAttribute("controlTypeID").getValue();
-    if (widgetType.equals("com.balsamiq.mockups::Button")) {
-      return this.parseButton(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::TextInput") || widgetType.equals("com.balsamiq.mockups::SearchBox")) {
-      return this.parseTextBox(e);
-    }
-    ;
-    if (widgetType.equals("com.balsamiq.mockups::TextArea")) {
-      return this.parseTextArea(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::NumericStepper")) {
-      return this.parseNumericSpinner(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::Label")) {
-      return this.parseLabel(e);
-    }
-    ;
-    if (widgetType.equals("com.balsamiq.mockups::Canvas")) {
-      return this.parsePanel(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::DateChooser")) {
-      return this.parseDatePicker(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::List")) {
-      return this.parseList(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::CheckBoxGroup")) {
-      return this.parseSelectableList(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::ComboBox")) {
-      return this.parseComboBox(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::DataGrid")) {
-      return this.parseTable(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::Image") || widgetType.equals("com.balsamiq.mockups::LineChart")
-            || widgetType.equals("com.balsamiq.mockups::PieChart")) {
-      return this.parseImage(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::CheckBox")) {
-      return this.parseCheckBox(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::RadioButton")) {
-      return this.parseRadioButton(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::TitleWindow")) {
-      return this.parsePage(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::Link")) {
-      return this.parseLink(e);
-    }
-    if (widgetType.equals("com.balsamiq.mockups::CallOut")) {
-      return this.parseAnnotation(e);
-    }
-    return null;
+  
+  private void addParserMapping(String widgetType, String parsingMethod) {
+    try {
+      this.getParserMapping().put(widgetType, this.getClass().getDeclaredMethod(parsingMethod, Element.class));
+    } catch (Exception e) { }
   }
 
+  private Widget parseElement(Element e) {
+    Method m = this.getParserMapping().get(e.getAttribute("controlTypeID").getValue());
+    if (m == null) {
+      return null;
+    }
+    try {
+      return (Widget) m.invoke(this, e);
+    } catch (Exception ex) { 
+      return null;
+    }
+  }
+
+  @SuppressWarnings("unused")
   private Widget parseNumericSpinner(Element e) {
     return this.getFactory().createNumericSpinner(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e), null, null);
   }
 
+  @SuppressWarnings("unused")
   private Widget parseTextArea(Element e) {
     return this.getFactory().createTextArea(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
   }
 
+  @SuppressWarnings("unused")
   private SelectableList parseSelectableList(Element e) {
     return this.getFactory().createSelectableList(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e), false);
   }
 
+  @SuppressWarnings("unused")
   private Widget parseAnnotation(Element e) {
     return this.getFactory().createAnnotation(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e), null,
             this.urlDecode(this.getChildText(e)));
   }
 
+  @SuppressWarnings("unused")
   private Widget parseLink(Element e) {
     return this.getFactory().createLink(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
             this.urlDecode(this.getChildText(e)));
   }
 
+  @SuppressWarnings("unused")
   private Widget parseRadioButton(Element e) {
     return this.getFactory().createRadioButton(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
             this.urlDecode(this.getChildText(e)));
   }
 
+  @SuppressWarnings("unused")
   private Widget parseCheckBox(Element e) {
     return this.getFactory().createCheckBox(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
             this.urlDecode(this.getChildText(e)));
+  }
+  
+  @SuppressWarnings("unused")
+  private final Button parseButton(Element e) {
+    return this.getFactory().createButton(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
+            this.urlDecode(this.getChildText(e)));
+  }
+  
+  @SuppressWarnings("unused")
+  private final Panel parsePanel(Element e) {
+    return this.getFactory().createPanel(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e), "");
+  }
+  
+  @SuppressWarnings("unused")
+  private final Page parsePage(Element e) {
+    return this.getFactory().createPage(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
+            this.urlDecode(this.getChildText(e)), "");
+  }
+  
+  @SuppressWarnings("unused")
+  private final TextBox parseTextBox(Element e) {
+    return this.getFactory().createTextBox(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
+  }
+  
+  @SuppressWarnings("unused")
+  private final Label parseLabel(Element e) {
+    return this.getFactory().createLabel(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
+            this.urlDecode(this.getChildText(e)));
+  }
+  
+  @SuppressWarnings("unused")
+  private final DatePicker parseDatePicker(Element e) {
+    return this.getFactory().createDatePicker(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
+  }
+  
+  @SuppressWarnings("unused")
+  private final org.webspeclanguage.mockupdd.sui.model.List parseList(Element e) {
+    return this.getFactory().createList(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
+  }
+  
+  @SuppressWarnings("unused")
+  private final ComboBox parseComboBox(Element e) {
+    return this.getFactory().createComboBox(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
   }
 
   private int getX(Element e) {
@@ -183,33 +226,6 @@ public class BalsamiqWidgetParser implements WidgetParser<String> {
     return height;
   }
 
-  public final Button parseButton(Element e) {
-    return this.getFactory().createButton(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
-            this.urlDecode(this.getChildText(e)));
-  }
-
-  public final Panel parsePanel(Element e) {
-    return this.getFactory().createPanel(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e), "");
-  }
-
-  public final Page parsePage(Element e) {
-    return this.getFactory().createPage(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
-            this.urlDecode(this.getChildText(e)), "");
-  }
-
-  public final TextBox parseTextBox(Element e) {
-    return this.getFactory().createTextBox(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
-  }
-
-  public final Label parseLabel(Element e) {
-    return this.getFactory().createLabel(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e),
-            this.urlDecode(this.getChildText(e)));
-  }
-
-  public final DatePicker parseDatePicker(Element e) {
-    return this.getFactory().createDatePicker(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
-  }
-
   public final Image parseImage(Element e) {
     String src = null;
     if (e.getChild(CONTROL_PROPERTIES) != null) {
@@ -223,14 +239,7 @@ public class BalsamiqWidgetParser implements WidgetParser<String> {
     return this.getFactory().createImage(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e), src);
   }
 
-  public final org.webspeclanguage.mockupdd.sui.model.List parseList(Element e) {
-    return this.getFactory().createList(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
-  }
-
-  public final ComboBox parseComboBox(Element e) {
-    return this.getFactory().createComboBox(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
-  }
-
+  @SuppressWarnings("unused")
   private Widget parseTable(Element e) {
     Table t = this.getFactory().createTable(this.getWidgetId(e), this.getX(e), this.getY(e), this.getWidth(e), this.getHeight(e));
     String[] cols = this.urlDecode(this.getChildText(e)).split("\n")[0].split(",");
