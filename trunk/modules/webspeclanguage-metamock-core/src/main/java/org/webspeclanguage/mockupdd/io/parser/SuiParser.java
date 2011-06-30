@@ -12,7 +12,6 @@
  */
 package org.webspeclanguage.mockupdd.io.parser;
 
-import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 
 /**
  * @author Jose Matias Rivero

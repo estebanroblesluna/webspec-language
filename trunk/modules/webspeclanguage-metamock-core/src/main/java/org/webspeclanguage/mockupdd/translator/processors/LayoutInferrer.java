@@ -40,6 +40,7 @@ public class LayoutInferrer implements MockupProcessor {
     this.setDefaultLayoutFactory(defaultLayoutFactory);
   }
 
+  @SuppressWarnings("unchecked")
   public <TSource> void process(WidgetGroup widgetGroup, SuiModel model, MockupContainerInfo containerInfo, MockupProcessingEngine<TSource> engine)
           throws SuiTranslationException {
     Collection<Widget> widgets = new ArrayList<Widget>();
