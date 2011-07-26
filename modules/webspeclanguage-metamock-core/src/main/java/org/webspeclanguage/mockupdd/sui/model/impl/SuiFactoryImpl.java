@@ -53,6 +53,7 @@ import org.webspeclanguage.mockupdd.sui.model.annotation.impl.TemplateAnnotation
 import org.webspeclanguage.mockupdd.sui.model.annotation.impl.TemplateInstantiationAnnotationImpl;
 import org.webspeclanguage.mockupdd.sui.model.annotation.impl.VerticalBoxLayoutAnnotationImpl;
 import org.webspeclanguage.mockupdd.sui.model.annotation.impl.WidgetAnnotationImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagApplicationImpl;
 import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagImpl;
 import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagParameterImpl;
 import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagParameterValueImpl;
@@ -63,6 +64,8 @@ import org.webspeclanguage.mockupdd.sui.model.layout.impl.GridBagLayoutImpl;
 import org.webspeclanguage.mockupdd.sui.model.layout.impl.ScanBasedGridBagLayoutFactory;
 import org.webspeclanguage.mockupdd.sui.model.layout.impl.VerticalBoxLayoutImpl;
 import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
@@ -217,6 +220,10 @@ public class SuiFactoryImpl implements SuiFactory {
 
   public TagParameterValue createTagParameterValue(TagParameter tagParameter, String value) {
     return new TagParameterValueImpl(tagParameter, value);
+  }
+
+  public TagApplication createTagApplication(Widget widget, Tag tag, java.util.List<TagParameterValue> parameterValues) throws TagApplicationException {
+    return new TagApplicationImpl(widget, tag, parameterValues);
   }
 
 }

@@ -55,6 +55,7 @@ public class SuiSerializationFacade {
     return SuiDefaultConfig.getInstance().getFactory();
   }
 
+  @SuppressWarnings("unchecked")
   public String balsamiqSourceToXml(String balsamiqSource) {
     try {
       return this.xmlSerializer.serialize(

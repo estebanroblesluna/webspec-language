@@ -51,6 +51,9 @@ public abstract class CompositeWidgetImpl extends WidgetImpl implements Composit
   }
 
   public final Collection<Widget> getWidgets() {
+    if (this.getLayout() != null) {
+      return this.getLayout().getWidgets();
+    }
     return widgets;
   }
 

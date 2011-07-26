@@ -29,9 +29,18 @@ public class TagApplicationImpl implements TagApplication {
   public TagApplicationImpl(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
     super();
     this.validateParams(widget, tag, parameterValues);
+    this.validateTagNotAppliedAlready(widget, tag, parameterValues);
     this.setWidget(widget);
     this.setTag(tag);
     this.setParameterValues(parameterValues);
+  }
+
+  private void validateTagNotAppliedAlready(Widget w, Tag t, List<TagParameterValue> parameterValues2) throws TagApplicationException {
+    for (TagApplication ta : w.getAppliedTags()) {
+      if (ta.getTag().equals(t)) {
+        throw new TagApplicationException(w, t, parameterValues, "The tag " + t.getName() + " has been already applied over that widget");
+      }
+    }
   }
 
   private void validateParams(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {

@@ -25,6 +25,8 @@ import org.webspeclanguage.mockupdd.sui.model.annotation.WidgetAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.layout.GridBagLayout;
 import org.webspeclanguage.mockupdd.sui.model.layout.VerticalBoxLayout;
 import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
@@ -108,5 +110,7 @@ public interface SuiFactory {
   TagParameter createTagParameter(String parameterName);
   
   TagParameterValue createTagParameterValue(TagParameter tagParameter, String value);
+  
+  TagApplication createTagApplication(Widget widget, Tag tag, java.util.List<TagParameterValue> parameterValues) throws TagApplicationException;
   
 }
