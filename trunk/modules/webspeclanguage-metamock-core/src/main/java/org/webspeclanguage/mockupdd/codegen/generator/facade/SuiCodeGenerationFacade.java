@@ -13,7 +13,7 @@
 package org.webspeclanguage.mockupdd.codegen.generator.facade;
 
 import java.io.FileWriter;
-import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Collection;
 
@@ -32,7 +32,7 @@ import org.webspeclanguage.mockupdd.codegen.xml.DocumentFile;
 import org.webspeclanguage.mockupdd.codegen.xml.MockupXmlGenerator;
 import org.webspeclanguage.mockupdd.config.SuiDefaultConfig;
 import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
-import org.webspeclanguage.mockupdd.translator.annotation.JsonAnnotationParser;
+import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.translator.annotation.WidgetAnnotationParser;
 import org.webspeclanguage.mockupdd.translator.balsamiq.BalsamiqWidgetParser;
 
@@ -41,7 +41,6 @@ import org.webspeclanguage.mockupdd.translator.balsamiq.BalsamiqWidgetParser;
  */
 public class SuiCodeGenerationFacade {
 
-  private SuiFactory metaMockFactory;
   private static SuiCodeGenerationFacade instance;
   
   public static SuiCodeGenerationFacade getInstance() {
@@ -54,9 +53,9 @@ public class SuiCodeGenerationFacade {
   private SuiCodeGenerationFacade() {
   }
 
-  public void balsamiq2ExtJs(String balsamiqMockupsFolder, String destinationFolder, String mockupListFolder, String mockupLocationPath) {
+  public SuiModel balsamiq2ExtJs(String balsamiqMockupsFolder, String destinationFolder, String mockupListFolder, String mockupLocationPath, String extjsLibraryPath) throws Exception {
     CodeWriter cw = this.createCodeWriter();
-    MockupCodeGenerator<String, CodeFileList<CodeArtifact>> codegen = this.createBalsamiq2ExtJsCodegen(balsamiqMockupsFolder);
+    MockupCodeGenerator<String, CodeFileList<CodeArtifact>> codegen = this.createBalsamiq2ExtJsCodegen(balsamiqMockupsFolder, extjsLibraryPath);
     CodeFileList<CodeArtifact> artifacts = codegen.generateCodeArtifacts();
     artifacts.setFolderPathForFiles(destinationFolder);
     artifacts.writeOn(cw);
@@ -66,10 +65,10 @@ public class SuiCodeGenerationFacade {
     artifacts.writeOn(cw);
     
     cw.flush();
+    return codegen.getTranslatedModel();
   }
   
-  public void balsamiq2Xml(String balsamiqMockupsFolder, String destinationFolder) {
-    try {
+  public SuiModel balsamiq2Xml(String balsamiqMockupsFolder, String destinationFolder) throws Exception {
       MockupCodeGenerator<String, Collection<DocumentFile>> codegen = this.createBalsamiq2XmlCodegen(balsamiqMockupsFolder);
       Collection<DocumentFile> artifacts = codegen.generateCodeArtifacts();
       XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
@@ -78,20 +77,20 @@ public class SuiCodeGenerationFacade {
         xo.output(df.getDocument(), w);
         w.close();
       }
-    } catch (IOException e) { }
+      return codegen.getTranslatedModel();
   }
-
+  
   private CodeWriter createCodeWriter() {
     return new DefaultCodeWriter();
   }
   
-  public MockupCodeGenerator<String, CodeFileList<CodeArtifact>> createBalsamiq2ExtJsCodegen(String balsamiqMockupsFolder) {
+  public MockupCodeGenerator<String, CodeFileList<CodeArtifact>> createBalsamiq2ExtJsCodegen(String balsamiqMockupsFolder, String extjsLibraryPath) {
     return new MockupCodeGenerator<String, CodeFileList<CodeArtifact>>(
       this.getFactory(),
       new BalsamiqWidgetParser(this.getFactory()),
       this.getAnnotationParser(),
       new FolderMockupCollector(balsamiqMockupsFolder, new RegularExpressionFileFilter(".*\\.bmml")),
-      new ExtJsGenerator());
+      new ExtJsGenerator(extjsLibraryPath));
   }
 
   private WidgetAnnotationParser getAnnotationParser() {

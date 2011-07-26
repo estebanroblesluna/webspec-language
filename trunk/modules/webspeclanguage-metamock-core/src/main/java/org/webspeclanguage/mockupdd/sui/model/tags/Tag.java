@@ -29,5 +29,7 @@ public interface Tag {
   Collection<Class<? extends Widget>> applicableOver();
   
   TagApplication applyOver(Widget widget, List<TagParameterValue> parameterValues) throws TagApplicationException;
+  
+  TagSet getTagSet();
 
 }

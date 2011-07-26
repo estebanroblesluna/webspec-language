@@ -43,19 +43,20 @@ public class SuiCodeGeneratorFactoryTest extends TestCase {
     
   }
   
-  public void testBalsamiq2ExtJs() {
+  public void testBalsamiq2ExtJs() throws Exception {
     this.cleanFolder("extjs/pages");
     SuiCodeGenerationFacade.getInstance().balsamiq2ExtJs(
       getSourceFolder() + "balsamiq",
       getDestinationFolder() + "extjs/pages",
       getSiteFolder(),
-      "../extjs/pages");
+      "../extjs/pages",
+      "..");
     this.assertFiles("extjs/pages", "newEvent.js", "inviteFriendsToEvent.js",
             "taskManager.js", "newEvent.html", "inviteFriendsToEvent.html",
             "taskManager.html", "editAlbum.html", "editAlbum.js");
   }
   
-  public void testBalsamiq2Xml() {
+  public void testBalsamiq2Xml() throws Exception {
     this.cleanFolder("xml/pages");
     SuiCodeGenerationFacade.getInstance().balsamiq2Xml(
       getSourceFolder() + "balsamiq",

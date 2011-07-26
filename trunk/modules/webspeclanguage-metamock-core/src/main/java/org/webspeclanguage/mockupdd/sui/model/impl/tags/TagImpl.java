@@ -21,6 +21,7 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 
 /**
  * @author Jose Matias Rivero
@@ -30,6 +31,7 @@ public class TagImpl implements Tag {
   private String name;
   private List<TagParameter> parameters;
   private Collection<Class<? extends Widget>> applicableOver;
+  private TagSet tagSet;
   
   public TagImpl(String name, List<TagParameter> parameters, Collection<Class< ? extends Widget>> applicableOver) {
     super();
@@ -66,6 +68,14 @@ public class TagImpl implements Tag {
     TagApplicationImpl tagApplication = new TagApplicationImpl(widget, this, parameterValues);
     widget.addTagApplication(tagApplication);
     return tagApplication;
+  }
+
+  public void setTagSet(TagSet tagSet) {
+    this.tagSet = tagSet;
+  }
+
+  public TagSet getTagSet() {
+    return tagSet;
   }
   
 }

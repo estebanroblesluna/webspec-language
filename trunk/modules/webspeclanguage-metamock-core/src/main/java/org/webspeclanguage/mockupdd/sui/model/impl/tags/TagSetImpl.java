@@ -25,7 +25,6 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 public class TagSetImpl implements TagSet {
 
   private String name;
-  private Collection<Tag> tags;
   private Map<String, Tag> tagsByName;
 
   public TagSetImpl(String name, Collection<Tag> tags) {
@@ -49,12 +48,8 @@ public class TagSetImpl implements TagSet {
     return name;
   }
 
-  private void setTags(Collection<Tag> tags) {
-    this.initializeTags(tags);
-  }
-
   public Collection<Tag> getTags() {
-    return tags;
+    return this.getTagsByName().values();
   }
 
   private void setTagsByName(Map<String, Tag> tagsByName) {
@@ -71,6 +66,7 @@ public class TagSetImpl implements TagSet {
 
   public void addTag(Tag tag) {
     this.getTagsByName().put(tag.getName(), tag);
+    ((TagImpl)tag).setTagSet(this);
   }
 
 }

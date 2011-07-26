@@ -12,12 +12,9 @@
  */
 package org.webspeclanguage.mockupdd.codegen.generator;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.webspeclanguage.mockupdd.codegen.common.SuiCodeGenerator;
-import org.webspeclanguage.mockupdd.codegen.framework.core.CodeArtifact;
 import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.translator.MockupProcessingEngine;
@@ -70,7 +67,7 @@ public class MockupCodeGenerator<TMockupRepresentation, TGeneratedArtifact> {
     return processingEngine;
   }
   
-  private SuiModel getTranslatedModel() throws SuiTranslationException, MockupSourceParsingException {
+  public SuiModel getTranslatedModel() throws SuiTranslationException, MockupSourceParsingException {
     if (this.translatedModel == null) {
       List<Mockup<TMockupRepresentation>> mockups = this.getMockupCollector().collectMockups();
       translatedModel = this.getProcessingEngine().translateModelFrom(mockups);

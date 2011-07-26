@@ -41,6 +41,7 @@ public class RepetitionDetectorTestCase extends SuiTestCase {
     this.repetitionDetector = new DefaultRepetitionDetectorImpl(this.getFactory(), TOLERANCE, MIN_CONTROLS);
   }
   
+  @SuppressWarnings("unchecked")
   public void testRepetitionDetection() {
     Repetition r = this.repetitionDetector.detectRepetition(
       this.createPanelWith(
@@ -61,6 +62,7 @@ public class RepetitionDetectorTestCase extends SuiTestCase {
     assertEquals(1, SuiUtil.filterWidgetsByType(r.getWidgets(), Link.class).size());
   }
   
+  @SuppressWarnings("unchecked")
   public void testRepetitionDetectionTolerance() {
     for (int i = 0; i < RANDOM_TOLERANCE_TEST_COUNT; i++) {
       Panel p = this.createPanelWith(

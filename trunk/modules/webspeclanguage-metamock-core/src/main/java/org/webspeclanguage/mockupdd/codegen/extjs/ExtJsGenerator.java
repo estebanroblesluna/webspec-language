@@ -27,6 +27,17 @@ import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 public class ExtJsGenerator implements
 		SuiCodeGenerator<CodeFileList<CodeArtifact>> {
 
+  private String libraryPath;
+  
+  public ExtJsGenerator() {
+    this("..");
+  }
+  
+  public ExtJsGenerator(String libraryPath) {
+    super();
+    this.libraryPath = libraryPath;
+  }
+
   @SuppressWarnings("unchecked")
   public CodeFileList<CodeArtifact> generateFrom(SuiModel m) {
 	  CodeFileList<CodeArtifact> fileList = Code.fileList();
@@ -53,16 +64,16 @@ public class ExtJsGenerator implements
     		  "  <head>",
     		  "    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">",
     		  "    <title>" + escapedTitle + "</title>",
-          "    <script type=\"text/javascript\" src=\"../extjs/adapter/ext/ext-base-debug.js\"></script>",
-          "    <script type=\"text/javascript\" src=\"../extjs/ext-all-debug.js\"></script>",
-          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"../extjs/resources/css/ext-all.css\"></link>",
-          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"../extjs/ux/css/ux-all.css\"></link>",
-          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"../style/custom.css\"></link>",
+          "    <script type=\"text/javascript\" src=\"" + this.libraryPath + "/extjs/adapter/ext/ext-base-debug.js\"></script>",
+          "    <script type=\"text/javascript\" src=\"" + this.libraryPath + "/extjs/ext-all-debug.js\"></script>",
+          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + this.libraryPath + "/extjs/resources/css/ext-all.css\"></link>",
+          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + this.libraryPath + "/extjs/ux/css/ux-all.css\"></link>",
+          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + this.libraryPath + "/style/custom.css\"></link>",
           "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + title + ".css\"></link>",
-          "    <script type=\"text/javascript\" src=\"../extjs/ux/ux-all.js\"></script>",
-          "    <script type=\"text/javascript\" src=\"../extjs/ux/css/ux-all.css\"></script>",
+          "    <script type=\"text/javascript\" src=\"" + this.libraryPath + "/extjs/ux/ux-all.js\"></script>",
+          "    <script type=\"text/javascript\" src=\"" + this.libraryPath + "/extjs/ux/css/ux-all.css\"></script>",
           "    <script type=\"text/javascript\" src=\"" + jsFile.getFilePath() + "\"></script>",
-          "    <script type=\"text/javascript\" src=\"../scripts/sampleStore.js\"></script>",
+          "    <script type=\"text/javascript\" src=\"" + this.libraryPath + "/scripts/sampleStore.js\"></script>",
           "  </head>",
     		  "  <body>",
     		  Code.indent(new ExtJsHtmlGenerator().generateFor(p), 2),
