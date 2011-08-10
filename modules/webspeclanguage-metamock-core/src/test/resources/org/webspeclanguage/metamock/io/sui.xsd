@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.webspeclanguage.org/sui" targetNamespace="http://www.webspeclanguage.org/sui">
+
+    <element name="mockups" type="tns:tMockups" />
+
+    <complexType name="tMockups">
+        <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="tns:ui" />
+        </sequence>
+        <attribute name="containerName" />
+    </complexType>
+
+    <!-- WIDGET -->
+    <element name="widget" type="tns:tWidget" abstract="true" />
+
+    <complexType name="tWidget">
+        <sequence>
+            <sequence minOccurs="0" maxOccurs="1">
+                <element ref="tns:layoutInfo" />
+            </sequence>
+            <sequence minOccurs="0" maxOccurs="1">
+                <element ref="tns:originalPosition" />
+            </sequence>
+            <sequence minOccurs="0" maxOccurs="1">
+                <element ref="tns:tags" />
+            </sequence>
+        </sequence>
+        <attribute name="id" type="string" use="required" />
+        <attribute name="friendlyId" type="string" />
+    </complexType>
+
+    <element name="originalPosition" type="tns:tOriginalPosition" />
+
+    <complexType name="tOriginalPosition">
+        <attribute name="x" type="integer" use="required" />
+        <attribute name="y" type="integer" use="required" />
+        <attribute name="width" type="integer" use="required" />
+        <attribute name="height" type="integer" use="required" />
+    </complexType>
+
+    <element name="layoutInfo">
+        <complexType>
+            <sequence>
+                <element ref="tns:abstractLayoutInfo" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="labeledWidget" type="tns:tLabeledWidget" substitutionGroup="tns:widget" abstract="true" />
+
+    <complexType name="tLabeledWidget">
+        <complexContent>
+            <extension base="tns:tWidget">
+                <attribute name="label" type="string" />
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <element name="button" type="tns:tButton" substitutionGroup="tns:labeledWidget" />
+
+    <complexType name="tButton">
+        <complexContent>
+            <extension base="tns:tLabeledWidget"></extension>
+        </complexContent>
+    </complexType>
+
+    <element name="link" type="tns:tLink" substitutionGroup="tns:labeledWidget" />
+
+    <complexType name="tLink">
+        <complexContent>
+            <extension base="tns:tLabeledWidget"></extension>
+        </complexContent>
+    </complexType>
+
+    <element name="label" type="tns:tLabel" substitutionGroup="tns:labeledWidget" />
+
+    <complexType name="tLabel">
+        <complexContent>
+            <extension base="tns:tLabeledWidget"></extension>
+        </complexContent>
+    </complexType>
+    
+    <element name="image" type="tns:tImage" substitutionGroup="tns:widget" />
+
+    <complexType name="tImage">
+        <complexContent>
+            <extension base="tns:tWidget" />
+        </complexContent>
+    </complexType>
+
+    <element name="checkBox" type="tns:tCheckBox" substitutionGroup="tns:labeledWidget" />
+
+    <complexType name="tCheckBox">
+        <complexContent>
+            <extension base="tns:tLabeledWidget" />
+        </complexContent>
+    </complexType>
+
+    <element name="comboBox" type="tns:tComboBox" substitutionGroup="tns:labeledWidget" />
+
+    <complexType name="tComboBox">
+        <complexContent>
+            <extension base="tns:tLabeledWidget" />
+        </complexContent>
+    </complexType>
+
+    <element name="radioButton" type="tns:tRadioButton" substitutionGroup="tns:labeledWidget" />
+
+    <complexType name="tRadioButton">
+        <complexContent>
+            <extension base="tns:tLabeledWidget" />
+        </complexContent>
+    </complexType>
+    
+    <element name="list" type="tns:tList" substitutionGroup="tns:widget" />
+
+    <complexType name="tList">
+        <complexContent>
+            <extension base="tns:tWidget" />
+        </complexContent>
+    </complexType>
+
+    <element name="textBox" type="tns:tTextBox" substitutionGroup="tns:widget" />
+
+    <complexType name="tTextBox">
+        <complexContent>
+            <extension base="tns:tWidget" />
+        </complexContent>
+    </complexType>
+
+    <element name="textArea" type="tns:tTextArea" substitutionGroup="tns:widget" />
+
+    <complexType name="tTextArea">
+        <complexContent>
+            <extension base="tns:tWidget" />
+        </complexContent>
+    </complexType>
+
+    <!-- COMPOSITE WIDGET -->
+    <element name="compositeWidget" type="tns:tCompositeWidget" abstract="true" substitutionGroup="tns:widget" />
+
+    <complexType name="tCompositeWidget">
+        <complexContent>
+            <extension base="tns:tWidget">
+                <sequence>
+                    <sequence>
+                        <element ref="tns:layout" minOccurs="0" maxOccurs="1" />
+                        <element ref="tns:widgets" />
+                    </sequence>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <element name="widgets">
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <element ref="tns:widget" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="layout">
+        <complexType>
+            <sequence>
+                <element ref="tns:abstractLayout" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="ui" type="tns:tUi" substitutionGroup="tns:compositeWidget" />
+
+    <complexType name="tUi">
+        <complexContent>
+            <extension base="tns:tCompositeWidget">
+                <attribute name="title" type="string" use="required" />
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <element name="panel" type="tns:tPanel" substitutionGroup="tns:compositeWidget" />
+
+    <complexType name="tPanel">
+        <complexContent>
+            <extension base="tns:tCompositeWidget" />
+        </complexContent>
+    </complexType>
+
+    <element name="repetition" type="tns:tRepetition" substitutionGroup="tns:compositeWidget" />
+
+    <complexType name="tRepetition">
+        <complexContent>
+            <extension base="tns:tCompositeWidget" />
+        </complexContent>
+    </complexType>
+
+    <!-- LAYOUT -->
+    <element name="abstractLayout" type="tns:tLayout" abstract="true" />
+
+    <complexType name="tLayout">
+
+    </complexType>
+
+    <element name="flowLayout" type="tns:tFlowLayout" substitutionGroup="tns:abstractLayout" />
+
+    <complexType name="tFlowLayout">
+        <complexContent>
+            <extension base="tns:tLayout" />
+        </complexContent>
+    </complexType>
+
+    <element name="linealLayout" type="tns:tLinealLayout" substitutionGroup="tns:abstractLayout" />
+
+    <complexType name="tLinealLayout">
+        <complexContent>
+            <extension base="tns:tLayout">
+                <attribute name="type">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="vertical" />
+                            <enumeration value="horizontal" />
+                        </restriction>
+                    </simpleType>
+                </attribute>
+                <attribute name="boxes" type="integer" />
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <element name="gridBagLayout" type="tns:tGridBagLayout" substitutionGroup="tns:abstractLayout" />
+
+    <complexType name="tGridBagLayout">
+        <complexContent>
+            <extension base="tns:tLayout">
+                <attribute name="columns" type="integer" use="required" />
+                <attribute name="rows" type="integer" use="required" />
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <element name="absoluteLayout" type="tns:tGridBagLayout" substitutionGroup="tns:abstractLayout" />
+
+    <complexType name="tAbsoluteLayout">
+
+    </complexType>
+
+    <!-- LAYOUT INFO -->
+    <element name="abstractLayoutInfo" type="tns:tLayoutInfo" abstract="true" />
+
+    <complexType name="tLayoutInfo">
+
+    </complexType>
+
+    <element name="linealLayoutInfo" type="tns:tLinealLayoutInfo" substitutionGroup="tns:abstractLayoutInfo" />
+
+    <complexType name="tLinealLayoutInfo">
+        <complexContent>
+            <extension base="tns:tLayoutInfo">
+                <attribute name="box" type="integer" use="required" />
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <element name="gridBoxLayoutInfo" type="tns:tGridBoxLayoutInfo" substitutionGroup="tns:abstractLayoutInfo" />
+
+    <complexType name="tGridBoxLayoutInfo">
+        <complexContent>
+            <extension base="tns:tLayoutInfo">
+                <attribute name="column" type="integer" use="required" />
+                <attribute name="row" type="integer" use="required" />
+                <attribute name="colspan" type="integer" default="1" />
+                <attribute name="rowspan" type="integer" default="1" />
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <element name="absoluteLayoutInfo" type="tns:tAbsoluteLayoutInfo" substitutionGroup="tns:abstractLayoutInfo" />
+
+    <complexType name="tAbsoluteLayoutInfo">
+        <complexContent>
+            <extension base="tns:tLayoutInfo">
+                <attribute name="x" type="integer" use="required" />
+                <attribute name="y" type="integer" use="required" />
+                <attribute name="width" type="integer" use="required" />
+                <attribute name="height" type="integer" use="required" />
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <!-- TAGS -->
+
+    <element name="tags">
+        <complexType>
+            <sequence minOccurs="1" maxOccurs="unbounded">
+                <element ref="tns:tag" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="tag">
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <element ref="tns:param" />
+            </sequence>
+            <attribute name="name" type="string" />
+            <attribute name="tagSet" type="string" />
+        </complexType>
+    </element>
+
+    <element name="param">
+        <complexType>
+            <attribute name="value" type="string" />
+        </complexType>
+    </element>
+</schema>
