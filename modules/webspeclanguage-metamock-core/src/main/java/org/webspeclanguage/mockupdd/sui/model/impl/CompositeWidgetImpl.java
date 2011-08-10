@@ -81,30 +81,44 @@ public abstract class CompositeWidgetImpl extends WidgetImpl implements Composit
     return containerId;
   }
 
-  public final void addChild(Widget c) {
-    this.getWidgets().add(c);
-    this.indexWidget(c);
-    c.setParent(this);
+  public final void addChild(Widget w) {
+    this.getWidgets().add(w);
+    w.setParent(this);
   }
 
-  public final void removeChild(Widget c) {
-    this.getWidgets().remove(c);
-    this.removeWidgetIndex(c);
-    c.setParent(null);
+  public void removeChild(Widget w) {
+    this.getWidgets().remove(w);
+    w.setParent(null);
   }
 
-  private void indexWidget(Widget c) {
-    this.getWidgetsById().put(c.getWidgetId(), c);
+  public void registerChild(Widget w) {
+    this.getWidgetsById().put(w.getWidgetId(), w);
     if (this.getParent() != null) {
-      ((CompositeWidgetImpl) this.getParent()).indexWidget(c);
+      ((CompositeWidgetImpl) this.getParent()).registerChild(w);
     }
   }
 
-  private void removeWidgetIndex(Widget c) {
-    this.getWidgetById(c.getWidgetId());
+  public void unregisterChild(Widget w) {
+    this.getWidgetsById().remove(w.getWidgetId());
     if (this.getParent() != null) {
-      ((CompositeWidgetImpl) this.getParent()).removeWidgetIndex(c);
+      ((CompositeWidgetImpl) this.getParent()).unregisterChild(w);
     }
+  }
+
+  public void registerChildren(Collection<Widget> widgets) {
+    for (Widget w : widgets) {
+      this.registerChild(w);
+    }
+  }
+
+  public void unregisterChildren(Collection<Widget> widgets) {
+    for (Widget w : widgets) {
+      this.unregisterChild(w);
+    }
+  }
+
+  private Collection<Widget> getRegisteredChildren() {
+    return this.getWidgetsById().values();
   }
 
   public final void addChilds(Collection<Widget> widgets) {
@@ -115,28 +129,6 @@ public abstract class CompositeWidgetImpl extends WidgetImpl implements Composit
 
   public final Widget getWidgetById(String id) {
     return this.getWidgetsById().get(id);
-  }
-
-  public final void setParent(CompositeWidget parentWidget) {
-    if (this.getParent() != null) {
-      this.removeWidgetIndexesParent();
-    }
-    super.setParent(parentWidget);
-    if (parentWidget != null) {
-      this.addWidgetIndexesInParent();
-    }
-  }
-
-  private void addWidgetIndexesInParent() {
-    for (Widget c : this.getWidgets()) {
-      ((CompositeWidgetImpl) this.getParent()).indexWidget(c);
-    }
-  }
-
-  private void removeWidgetIndexesParent() {
-    for (Widget c : this.getWidgets()) {
-      this.getParent().removeChild(c);
-    }
   }
 
   private void cloneChildWidgetsIn(CompositeWidget cc) {
@@ -159,11 +151,11 @@ public abstract class CompositeWidgetImpl extends WidgetImpl implements Composit
       this.removeChild(c);
     }
   }
-  
+
   public void addAll(Collection<Widget> widgets) {
     this.getWidgets().addAll(widgets);
   }
- 
+
   public void replaceWidget(Widget widgetToReplace, Widget replacingWidget) {
     this.removeChild(widgetToReplace);
     this.addChild(replacingWidget);
@@ -173,4 +165,16 @@ public abstract class CompositeWidgetImpl extends WidgetImpl implements Composit
   }
 
   protected abstract CompositeWidget createNewInstance();
+
+  protected void registerWidgetsInNewParent(CompositeWidget oldParent, CompositeWidget newParent) {
+    if (oldParent != null) {
+      ((CompositeWidgetImpl) oldParent).unregisterChild(this);
+      ((CompositeWidgetImpl) oldParent).unregisterChildren(this.getRegisteredChildren());
+    }
+    if (newParent != null) {
+      ((CompositeWidgetImpl) newParent).registerChild(this);
+      ((CompositeWidgetImpl) newParent).registerChildren(this.getRegisteredChildren());
+    }
+  }
+
 }

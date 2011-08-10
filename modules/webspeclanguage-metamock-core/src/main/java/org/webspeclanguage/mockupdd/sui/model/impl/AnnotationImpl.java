@@ -13,6 +13,7 @@
 package org.webspeclanguage.mockupdd.sui.model.impl;
 
 import org.webspeclanguage.mockupdd.sui.model.Annotation;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.utils.SuiVisitor;
 
@@ -21,7 +22,7 @@ import org.webspeclanguage.mockupdd.utils.SuiVisitor;
  * 
  * @author Jose Matias Rivero
  */
-public class AnnotationImpl extends WidgetImpl implements Annotation {
+public class AnnotationImpl extends SimpleWidgetImpl implements Annotation {
 
   private Widget targetElement;
   private String content;

@@ -12,6 +12,7 @@
  */
 package org.webspeclanguage.mockupdd.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.webspeclanguage.mockupdd.sui.model.Annotation;
@@ -193,11 +194,13 @@ public class SuiFactoryTestCase extends SuiTestCase {
 
   public void testCreateModel() {
     SuiModel c = this.getFactory().createSuiModel();
-    for (Widget ctrl : this.widgets)
+    for (Widget ctrl : this.widgets) {
       c.addWidgetOutsidePages(ctrl);
+    }
     assertEquals(this.widgets.size(), c.getWidgetsOutsidePages().size());
-    for (Widget ctrl : this.widgets)
+    for (Widget ctrl : this.widgets) {
       assertTrue(c.getWidgetsOutsidePages().contains(ctrl));
+    }
     
     Page p = this.getFactory().createPage(this.widgetId, this.x, this.y, this.width, this.height, this.text, this.containerId);
     c.addPage(p);
@@ -205,10 +208,12 @@ public class SuiFactoryTestCase extends SuiTestCase {
     assertTrue(c.getPages().contains(p));
     assertSame(p, c.getPageById(this.widgetId));
     
-    for (Widget ctrl : this.widgets)
+    for (Widget ctrl : this.widgets) {
       c.registerWidget(ctrl);
-    for (Widget ctrl : this.widgets)
+    }
+    for (Widget ctrl : this.widgets) {
       assertSame(c.getWidgetById(ctrl.getWidgetId()), ctrl);
+    }
     assertNull(c.getWidgetById("fakeId"));
     
     Template template = new Template(
@@ -412,6 +417,39 @@ public class SuiFactoryTestCase extends SuiTestCase {
     assertEquals(3, (int)c.getRows());
     this.assertUIWidgetFeatures(c);
     this.assertCompositeWidgetFeatures(c);  
+  }
+  
+  public void testWidgetComposition1() {
+    Panel panel = this.getFactory().createPanel("panel", 0, 0, 100, 100, "c");
+    Panel innerPanel = this.getFactory().createPanel("innerPanel", 0, 0, 100, 100, "c");
+    Button button = this.getFactory().createButton("b", 0, 0, 100, 100, "Button");
+    innerPanel.addChild(button);
+    panel.addChild(innerPanel);
+    assertEquals(button, panel.getWidgetById("b"));
+  }
+  
+  public void testWidgetComposition2() {
+    Panel panel = this.getFactory().createPanel("panel", 0, 0, 100, 100, "c");
+    Panel innerPanel = this.getFactory().createPanel("innerPanel", 0, 0, 100, 100, "c");
+    panel.addChild(innerPanel);
+    Button button = this.getFactory().createButton("b", 0, 0, 100, 100, "Button");
+    innerPanel.addChild(button);
+    assertEquals(button, panel.getWidgetById("b"));
+  }
+  
+  public void testWidgetComposition3() {
+    Repetition initialRepetition = this.getFactory().createRepetition("repetition0", 0, 0, 100, 100, new ArrayList<Widget>(), 2, 2, "c");
+    Repetition currentRepetition = initialRepetition;
+    for (int i = 1; i < 4; i++) {
+      Repetition newRepetition = this.getFactory().createRepetition("repetition" + 1, 0, 0, 100, 100, new ArrayList<Widget>(), 2, 2, "c");
+      currentRepetition.addChild(newRepetition);
+      currentRepetition = newRepetition;
+    }
+    Button button = this.getFactory().createButton("b", 0, 0, 100, 100, "Button");
+    currentRepetition.addChild(button);
+    Page page = this.getFactory().createPage("page", 0, 0, 100, 100, "Page", "c");
+    page.addChild(initialRepetition);
+    assertEquals(button, page.getWidgetById("b"));
   }
 
   public void testCreateRepetitionAnnotation() {

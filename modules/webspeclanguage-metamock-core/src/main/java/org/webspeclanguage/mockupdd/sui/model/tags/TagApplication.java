@@ -26,5 +26,7 @@ public interface TagApplication {
   Tag getTag();
   
   List<TagParameterValue> getParameterValues();
+
+  void remove();
   
 }

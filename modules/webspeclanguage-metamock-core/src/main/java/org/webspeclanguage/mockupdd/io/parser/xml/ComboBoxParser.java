@@ -10,19 +10,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.webspeclanguage.mockupdd.io.parser.xml;
 
 import org.jdom.Element;
 import org.webspeclanguage.mockupdd.io.parser.SuiParser;
-import org.webspeclanguage.mockupdd.sui.model.CheckBox;
+import org.webspeclanguage.mockupdd.io.parser.SuiParsingException;
+import org.webspeclanguage.mockupdd.sui.model.ComboBox;
+
 
 /**
  * @author Jose Matias Rivero
  */
-public class CheckBoxParser implements SuiParser<Element, SuiParserContext> {
+public class ComboBoxParser implements SuiParser<Element, SuiParserContext> {
 
-  public Object parse(Element source, SuiParserContext parserContext, Object partiallyParsedObject) {
-    return parserContext.buildWidget(CheckBox.class, source, source.getAttributeValue("label"));
+  public Object parse(Element source, SuiParserContext parserContext, Object partiallyParsedObject) throws SuiParsingException {
+    return (ComboBox) parserContext.buildWidget(ComboBox.class, source);
   }
 
 }

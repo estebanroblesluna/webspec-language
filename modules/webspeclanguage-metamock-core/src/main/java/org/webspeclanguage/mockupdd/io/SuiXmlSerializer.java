@@ -43,6 +43,7 @@ public class SuiXmlSerializer implements SuiSerializer {
 
   public SuiModel deserialize(String serializedModel) throws Exception {
     SAXBuilder builder = new SAXBuilder();
+    //builder.setFeature("http://apache.org/xml/features/validation/schema", true);
     Document d = builder.build(new StringReader(serializedModel));
     return (SuiModel) this.parser.parse(d.getRootElement(), new SuiParserContext(), null);
   }

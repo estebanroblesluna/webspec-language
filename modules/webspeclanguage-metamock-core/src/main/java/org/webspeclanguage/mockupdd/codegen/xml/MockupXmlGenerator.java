@@ -22,10 +22,13 @@ import org.jdom.Namespace;
 import org.webspeclanguage.mockupdd.codegen.common.DefaultWidgetGenerator;
 import org.webspeclanguage.mockupdd.codegen.common.SuiCodeGenerator;
 import org.webspeclanguage.mockupdd.codegen.framework.core.CodegenUtil;
+import org.webspeclanguage.mockupdd.sui.model.Button;
 import org.webspeclanguage.mockupdd.sui.model.CheckBox;
 import org.webspeclanguage.mockupdd.sui.model.ComboBox;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.Image;
 import org.webspeclanguage.mockupdd.sui.model.Label;
+import org.webspeclanguage.mockupdd.sui.model.Link;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.Panel;
 import org.webspeclanguage.mockupdd.sui.model.RadioButton;
@@ -44,11 +47,38 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
 public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implements SuiCodeGenerator<Collection<DocumentFile>> {
 
   private Namespace namespace;
+  private boolean generateOriginalPosition;
+  private boolean generateLayout;
   
   public MockupXmlGenerator() {
-    this.setNamespace(Namespace.getNamespace("http://www.webspeclanguage.org/metamock"));
+    this(false, false);
   }
   
+  public MockupXmlGenerator(boolean generateOriginalPosition, boolean generateLayout) {
+    this.setNamespace(Namespace.getNamespace("http://www.webspeclanguage.org/sui"));
+    this.generateOriginalPosition = generateOriginalPosition;
+    this.generateLayout = generateLayout;
+  }
+  
+  @Override
+  public Element visitButton(Button button) {
+    return 
+      this.addCommonFeatures(this.createElement("button")
+      .setAttribute("label", button.getText()), button);
+  }
+
+  @Override
+  public Element visitLink(Link link) {
+    return
+      this.addCommonFeatures(this.createElement("link")
+      .setAttribute("label", link.getText()), link);
+  }
+
+  @Override
+  public Element visitList(org.webspeclanguage.mockupdd.sui.model.List list) {
+    return this.addCommonFeatures(this.createElement("list"), list);
+  }
+
   public Document generateInSingleDocument(SuiModel model) {
     Element mockups = this.createElement("mockups");
     for (Page p : model.getPages()) {
@@ -81,8 +111,8 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
   @Override
   public Element visitLabel(Label label) {
     return 
-    this.addCommonFeatures(this.createElement("label")
-    .setAttribute("label", label.getText()), label);
+      this.addCommonFeatures(this.createElement("label")
+      .setAttribute("label", label.getText()), label);
   }
 
   @Override
@@ -108,7 +138,7 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
       .setAttribute("schemaLocation", "http://www.webspeclanguage.org/sui sui.xsd", xsiNs));
   }
 
-  private Collection<Element> generateCompositeWidgetContent(Collection<Widget> widgets) {
+  private Element generateCompositeWidgetContent(Collection<Widget> widgets) {
     Collection<Element> generatedElements = new ArrayList<Element>();
     for (Widget c : widgets) {
       Element e = c.accept(this);
@@ -116,7 +146,7 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
         generatedElements.add(e);
       }
     }
-    return generatedElements;
+    return this.createElement("widgets").addContent(generatedElements);
   }
 
   @Override
@@ -128,7 +158,7 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
     return this.addFlowLayout(1, 
     this.addCommonFeatures(
       this.createElement(widgetName), widget)
-      .addContent(this.generateCompositeWidgetContent(widget.getLayout().getWidgets())));
+      .addContent(this.generateCompositeWidgetContent(widget.getWidgets())));
   }
   
   @Override
@@ -149,6 +179,11 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
   }
 
   @Override
+  public Element visitImage(Image image) {
+    return this.addCommonFeatures(this.createElement("image"), image);
+  }
+
+  @Override
   public Element visitTextArea(TextArea textArea) {
     return this.addCommonFeatures(this.createElement("textArea"), textArea);
   }
@@ -165,12 +200,14 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
   
   private Element addCommonFeatures(Element element, Widget widget) {
     Element e = element.setAttribute("id", this.getWidgetId(widget));
-    e.addContent(this.createElement("originalPosition")
-        .setAttribute("x", widget.getX().toString())
-        .setAttribute("y", widget.getY().toString())
-        .setAttribute("width", widget.getWidth().toString())
-        .setAttribute("height", widget.getHeight().toString())
-      );
+    if (this.generateOriginalPosition) {
+      e.addContent(this.createElement("originalPosition")
+          .setAttribute("x", widget.getX().toString())
+          .setAttribute("y", widget.getY().toString())
+          .setAttribute("width", widget.getWidth().toString())
+          .setAttribute("height", widget.getHeight().toString())
+        );
+    }
     if (widget.getAppliedTags().size() > 0) {
       this.addAppliedTags(e, widget);
     }
@@ -185,7 +222,7 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
         values.add(this.createElement("param").setAttribute("value", pv.getValue()));
       }
       tags.addContent(this.createElement("tag")
-              .setAttribute("tagName", ta.getTag().getName())
+              .setAttribute("name", ta.getTag().getName())
               .setAttribute("tagSet", ta.getTag().getTagSet().getName())
               .addContent(values));
     }
@@ -201,6 +238,9 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
   }
   
   private Element addFlowLayout(int position, Element compositeWidgetElement) {
+    if (!this.generateLayout) {
+      return compositeWidgetElement;
+    }
     return compositeWidgetElement.addContent(position,
             this.createElement("layout").addContent(
                     this.createElement("flowLayout")));

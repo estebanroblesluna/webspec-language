@@ -90,4 +90,9 @@ public class TagApplicationImpl implements TagApplication {
     return parameterValues;
   }
 
+  public void remove() {
+    this.getWidget().removeTagApplication(this);
+    this.setWidget(null);
+  }
+
 }
