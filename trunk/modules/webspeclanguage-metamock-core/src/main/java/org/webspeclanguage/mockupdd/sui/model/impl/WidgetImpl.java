@@ -18,6 +18,7 @@ import java.util.Collection;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagApplicationImpl;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 
@@ -88,6 +89,7 @@ public abstract class WidgetImpl implements Widget {
   }
 
   public void setParent(CompositeWidget parentWidget) {
+    this.registerWidgetsInNewParent(this.parent, parentWidget);
     this.parent = parentWidget;
   }
 
@@ -116,7 +118,7 @@ public abstract class WidgetImpl implements Widget {
   
   protected String getProperties() {
     return 
-      "id: " + this.getWidgetId() + ", " +
+      "id: \"" + this.getWidgetId() + "\", " +
       "page: \"" + this.getPage() + "\"" +
       "x: " + this.getX() + ", " +
       "y: " + this.getY();
@@ -165,5 +167,11 @@ public abstract class WidgetImpl implements Widget {
     }
     this.getAppliedTags().add(tagApplication);
   }
+
+  public void removeTagApplication(TagApplication tagApplication) {
+    this.getAppliedTags().remove(tagApplication);
+  }
+  
+  protected abstract void registerWidgetsInNewParent(CompositeWidget oldParent, CompositeWidget newParent);
 
 }

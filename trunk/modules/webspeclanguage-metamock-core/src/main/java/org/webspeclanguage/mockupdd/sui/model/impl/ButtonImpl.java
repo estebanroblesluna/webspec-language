@@ -14,6 +14,7 @@ package org.webspeclanguage.mockupdd.sui.model.impl;
 
 import org.webspeclanguage.mockupdd.sui.model.Button;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagApplicationImpl;
 import org.webspeclanguage.mockupdd.utils.SuiVisitor;
 
 /**

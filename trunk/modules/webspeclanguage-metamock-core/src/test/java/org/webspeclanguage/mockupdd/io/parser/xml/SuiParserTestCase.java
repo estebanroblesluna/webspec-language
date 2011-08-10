@@ -21,6 +21,8 @@ import junit.framework.TestCase;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 import org.webspeclanguage.mockupdd.sui.model.CheckBox;
+import org.webspeclanguage.mockupdd.sui.model.ComboBox;
+import org.webspeclanguage.mockupdd.sui.model.Image;
 import org.webspeclanguage.mockupdd.sui.model.Label;
 import org.webspeclanguage.mockupdd.sui.model.Link;
 import org.webspeclanguage.mockupdd.sui.model.Page;
@@ -37,12 +39,10 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
  */
 public class SuiParserTestCase extends TestCase {
 
-  public void testXmlSuiModelParser() throws Exception {
-    SAXBuilder builder = new SAXBuilder();
-    Document d = builder.build(new FileReader("src/test/resources/org/webspeclanguage/metamock/io/suiExample.xml"));
-    SuiModel model = (SuiModel) new XmlSuiParser().parse(d.getRootElement(), new SuiParserContext(), null);
-    assertEquals(model.getPages().size(), 1);
-    Page page = model.getPages().iterator().next();
+  private Page page;
+  
+  public void testXmlSuiModelParsing() throws Exception {
+    this.setUp();
     
     assertEquals(page.getTitle(), "Login screen");
     assertEquals(page.getWidgetId(), "loginScreen");
@@ -73,10 +73,24 @@ public class SuiParserTestCase extends TestCase {
     
     panel = (Panel) page.getWidgetById("loginType");
     assertWidgetFeatures(panel, "loginType", 10, 110, 100, 100);
-    assertEquals(2, panel.getWidgets().size());
+    assertEquals(4, panel.getWidgets().size());
     
     RadioButton radioButton = (RadioButton) panel.getWidgetById("normalLogin");
     assertEquals("Normal login", radioButton.getText());
+    
+    ComboBox comboBox = (ComboBox) panel.getWidgetById("loginAs");
+    assertWidgetFeatures(comboBox, "loginAs", 30, 240, 200, 200);
+    
+    Image image = (Image) panel.getWidgetById("loginBanner");
+    assertWidgetFeatures(image, "loginBanner", 20, 160, 80, 30);
+  }
+
+  protected void setUp() throws Exception {
+    SAXBuilder builder = new SAXBuilder();
+    Document d = builder.build(new FileReader("src/test/resources/org/webspeclanguage/metamock/io/suiExample.xml"));
+    SuiModel model = (SuiModel) new XmlSuiParser().parse(d.getRootElement(), new SuiParserContext(), null);
+    assertEquals(model.getPages().size(), 1);
+    this.page = model.getPages().iterator().next();
   }
 
   private void assertAppliedTags(Collection<TagApplication> appliedTags) {

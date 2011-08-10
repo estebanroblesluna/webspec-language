@@ -77,4 +77,6 @@ public abstract interface Widget extends SuiModelElement {
 
   void addTagApplication(TagApplication tagApplication) throws TagApplicationException;
 
+  void removeTagApplication(TagApplication tagApplication);
+
 }

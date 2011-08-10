@@ -63,8 +63,11 @@ public class SuiParserContext {
     this.addParser("label", new LabelParser(), wp);
     this.addParser("textBox", new TextBoxParser(), wp);
     this.addParser("checkBox", new CheckBoxParser(), wp);
+    this.addParser("comboBox", new ComboBoxParser(), wp);
     this.addParser("button", new ButtonParser(), wp);
     this.addParser("link", new LinkParser(), wp);
+    this.addParser("list", new ListParser(), wp);
+    this.addParser("image", new ImageParser(), wp);
     this.addParser("radioButton", new RadioButtonParser(), wp);
     this.addParser("tag", new TagParser(), null);    
   }

@@ -12,7 +12,9 @@
  */
 package org.webspeclanguage.mockupdd.sui.model.impl;
 
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
+import org.webspeclanguage.mockupdd.utils.SuiVisitor;
 
 /**
  * Default implementation of {@link SimpleWidget}
@@ -21,8 +23,18 @@ import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
  */
 public abstract class SimpleWidgetImpl extends WidgetImpl implements SimpleWidget {
 
+
   public SimpleWidgetImpl(String widgetID, int x, int y, int width, int height) {
     super(widgetID, x, y, width, height);
+  }
+  
+  protected void registerWidgetsInNewParent(CompositeWidget oldParent, CompositeWidget newParent) {
+    if (oldParent != null) {
+      ((CompositeWidgetImpl) oldParent).unregisterChild(this);
+    }
+    if (newParent != null) {
+      ((CompositeWidgetImpl) newParent).registerChild(this);
+    }
   }
 
 }

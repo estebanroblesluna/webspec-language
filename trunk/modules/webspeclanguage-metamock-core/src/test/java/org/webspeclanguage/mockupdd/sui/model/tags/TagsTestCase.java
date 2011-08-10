@@ -40,7 +40,7 @@ public class TagsTestCase extends SuiTestCase {
   }
   
   @Test
-  public void testTagApplication() throws TagApplicationException {
+  public void testTagApplicationAndRemoval() throws TagApplicationException {
     Button b = this.getFactory().createButton("b", 0, 0, 0, 0, "button");
     Tag t = this.tagSet.getTagByName("Tag1");
     assertNotNull(t);
@@ -50,6 +50,9 @@ public class TagsTestCase extends SuiTestCase {
     assertEquals(at.getTag(), t);
     assertEquals(t.getParameters().iterator().next(), at.getParameterValues().get(0).getTagParameter());
     assertEquals("value1", at.getParameterValues().get(0).getValue());
+    at.remove();
+    assertNull(at.getWidget());
+    assertEquals(0, b.getAppliedTags().size());    
   }
   
   @Test
@@ -74,6 +77,10 @@ public class TagsTestCase extends SuiTestCase {
       t.applyOver(b, Arrays.asList(this.getFactory().createTagParameterValue(t.getParameters().iterator().next(), "value1")));
       fail();
     } catch (TagApplicationException e) { }
+  }
+  
+  protected TagSet getTagSet() {
+    return this.tagSet;
   }
   
 
