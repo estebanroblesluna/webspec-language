@@ -10,21 +10,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.mockupdd.codegen.webml.webmodel.links;
 
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
+package org.webspeclanguage.mockupdd.codegen.webml.webmodel;
+
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
+import java.util.*;
 
 /**
  * @author Franco Giacosa
  */
-public class AutomaticLink extends Link {
+public interface LinkElement {
 
-  public AutomaticLink(String id,String name, Boolean automaticCoupling, LinkElement from, LinkElement to) {
-    super(id, name, automaticCoupling, from, to);
-    // TODO Auto-generated constructor stub
-  }
-	public void accept(WebModelVisitor visitor) {
-		visitor.visit(this);
-	}
+  public String getId();
+  public HashMap<String,Parameter> getInputParameters();
+  public HashMap<String,Parameter> getOutputParameters();
 }

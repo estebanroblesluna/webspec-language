@@ -12,19 +12,47 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityFacade;
+import java.util.HashMap;
+
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.DefaultUnitParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
 
 /**
  * @author Franco Giacosa
  */
 public class MultiChoiceIndexUnit extends ContentUnit {
 
-	public MultiChoiceIndexUnit(String id, String name, EntityFacade entity) {
+  private HashMap<String,Parameter> defaultOutputParameters = new HashMap<String,Parameter>();
+
+	public MultiChoiceIndexUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
-		// TODO Auto-generated constructor stub
+    WebModelFactory webFactory = new WebModelFactory();
+    DefaultUnitParameter defaultUnitParameter1 = webFactory.createDefaultUnitParameter("Checked","Checked OID");
+    defaultOutputParameters.put(defaultUnitParameter1.getName(),defaultUnitParameter1);
+       
 	}
+  public HashMap<String, Parameter> getDefaultOutputParameters() {
+    return defaultOutputParameters;
+  }
+  
+  public void setDefaultOutputParameters(HashMap<String, Parameter> defaultOutputParameters) {
+    this.defaultOutputParameters = defaultOutputParameters;
+  }
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
+  public HashMap<String,Parameter> getInputParameters() {
+    return new HashMap<String,Parameter>();
+  }
+  public HashMap<String,Parameter> getOutputParameters() {
+    HashMap<String,Parameter> outputParameters = new HashMap<String,Parameter>();
+    outputParameters.putAll(this.getEntity().getParametersPool());
+    outputParameters.putAll(this.getDefaultOutputParameters());
+    return outputParameters;
+  }
+  
+
 }

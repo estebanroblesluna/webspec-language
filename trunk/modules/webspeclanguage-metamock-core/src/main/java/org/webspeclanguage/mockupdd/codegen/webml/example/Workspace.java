@@ -15,6 +15,7 @@ package org.webspeclanguage.mockupdd.codegen.webml.example;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.*;
 
 /**
  * @author Franco Giacosa
@@ -27,12 +28,22 @@ public class Workspace {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		WebModelConcreteVisitor visitor = new WebModelConcreteVisitor();
-		EntityFacade facade = new EntityFacade( new Entity("2","prueba","persistent",null));
-		CreateUnit unit = new CreateUnit("1","asd",facade);
-		unit.accept(visitor);
+		WebModelFactory factory = new WebModelFactory();
+		EntryUnit entryUnit1 = factory.createEntryUnit("entryunit1", null);
+		EntryUnit entryUnit2 = factory.createEntryUnit("entryunit2", null);
+		Page page1 = factory.createPage("page1", true, true);
+    Page page4 = factory.createPage("page4", true, true);
+
+		System.out.println(page1.getClass().getSimpleName());
+		if(page1.getClass().getSimpleName().equalsIgnoreCase("page")){
+		    System.out.print("hola");
+		}
 		
-		
+		NormalLink link = factory.createNormalLink("link", true, page1, entryUnit1);
+		System.out.println(link.toString());
+    System.out.println(link.getFrom().getId());
+    System.out.println(link.getTo().getId());
+	 		
 	}
 
 }

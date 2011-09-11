@@ -12,6 +12,8 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field;
 
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+
 /**
  * @author Franco Giacosa
  */
@@ -55,4 +57,8 @@ public class Slot {
 	public void setId(String id) {
 		this.id = id;
 	}
+  public void accept(WebModelVisitor visitor){
+    visitor.visit(this);
+  }
+
 }

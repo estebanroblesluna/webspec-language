@@ -11,7 +11,11 @@
  * limitations under the License.
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Type;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
+
 import java.util.*;
 
 /**
@@ -19,26 +23,46 @@ import java.util.*;
  */
 public class NormalField extends Field{
 
-	private Boolean preloaded = true;
-	private String modifiable = "true";
+
+  private Boolean preloaded = true;
+	private Boolean modifiable = true;
 	
-	
+  public NormalField(String id, String name, Type type) {
+    super(id, name, type);
+
+  }
 	public Boolean getPreloaded() {
 		return preloaded;
 	}
 	public void setPreloaded(Boolean preloaded) {
 		this.preloaded = preloaded;
 	}
-	public String getModifiable() {
+	public Boolean getModifiable() {
 		return modifiable;
 	}
-	public void setModifiable(String modifiable) {
+	public void setModifiable(Boolean modifiable) {
 		this.modifiable = modifiable;
 	}
-	public List<Parameter> getParameters(){
-		List<Parameter> listParameter = new ArrayList<Parameter>();
-		listParameter.add(new NormalFieldParameter(this.getName(),this));
-		return listParameter;
+	public void accept(WebModelVisitor visitor){
+	  visitor.visit(this);
 	}
+  @Override
+  public ArrayList<Parameter> getInputParameters() {
+    ArrayList<Parameter> parameters = new ArrayList<Parameter>();
+    WebModelFactory webFactory = new WebModelFactory();
+
+    if(preloaded) parameters.add(webFactory.createNormalFieldParameter(this));
+    
+    return parameters;  
+  }
+  @Override
+  public ArrayList<Parameter> getOutputParameters() {
+    ArrayList<Parameter> parameters = new ArrayList<Parameter>();
+    WebModelFactory webFactory = new WebModelFactory();
+
+    parameters.add(webFactory.createNormalFieldParameter(this));
+    
+    return parameters; 
+  }
 	
 }

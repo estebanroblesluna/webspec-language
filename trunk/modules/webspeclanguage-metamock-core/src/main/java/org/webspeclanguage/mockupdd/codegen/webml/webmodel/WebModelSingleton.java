@@ -32,14 +32,18 @@ public class WebModelSingleton {
     private Integer multiEntryUnitId = 1;
     private Integer selectorUnitId = 1;
     private Integer parameterCouplingId = 1;
-
-
+    private Integer selectorId = 1;
+    private Integer keyConditionId = 1;
+    private Integer keyConditionName = 1;
+    private Integer normalFieldId = 1;
+    private Integer selectionFieldId = 1;
+    
     private WebModelSingleton(){
     	
     }
     public static WebModelSingleton getWebModelSingleton() {  
-		  if(webModelSingleton==null) //SI ES NULL  
-			  webModelSingleton = new WebModelSingleton(); //LO INSTANCIAMOS  
+		  if(webModelSingleton==null) //if it's NULL  
+			  webModelSingleton = new WebModelSingleton(); //we create a singleton  
 		  return webModelSingleton;  
 	}  
 	public Object clone() throws CloneNotSupportedException {
@@ -84,6 +88,20 @@ public class WebModelSingleton {
 	public String getParameterCouplingId() {
 		return "par" + (parameterCouplingId ++).toString();
 	}
-	
+	public String getSelectorId(){
+	  return "su" + (selectorId ++).toString();
+	}
+	public String getKeyConditionId(){
+	  return "kcond" + (keyConditionId ++).toString();
+	}
+	public String getKeyConditionName(){
+	  return "KeyCondition" + (keyConditionName ++).toString();
+	}
+	public String getNormalFieldId(){
+	  return "fld" + (normalFieldId ++).toString();
+	}
+	public String getSelectionFieldId(){
+	  return "sfld" + (selectionFieldId ++).toString();
+  }
 	
 }

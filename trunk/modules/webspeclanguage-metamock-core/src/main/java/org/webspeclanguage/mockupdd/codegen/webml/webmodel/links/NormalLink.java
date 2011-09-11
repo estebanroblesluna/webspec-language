@@ -13,18 +13,18 @@
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.links;
 
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.Unit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 
 /**
  * @author Franco Giacosa
  */
-public class NormalLink extends ContextualLink {
+public class NormalLink extends Link {
 
-	public NormalLink(String id, String name, Boolean automaticCoupling, Unit targetUnit, Unit sourceUnit) {
-		super(id, name, automaticCoupling, targetUnit, sourceUnit);
-		// TODO Auto-generated constructor stub
-	}
-	public void accept(WebModelVisitor visitor) {
+  public NormalLink(String id,String name, Boolean automaticCoupling, LinkElement from, LinkElement to) {
+    super(id, name, automaticCoupling, from, to);
+    // TODO Auto-generated constructor stub
+  }
+  public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
 }

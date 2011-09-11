@@ -12,23 +12,36 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling;
 
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+
 /**
  * @author Franco Giacosa
  */
 public abstract class  Parameter {
 
-	public Parameter(String name) {
+  private String id;
+  private String name;
+
+	public Parameter(String id, String name) {
 		super();
+		this.id = id;
 		this.name = name;
 	}
-
-	public String name;
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
+  public abstract void accept(WebModelVisitor visitor);
+  
+  public String getId() {
+    return id;
+  }
+  
+  public void setId(String id) {
+    this.id = id;
+  }
+    
+  
 }

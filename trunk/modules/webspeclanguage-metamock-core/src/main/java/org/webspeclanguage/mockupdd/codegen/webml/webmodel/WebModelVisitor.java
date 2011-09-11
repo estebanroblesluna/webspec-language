@@ -15,6 +15,8 @@ package org.webspeclanguage.mockupdd.codegen.webml.webmodel;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.patternconfiguration.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 
 /**
  * @author Franco Giacosa
@@ -41,11 +43,26 @@ public interface WebModelVisitor {
 	void visit(MultiChoiceIndexUnit multiChoiceIndexUnit);
 	void visit(MultiEntryUnit mutiEntryUnit);
 	void visit(SelectorUnit selectorUnit);
+	void visit(KeyCondition keyCondition);
 	void visit(AutomaticLink automaticLink);
 	void visit(KOLink koLink);
-	void visit(NonContextualLink nonContextualLink);
 	void visit(OKLink okLink);
 	void visit(NormalLink normalLink);
+	void visit(SelectionField selectionField);
 	void visit(TransportLink transportLink);
+	void visit(ParameterCoupling parameterCoupling);
+	void visit(NormalField normalField);
+	void visit(SelectionFieldLabelParameter selectionField);
+  void visit(SelectionFieldOutputParameter selectionField);
+	void visit(SelectionFieldPreselectionParameter selectionField);
+	void visit(Slot slot);
+	void visit(Selector selector);
+	void visit(AttributeParameter attributeParameter);
+  void visit(CurrentOIDParameter currentOIDParameter);
+  void visit(KeyConditionParameter keyConditionParameter);
+  void visit(NormalFieldParameter normalFieldParameter);
+  void visit(RelationshipParameter relationshipParameter);
+  void visit(DefaultUnitParameter defaultUnitParameter);
+  void visit(OutputSelectionFieldParameter outputSelectionFieldParameter);
 
 }

@@ -12,19 +12,27 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityFacade;
+import java.util.*;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
 
 /**
  * @author Franco Giacosa
  */
 public class SelectorUnit extends ContentUnit {
 
-	public SelectorUnit(String id, String name, EntityFacade entity) {
+	public SelectorUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
 		// TODO Auto-generated constructor stub
 	}
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
+  public HashMap<String,Parameter> getInputParameters() {
+    return new HashMap<String,Parameter>();
+  }
+  public HashMap<String,Parameter> getOutputParameters() {
+    return this.getEntity().getParametersPool();
+  }
 }

@@ -11,6 +11,7 @@
  * limitations under the License.
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
 
 /**
@@ -18,18 +19,20 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
  */
 public class NormalFieldParameter extends Parameter {
 
-	private Field field;
+	private NormalField field;
 	
-	public NormalFieldParameter(String name, Field field) {
-		super(name);
+	public NormalFieldParameter(String id, NormalField field) {
+		super(id,field.getName());
 		this.field = field;
 		// TODO Auto-generated constructor stub
 	}
 	public Field getField() {
 		return field;
 	}
-	public void setField(Field field) {
+	public void setField(NormalField field) {
 		this.field = field;
 	}
-
+	public void accept(WebModelVisitor visitor) {
+    visitor.visit(this);
+  }
 }

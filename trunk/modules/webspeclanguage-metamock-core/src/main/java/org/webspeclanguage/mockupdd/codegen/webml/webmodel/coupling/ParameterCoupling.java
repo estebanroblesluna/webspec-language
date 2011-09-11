@@ -12,6 +12,8 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling;
 
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+
 /**
  * @author Franco Giacosa
  */
@@ -71,5 +73,8 @@ public class ParameterCoupling {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+	public void accept(WebModelVisitor visitor){
+	 visitor.visit(this);
+	}
+
 }

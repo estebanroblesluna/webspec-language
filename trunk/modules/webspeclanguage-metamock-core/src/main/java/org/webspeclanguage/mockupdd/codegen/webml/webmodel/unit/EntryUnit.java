@@ -12,10 +12,12 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
 
 import java.util.*;
 
@@ -25,10 +27,16 @@ import java.util.*;
 public class EntryUnit extends ContentUnit {
 
 	private Map<String,Field> fields = new HashMap<String,Field>();
-
-	public EntryUnit(String id, String name, EntityFacade entity) {
+	
+	public EntryUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
 		// TODO Auto-generated constructor stub
+	}
+	public EntryUnit(String id, String name){
+	  super(id,name,null);
+	}
+	public void addField(Field field){
+	  this.getFields().put(field.getId(), field);
 	}
 	public Map<String, Field> getFields() {
 		return fields;
@@ -36,24 +44,53 @@ public class EntryUnit extends ContentUnit {
 	public void setFields(Map<String, Field> fields) {
 		this.fields = fields;
 	}
-	public Map<String,Parameter> getParametersPool(){
-		//here we obtain every parameter that the unit can use
-		HashMap<String,Parameter> parametersField = new HashMap<String,Parameter>();
-		Iterator<String> iterator = this.getFields().keySet().iterator();
-		
-		while(iterator.hasNext()){
-			String key = (String)iterator.next();
-			List<Parameter> parameterList = this.getFields().get(key).getParameters();
-			
-			Iterator<Parameter> parameterIterator = parameterList.iterator();
-			while(parameterIterator.hasNext()){
-				Parameter parameter = (Parameter)parameterIterator.next();
-				parametersField.put(parameter.getName(), parameter);
-			}
-		}
-		return parametersField;
-	}
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
+	public void createFields(){
+    WebModelFactory webFactory = new WebModelFactory();
+
+    if(this.getEntity() != null){
+      Iterator<String> iteratorAttributes = this.getEntity().getAttributes().keySet().iterator();
+      while(iteratorAttributes.hasNext()){
+        String keyAttribute = (String)iteratorAttributes.next();
+        AttributeDecorator attribute = this.getEntity().getAttributes().get(keyAttribute);
+        this.addField(webFactory.createNormalField(attribute));
+      }
+    }
+	}
+  public HashMap<String,Parameter> getInputParameters() {
+    HashMap<String,Parameter> inputParameters = new HashMap<String,Parameter>();
+    
+    Iterator<String> iteratorFields = this.getFields().keySet().iterator();
+    
+    while(iteratorFields.hasNext()){
+      String key = (String)iteratorFields.next();
+      ArrayList<Parameter> parameterList = this.getFields().get(key).getInputParameters();
+      
+      Iterator<Parameter> parameterIterator = parameterList.iterator();
+      while(parameterIterator.hasNext()){
+        Parameter parameter = parameterIterator.next();
+        inputParameters.put(parameter.getName(),parameter);
+      }
+    }
+    return inputParameters;  
+  }
+  public HashMap<String,Parameter> getOutputParameters() {
+    HashMap<String,Parameter> outputParameters = new HashMap<String,Parameter>();
+    
+    Iterator<String> iteratorFields = this.getFields().keySet().iterator();
+    
+    while(iteratorFields.hasNext()){
+      String key = (String)iteratorFields.next();
+      ArrayList<Parameter> parameterList = this.getFields().get(key).getOutputParameters();
+      
+      Iterator<Parameter> parameterIterator = parameterList.iterator();
+      while(parameterIterator.hasNext()){
+        Parameter parameter = (Parameter)parameterIterator.next();     
+        outputParameters.put(parameter.getName(),parameter);
+      }
+    }
+    return outputParameters;  
+  }
 }

@@ -12,6 +12,7 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 import java.util.*;
 
@@ -19,33 +20,36 @@ import java.util.*;
  * @author Franco Giacosa
  */
 public abstract class Field {
+  private String id;
+  private String name;
+  private Type type;
 
-	private String id;
-	private String name;
-	private Type type;
+	public Field(String id, String name, Type type) {
+    super();
+    this.id = id;
+    this.name = name;
+    this.type = type;
+  }
+
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public Type getType() {
 		return type;
 	}
-
 	public void setType(Type type) {
 		this.type = type;
 	}
-	
-	public abstract List<Parameter> getParameters();
+  public abstract void accept(WebModelVisitor visitor);
+  public abstract ArrayList<Parameter> getInputParameters();
+  public abstract ArrayList<Parameter> getOutputParameters();
 }

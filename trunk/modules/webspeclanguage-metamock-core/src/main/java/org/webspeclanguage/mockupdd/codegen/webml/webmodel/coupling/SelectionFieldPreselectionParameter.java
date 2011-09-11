@@ -10,29 +10,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling;
 
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.SelectionField;
+
 
 /**
  * @author Franco Giacosa
  */
-public class RelationshipParameter extends Parameter {
+public class SelectionFieldPreselectionParameter extends SelectionFieldInputParameter {
 
-	public RelationshipDecorator relationship;
-
-	public RelationshipParameter(String id, RelationshipDecorator relationship) {
-		super(id,relationship.getName());
-		this.relationship = relationship;
-	}
-	public RelationshipDecorator getRelationship() {
-		return relationship;
-	}
-	public void setRelationship(RelationshipDecorator relationship) {
-		this.relationship = relationship;
-	}
-	public void accept(WebModelVisitor visitor) {
+  public SelectionFieldPreselectionParameter(String id,String name, SelectionField selectionField) {
+    super(id,name, selectionField);
+  } 
+  public void accept(WebModelVisitor visitor) {
     visitor.visit(this);
   }
 }
+

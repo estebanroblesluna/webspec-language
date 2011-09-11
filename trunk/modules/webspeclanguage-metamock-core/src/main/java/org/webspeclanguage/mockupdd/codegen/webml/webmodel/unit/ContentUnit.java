@@ -19,19 +19,19 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
  */
 public abstract class ContentUnit extends Unit {
 
-	private ArrayList<AttributeFacade> displayAttributes = new ArrayList<AttributeFacade>();
+	private ArrayList<AttributeDecorator> displayAttributes = new ArrayList<AttributeDecorator>();
 	private Boolean displayAllAttributes = true;
 	
-	public ContentUnit(String id, String name, EntityFacade entity) {
+	public ContentUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ArrayList<AttributeFacade> getDisplayAttributes() {
+	public ArrayList<AttributeDecorator> getDisplayAttributes() {
 		return displayAttributes;
 	}
 
-	public void setDisplayAttributes(ArrayList<AttributeFacade> displayAttributes) {
+	public void setDisplayAttributes(ArrayList<AttributeDecorator> displayAttributes) {
 		this.displayAttributes = displayAttributes;
 	}
 
