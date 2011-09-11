@@ -12,7 +12,6 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.*;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
 
@@ -22,17 +21,16 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 /**
  * @author Franco Giacosa
  */
-public abstract class Unit implements WebModelElement{
+public abstract class Unit implements WebModelElement, LinkElement{
 
 
 	private String name;
 	private String id;
-	private ArrayList<Parameter> inputParameters = new ArrayList<Parameter>();
-	private ArrayList<Parameter> outputParameters= new ArrayList<Parameter>();
-	private Map<String,ContextualLink> outputLinks = new HashMap<String,ContextualLink>();
-	private EntityFacade entity;
+
+	private Map<String,Link> links = new HashMap<String,Link>();
+	private EntityDecorator entity;
 	
-	public Unit(String id, String name, EntityFacade entity){
+	public Unit(String id, String name, EntityDecorator entity){
 		this.id = id;
 		this.name = name;
 		this.entity = entity;
@@ -49,32 +47,18 @@ public abstract class Unit implements WebModelElement{
 	public void setId(String id) {
 		this.id = id;
 	}
-	public ArrayList<Parameter> getInputParameters() {
-		return inputParameters;
+	public Map<String, Link> getLinks() {
+		return links;
 	}
-	public void setInputParameters(ArrayList<Parameter> inputParameters) {
-		this.inputParameters = inputParameters;
+	public void setLinks(Map<String, Link> outputLinks) {
+		this.links = outputLinks;
 	}
-	public ArrayList<Parameter> getOutputParameters() {
-		return outputParameters;
-	}
-	public void setOutputParameters(ArrayList<Parameter> outputParameters) {
-		this.outputParameters = outputParameters;
-	}
-	public Map<String, ContextualLink> getOutputLinks() {
-		return outputLinks;
-	}
-	public void setOutputLinks(Map<String, ContextualLink> outputLinks) {
-		this.outputLinks = outputLinks;
-	}
-	public EntityFacade getEntity() {
+	public EntityDecorator getEntity() {
 		return entity;
 	}
-	public void setEntity(EntityFacade entity) {
+	public void setEntity(EntityDecorator entity) {
 		this.entity = entity;
 	}
-	public Map<String,Parameter> getParametersPool(){
-		return this.getEntity().getParametersPool();
-	}
+  public abstract void accept(WebModelVisitor visitor);
 
 }

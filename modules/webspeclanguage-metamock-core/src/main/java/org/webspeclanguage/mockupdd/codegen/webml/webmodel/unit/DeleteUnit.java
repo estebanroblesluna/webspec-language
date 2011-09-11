@@ -12,20 +12,50 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityFacade;
+import java.util.*;
+
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.KeyConditionParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
 
 /**
  * @author Franco Giacosa
  */
 public class DeleteUnit extends OperationUnit {
 
-	public DeleteUnit(String id, String name, EntityFacade entity) {
+  private Selector selector;
+	public DeleteUnit(String id, String name, EntityDecorator entity, Selector selector) {
 		super(id, name, entity);
+		this.selector = selector;
 		// TODO Auto-generated constructor stub
 	}
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
+  
+  public Selector getSelector() {
+    return selector;
+  }
+  
+  public void setSelector(Selector selector) {
+    this.selector = selector;
+  }
+  public HashMap<String,Parameter> getInputParameters() {
+    HashMap<String,Parameter> inputParameters = new HashMap<String,Parameter>();
+    WebModelFactory webFactory = new WebModelFactory();
+
+    Iterator<String> iteratorK = this.getSelector().getKeyConditions().keySet().iterator();
+    while(iteratorK.hasNext()){
+      String key = (String)iteratorK.next();
+      KeyConditionParameter keyConditionParameter = webFactory.createKeyConditionParameter(this.getSelector().getKeyConditions().get(key));
+      inputParameters.put(keyConditionParameter.getName(),keyConditionParameter);
+    }
+    return inputParameters; 
+  }
+  public HashMap<String,Parameter> getOutputParameters() {
+    return new HashMap<String,Parameter>();
+  }
 
 }

@@ -12,23 +12,26 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 
 /**
  * @author Franco Giacosa
  */
 public class AttributeParameter extends Parameter {
 
-	public AttributeFacade attribute;
+	public AttributeDecorator attribute;
 
-	public AttributeParameter(String name, AttributeFacade attribute) {
-		super(name);
+	public AttributeParameter(String id, AttributeDecorator attribute) {
+		super(id,attribute.getName());
 		this.attribute = attribute;
 	}
-	public AttributeFacade getAttribute() {
+	public AttributeDecorator getAttribute() {
 		return attribute;
 	}
-
-	public void setAttribute(AttributeFacade attribute) {
+	public void setAttribute(AttributeDecorator attribute) {
 		this.attribute = attribute;
-	} 
+	}
+	public void accept(WebModelVisitor visitor) {
+	  visitor.visit(this);
+	}  
 }

@@ -13,6 +13,7 @@
 package org.webspeclanguage.mockupdd.codegen.webml.datamodel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 	
 /**
@@ -41,6 +42,25 @@ public class DataModelFactory {
 	}
 	public Type createType(String type){
 		return new Type(type);
+	}
+	public EntityDecorator createEntityDecorator(Entity entity){
+	  EntityDecorator entityDecorator = new EntityDecorator(entity);
+	  
+    Iterator<String> iteratorA = entity.getAttributes().keySet().iterator();
+    while(iteratorA.hasNext()){
+      String key = (String)iteratorA.next();
+      AttributeDecorator attributeDecorator = this.createAttributeDecorator(entity.getAttributes().get(key));
+      entityDecorator.addAttribute(attributeDecorator);
+    }
+    
+	  return entityDecorator;
+	}
+	public AttributeDecorator createAttributeDecorator(Attribute attribute){
+	  return new AttributeDecorator(attribute);
+	}
+	public RelationshipDecorator createRelationshipDecorator(Relationship relationship){
+	  //Falta ver una forma de asociar la relacion a la entidaddecorator
+	  return new RelationshipDecorator(relationship);
 	}
 	public DataModelSingleton getDataModelSingleton() {
 		return dataModelSingleton;

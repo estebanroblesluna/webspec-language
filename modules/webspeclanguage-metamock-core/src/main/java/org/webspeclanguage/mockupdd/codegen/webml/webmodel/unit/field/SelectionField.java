@@ -11,23 +11,40 @@
  * limitations under the License.
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field;
+
 import java.util.ArrayList;
-import java.util.List;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Type;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
-
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 /**
  * @author Franco Giacosa
  */
 public class SelectionField extends Field {
 
 	
-	public List<Parameter> getParameters(){
-		List<Parameter> listParameter = new ArrayList<Parameter>();
-		listParameter.add(new NormalFieldParameter(this.getName() + " - Preselection",this));
-		listParameter.add(new NormalFieldParameter(this.getName() + " [label]",this));
-		listParameter.add(new NormalFieldParameter(this.getName() + " [output]",this));
+    public SelectionField(String id, String name, Type type) {
+	       super(id, name, type);
+	  }
+	  public void accept(WebModelVisitor visitor){
+	    visitor.visit(this);
+	  }
+	  public ArrayList<Parameter> getInputParameters(){
+	    ArrayList<Parameter> parameters = new ArrayList<Parameter>();
+	    WebModelFactory webFactory = new WebModelFactory();
+	    parameters.add(webFactory.createSelectionFieldPreselectionParameter(this.getId()+"_presel",this.getName()+"- Preselection",this));
+      parameters.add(webFactory.createSelectionFieldLabelParameter(this.getId()+"_label",this.getName()+" [label]",this));
+      parameters.add(webFactory.createSelectionFieldOutputParameter(this.getId()+"_output",this.getName()+" [output]",this));
 
-		return listParameter;
-	}
+	    return parameters;
+	  }
+	  public ArrayList<Parameter> getOutputParameters(){
+	    ArrayList<Parameter> parameters = new ArrayList<Parameter>();
+      WebModelFactory webFactory = new WebModelFactory();
+      
+      parameters.add(webFactory.createOutputSelectionFieldParameter(this));
+      
+      return parameters;
+	  }
 }

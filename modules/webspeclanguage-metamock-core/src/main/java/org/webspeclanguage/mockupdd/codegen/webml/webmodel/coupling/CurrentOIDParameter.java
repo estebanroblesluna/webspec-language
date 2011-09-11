@@ -10,6 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
@@ -18,21 +19,21 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 /**
  * @author Franco Giacosa
  */
-public class RelationshipParameter extends Parameter {
+public class CurrentOIDParameter extends Parameter {
 
-	public RelationshipDecorator relationship;
-
-	public RelationshipParameter(String id, RelationshipDecorator relationship) {
-		super(id,relationship.getName());
-		this.relationship = relationship;
-	}
-	public RelationshipDecorator getRelationship() {
-		return relationship;
-	}
-	public void setRelationship(RelationshipDecorator relationship) {
-		this.relationship = relationship;
-	}
-	public void accept(WebModelVisitor visitor) {
+  private AttributeDecorator currentOID;
+  
+  public CurrentOIDParameter(String id, AttributeDecorator currentOID) {
+    super(id,currentOID.getName());
+    this.currentOID = currentOID;
+  }
+  public AttributeDecorator getCurrentOID() {
+    return currentOID;
+  }
+  public void setCurrentOID(AttributeDecorator currentOID) {
+    this.currentOID = currentOID;
+  }
+  public void accept(WebModelVisitor visitor) {
     visitor.visit(this);
   }
 }

@@ -19,7 +19,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
  */
 public abstract class OperationUnit extends Unit {
 
-	public OperationUnit(String id, String name, EntityFacade entity) {
+	public OperationUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
 		// TODO Auto-generated constructor stub
 	}

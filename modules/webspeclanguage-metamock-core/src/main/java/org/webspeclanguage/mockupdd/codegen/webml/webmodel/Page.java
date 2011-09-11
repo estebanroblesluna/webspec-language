@@ -14,13 +14,14 @@ package org.webspeclanguage.mockupdd.codegen.webml.webmodel;
 
 import java.util.*;
 
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.*;
 
 /**
  * @author Franco Giacosa
  */
-public class Page implements WebModelElement{
+public class Page implements WebModelElement, LinkElement{
 
 	private String id;
 	private String name;
@@ -90,4 +91,12 @@ public class Page implements WebModelElement{
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
+  public HashMap<String,Parameter> getInputParameters() {
+    return new HashMap<String,Parameter>();
+  }
+  public HashMap<String,Parameter> getOutputParameters() {
+    return new HashMap<String,Parameter>();
+  }
+
+
 }
