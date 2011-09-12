@@ -12,8 +12,7 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Type;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 
 import java.util.*;
@@ -49,7 +48,8 @@ public class NormalField extends Field{
   @Override
   public ArrayList<Parameter> getInputParameters() {
     ArrayList<Parameter> parameters = new ArrayList<Parameter>();
-    WebModelFactory webFactory = new WebModelFactory();
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
 
     if(preloaded) parameters.add(webFactory.createNormalFieldParameter(this));
     
@@ -58,7 +58,8 @@ public class NormalField extends Field{
   @Override
   public ArrayList<Parameter> getOutputParameters() {
     ArrayList<Parameter> parameters = new ArrayList<Parameter>();
-    WebModelFactory webFactory = new WebModelFactory();
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
 
     parameters.add(webFactory.createNormalFieldParameter(this));
     

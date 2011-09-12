@@ -28,8 +28,9 @@ public class Workspace {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		WebModelFactory factory = new WebModelFactory();
-		EntryUnit entryUnit1 = factory.createEntryUnit("entryunit1", null);
+	  WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory factory = webModelFacade.getWebModelFactory();
+    EntryUnit entryUnit1 = factory.createEntryUnit("entryunit1", null);
 		EntryUnit entryUnit2 = factory.createEntryUnit("entryunit2", null);
 		Page page1 = factory.createPage("page1", true, true);
     Page page4 = factory.createPage("page4", true, true);

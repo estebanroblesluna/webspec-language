@@ -13,7 +13,9 @@
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
@@ -48,8 +50,8 @@ public class EntryUnit extends ContentUnit {
 		visitor.visit(this);
 	}
 	public void createFields(){
-    WebModelFactory webFactory = new WebModelFactory();
-
+	  WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     if(this.getEntity() != null){
       Iterator<String> iteratorAttributes = this.getEntity().getAttributes().keySet().iterator();
       while(iteratorAttributes.hasNext()){

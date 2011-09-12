@@ -12,11 +12,27 @@
  */
 
 package org.webspeclanguage.mockupdd.codegen.webml.example;
-
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 
 /**
  * @author Franco Giacosa
  */
 public class asd {
 
+  public static void main(String[] args) {
+      WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+      
+      WebModelFacade webModelFacade2 = WebModelFacade.getWebModelFacade();
+      if(webModelFacade.equals(webModelFacade2))
+        System.out.print(webModelFacade2.getClass().toString());
+      
+      WebModelFactory factory = webModelFacade2.getWebModelFactory();
+      
+      if(factory != null){
+        System.out.print(webModelFacade2.getClass().toString());
+
+      }
+     
+  }
 }

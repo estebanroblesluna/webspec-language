@@ -15,6 +15,8 @@ package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field;
 import java.util.ArrayList;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Type;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
@@ -32,7 +34,8 @@ public class SelectionField extends Field {
 	  }
 	  public ArrayList<Parameter> getInputParameters(){
 	    ArrayList<Parameter> parameters = new ArrayList<Parameter>();
-	    WebModelFactory webFactory = new WebModelFactory();
+	    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+	    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
 	    parameters.add(webFactory.createSelectionFieldPreselectionParameter(this.getId()+"_presel",this.getName()+"- Preselection",this));
       parameters.add(webFactory.createSelectionFieldLabelParameter(this.getId()+"_label",this.getName()+" [label]",this));
       parameters.add(webFactory.createSelectionFieldOutputParameter(this.getId()+"_output",this.getName()+" [output]",this));
@@ -41,7 +44,8 @@ public class SelectionField extends Field {
 	  }
 	  public ArrayList<Parameter> getOutputParameters(){
 	    ArrayList<Parameter> parameters = new ArrayList<Parameter>();
-      WebModelFactory webFactory = new WebModelFactory();
+	    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+	    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
       
       parameters.add(webFactory.createOutputSelectionFieldParameter(this));
       

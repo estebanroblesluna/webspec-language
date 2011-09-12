@@ -10,125 +10,83 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel;
 
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.*;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.*;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.AttributeDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.RelationshipDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Type;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.AttributeParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.CurrentOIDParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.DefaultUnitParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.KeyConditionParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.NormalFieldParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.OutputSelectionFieldParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.ParameterCoupling;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.RelationshipParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.SelectionFieldLabelParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.SelectionFieldOutputParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.SelectionFieldPreselectionParameter;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.AutomaticLink;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.KOLink;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.NormalLink;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.OKLink;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.TransportLink;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.CreateUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.DataUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.DeleteUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.EntryUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.IndexUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.KeyCondition;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.ModifyUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.MultiChoiceIndexUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.MultiEntryUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.Selector;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.SelectorUnit;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.NormalField;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.SelectionField;
+
+
 /**
  * @author Franco Giacosa
  */
-public class WebModelFactory {
-
-	private WebModelSingleton webModelSingleton = WebModelSingleton.getWebModelSingleton();
-
-	public WebModel createWebModel(SiteView homeSiteView){
-		return new WebModel(homeSiteView);
-	}
-	public SiteView createSiteView(String name, Boolean homeSiteView){
-		return new SiteView(this.getWebModelSingleton().getSiteViewId(),name,homeSiteView);
-	}
-	public Page createPage(String name, Boolean home, Boolean landmark){
-		return new Page(this.getWebModelSingleton().getPageId(),name,home,landmark);
-	}
-	public DataUnit createDataUnit(String name, EntityDecorator entity){
-		return new DataUnit(this.getWebModelSingleton().getDataUnitId(),name, entity, this.createSelector(entity.getEntityKey()));
-	}
-	public EntryUnit createEntryUnit(String name){
-    return new EntryUnit(this.getWebModelSingleton().getEntryUnitId(),name);
-  }
-	public EntryUnit createEntryUnit(String name, EntityDecorator entity){
-		return new EntryUnit(this.getWebModelSingleton().getEntryUnitId(),name, entity);
-	}
-	public IndexUnit createIndexUnit(String name, EntityDecorator entity){
-		return new IndexUnit(this.getWebModelSingleton().getIndexUnitId(),name, entity);
-	}
-	public MultiChoiceIndexUnit createMultiChoiceIndexUnit(String name, EntityDecorator entity){
-		return new MultiChoiceIndexUnit(this.getWebModelSingleton().getMultiChoiceIndexUnitId(),name, entity);
-	}
-	public MultiEntryUnit createMultiEntryUnit(String name, EntityDecorator entity){
-		return new MultiEntryUnit(this.getWebModelSingleton().getMultiEntryUnitId(),name, entity);
-	}
-	public SelectorUnit createSelectorUnit(String name, EntityDecorator entity){
-		return new SelectorUnit(this.getWebModelSingleton().getSelectorUnitId(),name, entity);
-	}
-	public CreateUnit createCreateUnit(String name, EntityDecorator entity){
-		return new CreateUnit(this.getWebModelSingleton().getCreateUnitId(),name, entity);
-	}
-	public DeleteUnit createDeleteUnit(String name, EntityDecorator entity){
-		return new DeleteUnit(this.getWebModelSingleton().getDeleteUnitId(),name, entity, this.createSelector(entity.getEntityKey()));
-	}
-	public ModifyUnit createaModifyUnit(String name, EntityDecorator entity){
-		return new ModifyUnit(this.getWebModelSingleton().getModifyUnitId(),name, entity, this.createSelector(entity.getEntityKey()));
-	}	
-	public ParameterCoupling createParameterCoupling(String name, Boolean coupling, Boolean passing, Parameter sourceParameter, Parameter targetParameter){
-		return new ParameterCoupling(this.getWebModelSingleton().getParameterCouplingId(),name,coupling,passing,sourceParameter,targetParameter);
-	}
-	public Selector createSelector(AttributeDecorator key){
-	  Selector selector = new Selector(this.getWebModelSingleton().getSelectorId(), key);
-	  selector.addKeyCondition(this.createKeyCondition());
-	  return selector;
-	}
-	public KeyCondition createKeyCondition(){
-	  return new KeyCondition(this.getWebModelSingleton().getKeyConditionId(),this.getWebModelSingleton().getKeyConditionName());
-	}
-	public WebModelSingleton getWebModelSingleton() {
-		return webModelSingleton;
-	}
-	public AutomaticLink createAutomaticLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new AutomaticLink(this.getWebModelSingleton().getLinkId(),name,automaticCoupling,from,to);
-  }
-  public NormalLink createNormalLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new NormalLink(this.getWebModelSingleton().getLinkId(),name,automaticCoupling,from,to);
-  }
-  public TransportLink createTransportLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new TransportLink(this.getWebModelSingleton().getLinkId(),name,automaticCoupling,from,to);
-  }
-  public OKLink createOKLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new OKLink(this.getWebModelSingleton().getLinkId(),name,automaticCoupling,from,to);
-  }
-  public KOLink createKOLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new KOLink(this.getWebModelSingleton().getLinkId(),name,automaticCoupling,from,to);
-  }
-  public NormalField createNormalField(String name, Type type){
-    return new NormalField(this.getWebModelSingleton().getNormalFieldId(), name, type);
-  }
-  public NormalField createNormalField(AttributeDecorator attribute){
-    return this.createNormalField(attribute.getName(), attribute.getAttributeType());
-  }
-  public SelectionField createSelectionField(String name, Type type){
-    return new SelectionField(this.getWebModelSingleton().getSelectionFieldId(), name, type);
-  }
-  public AttributeParameter createAttributeParameter(AttributeDecorator attribute){
-    return new AttributeParameter(attribute.getId(),attribute);
-  }
-  public CurrentOIDParameter createCurrentOIDParameter(AttributeDecorator attributeKey){
-    return new CurrentOIDParameter(attributeKey.getId(),attributeKey);
-  }
-  public DefaultUnitParameter createDefaultUnitParameter(String name, String id){
-    return new DefaultUnitParameter(name,id);
-  }
-  public KeyConditionParameter createKeyConditionParameter(KeyCondition keyCondition){
-    return new KeyConditionParameter(keyCondition.getId(),keyCondition);
-  }
-  public RelationshipParameter createRelationshipParameter(RelationshipDecorator relationship){
-    return new RelationshipParameter(relationship.getId(),relationship);
-  }
-  public NormalFieldParameter createNormalFieldParameter(NormalField normalField){
-    return new NormalFieldParameter(normalField.getId(),normalField);
-  }
-  public SelectionFieldLabelParameter createSelectionFieldLabelParameter(String id, String name, SelectionField selectionField){
-    return new SelectionFieldLabelParameter(id,name,selectionField);
-  }
-  public SelectionFieldOutputParameter createSelectionFieldOutputParameter(String id, String name, SelectionField selectionField){
-    return new SelectionFieldOutputParameter(id,name,selectionField);
-  }
-  public SelectionFieldPreselectionParameter createSelectionFieldPreselectionParameter(String id, String name, SelectionField selectionField){
-    return new SelectionFieldPreselectionParameter(id, name,selectionField);
-  }
-  public OutputSelectionFieldParameter createOutputSelectionFieldParameter(SelectionField selectionField){
-    return new OutputSelectionFieldParameter(selectionField);
-  }
+public interface WebModelFactory {
+  public abstract WebModel createWebModel(SiteView homeSiteView);
+  public abstract SiteView createSiteView(String name, Boolean homeSiteView);
+  public abstract Page createPage(String name, Boolean home, Boolean landmark);
+  public abstract DataUnit createDataUnit(String name, EntityDecorator entity);
+  public abstract EntryUnit createEntryUnit(String name);
+  public abstract EntryUnit createEntryUnit(String name, EntityDecorator entity);
+  public abstract IndexUnit createIndexUnit(String name, EntityDecorator entity);
+  public abstract MultiChoiceIndexUnit createMultiChoiceIndexUnit(String name, EntityDecorator entity);
+  public abstract MultiEntryUnit createMultiEntryUnit(String name, EntityDecorator entity);
+  public abstract SelectorUnit createSelectorUnit(String name, EntityDecorator entity);
+  public abstract CreateUnit createCreateUnit(String name, EntityDecorator entity);
+  public abstract DeleteUnit createDeleteUnit(String name, EntityDecorator entity);
+  public abstract ModifyUnit createaModifyUnit(String name, EntityDecorator entity);
+  public abstract ParameterCoupling createParameterCoupling(String name, Boolean coupling, Boolean passing, Parameter sourceParameter, Parameter targetParameter);
+  public abstract Selector createSelector(AttributeDecorator key);
+  public abstract KeyCondition createKeyCondition();
+  public abstract WebModelIds getWebModelIds();
+  public abstract AutomaticLink createAutomaticLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  public abstract NormalLink createNormalLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  public abstract TransportLink createTransportLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  public abstract OKLink createOKLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  public abstract KOLink createKOLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  public abstract NormalField createNormalField(String name, Type type);
+  public abstract NormalField createNormalField(AttributeDecorator attribute);
+  public abstract SelectionField createSelectionField(String name, Type type);
+  public abstract AttributeParameter createAttributeParameter(AttributeDecorator attribute);
+  public abstract CurrentOIDParameter createCurrentOIDParameter(AttributeDecorator attributeKey);
+  public abstract DefaultUnitParameter createDefaultUnitParameter(String name, String id);
+  public abstract KeyConditionParameter createKeyConditionParameter(KeyCondition keyCondition);
+  public abstract RelationshipParameter createRelationshipParameter(RelationshipDecorator relationship);
+  public abstract NormalFieldParameter createNormalFieldParameter(NormalField normalField);
+  public abstract SelectionFieldLabelParameter createSelectionFieldLabelParameter(String id, String name, SelectionField selectionField);
+  public abstract SelectionFieldOutputParameter createSelectionFieldOutputParameter(String id, String name, SelectionField selectionField);
+  public abstract SelectionFieldPreselectionParameter createSelectionFieldPreselectionParameter(String id, String name, SelectionField selectionField);
+  public abstract OutputSelectionFieldParameter createOutputSelectionFieldParameter(SelectionField selectionField);
+   
 }

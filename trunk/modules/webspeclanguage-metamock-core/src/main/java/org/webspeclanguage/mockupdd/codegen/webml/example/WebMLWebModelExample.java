@@ -22,15 +22,15 @@ public class WebMLWebModelExample {
 
 	
 	public WebModel generateWebModel(){
-		WebModelFactory webModelFactory = new WebModelFactory();
-		
+	  WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webModelFactory = webModelFacade.getWebModelFactory();		
 		
 		
 		Page page1 = webModelFactory.createPage("page1", true, true);
 		Page page2 = webModelFactory.createPage("page2", false, true);
 		
-		NonContextualLink link = webModelFactory.createNonContextualLink("link page 1 to 2", true , page1,page2);
-		page1.addLink(link);
+		//Link link = webModelFactory.createNonContextualLink("link page 1 to 2", true , page1,page2);
+	//	page1.addLink(link);
 		
 		
 		SiteView siteView = webModelFactory.createSiteView("Site View 1", true);

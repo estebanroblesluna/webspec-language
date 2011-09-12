@@ -16,7 +16,9 @@ import java.util.*;
 
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.KeyConditionParameter;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
@@ -45,8 +47,8 @@ public class ModifyUnit extends OperationUnit {
   }
   public HashMap<String,Parameter> getInputParameters() {
     HashMap<String,Parameter> inputParameters = new HashMap<String,Parameter>();
-    WebModelFactory webFactory = new WebModelFactory();
-
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     Iterator<String> iteratorK = this.getSelector().getKeyConditions().keySet().iterator();
     while(iteratorK.hasNext()){
       String key = (String)iteratorK.next();
@@ -57,7 +59,8 @@ public class ModifyUnit extends OperationUnit {
   }
   public HashMap<String,Parameter> getOutputParameters() {
     HashMap<String,Parameter> outputParameters = new HashMap<String,Parameter>();
-    WebModelFactory webFactory = new WebModelFactory();
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     AttributeParameter attributeParameter = webFactory.createAttributeParameter(this.getSelector().getKey());
     outputParameters.put(attributeParameter.getName(),attributeParameter);
     return outputParameters; 
