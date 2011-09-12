@@ -15,7 +15,9 @@ package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 import java.util.HashMap;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.DefaultUnitParameter;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
@@ -29,7 +31,8 @@ public class MultiChoiceIndexUnit extends ContentUnit {
 
 	public MultiChoiceIndexUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
-    WebModelFactory webFactory = new WebModelFactory();
+		WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+	  WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     DefaultUnitParameter defaultUnitParameter1 = webFactory.createDefaultUnitParameter("Checked","Checked OID");
     defaultOutputParameters.put(defaultUnitParameter1.getName(),defaultUnitParameter1);
        

@@ -15,7 +15,9 @@ package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 import java.util.*;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 /**
@@ -32,14 +34,15 @@ public class IndexUnit extends ContentUnit {
 	}
 	public Parameter getParameterKey(){
     AttributeDecorator attributeKey = this.getEntity().getEntityKey();
-    WebModelFactory webFactory = new WebModelFactory();
-
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     CurrentOIDParameter currentOIDParameter = webFactory.createCurrentOIDParameter(attributeKey);
     return currentOIDParameter;
 	}
   public HashMap<String,Parameter> getInputParameters() {
     HashMap<String,Parameter> inputParameters = new HashMap<String,Parameter>();
-    WebModelFactory webFactory = new WebModelFactory();
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     AttributeDecorator attributeKey = this.getEntity().getEntityKey();
     CurrentOIDParameter currentOIDParameter = webFactory.createCurrentOIDParameter(attributeKey);
     inputParameters.put(currentOIDParameter.getName(),currentOIDParameter);

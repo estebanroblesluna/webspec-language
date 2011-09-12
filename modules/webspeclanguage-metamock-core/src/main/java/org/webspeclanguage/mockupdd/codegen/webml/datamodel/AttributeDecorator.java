@@ -16,7 +16,9 @@ package org.webspeclanguage.mockupdd.codegen.webml.datamodel;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.AttributeParameter;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
 
@@ -51,7 +53,8 @@ public class AttributeDecorator {
 		this.attribute = attribute;
 	}
 	public AttributeParameter getParameter(){
-    WebModelFactory webFactory = new WebModelFactory();
+	  WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     return webFactory.createAttributeParameter(this);
 	}
 	
