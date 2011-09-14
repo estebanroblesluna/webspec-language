@@ -10,30 +10,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.mockupdd.codegen.webml.webmodel.patternconfiguration;
 
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
+package org.webspeclanguage.mockupdd.codegen.webml.example;
+
+import org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration.*;
+
 
 /**
  * @author Franco Giacosa
  */
-public class PatternConfigurationDate extends PatternConfiguration {
+public class WorkspaceXMLCreator {
 
-	private String type = "date";
-	private String pattern = "MM/dd/yyyy";
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public String getPattern() {
-		return pattern;
-	}
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
-	}
-	public void accept(WebModelVisitor visitor){
-		visitor.visit(this);
-	}
+  public static void main(String[] args) {
+    MainXmlGenerator xmlGenerator = new MainXmlGenerator();
+      
+    xmlGenerator.generateXMLDataModel(null);
+  }
+
 }

@@ -33,6 +33,12 @@ public class DataModel implements DataModelElement{
 		this.relationships = relationships;
 	}
 	
+	public void addEntity(Entity ent){
+	  this.getEntitys().put(ent.getId(), ent);
+	}
+	public void addRelationship(Relationship rel){
+	  this.getRelationships().put(rel.getId(), rel);
+	}
 	public Map<String, Entity> getEntitys() {
 		return entitys;
 	}

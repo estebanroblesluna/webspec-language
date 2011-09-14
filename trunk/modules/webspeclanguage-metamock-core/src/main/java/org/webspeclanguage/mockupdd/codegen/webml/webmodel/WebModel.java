@@ -22,7 +22,6 @@ public class WebModel implements WebModelElement {
 
 	private Locale locale = new Locale();
 	private String defaultLocale = "lcl1";
-	private String layoutStyle = "WRDefault";
 	private SiteView homeSiteView;
 	private Map<String,SiteView> siteViews = new HashMap<String,SiteView>();
 	
@@ -44,12 +43,6 @@ public class WebModel implements WebModelElement {
 	}
 	public void setDefaultLocale(String defaultLocale) {
 		this.defaultLocale = defaultLocale;
-	}
-	public String getLayoutStyle() {
-		return layoutStyle;
-	}
-	public void setLayoutStyle(String layoutStyle) {
-		this.layoutStyle = layoutStyle;
 	}
 	public void addSiteView(SiteView newSiteView){
 		this.getSiteViews().put(newSiteView.getId(),newSiteView);

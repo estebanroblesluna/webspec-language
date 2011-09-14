@@ -20,7 +20,6 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 public class PatternConfigurationFloat extends PatternConfiguration {
 
 	private String type = "float";
-	private Boolean useNumberPattern = false;
 	private Integer maxDecimal = 3;
 	private Integer minDecimal = 0;
 	private Integer minInteger = 1;
@@ -31,12 +30,6 @@ public class PatternConfigurationFloat extends PatternConfiguration {
 	}
 	public void setType(String type) {
 		this.type = type;
-	}
-	public Boolean getUseNumberPattern() {
-		return useNumberPattern;
-	}
-	public void setUseNumberPattern(Boolean useNumberPattern) {
-		this.useNumberPattern = useNumberPattern;
 	}
 	public Integer getMaxDecimal() {
 		return maxDecimal;

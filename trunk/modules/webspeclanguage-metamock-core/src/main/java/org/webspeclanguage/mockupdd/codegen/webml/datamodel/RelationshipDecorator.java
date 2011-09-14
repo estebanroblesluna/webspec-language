@@ -44,10 +44,10 @@ public class RelationshipDecorator {
 	public String getName() {
 		return this.getRelationship().getName();
 	}
-	public String getSourceEntity() {
+	public Entity getSourceEntity() {
 		return this.getRelationship().getSourceEntity();
 	}
-	public String getTargetEntity() {
+	public Entity getTargetEntity() {
 		return this.getRelationship().getTargetEntity();
 	}
 	public RelationshipParameter getParameter(){

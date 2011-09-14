@@ -49,11 +49,8 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
 
 	public void visit(WebModel webModel) {
 		System.out.print("<WebModel ");
-		System.out.print("defaultLocale\"");
+		System.out.print("defaultLocale=\"");
 		System.out.print(webModel.getDefaultLocale());
-		System.out.print("\" ");
-		System.out.print("layout:style=\"");
-		System.out.print(webModel.getLayoutStyle());
 		System.out.print("\" ");
 		System.out.print("homeSiteView=\"");
 		System.out.print(webModel.getHomeSiteView().getId());
@@ -98,7 +95,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
 		
 	}
 	public void visit(PatternConfigurationBoolean patternConfiguration) {
-		System.out.print("<PatternConfiuration ");
+		System.out.print("<PatternConfiguration ");
 		System.out.print("type=\"");
 		System.out.print(patternConfiguration.getType());
 		System.out.print("\" ");
@@ -109,12 +106,9 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
 		System.out.println("");
 	}
 	public void visit(PatternConfigurationDecimal patternConfiguration) {
-		System.out.print("<PatternConfiuration ");
+		System.out.print("<PatternConfiguration ");
 		System.out.print("type=\"");
 		System.out.print(patternConfiguration.getType());
-		System.out.print("\" ");
-		System.out.print("useNumberPattern=\"");
-		System.out.print(patternConfiguration.getUseNumberPattern().toString());
 		System.out.print("\" ");
 		System.out.print("maxDecimal=\"");
 		System.out.print(patternConfiguration.getMaxDecimal().toString());
@@ -132,7 +126,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
 		System.out.println("");		
 	}
 	public void visit(PatternConfigurationDate patternConfiguration) {
-		System.out.print("<PatternConfiuration ");
+		System.out.print("<PatternConfiguration ");
 		System.out.print("type=\"");
 		System.out.print(patternConfiguration.getType());
 		System.out.print("\" ");
@@ -143,12 +137,9 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
 		System.out.println("");		
 	}
 	public void visit(PatternConfigurationFloat patternConfiguration) {
-		System.out.print("<PatternConfiuration ");
+		System.out.print("<PatternConfiguration ");
 		System.out.print("type=\"");
 		System.out.print(patternConfiguration.getType());
-		System.out.print("\" ");
-		System.out.print("useNumberPattern=\"");
-		System.out.print(patternConfiguration.getUseNumberPattern().toString());
 		System.out.print("\" ");
 		System.out.print("maxDecimal=\"");
 		System.out.print(patternConfiguration.getMaxDecimal().toString());
@@ -166,24 +157,21 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
 		System.out.println("");			
 	}
 	public void visit(PatternConfigurationInteger patternConfiguration) {
-		System.out.print("<PatternConfiuration ");
+		System.out.print("<PatternConfiguration ");
 		System.out.print("type=\"");
 		System.out.print(patternConfiguration.getType());
 		System.out.print("\" ");
-		System.out.print("useNumberPattern=\"");
-		System.out.print(patternConfiguration.getUseNumberPattern().toString());
-		System.out.print("\" ");
 		System.out.print("minIngeter=\"");
 		System.out.print(patternConfiguration.getMinInteger().toString());
-		System.out.print("\"");
+		System.out.print("\" ");
 		System.out.print("useThousandSeparator=\"");
 		System.out.print(patternConfiguration.getUseThousandSeparator());
-		System.out.print("\" ");
+		System.out.print("\"");
 		System.out.print("/>");
 		System.out.println("");			
 	}
 	public void visit(PatternConfigurationTime patternConfiguration) {
-		System.out.print("<PatternConfiuration ");
+		System.out.print("<PatternConfiguration ");
 		System.out.print("type=\"");
 		System.out.print(patternConfiguration.getType());
 		System.out.print("\" ");
@@ -194,7 +182,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
 		System.out.println("");				
 	}
 	public void visit(PatternConfigurationTimeStamp patternConfiguration) {
-		System.out.print("<PatternConfiuration ");
+		System.out.print("<PatternConfiguration ");
 		System.out.print("type=\"");
 		System.out.print(patternConfiguration.getType());
 		System.out.print("\" ");
@@ -220,7 +208,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
 		System.out.print("\"");
 		System.out.print(">");
 		System.out.println("");
-		//we visit de operation units
+		//we visit the operation units
 		if(siteView.getOperationUnits().isEmpty())
 			System.out.println("<OperationUnits />");
 
@@ -299,6 +287,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print(createUnit.getEntity().getName());
     if(!createUnit.getLinks().isEmpty())
     {
+      System.out.print("\"");
       System.out.print(">");
       System.out.println(""); 
       Iterator<String> iteratorLink = createUnit.getLinks().keySet().iterator();
@@ -311,7 +300,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     else
     {
       System.out.print("\"");
-      System.out.print(">");
+      System.out.print("/>");
       System.out.println("");
     }
      
@@ -328,6 +317,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print(indexUnit.getEntity().getName());
     if(!indexUnit.getLinks().isEmpty())
     {
+      System.out.print("\"");
       System.out.print(">");
       System.out.println(""); 
       Iterator<String> iteratorLink = indexUnit.getLinks().keySet().iterator();
@@ -340,7 +330,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     else
     {
       System.out.print("\"");
-      System.out.print(">");
+      System.out.print("/>");
       System.out.println("");
     }   
   }
@@ -356,6 +346,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print(multiChoiceIndexUnit.getEntity().getName());
     if(!multiChoiceIndexUnit.getLinks().isEmpty())
     {
+      System.out.print("\"");
       System.out.print(">");
       System.out.println(""); 
       Iterator<String> iteratorLink = multiChoiceIndexUnit.getLinks().keySet().iterator();
@@ -368,7 +359,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     else
     {
       System.out.print("\"");
-      System.out.print(">");
+      System.out.print("/>");
       System.out.println("");
     }
   }
@@ -384,6 +375,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print(selectorUnit.getEntity().getName());
     if(!selectorUnit.getLinks().isEmpty())
     {
+      System.out.print("\"");
       System.out.print(">");
       System.out.println(""); 
       Iterator<String> iteratorLink = selectorUnit.getLinks().keySet().iterator();
@@ -396,7 +388,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     else
     {
       System.out.print("\"");
-      System.out.print(">");
+      System.out.print("/>");
       System.out.println("");
     }    
   }
@@ -410,6 +402,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print("\" ");
     System.out.print("entity=\"");
     System.out.print(dataUnit.getEntity().getName());
+    System.out.print("\"");
     System.out.print(">");
     System.out.println(""); 
     dataUnit.getSelector().accept(this);
@@ -433,6 +426,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print("\" ");
     System.out.print("entity=\"");
     System.out.print(deleteUnit.getEntity().getName());
+    System.out.print("\"");
     System.out.print(">");
     System.out.println(""); 
     deleteUnit.getSelector().accept(this);
@@ -456,6 +450,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print("\" ");
     System.out.print("entity=\"");
     System.out.print(modifyUnit.getEntity().getName());
+    System.out.print("\"");
     System.out.print(">");
     System.out.println(""); 
     modifyUnit.getSelector().accept(this);
@@ -476,56 +471,73 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print("\" ");
     System.out.print("name=\"");
     System.out.print(entryUnit.getName());
-    System.out.print(">");
-    System.out.println(""); 
-    if(!entryUnit.getFields().isEmpty())
-    {
-      Iterator<String> iteratorField = entryUnit.getFields().keySet().iterator();
-      while(iteratorField.hasNext()){
-        String key = (String)iteratorField.next();
-        entryUnit.getFields().get(key).accept(this);
-      }
+
+    if((entryUnit.getFields().isEmpty()) & (entryUnit.getLinks().isEmpty())){
+      System.out.print("\"");
+      System.out.print("/>");
+      System.out.println("");
     }
-    if(!entryUnit.getLinks().isEmpty())
-    {
-      Iterator<String> iteratorLink = entryUnit.getLinks().keySet().iterator();
-      while(iteratorLink.hasNext()){
-        String key = (String)iteratorLink.next();
-        entryUnit.getLinks().get(key).accept(this);
+    else{
+      System.out.print("\"");
+      System.out.print(">");
+      System.out.println("");
+   
+      if(!entryUnit.getFields().isEmpty())
+      {
+        Iterator<String> iteratorField = entryUnit.getFields().keySet().iterator();
+        while(iteratorField.hasNext()){
+          String key = (String)iteratorField.next();
+          entryUnit.getFields().get(key).accept(this);
+        }
       }
+      if(!entryUnit.getLinks().isEmpty())
+      {
+        Iterator<String> iteratorLink = entryUnit.getLinks().keySet().iterator();
+        while(iteratorLink.hasNext()){
+          String key = (String)iteratorLink.next();
+          entryUnit.getLinks().get(key).accept(this);
+        }
+      }
+      System.out.println("</EntryUnit>");
     }
-    System.out.println("</EntryUnit>");      
 	}
-	public void visit(MultiEntryUnit mutiEntryUnit) {
+	public void visit(MultiEntryUnit multiEntryUnit) {
 	  System.out.print("<MultiEntryUnit ");
     System.out.print("id=\"");
-    System.out.print(mutiEntryUnit.getId());
+    System.out.print(multiEntryUnit.getId());
     System.out.print("\" ");
     System.out.print("name=\"");
-    System.out.print(mutiEntryUnit.getName());
+    System.out.print(multiEntryUnit.getName());
     System.out.print("\" ");
     System.out.print("minLength=\"");
-    System.out.print(mutiEntryUnit.getMinLength());
-    System.out.print("\"");
-    System.out.print(">");
-    System.out.println(""); 
-    if(!mutiEntryUnit.getFields().isEmpty())
-    {
-      Iterator<String> iteratorField = mutiEntryUnit.getFields().keySet().iterator();
-      while(iteratorField.hasNext()){
-        String key = (String)iteratorField.next();
-        mutiEntryUnit.getFields().get(key).accept(this);
-      }
+    System.out.print(multiEntryUnit.getMinLength());
+    if((multiEntryUnit.getFields().isEmpty()) & (multiEntryUnit.getLinks().isEmpty())){
+      System.out.print("\"");
+      System.out.print("/>");
+      System.out.println("");
     }
-    if(!mutiEntryUnit.getLinks().isEmpty())
-    {
-      Iterator<String> iteratorLink = mutiEntryUnit.getLinks().keySet().iterator();
-      while(iteratorLink.hasNext()){
-        String key = (String)iteratorLink.next();
-        mutiEntryUnit.getLinks().get(key).accept(this);
+    else{
+      System.out.print("\"");
+      System.out.print(">");
+      System.out.println("");
+      if(!multiEntryUnit.getFields().isEmpty())
+      {
+        Iterator<String> iteratorField = multiEntryUnit.getFields().keySet().iterator();
+        while(iteratorField.hasNext()){
+          String key = (String)iteratorField.next();
+          multiEntryUnit.getFields().get(key).accept(this);
+        }
       }
-    }
-    System.out.println("</MultiEntryUnit>");   		
+      if(!multiEntryUnit.getLinks().isEmpty())
+      {
+        Iterator<String> iteratorLink = multiEntryUnit.getLinks().keySet().iterator();
+        while(iteratorLink.hasNext()){
+          String key = (String)iteratorLink.next();
+          multiEntryUnit.getLinks().get(key).accept(this);
+        }
+      }
+      System.out.println("</MultiEntryUnit>"); 
+    }      		
 	}
 	public void visit(AutomaticLink automaticLink) {
 	  System.out.print("<Link ");
@@ -595,7 +607,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     }		
 	}
 	public void visit(OKLink okLink) {
-	  System.out.print("<Link ");
+	  System.out.print("<OKLink ");
     System.out.print("id=\"");
     System.out.print(okLink.getId());
     System.out.print("\" ");
@@ -604,9 +616,6 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print("\" ");
     System.out.print("to=\"");
     System.out.print(okLink.getTo().getId());
-    System.out.print("\" ");
-    System.out.print("type=\"");
-    System.out.print("normal");
     System.out.print("\" ");
     System.out.print("validate=\"");
     System.out.print("true");
@@ -626,7 +635,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
         ParameterCoupling parameterCoupling = (ParameterCoupling)iteratorParam.next();
         parameterCoupling.accept(this);
       }
-      System.out.print("</Link>");  
+      System.out.print("</OKLink>");  
     }     		
 	}
 	public void visit(NormalLink normalLink) {
@@ -772,11 +781,11 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
         String key = (String)iteratorKCond.next();
         selector.getKeyConditions().get(key).accept(this);
       }
-      System.out.println("</SelectorUnit>");
+      System.out.println("</Selector>");
     }
     else{
       System.out.print("\"");
-      System.out.print(">");
+      System.out.print("/>");
       System.out.println(""); 
     }
   }
@@ -794,7 +803,7 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print("implied=\"");
     System.out.print(keyCondition.getImplied().toString());
     System.out.print("\"");
-    System.out.print(">");
+    System.out.print("/>");
     System.out.println(""); 
   }
   public void visit(AttributeParameter attributeParameter) {
@@ -828,3 +837,4 @@ public class WebModelConcreteVisitor implements WebModelVisitor {
     System.out.print(outputSelectionFieldParameter.getSelectionField().getName());
   }
 }
+

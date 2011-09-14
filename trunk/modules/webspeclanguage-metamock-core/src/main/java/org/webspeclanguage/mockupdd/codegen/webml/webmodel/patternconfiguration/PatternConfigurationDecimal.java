@@ -20,22 +20,15 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 public class PatternConfigurationDecimal extends PatternConfiguration {
 
 	private String type = "decimal";
-	private Boolean useNumberPattern = false;
 	private Integer maxDecimal = 3;
 	private Integer minDecimal = 0;
 	private Integer minInteger = 1;
-	private Boolean useThousandSeparator = true;
+	private Boolean useThousandSeparator = false;
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
-	}
-	public Boolean getUseNumberPattern() {
-		return useNumberPattern;
-	}
-	public void setUseNumberPattern(Boolean useNumberPattern) {
-		this.useNumberPattern = useNumberPattern;
 	}
 	public Integer getMaxDecimal() {
 		return maxDecimal;

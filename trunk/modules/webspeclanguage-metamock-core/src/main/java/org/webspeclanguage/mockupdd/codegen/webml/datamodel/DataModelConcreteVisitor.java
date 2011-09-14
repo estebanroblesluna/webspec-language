@@ -19,7 +19,9 @@ import java.util.Iterator;
  * @author Franco Giacosa
  */
 public class DataModelConcreteVisitor implements DataModelVisitor {
+  
 
+  
 	public void visit(DataModel dataModel) {
 		System.out.println("<DataModel>");
 		
@@ -44,7 +46,7 @@ public class DataModelConcreteVisitor implements DataModelVisitor {
 		System.out.print(entity.getName());
 		System.out.print("\" duration=\"");
 		System.out.print(entity.getDuration());
-		System.out.print("\"attributeOrder=\"");
+		System.out.print("\" attributeOrder=\"\"");
 		System.out.print(">");
 		System.out.println("");
 
@@ -75,10 +77,10 @@ public class DataModelConcreteVisitor implements DataModelVisitor {
 		System.out.print("\" name=\"");
 		System.out.print(relationship.getName());
 		System.out.print("\" sourceEntity=\"");
-		System.out.print(relationship.getSourceEntity().toString());
+		System.out.print(relationship.getSourceEntity().getId());
 		System.out.print("\" targetEntity=\"");
-		System.out.print(relationship.getTargetEntity().toString());
-		System.out.print(">");
+		System.out.print(relationship.getTargetEntity().getId());
+		System.out.print("\">");
 		System.out.println("");
 
 		Iterator<RelationshipRole> iteratorRol = relationship.getRoles().iterator();
@@ -100,4 +102,10 @@ public class DataModelConcreteVisitor implements DataModelVisitor {
 		System.out.println("");
 		System.out.println("</RelationshipRole>");
 	}
+
+
+  
+ 
+
+
 }

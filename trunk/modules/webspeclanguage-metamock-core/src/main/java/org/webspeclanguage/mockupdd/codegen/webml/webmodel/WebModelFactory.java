@@ -65,7 +65,7 @@ public interface WebModelFactory {
   public abstract SelectorUnit createSelectorUnit(String name, EntityDecorator entity);
   public abstract CreateUnit createCreateUnit(String name, EntityDecorator entity);
   public abstract DeleteUnit createDeleteUnit(String name, EntityDecorator entity);
-  public abstract ModifyUnit createaModifyUnit(String name, EntityDecorator entity);
+  public abstract ModifyUnit createModifyUnit(String name, EntityDecorator entity);
   public abstract ParameterCoupling createParameterCoupling(String name, Boolean coupling, Boolean passing, Parameter sourceParameter, Parameter targetParameter);
   public abstract Selector createSelector(AttributeDecorator key);
   public abstract KeyCondition createKeyCondition();

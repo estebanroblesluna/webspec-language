@@ -25,9 +25,9 @@ public class WebModelFactoryImpl implements WebModelFactory{
 	
   private WebModelIds webModelIds;
   
-  public WebModelFactoryImpl(WebModelIds webModelSingleton) {
+  public WebModelFactoryImpl(WebModelIds webModelIds) {
     super();
-    this.webModelIds = webModelSingleton;
+    this.webModelIds = webModelIds;
   }
 	public WebModel createWebModel(SiteView homeSiteView){
 		return new WebModel(homeSiteView);
@@ -65,7 +65,7 @@ public class WebModelFactoryImpl implements WebModelFactory{
 	public DeleteUnit createDeleteUnit(String name, EntityDecorator entity){
 		return new DeleteUnit(this.getWebModelIds().getDeleteUnitId(),name, entity, this.createSelector(entity.getEntityKey()));
 	}
-	public ModifyUnit createaModifyUnit(String name, EntityDecorator entity){
+	public ModifyUnit createModifyUnit(String name, EntityDecorator entity){
 		return new ModifyUnit(this.getWebModelIds().getModifyUnitId(),name, entity, this.createSelector(entity.getEntityKey()));
 	}	
 	public ParameterCoupling createParameterCoupling(String name, Boolean coupling, Boolean passing, Parameter sourceParameter, Parameter targetParameter){
@@ -79,7 +79,6 @@ public class WebModelFactoryImpl implements WebModelFactory{
 	public KeyCondition createKeyCondition(){
 	  return new KeyCondition(this.getWebModelIds().getKeyConditionId(),this.getWebModelIds().getKeyConditionName());
 	}
-
 	public AutomaticLink createAutomaticLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
     return new AutomaticLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
   }
@@ -134,7 +133,6 @@ public class WebModelFactoryImpl implements WebModelFactory{
   public OutputSelectionFieldParameter createOutputSelectionFieldParameter(SelectionField selectionField){
     return new OutputSelectionFieldParameter(selectionField);
   }
-  
   public WebModelIds getWebModelIds() {
     return webModelIds;
   }
