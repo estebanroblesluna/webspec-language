@@ -22,12 +22,12 @@ public class Relationship implements DataModelElement{
 	
 	private String id;
 	private String name;
-	private String sourceEntity;
-	private String targetEntity;
+	private Entity sourceEntity;
+	private Entity targetEntity;
 	private ArrayList<RelationshipRole> roles;
 	
-	public Relationship(String id, String name, String sourceEntity,
-			String targetEntity, ArrayList<RelationshipRole> roles) {
+	public Relationship(String id, String name, Entity sourceEntity,
+			Entity targetEntity, ArrayList<RelationshipRole> roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,16 +48,16 @@ public class Relationship implements DataModelElement{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getSourceEntity() {
+	public Entity getSourceEntity() {
 		return sourceEntity;
 	}
-	public void setSourceEntity(String sourceEntity) {
+	public void setSourceEntity(Entity sourceEntity) {
 		this.sourceEntity = sourceEntity;
 	}
-	public String getTargetEntity() {
+	public Entity getTargetEntity() {
 		return targetEntity;
 	}
-	public void setTargetEntity(String targetEntity) {
+	public void setTargetEntity(Entity targetEntity) {
 		this.targetEntity = targetEntity;
 	}
 	public ArrayList<RelationshipRole> getRoles() {

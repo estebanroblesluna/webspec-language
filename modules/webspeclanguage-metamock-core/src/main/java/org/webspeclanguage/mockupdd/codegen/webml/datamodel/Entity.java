@@ -33,6 +33,12 @@ public class Entity implements DataModelElement{
 		this.name = name;
 		this.attributes = attributes;
 	}
+	public void addAttribute(Attribute at){
+	  this.getAttributes().put(at.getId(), at);
+	}
+	public void addRelationship(Relationship rel){
+    this.getRelationships().put(rel.getId(), rel);
+  }
 	public String getName() {
 		return name;
 	}

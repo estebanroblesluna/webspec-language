@@ -15,28 +15,20 @@ package org.webspeclanguage.mockupdd.codegen.webml.datamodel;
 /**
  * @author Franco Giacosa
  */
-public class DataModelSingleton {
+public class DataModelIds {
 
     
-    private static DataModelSingleton dataModelSingleton;
-    
-    private Integer attributeId = 1;
+ 
+
+  private Integer attributeId = 1;
 	private Integer entityId = 1;
 	private Integer relationshipId = 1;
 
-	private DataModelSingleton(){
-	}
-	
-	public static DataModelSingleton getDataModelSingleton() {  
-		  if(dataModelSingleton==null) //SI ES NULL  
-			  dataModelSingleton = new DataModelSingleton(); //LO INSTANCIAMOS  
-		  return dataModelSingleton;  
-	}  
-	
-	public Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException(); 
-	}
 
+	 public DataModelIds() {
+	    super();
+	  }
+	 
 	public String getAttributeId() {
 		return "att" + (attributeId ++).toString();
 	}

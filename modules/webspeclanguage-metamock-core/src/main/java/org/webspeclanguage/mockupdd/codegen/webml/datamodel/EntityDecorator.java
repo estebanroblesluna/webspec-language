@@ -74,6 +74,9 @@ public class EntityDecorator {
 	public void addAttribute(AttributeDecorator attribute){
 	  this.getAttributes().put(attribute.getId(), attribute);
 	}
+	public void addRelationship(RelationshipDecorator relationship){
+	  this.getRelationships().put(relationship.getId(), relationship);
+	}
 	public HashMap<String,Parameter> getParametersPool(){
 		//each attribute and each relationship gets a parameter
 	  HashMap<String,Parameter> entityParameters = new HashMap<String,Parameter>();

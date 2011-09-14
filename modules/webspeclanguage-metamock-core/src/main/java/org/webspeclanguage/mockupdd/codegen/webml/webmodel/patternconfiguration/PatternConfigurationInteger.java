@@ -19,20 +19,13 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
  */
 public class PatternConfigurationInteger extends PatternConfiguration {
 	private String type = "integer";
-	private Boolean useNumberPattern = false;
 	private Integer minInteger = 1;
-	private Boolean useThousandSeparator = true;
+	private Boolean useThousandSeparator = false;
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
-	}
-	public Boolean getUseNumberPattern() {
-		return useNumberPattern;
-	}
-	public void setUseNumberPattern(Boolean userNumberPattern) {
-		this.useNumberPattern = userNumberPattern;
 	}
 	public Integer getMinInteger() {
 		return minInteger;

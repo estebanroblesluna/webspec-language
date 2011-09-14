@@ -12,9 +12,12 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.example;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.*;
-
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
 /**
  * @author Franco Giacosa
  */
@@ -22,15 +25,28 @@ public class WebMLWebModelExample {
 
 	
 	public WebModel generateWebModel(){
+	  DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
+    DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();
+    WebMLDataModelExample datamodelexample = new WebMLDataModelExample();  
+    DataModel dataModel = datamodelexample.generateDataModel();
+	  
+	  
+	  
 	  WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webModelFactory = webModelFacade.getWebModelFactory();		
-		
+		EntityDecorator entD1 = dataFactory.createEntityDecorator(dataModel.getEntitys().get("ent1"));
+    IndexUnit inu1 = webModelFactory.createIndexUnit("indexunit", entD1);
+    DataUnit du1 = webModelFactory.createDataUnit("dataunit", entD1);
+
+    
+    
 		
 		Page page1 = webModelFactory.createPage("page1", true, true);
 		Page page2 = webModelFactory.createPage("page2", false, true);
-		
-		//Link link = webModelFactory.createNonContextualLink("link page 1 to 2", true , page1,page2);
-	//	page1.addLink(link);
+		page1.addContentUnit(inu1);
+		page2.addContentUnit(du1);
+		Link link = webModelFactory.createNormalLink("link page 1 to 2", true , inu1,du1);
+		inu1.addLink(link);
 		
 		
 		SiteView siteView = webModelFactory.createSiteView("Site View 1", true);

@@ -35,6 +35,9 @@ public abstract class Unit implements WebModelElement, LinkElement{
 		this.name = name;
 		this.entity = entity;
 	}
+	public void addLink(Link link){
+	  this.getLinks().put(link.getId(), link);
+	}
 	public String getName() {
 		return name;
 	}

@@ -19,7 +19,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
  */
 public class PatternConfigurationTimeStamp extends PatternConfiguration {
 	private String type = "timestamp";
-	private String pattern = "M/d/yy h:mm:ss a";
+	private String pattern = "MM/dd/yyyy h:mm:ss a";
 	public String getType() {
 		return type;
 	}
