@@ -67,7 +67,7 @@ public class DataModelConcreteVisitor implements DataModelVisitor {
 		System.out.print(attribute.getAttributeType().getTypeName());
 		System.out.print("\" key=\"");
 		System.out.print(attribute.getKey().toString());
-		System.out.print("/>");
+		System.out.print("\"/>");
 		System.out.println("");
 	}
 
@@ -80,7 +80,7 @@ public class DataModelConcreteVisitor implements DataModelVisitor {
 		System.out.print(relationship.getSourceEntity().getId());
 		System.out.print("\" targetEntity=\"");
 		System.out.print(relationship.getTargetEntity().getId());
-		System.out.print("\">");
+    System.out.print("\">");
 		System.out.println("");
 
 		Iterator<RelationshipRole> iteratorRol = relationship.getRoles().iterator();
@@ -98,9 +98,9 @@ public class DataModelConcreteVisitor implements DataModelVisitor {
 		System.out.print(relationshipRole.getName());
 		System.out.print("\" maxCard=\"");
 		System.out.print(relationshipRole.getMaxCard());
-		System.out.print("/>");
+    System.out.print("\"/>");
 		System.out.println("");
-		System.out.println("</RelationshipRole>");
+		
 	}
 
 
