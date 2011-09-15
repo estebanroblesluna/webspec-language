@@ -13,6 +13,8 @@
 
 package org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration;
 
+import java.io.File;
+
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Attribute;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModel;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelConcreteVisitor;
@@ -26,15 +28,22 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.RelationshipRole;
  */
 public class DataModelWriter extends DataModelConcreteVisitor {
 
+  private String rootPath;
   private FileCreatorWrapper file;
-
-  public DataModelWriter(FileCreatorWrapper file){
-    this.file = file;
+  
+  public DataModelWriter(String rootPath){
+    this.rootPath = rootPath;
+    String folderPath = this.getRootPath() + "DataModel" + "/";
+    File newFolder= new File(folderPath); 
+    newFolder.mkdir();
+    this.file = new FileCreatorWrapper(folderPath, "Properties.wr");
   }
-  public FileCreatorWrapper getFile() {
+  public String getRootPath() {
+    return rootPath;
+  }
+  public FileCreatorWrapper getFile(){
     return file;
   }
-  
   public void visit(DataModel dataModel) {
     this.beginDataModel(dataModel);
     super.visit(dataModel);
@@ -67,12 +76,10 @@ public class DataModelWriter extends DataModelConcreteVisitor {
     this.getFile().appendString(relationshipRole.getName());
     this.getFile().appendString("\" maxCard=\"");
     this.getFile().appendString(relationshipRole.getMaxCard());
-    this.getFile().appendString(">");
+    this.getFile().appendString("\"/>");
     this.getFile().newLine();
   }
   public void endRelationshipRole(RelationshipRole relationshipRole){
-    this.getFile().appendString("</RelationshipRole>");
-    this.getFile().newLine();
 
   }
   public void beginRelationship(Relationship relationship){
@@ -100,7 +107,7 @@ public class DataModelWriter extends DataModelConcreteVisitor {
     this.getFile().appendString(attribute.getAttributeType().getTypeName());
     this.getFile().appendString("\" key=\"");
     this.getFile().appendString(attribute.getKey().toString());
-    this.getFile().appendString("/>");
+    this.getFile().appendString("\"/>");
     this.getFile().newLine();
   }
   public void endAttribute(Attribute attribute){

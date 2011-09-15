@@ -602,7 +602,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(dataUnit.getName());
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("entity=\"");
-    fileCreatorWrapper.appendString(dataUnit.getEntity().getName());
+    fileCreatorWrapper.appendString(dataUnit.getEntity().getId());
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine();
@@ -624,7 +624,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(selectorUnit.getName());
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("entity=\"");
-    fileCreatorWrapper.appendString(selectorUnit.getEntity().getName());
+    fileCreatorWrapper.appendString(selectorUnit.getEntity().getId());
     fileCreatorWrapper.appendString("\"");
     if(!selectorUnit.getLinks().isEmpty())
     {
@@ -652,7 +652,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(multiChoiceIndexUnit.getName());
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("entity=\"");
-    fileCreatorWrapper.appendString(multiChoiceIndexUnit.getEntity().getName());
+    fileCreatorWrapper.appendString(multiChoiceIndexUnit.getEntity().getId());
     fileCreatorWrapper.appendString("\"");
     if(!multiChoiceIndexUnit.getLinks().isEmpty())
     {
@@ -680,7 +680,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(indexUnit.getName());
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("entity=\"");
-    fileCreatorWrapper.appendString(indexUnit.getEntity().getName());
+    fileCreatorWrapper.appendString(indexUnit.getEntity().getId());
     fileCreatorWrapper.appendString("\"");
     if(!indexUnit.getLinks().isEmpty())
     {
@@ -785,7 +785,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(modifyUnit.getName());
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("entity=\"");
-    fileCreatorWrapper.appendString(modifyUnit.getEntity().getName());
+    fileCreatorWrapper.appendString(modifyUnit.getEntity().getId());
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine();
@@ -807,7 +807,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(deleteUnit.getName());
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("entity=\"");
-    fileCreatorWrapper.appendString(deleteUnit.getEntity().getName());
+    fileCreatorWrapper.appendString(deleteUnit.getEntity().getId());
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine(); 
@@ -828,7 +828,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(createUnit.getName());
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("entity=\"");
-    fileCreatorWrapper.appendString(createUnit.getEntity().getName());
+    fileCreatorWrapper.appendString(createUnit.getEntity().getId());
     fileCreatorWrapper.appendString("\"");
     if(!createUnit.getLinks().isEmpty()){
       fileCreatorWrapper.appendString(">");
