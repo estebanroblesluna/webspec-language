@@ -35,36 +35,53 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.example.WebMLDataModelExample;
+import org.webspeclanguage.mockupdd.codegen.webml.example.WebMLWebModelExample;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModel;
+import org.webspeclanguage.mockupdd.codegen.webml.example.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 
 
 /**
  * @author Franco Giacosa
  */
 public class MainXmlGenerator {
-
+  private String projectName;
+  private String versionFolder;
   
-  public void generateXMLDataModel(DataModel dataModel){
-    String versionProjectFolder = this.createVersionFolder();
-    String modelsFolder = versionProjectFolder + "/Model";
-    File newModelsFolder = new File(modelsFolder);
-    newModelsFolder.mkdir();
-    String dataModelFolder = modelsFolder + "/DataModel";
-    File newDataModelFolder = new File(dataModelFolder);
-    newDataModelFolder.mkdir();
+  public void mapModels(DataModel dataModel,WebModel webModel){
+    this.createVersionFolder();
     
+    DotProjectWritter dotProject = new DotProjectWritter(this.getVersionFolder());
+    dotProject.generateDotProjectFile(this.getProjectName());
+    
+    ModelWrWritter modelWr = new ModelWrWritter(this.getVersionFolder());
+    modelWr.generateModelWrFile();
+    
+    String modelsFolderPath = this.getVersionFolder() + "Model/";
+    File newFolder= new File(modelsFolderPath); 
+    newFolder.mkdir();
+    
+    DataModelVisitor visitor = new DataModelWriter(modelsFolderPath);
+    dataModel.accept(visitor);
+            
+    WebModelVisitor visitor1 = new WebModelWriter(modelsFolderPath);
+    webModel.accept(visitor1);
+
+
   }
-  
-  public String createVersionFolder(){
+  public void createVersionFolder(){
     String xmlVersionFile = "src/main/java/org/webspeclanguage/mockupdd/codegen/webml/xmlgeneration/webratioprojects/WebRatioXMLProjectVersion.xml";    
     String versionNumber = this.getVersionNumber(xmlVersionFile);
     
     
-    String folderPath = "src/main/java/org/webspeclanguage/mockupdd/codegen/webml/xmlgeneration/webratioprojects/XMLWebRatioProject" + versionNumber;
+    String folderPath = "src/main/java/org/webspeclanguage/mockupdd/codegen/webml/xmlgeneration/webratioprojects/XMLWebRatioProject" + versionNumber + "/";
     File newFolder= new File(folderPath); 
-    
     newFolder.mkdir();
     
-    return folderPath;
+    this.setVersionFolder(folderPath);
+    this.setProjectName("XMLWebRatioProject" + versionNumber);
+    
   }
 
   
@@ -99,5 +116,21 @@ public class MainXmlGenerator {
        return "unknow Version";
     }
         
+  }
+  
+  private String getProjectName() {
+    return projectName;
+  }
+  
+  private void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
+  
+  private String getVersionFolder() {
+    return versionFolder;
+  }
+  
+  private void setVersionFolder(String versionFolder) {
+    this.versionFolder = versionFolder;
   }
 }

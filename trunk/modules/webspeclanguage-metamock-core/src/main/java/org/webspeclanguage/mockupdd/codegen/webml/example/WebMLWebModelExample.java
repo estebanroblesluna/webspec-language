@@ -24,12 +24,10 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
 public class WebMLWebModelExample {
 
 	
-	public WebModel generateWebModel(){
+	public WebModel generateWebModel(DataModel dataModel){
+
 	  DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
     DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();
-    WebMLDataModelExample datamodelexample = new WebMLDataModelExample();  
-    DataModel dataModel = datamodelexample.generateDataModel();
-	  
 	  
 	  
 	  WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
