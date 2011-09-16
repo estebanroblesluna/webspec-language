@@ -18,10 +18,10 @@ package org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration;
  * @author Franco Giacosa
  */
 public class ModelWrWritter {
-  private FileCreatorWrapper file;
+  private CreatorWrapper file;
   
   public ModelWrWritter(String rootPath){
-    this.file = new FileCreatorWrapper(rootPath, "Model.wr");
+    this.file = new CreatorWrapper(rootPath, "Model.wr");
   }
   
    
@@ -58,10 +58,11 @@ public class ModelWrWritter {
     this.getFile().appendString("<ServiceDataProviders/>");
     this.getFile().newLine();
     this.getFile().appendString("</WebProject>");
+    this.getFile().newLine();
     this.getFile().closeFile();
   }
     
-  private FileCreatorWrapper getFile() {
+  private CreatorWrapper getFile() {
     return file;
   }
 }

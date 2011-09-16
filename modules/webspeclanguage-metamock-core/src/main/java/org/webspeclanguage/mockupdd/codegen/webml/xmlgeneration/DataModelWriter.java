@@ -29,19 +29,19 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.RelationshipRole;
 public class DataModelWriter extends DataModelConcreteVisitor {
 
   private String rootPath;
-  private FileCreatorWrapper file;
+  private CreatorWrapper file;
   
   public DataModelWriter(String rootPath){
     this.rootPath = rootPath;
     String folderPath = this.getRootPath() + "DataModel" + "/";
     File newFolder= new File(folderPath); 
     newFolder.mkdir();
-    this.file = new FileCreatorWrapper(folderPath, "Properties.wr");
+    this.file = new CreatorWrapper(folderPath, "Properties.wr");
   }
   public String getRootPath() {
     return rootPath;
   }
-  public FileCreatorWrapper getFile(){
+  public CreatorWrapper getFile(){
     return file;
   }
   public void visit(DataModel dataModel) {
@@ -111,7 +111,6 @@ public class DataModelWriter extends DataModelConcreteVisitor {
     this.getFile().newLine();
   }
   public void endAttribute(Attribute attribute){
-    //Not necesary to finish it
   }
   
   public void beginEntity(Entity entity){
@@ -136,6 +135,7 @@ public class DataModelWriter extends DataModelConcreteVisitor {
   }
   public void endDataModel(DataModel dataModel){
     this.getFile().appendString("</DataModel>");
+    this.getFile().newLine();
     this.getFile().closeFile();
   }
 }

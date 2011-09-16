@@ -21,10 +21,10 @@ import java.io.File;
  */
 public class DotProjectWritter {
 
-  private FileCreatorWrapper file;
+  private CreatorWrapper file;
   
   public DotProjectWritter(String rootPath){
-    this.file = new FileCreatorWrapper(rootPath, ".project");
+    this.file = new CreatorWrapper(rootPath, ".project");
   }
   public void generateDotProjectFile(String projectName){
     this.getFile().appendString("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -60,10 +60,11 @@ public class DotProjectWritter {
     this.getFile().appendString("</natures>");
     this.getFile().newLine();
     this.getFile().appendString("</projectDescription>");
+    this.getFile().newLine();
     this.getFile().closeFile();
   }
   
-  private FileCreatorWrapper getFile() {
+  private CreatorWrapper getFile() {
     return file;
   }
 }

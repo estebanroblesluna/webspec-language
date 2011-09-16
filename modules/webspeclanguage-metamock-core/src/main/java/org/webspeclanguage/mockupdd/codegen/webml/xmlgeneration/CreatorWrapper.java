@@ -20,12 +20,17 @@ import java.io.IOException;
 /**
  * @author Franco Giacosa
  */
-public class FileCreatorWrapper {
+public class CreatorWrapper {
   
   private FileWriter outputFile;
   private String folderPath;
-  public FileCreatorWrapper(String folderPath, String fileName){
-      this.folderPath = folderPath;
+  public CreatorWrapper(String folderPath, String fileName){
+    this.folderPath = folderPath;
+
+    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    System.out.println("FILE " + fileName + " CREATE AT " + this.folderPath + fileName);
+    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
     try {
       this.outputFile = new FileWriter(this.folderPath + fileName);
       
@@ -36,6 +41,7 @@ public class FileCreatorWrapper {
   }
   public void newLine(){
     try {
+      System.out.println("");
       this.getOutputFile().write("\r\n");
     } catch (IOException e) {
       System.out.print("error newLine method");
@@ -44,6 +50,7 @@ public class FileCreatorWrapper {
   }
   public void appendString(String appendString){
     try {
+      System.out.print(appendString);
       this.getOutputFile().write(appendString);
     } catch (IOException e) {
       System.out.print("error appendString");
@@ -52,6 +59,9 @@ public class FileCreatorWrapper {
   }
   public void closeFile(){
     try {
+      System.out.println("-----------------------------------------------------");
+      System.out.println("FILE CLOSE");
+      System.out.println("-----------------------------------------------------");
       this.getOutputFile().close();
     } catch (IOException e) {
       System.out.print("error closeFile");
