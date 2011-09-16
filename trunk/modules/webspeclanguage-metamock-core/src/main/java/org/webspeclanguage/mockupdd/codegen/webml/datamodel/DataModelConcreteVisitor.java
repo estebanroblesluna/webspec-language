@@ -23,8 +23,6 @@ public class DataModelConcreteVisitor implements DataModelVisitor {
 
   
 	public void visit(DataModel dataModel) {
-		System.out.println("<DataModel>");
-		
 		Iterator<String> iteratorEnt = dataModel.getEntitys().keySet().iterator();
 		while(iteratorEnt.hasNext()){
 			String key = (String)iteratorEnt.next();
@@ -35,77 +33,26 @@ public class DataModelConcreteVisitor implements DataModelVisitor {
 			String key = (String)iteratorRel.next();
 			dataModel.getRelationships().get(key).accept(this);
 		}
-		System.out.println("</DataModel>");
-
 	}
-
 	public void visit(Entity entity) {
-		System.out.print("<Entity id=\"");
-		System.out.print(entity.getId());
-		System.out.print("\" name=\"");
-		System.out.print(entity.getName());
-		System.out.print("\" duration=\"");
-		System.out.print(entity.getDuration());
-		System.out.print("\" attributeOrder=\"\"");
-		System.out.print(">");
-		System.out.println("");
 
 		Iterator<String> iteratorAt = entity.getAttributes().keySet().iterator();
 		while(iteratorAt.hasNext()){
 			String key = (String)iteratorAt.next();
 			entity.getAttributes().get(key).accept(this);
 		}
-		System.out.println("</Entity>");
 	}
-
 	public void visit(Attribute attribute) {
-		System.out.print("<Attribute name=\"");
-		System.out.print(attribute.getName());
-		System.out.print("\" id=\"");
-		System.out.print(attribute.getId());
-		System.out.print("\" type=\"");
-		System.out.print(attribute.getAttributeType().getTypeName());
-		System.out.print("\" key=\"");
-		System.out.print(attribute.getKey().toString());
-		System.out.print("\"/>");
-		System.out.println("");
 	}
-
 	public void visit(Relationship relationship) {
-		System.out.print("<Relationship id=\"");
-		System.out.print(relationship.getId());
-		System.out.print("\" name=\"");
-		System.out.print(relationship.getName());
-		System.out.print("\" sourceEntity=\"");
-		System.out.print(relationship.getSourceEntity().getId());
-		System.out.print("\" targetEntity=\"");
-		System.out.print(relationship.getTargetEntity().getId());
-    System.out.print("\">");
-		System.out.println("");
 
 		Iterator<RelationshipRole> iteratorRol = relationship.getRoles().iterator();
 		while(iteratorRol.hasNext()){
 			RelationshipRole rol = (RelationshipRole)iteratorRol.next();
 			rol.accept(this);
 		}
-		System.out.println("</Relationship>");
 	}
 
 	public void visit(RelationshipRole relationshipRole) {
-		System.out.print("<RelationshipRole id=\"");
-		System.out.print(relationshipRole.getId());
-		System.out.print("\" name=\"");
-		System.out.print(relationshipRole.getName());
-		System.out.print("\" maxCard=\"");
-		System.out.print(relationshipRole.getMaxCard());
-    System.out.print("\"/>");
-		System.out.println("");
-		
 	}
-
-
-  
- 
-
-
 }
