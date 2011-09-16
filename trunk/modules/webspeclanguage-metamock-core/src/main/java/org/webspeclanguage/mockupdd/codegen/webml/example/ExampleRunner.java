@@ -12,27 +12,25 @@
  */
 
 package org.webspeclanguage.mockupdd.codegen.webml.example;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 /**
  * @author Franco Giacosa
  */
-public class asd {
+public class ExampleRunner {
 
   public static void main(String[] args) {
-      WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
-      
-      WebModelFacade webModelFacade2 = WebModelFacade.getWebModelFacade();
-      if(webModelFacade.equals(webModelFacade2))
-        System.out.print(webModelFacade2.getClass().toString());
-      
-      WebModelFactory factory = webModelFacade2.getWebModelFactory();
-      
-      if(factory != null){
-        System.out.print(webModelFacade2.getClass().toString());
-
-      }
-     
+        
+    WebMLDataModelExample dmexample = new WebMLDataModelExample();  
+    DataModel dm = dmexample.generateDataModel();
+    
+    WebMLWebModelExample wmexample = new WebMLWebModelExample();  
+    WebModel wm = wmexample.generateWebModel(dm);
+    
+    MainXmlGenerator mainXmlGenerator = new MainXmlGenerator();
+    mainXmlGenerator.mapModels(dm, wm);
+    
   }
 }
