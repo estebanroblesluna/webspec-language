@@ -28,7 +28,7 @@ public class CreatorWrapper {
     this.folderPath = folderPath;
 
     System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    System.out.println("FILE " + fileName + " CREATE AT " + this.folderPath + fileName);
+    System.out.println("FILE " + fileName + " CREATED AT " + this.folderPath + fileName);
     System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
     try {
