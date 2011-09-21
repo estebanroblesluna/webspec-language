@@ -12,12 +12,15 @@
  */
 package org.webspeclanguage.mockupdd.sui.model.impl.tags;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
 
 public class TagApplicationImpl implements TagApplication {
@@ -35,6 +38,25 @@ public class TagApplicationImpl implements TagApplication {
     this.setParameterValues(parameterValues);
   }
 
+  public static TagApplicationImpl newFromTextualValues(Widget widget, Tag tag, List<String> parameterValues) throws TagApplicationException {
+    List<TagParameterValue> values = new ArrayList<TagParameterValue>();
+    if (tag.getParameters().size() == 0) {
+      if (parameterValues.size() == 0) {
+        return new TagApplicationImpl(widget, tag, Arrays.asList(new TagParameterValue[]{}));
+      } else {
+        throw new TagApplicationException(widget, tag, null, "The tag " + tag.getName() + " doesn't accept parameters");
+      }
+    }
+    TagParameter currentParameter = null;
+    for (int i = 0; i < parameterValues.size(); i++) {
+      if (i < tag.getParameters().size()) {
+        currentParameter = tag.getParameters().get(i);
+      }
+      values.add(new TagParameterValueImpl(currentParameter, parameterValues.get(i)));
+    }
+    return new TagApplicationImpl(widget, tag, values);
+  }
+
   private void validateTagNotAppliedAlready(Widget w, Tag t, List<TagParameterValue> parameterValues2) throws TagApplicationException {
     for (TagApplication ta : w.getAppliedTags()) {
       if (ta.getTag().equals(t)) {
@@ -44,16 +66,42 @@ public class TagApplicationImpl implements TagApplication {
   }
 
   private void validateParams(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
-    if (!this.tagIsApplicableOver(tag, widget.getClass())) {
-      throw new TagApplicationException(widget, tag, parameterValues, "Tag " + tag.getName() + " not applicable for widget class " + widget.getClass());
+    this.checkApplicability(widget, tag, parameterValues);
+    this.checkParameterWellFormedness(widget, tag, parameterValues);
+    this.checkParameterCount(widget, tag, parameterValues);
+    this.checkParameters(widget, tag, parameterValues);
+  }
+
+  private void checkParameterWellFormedness(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
+    for (TagParameterValue value : parameterValues) {
+      if (!value.getValue().matches("[a-zA-Z0-9]+(:[a-zA-Z0-9]+)?")) {
+        throw new TagApplicationException(widget, tag, parameterValues, "The tag " + tag.getName() + " has an invalid parameter value: \"" + value.getValue() + "\"");
+      }
     }
-    if (parameterValues.size() != tag.getParameters().size()) {
-      throw new TagApplicationException(widget, tag, parameterValues, "Parameter names provided does not match for tag " + tag.getName());
-    }
-    for (int i = 0; i < parameterValues.size(); i++) {
-      if (!tag.getParameters().get(i).equals(parameterValues.get(i).getTagParameter())) {
+  }
+
+  private void checkParameters(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
+    int i = 0;
+    TagParameter currentParameter = null;
+    for (; i < parameterValues.size(); i++) {
+      if (i < tag.getParameters().size()) {
+        currentParameter = tag.getParameters().get(i);
+      }
+      if (!currentParameter.equals(parameterValues.get(i).getTagParameter())) {
         throw new TagApplicationException(widget, tag, parameterValues, "Parameter " + i + " does not match for tag " + tag.getName());
       }
+    }
+  }
+
+  private void checkParameterCount(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
+    if (parameterValues.size() < tag.getParameters().size()) {
+      throw new TagApplicationException(widget, tag, parameterValues, "Parameter provided are less than expected for tag " + tag.getName());
+    }
+  }
+
+  private void checkApplicability(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
+    if (!this.tagIsApplicableOver(tag, widget.getClass())) {
+      throw new TagApplicationException(widget, tag, parameterValues, "Tag " + tag.getName() + " not applicable for widget class " + widget.getClass());
     }
   }
   
