@@ -17,7 +17,7 @@ package org.webspeclanguage.mockupdd.sui.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface RadioButton extends SimpleWidget {
+public interface RadioButton extends SimpleWidget, SelectionWidget {
 
   String getText();
 

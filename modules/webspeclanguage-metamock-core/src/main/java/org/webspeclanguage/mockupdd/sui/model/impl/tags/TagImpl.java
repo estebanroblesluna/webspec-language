@@ -77,5 +77,11 @@ public class TagImpl implements Tag {
   public TagSet getTagSet() {
     return tagSet;
   }
+
+  public TagApplication applyOverWithValues(Widget widget, List<String> parameterValues) throws TagApplicationException {
+    TagApplicationImpl tagApplication = TagApplicationImpl.newFromTextualValues(widget, this, parameterValues);
+    widget.addTagApplication(tagApplication);
+    return tagApplication;
+  }
   
 }

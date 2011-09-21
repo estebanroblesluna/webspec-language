@@ -15,6 +15,7 @@ package org.webspeclanguage.mockupdd.sui.model;
 import junit.framework.TestCase;
 
 import org.webspeclanguage.mockupdd.config.SuiDefaultConfig;
+import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 
 /**
@@ -24,6 +25,7 @@ public abstract class SuiTestCase extends TestCase {
 
   private SuiFactory factory;
   private TagSet testTagSet;
+  private Tag compositeWidgetTag;
 
   public SuiTestCase() {
     super();
@@ -36,23 +38,20 @@ public abstract class SuiTestCase extends TestCase {
   protected SuiFactory getFactory() {
     return factory;
   }
-  
-  protected TagSet getTestTagSet() {
-    return testTagSet;
-  }
-  
-  private void setTestTagSet(TagSet tagSet) {
-    this.testTagSet = tagSet;
-  }
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     this.setFactory(SuiDefaultConfig.getInstance().getFactory());
-    this.setTestTagSet(SuiDefaultConfig.getInstance().getTagSetByName("Data"));
-    if (this.getTestTagSet() == null) {
-      fail("Test tag set not found");
-    }
+    this.setCompositeWidgetTag(SuiDefaultConfig.getInstance().getTagSetByName("Data").getTagByName("Data"));
+  }
+
+  protected Tag getCompositeWidgetTag() {
+    return compositeWidgetTag;
+  }
+
+  private void setCompositeWidgetTag(Tag compositeWidgetTag) {
+    this.compositeWidgetTag = compositeWidgetTag;
   }
   
 }

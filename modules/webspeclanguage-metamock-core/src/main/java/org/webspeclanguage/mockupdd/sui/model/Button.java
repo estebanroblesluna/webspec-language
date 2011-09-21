@@ -17,7 +17,7 @@ package org.webspeclanguage.mockupdd.sui.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface Button extends SimpleWidget {
+public interface Button extends SimpleWidget, TriggerWidget {
 
   String getText();
 

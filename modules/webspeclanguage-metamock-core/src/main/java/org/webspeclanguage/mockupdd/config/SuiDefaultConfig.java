@@ -19,13 +19,17 @@ import java.util.Map;
 
 import org.webspeclanguage.mockupdd.sui.model.Annotation;
 import org.webspeclanguage.mockupdd.sui.model.Button;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Link;
 import org.webspeclanguage.mockupdd.sui.model.Page;
+import org.webspeclanguage.mockupdd.sui.model.SelectionWidget;
 import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
+import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.impl.SuiFactoryImpl;
 import org.webspeclanguage.mockupdd.sui.model.layout.LayoutFactory;
 import org.webspeclanguage.mockupdd.sui.model.layout.impl.ScanBasedGridBagLayoutFactory;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 import org.webspeclanguage.mockupdd.translator.DefaultRepetitionDetectorImpl;
 import org.webspeclanguage.mockupdd.translator.MockupProcessor;
@@ -100,13 +104,37 @@ public class SuiDefaultConfig {
                       Button.class, Link.class),
               this.getFactory().createTag("Node", 
                       Arrays.asList(this.getFactory().createTagParameter("nodeId")),
-                      Page.class) 
+                      Page.class),
+              this.getFactory().createTag("Select", 
+                      Arrays.asList(new TagParameter[]{}),
+                      SelectionWidget.class), 
+              this.getFactory().createTag("Transfer", 
+                      Arrays.asList(this.getFactory().createTagParameter("types")),
+                      TriggerWidget.class),
+              this.getFactory().createTag("Action", 
+                      Arrays.asList(this.getFactory().createTagParameter("actionDescription")),
+                      TriggerWidget.class)
       ));
     this.tagSetsByName.put("Data", 
       this.getFactory().createTagSet("Data",
               this.getFactory().createTag("Data", 
                       Arrays.asList(this.getFactory().createTagParameter("typeId")),
-                      Widget.class) 
+                      Widget.class),
+              this.getFactory().createTag("Save", 
+                      Arrays.asList(this.getFactory().createTagParameter("types")),
+                      TriggerWidget.class),
+              this.getFactory().createTag("Delete", 
+                      Arrays.asList(this.getFactory().createTagParameter("types")),
+                      TriggerWidget.class),
+              this.getFactory().createTag("Associate", 
+                      Arrays.asList(this.getFactory().createTagParameter("type1"), this.getFactory().createTagParameter("type2")),
+                      TriggerWidget.class),
+              this.getFactory().createTag("Dissociate", 
+                      Arrays.asList(this.getFactory().createTagParameter("type1"), this.getFactory().createTagParameter("type2")),
+                      TriggerWidget.class),
+              this.getFactory().createTag("Query", 
+                      Arrays.asList(this.getFactory().createTagParameter("queryDescription")),
+                      CompositeWidget.class)
     ));
   }
 

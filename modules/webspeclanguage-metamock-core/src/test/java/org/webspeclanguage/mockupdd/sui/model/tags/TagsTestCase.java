@@ -32,7 +32,12 @@ public class TagsTestCase extends SuiTestCase {
             this.getFactory().createTag(
                     "Tag1", 
                     Arrays.asList(this.getFactory().createTagParameter("Param1")), 
-                    Button.class));
+                    Button.class),
+            this.getFactory().createTag(
+                    "Tag2", 
+                    Arrays.asList(new TagParameter[]{}), 
+                    Button.class)
+            );
   }
 
   protected void tearDown() throws Exception {
@@ -53,6 +58,58 @@ public class TagsTestCase extends SuiTestCase {
     at.remove();
     assertNull(at.getWidget());
     assertEquals(0, b.getAppliedTags().size());    
+  }
+  
+  @Test
+  public void testMultiParameterTagApplication() throws TagApplicationException {
+    Button b = this.getFactory().createButton("b", 0, 0, 0, 0, "button");
+    Tag t = this.tagSet.getTagByName("Tag1");
+    assertNotNull(t);
+    TagParameter param = t.getParameters().iterator().next();
+    TagApplication at = t.applyOver(b, Arrays.asList(this.getFactory().createTagParameterValue(param, "value1"), this.getFactory().createTagParameterValue(param, "value2")));
+    this.assertTwoValuesAndOneParameterApplication(b, t, param, at);  
+  }
+  
+  @Test
+  public void testTextualParameterTagApplication() throws TagApplicationException {
+    Button b = this.getFactory().createButton("b", 0, 0, 0, 0, "button");
+    Tag t = this.tagSet.getTagByName("Tag1");
+    assertNotNull(t);
+    TagParameter param = t.getParameters().iterator().next();
+    TagApplication at = t.applyOverWithValues(b, Arrays.asList("value1", "value2"));
+    this.assertTwoValuesAndOneParameterApplication(b, t, param, at);  
+  }
+
+  private void assertTwoValuesAndOneParameterApplication(Button widget, Tag t, TagParameter param, TagApplication at) {
+    assertEquals(1, widget.getAppliedTags().size());
+    assertEquals(widget.getAppliedTags().iterator().next(), at);
+    assertEquals(at.getTag(), t);
+    assertEquals(param, at.getParameterValues().get(0).getTagParameter());
+    assertEquals("value1", at.getParameterValues().get(0).getValue());
+    assertEquals(param, at.getParameterValues().get(1).getTagParameter());
+    assertEquals("value2", at.getParameterValues().get(1).getValue());
+  }
+  
+  @Test
+  public void testNoParameterTagApplication() throws TagApplicationException {
+    Button b = this.getFactory().createButton("b", 0, 0, 0, 0, "button");
+    Tag t = this.tagSet.getTagByName("Tag2");
+    assertNotNull(t);
+    TagApplication at = t.applyOver(b, Arrays.asList(new TagParameterValue[]{}));
+    assertEquals(1, b.getAppliedTags().size());
+    assertEquals(b.getAppliedTags().iterator().next(), at);
+    assertEquals(at.getTag(), t);  
+  }
+  
+  @Test
+  public void testNoParameterTextualTagApplication() throws TagApplicationException {
+    Button b = this.getFactory().createButton("b", 0, 0, 0, 0, "button");
+    Tag t = this.tagSet.getTagByName("Tag2");
+    assertNotNull(t);
+    TagApplication at = t.applyOverWithValues(b, Arrays.asList(new String[]{}));
+    assertEquals(1, b.getAppliedTags().size());
+    assertEquals(b.getAppliedTags().iterator().next(), at);
+    assertEquals(at.getTag(), t);  
   }
   
   @Test
