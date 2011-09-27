@@ -14,6 +14,7 @@
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel;
 
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.*;
 import java.util.*;
 
 /**
@@ -22,6 +23,7 @@ import java.util.*;
 public interface LinkElement {
 
   public String getId();
+  public void addLink(Link link);
   public HashMap<String,Parameter> getInputParameters();
   public HashMap<String,Parameter> getOutputParameters();
 }

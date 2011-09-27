@@ -857,7 +857,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
       fileCreatorWrapper.appendString("<OperationUnits />");
     else
       fileCreatorWrapper.appendString("<OperationUnits>");
-
+    fileCreatorWrapper.newLine();
   }
   private void endSiteView(SiteView siteView) {
     CreatorWrapper fileCreatorWrapper = this.getFile().pop();

@@ -32,68 +32,72 @@ public class WebMLWebModelExample {
 
 	  DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
     DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();
-	  
-	  
+    EntityDecorator entD1 = dataFactory.createEntityDecorator(dataModel.getEntitys().get("ent1"));
+    Type integerType = dataFactory.createType("integer");
+    
 	  WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webModelFactory = webModelFacade.getWebModelFactory();
-    Type integerType = dataFactory.createType("integer");
-
-		EntityDecorator entD1 = dataFactory.createEntityDecorator(dataModel.getEntitys().get("ent1"));
-		
-		SiteView siteView = webModelFactory.createSiteView("Site View 1", true);
-		
+    //SiteView creation
+    SiteView siteView = webModelFactory.createSiteView("Site View 1", true);
+    //WebModel creation
+    WebModel webModel = webModelFactory.createWebModel(siteView);
+		//Pages creation
 		Page page1 = webModelFactory.createPage("page1", true, true);
     Page page2 = webModelFactory.createPage("page2", false, true);
 		
+    //ContentUnits creation
 		MultiChoiceIndexUnit mulciu = webModelFactory.createMultiChoiceIndexUnit("multichoice", entD1);
-    page1.addContentUnit(mulciu);
-
-    IndexUnit inu1 = webModelFactory.createIndexUnit("indexunit", entD1);
-    page1.addContentUnit(inu1);
-
-    EntryUnit eu1 = webModelFactory.createEntryUnit("entryunit1", entD1);
-    eu1.createFields();
+    
+		IndexUnit inu1 = webModelFactory.createIndexUnit("indexunit", entD1);
+    
+		DataUnit du1 = webModelFactory.createDataUnit("dataunit", entD1);
+    
+		EntryUnit eu1 = webModelFactory.createEntryUnit("entryunit1", entD1);
     eu1.addField(webModelFactory.createSelectionField("selectionfieldinteger", integerType));
     HashMap<String,Parameter> outputparameteres = eu1.getOutputParameters();
     Parameter outputparam = outputparameteres.get("email");
     
-    
-    page1.addContentUnit(eu1);
-    
     MultiEntryUnit meu1 = webModelFactory.createMultiEntryUnit("multientryunit1", entD1);
-    meu1.createFields();
     meu1.addField(webModelFactory.createSelectionField("selectionfieldinteger2", integerType));
     HashMap<String,Parameter> inputparameters = meu1.getInputParameters();
     Parameter inputParam = inputparameters.get("email");
-
+    
+    //Content Units added
+    page1.addContentUnit(inu1);
+    page1.addContentUnit(mulciu);
+    page1.addContentUnit(eu1);
     page2.addContentUnit(meu1);
-
-    DataUnit du1 = webModelFactory.createDataUnit("dataunit", entD1);
     page2.addContentUnit(du1);
-  
-		
-		inputParam.getName();
-		TransportLink linktranspot = webModelFactory.createTransportLink("transport", true, inu1, eu1);
-		inu1.addLink(linktranspot);
-		AutomaticLink linkauto = webModelFactory.createAutomaticLink("auto", true, meu1, du1);
-		meu1.addLink(linkauto);
+    
+    //OperationUnits creation
+    CreateUnit cu1 = webModelFactory.createCreateUnit("createunit1", entD1);
+    DeleteUnit delu1 = webModelFactory.createDeleteUnit("deleteunit1", entD1);
+    ModifyUnit mu1 = webModelFactory.createModifyUnit("modifyunit1", entD1);
+    
+    //Links creation
+		webModelFactory.createTransportLink("transport", true, inu1, eu1);
+		webModelFactory.createAutomaticLink("auto", true, meu1, du1);
     Link linkcoupling = webModelFactory.createNormalLink("link coupling", false, eu1,meu1);
+		webModelFactory.createNormalLink("link page 1 to 2", true , inu1,du1);
+    webModelFactory.createNormalLink("link page 1 to 2", true , mulciu,du1);
+   	webModelFactory.createNormalLink("tocreateunit",true, eu1, cu1);
+    webModelFactory.createOKLink("oklink",true, delu1, inu1);
+    webModelFactory.createKOLink("koLink",true, mu1, mulciu);
+    
+    //Coupling creation
     linkcoupling.addParameterCoupling(webModelFactory.createParameterCoupling("emailtousername", true, false, outputparam, inputParam));
-		Link link1 = webModelFactory.createNormalLink("link page 1 to 2", true , inu1,du1);
-    Link link2 = webModelFactory.createNormalLink("link page 1 to 2", true , mulciu,du1);
-    eu1.addLink(linkcoupling);
-    mulciu.addLink(link2);
-		inu1.addLink(link1);
+
+    //OperationUnits added
+		siteView.addOperationUnit(cu1);
+		siteView.addOperationUnit(delu1);
+		siteView.addOperationUnit(mu1);
 		
-		siteView.addOperationUnit(webModelFactory.createCreateUnit("createunit1", entD1));
-		siteView.addOperationUnit(webModelFactory.createDeleteUnit("deleteunit1", entD1));
-		siteView.addOperationUnit(webModelFactory.createModifyUnit("modifyunit1", entD1));
-		
+		//HomePage set, pages added to siteview
 		siteView.setHomePage(page1);
 		siteView.addPage(page1);
 		siteView.addPage(page2);
 		
-		WebModel webModel = webModelFactory.createWebModel(siteView);
+		//Siteview added
 		webModel.addSiteView(siteView);
 		return webModel;
 	}

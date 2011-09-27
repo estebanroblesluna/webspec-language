@@ -45,7 +45,9 @@ public class WebModelFactoryImpl implements WebModelFactory{
     return new EntryUnit(this.getWebModelIds().getEntryUnitId(),name);
   }
 	public EntryUnit createEntryUnit(String name, EntityDecorator entity){
-		return new EntryUnit(this.getWebModelIds().getEntryUnitId(),name, entity);
+	  EntryUnit entryUnit = new EntryUnit(this.getWebModelIds().getEntryUnitId(),name, entity);
+	  entryUnit.createFields();
+    return entryUnit;
 	}
 	public IndexUnit createIndexUnit(String name, EntityDecorator entity){
 		return new IndexUnit(this.getWebModelIds().getIndexUnitId(),name, entity);
@@ -54,7 +56,9 @@ public class WebModelFactoryImpl implements WebModelFactory{
 		return new MultiChoiceIndexUnit(this.getWebModelIds().getMultiChoiceIndexUnitId(),name, entity);
 	}
 	public MultiEntryUnit createMultiEntryUnit(String name, EntityDecorator entity){
-		return new MultiEntryUnit(this.getWebModelIds().getMultiEntryUnitId(),name, entity);
+		MultiEntryUnit multiEntryUnit = new MultiEntryUnit(this.getWebModelIds().getMultiEntryUnitId(),name, entity);
+		multiEntryUnit.createFields();
+		return multiEntryUnit;
 	}
 	public SelectorUnit createSelectorUnit(String name, EntityDecorator entity){
 		return new SelectorUnit(this.getWebModelIds().getSelectorUnitId(),name, entity);
@@ -80,19 +84,29 @@ public class WebModelFactoryImpl implements WebModelFactory{
 	  return new KeyCondition(this.getWebModelIds().getKeyConditionId(),this.getWebModelIds().getKeyConditionName());
 	}
 	public AutomaticLink createAutomaticLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new AutomaticLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+	  AutomaticLink link = new AutomaticLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+	  from.addLink(link);
+	  return link;
   }
   public NormalLink createNormalLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new NormalLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+    NormalLink link = new NormalLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+    from.addLink(link);
+    return link;
   }
   public TransportLink createTransportLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new TransportLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+    TransportLink link = new TransportLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+    from.addLink(link);
+    return link;
   }
   public OKLink createOKLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new OKLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+    OKLink link = new OKLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+    from.addLink(link);
+    return link;
   }
   public KOLink createKOLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to){
-    return new KOLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+    KOLink link = new KOLink(this.getWebModelIds().getLinkId(),name,automaticCoupling,from,to);
+    from.addLink(link);
+    return link;
   }
   public NormalField createNormalField(String name, Type type){
     return new NormalField(this.getWebModelIds().getNormalFieldId(), name, type);
