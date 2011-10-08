@@ -16,6 +16,8 @@ package org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * @author Franco Giacosa
@@ -24,19 +26,21 @@ public class CreatorWrapper {
   
   private FileWriter outputFile;
   private String folderPath;
+  private Logger logger = Logger.getLogger(CreatorWrapper.class);
+
   public CreatorWrapper(String folderPath, String fileName){
     this.folderPath = folderPath;
-
-    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    System.out.println("FILE " + fileName + " CREATED AT " + this.folderPath + fileName);
-    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    
+    this.getLogger().info("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    this.getLogger().info("FILE " + fileName + " CREATED AT " + this.folderPath + fileName);
+    this.getLogger().info("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
     try {
       this.outputFile = new FileWriter(this.folderPath + fileName);
       
     } catch (IOException e) {
-      System.out.print("error creating the file");
-      e.printStackTrace();
+      this.getLogger().info("error creating the file");
+      this.getLogger().info(e);
     }
   }
   public void newLine(){
@@ -44,8 +48,8 @@ public class CreatorWrapper {
       System.out.println("");
       this.getOutputFile().write("\r\n");
     } catch (IOException e) {
-      System.out.print("error newLine method");
-      e.printStackTrace();
+      this.getLogger().info("error newLine method");
+      this.getLogger().info(e);
     }
   }
   public void appendString(String appendString){
@@ -53,19 +57,19 @@ public class CreatorWrapper {
       System.out.print(appendString);
       this.getOutputFile().write(appendString);
     } catch (IOException e) {
-      System.out.print("error appendString");
-      e.printStackTrace();
+      this.getLogger().info("error appendString");
+      this.getLogger().info(e);
     }
   }
   public void closeFile(){
     try {
-      System.out.println("-----------------------------------------------------");
-      System.out.println("FILE CLOSE");
-      System.out.println("-----------------------------------------------------");
+      this.getLogger().info("-----------------------------------------------------");
+      this.getLogger().info("FILE CLOSE");
+      this.getLogger().info("-----------------------------------------------------");
       this.getOutputFile().close();
     } catch (IOException e) {
-      System.out.print("error closeFile");
-      e.printStackTrace();
+      this.getLogger().info("error closeFile");
+      this.getLogger().info(e);
     }
   }
   
@@ -75,6 +79,14 @@ public class CreatorWrapper {
   
   public String getFolderPath() {
     return folderPath;
+  }
+  
+  public Logger getLogger() {
+    return logger;
+  }
+  
+  public void setLogger(Logger logger) {
+    this.logger = logger;
   }
 
 }

@@ -13,9 +13,6 @@
 package org.webspeclanguage.mockupdd.codegen.webml.datamodel;
 
 import java.util.*;
-
-
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 
 /**
@@ -65,8 +62,9 @@ public class EntityDecorator {
     while(iteratorE.hasNext()){
       String key = (String)iteratorE.next();
       AttributeDecorator attribute = this.getAttributes().get(key);
-      if(attribute.getKey())
+      if(attribute.getKey()){
         keyAttribute = attribute;
+      }
     }
     
     return keyAttribute;
@@ -77,29 +75,28 @@ public class EntityDecorator {
 	public void addRelationship(RelationshipDecorator relationship){
 	  this.getRelationships().put(relationship.getId(), relationship);
 	}
-	public HashMap<String,Parameter> getParametersPool(){
+	public Map<String,Parameter> getParametersPool(){
 		//each attribute and each relationship gets a parameter
-	  HashMap<String,Parameter> entityParameters = new HashMap<String,Parameter>();
+	  Map<String,Parameter> entityParameters = new HashMap<String,Parameter>();
 		
 		entityParameters.putAll(this.getAttributesParametersPool());
 		entityParameters.putAll(this.getRelationshipsParametersPool());
 		
 		return entityParameters;
 	}
-	public HashMap<String,Parameter> getAttributesParametersPool(){
-	  HashMap<String,Parameter> attributeParameters = new HashMap<String,Parameter>();
-	    Iterator<String> iteratorE = this.getAttributes().keySet().iterator();
-  
-      while(iteratorE.hasNext()){
-          String key = (String)iteratorE.next();
-           AttributeParameter attributeParameter = this.getAttributes().get(key).getParameter();
-           attributeParameters.put(attributeParameter.getName(),attributeParameter);
-            
-     }
+	public Map<String,Parameter> getAttributesParametersPool(){
+	  Map<String,Parameter> attributeParameters = new HashMap<String,Parameter>();
+	  
+	  Iterator<String> iteratorE = this.getAttributes().keySet().iterator();
+    while(iteratorE.hasNext()){
+      String key = (String)iteratorE.next();
+      AttributeParameter attributeParameter = this.getAttributes().get(key).getParameter();
+      attributeParameters.put(attributeParameter.getName(),attributeParameter);
+    }
     return attributeParameters;
   }
-	public HashMap<String,Parameter> getRelationshipsParametersPool(){
-	  HashMap<String,Parameter> relationshipParameters = new HashMap<String,Parameter>();
+	public Map<String,Parameter> getRelationshipsParametersPool(){
+	  Map<String,Parameter> relationshipParameters = new HashMap<String,Parameter>();
 
 	  Iterator<String> iteratorR = this.getRelationships().keySet().iterator();
     while(iteratorR.hasNext()){

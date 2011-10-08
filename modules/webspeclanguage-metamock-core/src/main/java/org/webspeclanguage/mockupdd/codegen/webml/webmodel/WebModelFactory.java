@@ -53,40 +53,40 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.SelectionF
  * @author Franco Giacosa
  */
 public interface WebModelFactory {
-  public abstract WebModel createWebModel(SiteView homeSiteView);
-  public abstract SiteView createSiteView(String name, Boolean homeSiteView);
-  public abstract Page createPage(String name, Boolean home, Boolean landmark);
-  public abstract DataUnit createDataUnit(String name, EntityDecorator entity);
-  public abstract EntryUnit createEntryUnit(String name);
-  public abstract EntryUnit createEntryUnit(String name, EntityDecorator entity);
-  public abstract IndexUnit createIndexUnit(String name, EntityDecorator entity);
-  public abstract MultiChoiceIndexUnit createMultiChoiceIndexUnit(String name, EntityDecorator entity);
-  public abstract MultiEntryUnit createMultiEntryUnit(String name, EntityDecorator entity);
-  public abstract SelectorUnit createSelectorUnit(String name, EntityDecorator entity);
-  public abstract CreateUnit createCreateUnit(String name, EntityDecorator entity);
-  public abstract DeleteUnit createDeleteUnit(String name, EntityDecorator entity);
-  public abstract ModifyUnit createModifyUnit(String name, EntityDecorator entity);
-  public abstract ParameterCoupling createParameterCoupling(String name, Boolean coupling, Boolean passing, Parameter sourceParameter, Parameter targetParameter);
-  public abstract Selector createSelector(AttributeDecorator key);
-  public abstract KeyCondition createKeyCondition();
-  public abstract WebModelIds getWebModelIds();
-  public abstract AutomaticLink createAutomaticLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
-  public abstract NormalLink createNormalLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
-  public abstract TransportLink createTransportLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
-  public abstract OKLink createOKLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
-  public abstract KOLink createKOLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
-  public abstract NormalField createNormalField(String name, Type type);
-  public abstract NormalField createNormalField(AttributeDecorator attribute);
-  public abstract SelectionField createSelectionField(String name, Type type);
-  public abstract AttributeParameter createAttributeParameter(AttributeDecorator attribute);
-  public abstract CurrentOIDParameter createCurrentOIDParameter(AttributeDecorator attributeKey);
-  public abstract DefaultUnitParameter createDefaultUnitParameter(String name, String id);
-  public abstract KeyConditionParameter createKeyConditionParameter(KeyCondition keyCondition);
-  public abstract RelationshipParameter createRelationshipParameter(RelationshipDecorator relationship);
-  public abstract NormalFieldParameter createNormalFieldParameter(NormalField normalField);
-  public abstract SelectionFieldLabelParameter createSelectionFieldLabelParameter(String id, String name, SelectionField selectionField);
-  public abstract SelectionFieldOutputParameter createSelectionFieldOutputParameter(String id, String name, SelectionField selectionField);
-  public abstract SelectionFieldPreselectionParameter createSelectionFieldPreselectionParameter(String id, String name, SelectionField selectionField);
-  public abstract OutputSelectionFieldParameter createOutputSelectionFieldParameter(SelectionField selectionField);
-   
+  WebModel createWebModel(SiteView homeSiteView);
+  SiteView createSiteView(String name, Boolean homeSiteView);
+  Page createPage(String name, Boolean home, Boolean landmark);
+  DataUnit createDataUnit(String name, EntityDecorator entity);
+  EntryUnit createEntryUnit(String name);
+  EntryUnit createEntryUnit(String name, EntityDecorator entity);
+  IndexUnit createIndexUnit(String name, EntityDecorator entity);
+  MultiChoiceIndexUnit createMultiChoiceIndexUnit(String name, EntityDecorator entity);
+  MultiEntryUnit createMultiEntryUnit(String name, EntityDecorator entity);
+  SelectorUnit createSelectorUnit(String name, EntityDecorator entity);
+  CreateUnit createCreateUnit(String name, EntityDecorator entity);
+  DeleteUnit createDeleteUnit(String name, EntityDecorator entity);
+  ModifyUnit createModifyUnit(String name, EntityDecorator entity);
+  ParameterCoupling createParameterCoupling(String name, Boolean coupling, Boolean passing, Parameter sourceParameter, Parameter targetParameter);
+  Selector createSelector(AttributeDecorator key);
+  KeyCondition createKeyCondition();
+  WebModelIds getWebModelIds();
+  AutomaticLink createAutomaticLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  NormalLink createNormalLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  TransportLink createTransportLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  OKLink createOKLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  KOLink createKOLink(String name, Boolean automaticCoupling, LinkElement from, LinkElement to);
+  NormalField createNormalField(String name, Type type);
+  NormalField createNormalField(AttributeDecorator attribute);
+  SelectionField createSelectionField(String name, Type type);
+  AttributeParameter createAttributeParameter(AttributeDecorator attribute);
+  CurrentOIDParameter createCurrentOIDParameter(AttributeDecorator attributeKey);
+  DefaultUnitParameter createDefaultUnitParameter(String name, String id);
+  KeyConditionParameter createKeyConditionParameter(KeyCondition keyCondition);
+  RelationshipParameter createRelationshipParameter(RelationshipDecorator relationship);
+  NormalFieldParameter createNormalFieldParameter(NormalField normalField);
+  SelectionFieldLabelParameter createSelectionFieldLabelParameter(String id, String name, SelectionField selectionField);
+  SelectionFieldOutputParameter createSelectionFieldOutputParameter(String id, String name, SelectionField selectionField);
+  SelectionFieldPreselectionParameter createSelectionFieldPreselectionParameter(String id, String name, SelectionField selectionField);
+  OutputSelectionFieldParameter createOutputSelectionFieldParameter(SelectionField selectionField);
+  
 }

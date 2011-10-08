@@ -13,21 +13,16 @@
 
 package org.webspeclanguage.mockupdd.codegen.webml.datamodel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.AttributeParameter;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
 
 /**
  * @author Franco Giacosa
  */
 public class AttributeDecorator {
 
-  public Attribute attribute;
+  private Attribute attribute;
 
 	public AttributeDecorator(Attribute attribute) {
 		super();

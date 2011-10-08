@@ -12,11 +12,7 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.datamodel;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelIds;
+import java.util.*;
 	
 /**
  * @author Franco Giacosa
@@ -39,7 +35,7 @@ public class DataModelFactoryImpl implements DataModelFactory{
 	public Entity createEntity(String name, String duration, Map<String, Attribute> attributes){
 		return new Entity(this.getDataModelIds().getEntityId(),name,duration,attributes);
 	}
-	public Relationship createRelationship(String name, Entity sourceEntity, Entity targetEntity, ArrayList<RelationshipRole> roles){
+	public Relationship createRelationship(String name, Entity sourceEntity, Entity targetEntity, List<RelationshipRole> roles){
 	  
 		Relationship rel = new Relationship(this.getDataModelIds().getRelationshipId(),name,sourceEntity,targetEntity,roles);
 		sourceEntity.addRelationship(rel);

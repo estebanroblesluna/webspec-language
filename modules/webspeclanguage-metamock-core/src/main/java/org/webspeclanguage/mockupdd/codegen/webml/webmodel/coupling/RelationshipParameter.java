@@ -20,7 +20,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
  */
 public class RelationshipParameter extends Parameter {
 
-	public RelationshipDecorator relationship;
+	private RelationshipDecorator relationship;
 
 	public RelationshipParameter(String id, RelationshipDecorator relationship) {
 		super(id,relationship.getName());

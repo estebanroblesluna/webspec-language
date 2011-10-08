@@ -17,7 +17,7 @@ package org.webspeclanguage.mockupdd.codegen.webml.webmodel;
 /**
  * @author Franco Giacosa
  */
-public class WebModelFacade {
+public final class WebModelFacade {
 
   private WebModelFactory webModelFactory;
   private static WebModelFacade webModelFacade;

@@ -13,7 +13,6 @@
 
 package org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration;
 
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModel;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.NormalField;
@@ -21,10 +20,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.SelectionF
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.patternconfiguration.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
-
 import java.io.File;
-import java.util.Iterator;
 import java.util.Stack;
 /**
  * @author Franco Giacosa
@@ -47,9 +43,10 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     newFolder.mkdir();
     CreatorWrapper fileCreator = new CreatorWrapper(folderPath, "Properties.wr");
     this.getFile().push(fileCreator);
+    
     this.beginWebModel(webModel);
     super.visit(webModel);
-    this.endWebModel(webModel);
+    this.endWebModel();
   }
   public void visit(SiteView siteView){
     String folderPath = this.getFile().peek().getFolderPath() + siteView.getId() + "/";
@@ -76,42 +73,35 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   public void visit(Locale locale) {
     this.beginLocale(locale);
     super.visit(locale);
-    this.endLocale(locale);
+    this.endLocale();
   }
   public void visit(PatternConfigurationBoolean patternConfigurationBoolean) {
     this.beginPatternConfigurationBoolean(patternConfigurationBoolean);
     super.visit(patternConfigurationBoolean);
-    this.endPatternConfigurationBoolean(patternConfigurationBoolean);
   }
   public void visit(PatternConfigurationDecimal patternConfigurationDecimal) {
     this.beginPatternConfigurationDecimal(patternConfigurationDecimal);
     super.visit(patternConfigurationDecimal);
-    this.endPatternConfigurationDecimal(patternConfigurationDecimal);
   }
   public void visit(PatternConfigurationDate patternConfigurationDate) {
     this.beginPatternConfigurationDate(patternConfigurationDate);
     super.visit(patternConfigurationDate);
-    this.endPatternConfigurationDate(patternConfigurationDate);
   }
   public void visit(PatternConfigurationFloat patternConfigurationFloat) {
     this.beginPatternConfigurationFloat(patternConfigurationFloat);
     super.visit(patternConfigurationFloat);
-    this.endPatternConfigurationFloat(patternConfigurationFloat);
   }
   public void visit(PatternConfigurationInteger patternConfigurationInteger) {
     this.beginPatternConfigurationInteger(patternConfigurationInteger);
     super.visit(patternConfigurationInteger);
-    this.endPatternConfigurationInteger(patternConfigurationInteger);
   }
   public void visit(PatternConfigurationTime patternConfigurationTime) {
     this.beginPatternConfigurationTime(patternConfigurationTime);
     super.visit(patternConfigurationTime);
-    this.endPatternConfigurationTime(patternConfigurationTime);
   }
   public void visit(PatternConfigurationTimeStamp patternConfigurationTimeStamp) {
     this.beginPatternConfigurationTimeStamp(patternConfigurationTimeStamp);
     super.visit(patternConfigurationTimeStamp);
-    this.endPatternConfigurationTimeStamp(patternConfigurationTimeStamp);
   }
   public void visit(IndexUnit indexUnit){
     this.beginIndexUnit(indexUnit);
@@ -131,7 +121,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   public void visit(DataUnit dataUnit){
     this.beginDataUnit(dataUnit);
     super.visit(dataUnit);
-    this.endDataUnit(dataUnit);
+    this.endDataUnit();
   }
   public void visit(EntryUnit entryUnit){
     this.beginEntryUnit(entryUnit);
@@ -166,117 +156,84 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   public void visit(ParameterCoupling parameterCoupling){
     this.beginParameterCoupling(parameterCoupling);
     super.visit(parameterCoupling);
-    this.endParameterCoupling(parameterCoupling);
   }
   public void visit(NormalField normalField){
     this.beginNormalField(normalField);
     super.visit(normalField);
-    this.endNormalField(normalField);
   }
   public void visit(SelectionField selectionField){
     this.beginSelectionField(selectionField);
     super.visit(selectionField);
-    this.endSelectionField(selectionField);
   }
   public void visit(AttributeParameter attributeParameter){
     this.beginAttributeParameter(attributeParameter);
-    this.endAttributeParameter(attributeParameter);
   }
   private void beginAttributeParameter(AttributeParameter attributeParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(attributeParameter.getAttribute().getName());
   }
-  private void endAttributeParameter(AttributeParameter attributeParameter) {
-  }
   public void visit(CurrentOIDParameter currentOIDParameter){
     this.beginCurrentOIDParameter(currentOIDParameter);
-    this.endCurrentOIDParameter(currentOIDParameter);
   }
   private void beginCurrentOIDParameter(CurrentOIDParameter currentOIDParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString("current " + currentOIDParameter.getCurrentOID().getName());
   }
-  private void endCurrentOIDParameter(CurrentOIDParameter currentOIDParameter) {
-  }
   public void visit(KeyConditionParameter keyConditionParameter){
     this.beginKeyConditionParameter(keyConditionParameter);
-    this.endKeyConditionParameter(keyConditionParameter);
   }
   private void beginKeyConditionParameter(KeyConditionParameter keyConditionParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(keyConditionParameter.getKeyCondition().getName() + " [" + keyConditionParameter.getKeyCondition().getKey().getName() + "]");
   }
-  private void endKeyConditionParameter(KeyConditionParameter keyConditionParameter) {
-  }
   public void visit(NormalFieldParameter normalFieldParameter){
     this.beginNormalFieldParameter(normalFieldParameter);
-    this.endNormalFieldParameter(normalFieldParameter);
   }
   private void beginNormalFieldParameter(NormalFieldParameter normalFieldParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(normalFieldParameter.getField().getName());
   }
-  private void endNormalFieldParameter(NormalFieldParameter normalFieldParameter) {
-  }
   public void visit(RelationshipParameter relationshipParameter){
     this.beginRelationshipParameter(relationshipParameter);
-    this.endRelationshipParameter(relationshipParameter);
   }
   private void beginRelationshipParameter(RelationshipParameter relationshipParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(relationshipParameter.getRelationship().getName());
   }
-  private void endRelationshipParameter(RelationshipParameter relationshipParameter) {
-  }
   public void visit(SelectionFieldLabelParameter selectionFieldParameter){
     this.beginSelectionFieldLabelParameter(selectionFieldParameter);
-    this.endSelectionFieldLabelParameter(selectionFieldParameter);
   }
   private void beginSelectionFieldLabelParameter(SelectionFieldLabelParameter selectionFieldParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(selectionFieldParameter.getSelectionField().getName());
   }
-  private void endSelectionFieldLabelParameter(SelectionFieldLabelParameter selectionFieldParameter) {
-  }
   public void visit(SelectionFieldOutputParameter selectionFieldParameter){
     this.beginSelectionFieldOutputParameter(selectionFieldParameter);
-    this.endSelectionFieldOutputParameter(selectionFieldParameter);
   }
   private void beginSelectionFieldOutputParameter(SelectionFieldOutputParameter selectionFieldParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(selectionFieldParameter.getSelectionField().getName());
   }
-  private void endSelectionFieldOutputParameter(SelectionFieldOutputParameter selectionFieldParameter) {
-  }
   public void visit(SelectionFieldPreselectionParameter selectionFieldParameter){
     this.beginSelectionFieldPreselectionParameter(selectionFieldParameter);
-    this.endSelectionFieldPreselectionParameter(selectionFieldParameter);
   }
   private void beginSelectionFieldPreselectionParameter(SelectionFieldPreselectionParameter selectionFieldParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(selectionFieldParameter.getSelectionField().getName());
   }
-  private void endSelectionFieldPreselectionParameter(SelectionFieldPreselectionParameter selectionFieldParameter) {
-  }
   public void visit(DefaultUnitParameter defaultUnitParameter){
     this.beginDefaultUnitParameter(defaultUnitParameter);
-    this.endDefaultUnitParameter(defaultUnitParameter);
   }
   private void beginDefaultUnitParameter(DefaultUnitParameter defaultUnitParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(defaultUnitParameter.getId());
   }
-  private void endDefaultUnitParameter(DefaultUnitParameter defaultUnitParameter) {
-  }
   public void visit(OutputSelectionFieldParameter outputSelectionFieldParameter){
     this.beginOutputSelectionFieldParameter(outputSelectionFieldParameter);
-    this.endOutputSelectionFieldParameter(outputSelectionFieldParameter);
   }
   private void beginOutputSelectionFieldParameter(OutputSelectionFieldParameter outputSelectionFieldParameter) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString(outputSelectionFieldParameter.getSelectionField().getName());
-  }
-  private void endOutputSelectionFieldParameter(OutputSelectionFieldParameter outputSelectionFieldParameter) {
   }
   private void beginSelectionField(SelectionField selectionField) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
@@ -293,8 +250,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
-  }
-  private void endSelectionField(SelectionField selectionField) {
   }
   private void beginNormalField(NormalField normalField) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
@@ -318,8 +273,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
   }
-  private void endNormalField(NormalField normalField) {
-  }
   private void beginParameterCoupling(ParameterCoupling parameterCoupling) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
 
@@ -340,8 +293,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
-  }
-  private void endParameterCoupling(ParameterCoupling parameterCoupling) {
   }
   private void beginTransportLink(TransportLink transportLink) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
@@ -368,8 +319,9 @@ public class WebModelWriter extends WebModelConcreteVisitor {
       fileCreatorWrapper.appendString("\"");
       fileCreatorWrapper.appendString("/>");
     }
-    else      
+    else{      
       fileCreatorWrapper.appendString("\">");
+    }
     
     fileCreatorWrapper.newLine();
   }
@@ -407,8 +359,9 @@ public class WebModelWriter extends WebModelConcreteVisitor {
       fileCreatorWrapper.appendString("\"");
       fileCreatorWrapper.appendString("/>");
     }
-    else
+    else{
       fileCreatorWrapper.appendString("\">");
+    }
     
     fileCreatorWrapper.newLine();
   }
@@ -441,9 +394,9 @@ public class WebModelWriter extends WebModelConcreteVisitor {
       fileCreatorWrapper.appendString("\"");
       fileCreatorWrapper.appendString("/>");
     }
-    else
+    else{
       fileCreatorWrapper.appendString("\">");
-    
+    }
     fileCreatorWrapper.newLine();
   }
   private void endOKLink(OKLink okLink) {
@@ -476,9 +429,9 @@ public class WebModelWriter extends WebModelConcreteVisitor {
       fileCreatorWrapper.appendString("\"");
       fileCreatorWrapper.appendString("/>");
     }
-    else
+    else{
       fileCreatorWrapper.appendString("\">");
-    
+    }
     fileCreatorWrapper.newLine();
   }
   private void endKOLink(KOLink koLink) {
@@ -514,9 +467,9 @@ public class WebModelWriter extends WebModelConcreteVisitor {
       fileCreatorWrapper.appendString("\"");
       fileCreatorWrapper.appendString("/>");
     }
-    else
+    else{
       fileCreatorWrapper.appendString("\">");
-    
+    }
     fileCreatorWrapper.newLine();
 
   }
@@ -545,19 +498,21 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("minLength=\"");
     fileCreatorWrapper.appendString(multiEntryUnit.getMinLength());
-    if((multiEntryUnit.getFields().isEmpty()) & (multiEntryUnit.getLinks().isEmpty()))
+    if((multiEntryUnit.getFields().isEmpty()) & (multiEntryUnit.getLinks().isEmpty())){
       fileCreatorWrapper.appendString("\"/>");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("\">");
+    }
    
     fileCreatorWrapper.newLine();
   }
   private void endMultiEntryUnit(MultiEntryUnit multiEntryUnit) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     
-    if((!multiEntryUnit.getFields().isEmpty()) | (!multiEntryUnit.getLinks().isEmpty()))
+    if((!multiEntryUnit.getFields().isEmpty()) | (!multiEntryUnit.getLinks().isEmpty())){
       fileCreatorWrapper.appendString("</MultiEntryUnit>");
-    
+    }
     fileCreatorWrapper.newLine();
   }
   private void beginEntryUnit(EntryUnit entryUnit) {
@@ -569,18 +524,21 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("name=\"");
     fileCreatorWrapper.appendString(entryUnit.getName());
-    if((entryUnit.getFields().isEmpty()) & (entryUnit.getLinks().isEmpty()))
+    if((entryUnit.getFields().isEmpty()) & (entryUnit.getLinks().isEmpty())){
       fileCreatorWrapper.appendString("\"/>");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("\">");
+    }
 
     fileCreatorWrapper.newLine();
   }
   private void endEntryUnit(EntryUnit entryUnit) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     
-    if((!entryUnit.getFields().isEmpty()) | (!entryUnit.getLinks().isEmpty()))
+    if((!entryUnit.getFields().isEmpty()) | (!entryUnit.getLinks().isEmpty())){
       fileCreatorWrapper.appendString("</EntryUnit>");
+    }
     fileCreatorWrapper.newLine();
   }
   private void beginDataUnit(DataUnit dataUnit) {
@@ -599,7 +557,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine();
   }
-  private void endDataUnit(DataUnit dataUnit) {
+  private void endDataUnit() {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     
     fileCreatorWrapper.appendString("</DataUnit>");
@@ -626,10 +584,12 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   }
   private void endSelectorUnit(SelectorUnit selectorUnit) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
-    if(!selectorUnit.getLinks().isEmpty())
+    if(!selectorUnit.getLinks().isEmpty()){
       fileCreatorWrapper.appendString("</SelectorUnit>");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("/>");
+    }
     
     fileCreatorWrapper.newLine();
   }
@@ -654,10 +614,12 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   }
   private void endMultiChoiceIndexUnit(MultiChoiceIndexUnit multiChoiceIndexUnit) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
-    if(!multiChoiceIndexUnit.getLinks().isEmpty())
+    if(!multiChoiceIndexUnit.getLinks().isEmpty()){
       fileCreatorWrapper.appendString("</MultiChoiceIndexUnit>");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("/>");
+    }
     
     fileCreatorWrapper.newLine();
   }
@@ -683,10 +645,12 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   }
   private void endIndexUnit(IndexUnit indexUnit) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
-    if(!indexUnit.getLinks().isEmpty())
+    if(!indexUnit.getLinks().isEmpty()){
       fileCreatorWrapper.appendString("</IndexUnit>");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("/>");
+    }
     
     fileCreatorWrapper.newLine();
   }
@@ -698,12 +662,12 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   public void visit(DeleteUnit deleteUnit){
     this.beginDeleteUnit(deleteUnit);
     super.visit(deleteUnit);
-    this.endDeleteUnit(deleteUnit);
+    this.endDeleteUnit();
   }
   public void visit(ModifyUnit modifyUnit){
     this.beginModifyUnit(modifyUnit);
     super.visit(modifyUnit);
-    this.endModifyUnit(modifyUnit);
+    this.endModifyUnit();
   }
   public void visit(Selector selector){
     this.beginSelector(selector);
@@ -713,7 +677,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   public void visit(KeyCondition keyCondition){
     this.beginKeyCondition(keyCondition);
     super.visit(keyCondition);
-    this.endKeyCondition(keyCondition);
   }
   private void beginKeyCondition(KeyCondition keyCondition) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
@@ -733,8 +696,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
-  }
-  private void endKeyCondition(KeyCondition keyCondition) {
   }
   private void beginSelector(Selector selector) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
@@ -758,10 +719,12 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   private void endSelector(Selector selector) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     
-    if(!selector.getKeyConditions().isEmpty())
+    if(!selector.getKeyConditions().isEmpty()){
        fileCreatorWrapper.appendString("</Selector>");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("/>");
+    }
     
     fileCreatorWrapper.newLine();
     
@@ -782,7 +745,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine();
   }
-  private void endModifyUnit(ModifyUnit modifyUnit) {
+  private void endModifyUnit() {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     
     fileCreatorWrapper.appendString("</ModifyUnit>");
@@ -804,7 +767,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine(); 
   }
-  private void endDeleteUnit(DeleteUnit deleteUnit) {
+  private void endDeleteUnit() {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString("</DeleteUnit>");
     fileCreatorWrapper.newLine();
@@ -829,10 +792,12 @@ public class WebModelWriter extends WebModelConcreteVisitor {
   }
   private void endCreateUnit(CreateUnit createUnit){
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
-    if(!createUnit.getLinks().isEmpty())
+    if(!createUnit.getLinks().isEmpty()){
       fileCreatorWrapper.appendString("</CreateUnit>");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("/>");
+    }
     fileCreatorWrapper.newLine();
 
   }
@@ -846,17 +811,21 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(siteView.getName());
     fileCreatorWrapper.appendString("\" ");
     fileCreatorWrapper.appendString("homePage=\"");
-    if(siteView.getHomePage() != null)
+    if(siteView.getHomePage() != null){
       fileCreatorWrapper.appendString(siteView.getHomePage().getId());
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("");
+    }
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine();
-    if(siteView.getOperationUnits().isEmpty())
+    if(siteView.getOperationUnits().isEmpty()){
       fileCreatorWrapper.appendString("<OperationUnits />");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("<OperationUnits>");
+    }
     fileCreatorWrapper.newLine();
   }
   private void endSiteView(SiteView siteView) {
@@ -883,8 +852,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
   }
-  private void endPatternConfigurationBoolean(PatternConfigurationBoolean patternConfigurationBoolean) {
-  }
   private void beginPatternConfigurationDecimal(PatternConfigurationDecimal patternConfigurationDecimal) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
 
@@ -906,8 +873,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
-  }
-  private void endPatternConfigurationDecimal(PatternConfigurationDecimal patternConfigurationDecimal) {
   } 
   private void beginPatternConfigurationDate(PatternConfigurationDate patternConfigurationDate) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
@@ -921,8 +886,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
-  }
-  private void endPatternConfigurationDate(PatternConfigurationDate patternConfigurationDate) {
   }  
   private void beginPatternConfigurationFloat(PatternConfigurationFloat patternConfigurationFloat) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
@@ -946,8 +909,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
   }
-  private void endPatternConfigurationFloat(PatternConfigurationFloat patternConfigurationFloat) {
-  }
   private void beginPatternConfigurationInteger(PatternConfigurationInteger patternConfigurationInteger) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
 
@@ -964,8 +925,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
   }
-  private void endPatternConfigurationInteger(PatternConfigurationInteger patternConfigurationInteger) {
-  }
   private void beginPatternConfigurationTime(PatternConfigurationTime patternConfigurationTime) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
 
@@ -979,8 +938,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
   }
-  private void endPatternConfigurationTime(PatternConfigurationTime patternConfigurationTime) {
-  }
   private void beginPatternConfigurationTimeStamp(PatternConfigurationTimeStamp patternConfigurationTimeStamp) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
 
@@ -993,8 +950,6 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString("\"");
     fileCreatorWrapper.appendString("/>");
     fileCreatorWrapper.newLine();
-  }
-  private void endPatternConfigurationTimeStamp(PatternConfigurationTimeStamp patternConfigurationTimeStamp) {
   }
   private void beginLocale(Locale locale) {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
@@ -1012,7 +967,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine();
   }
-  private void endLocale(Locale locale) {
+  private void endLocale() {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString("</Locale>");
     fileCreatorWrapper.newLine();
@@ -1029,7 +984,7 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine();
   }
-  private void endWebModel(WebModel webModel) {
+  private void endWebModel() {
     CreatorWrapper fileCreatorWrapper = this.getFile().peek();
     fileCreatorWrapper.appendString("</WebModel>");
     fileCreatorWrapper.newLine();
@@ -1059,10 +1014,12 @@ public class WebModelWriter extends WebModelConcreteVisitor {
     fileCreatorWrapper.appendString(">");
     fileCreatorWrapper.newLine(); 
 
-    if(page.getContentUnits().isEmpty())
+    if(page.getContentUnits().isEmpty()){
       fileCreatorWrapper.appendString("<ContentUnits />");
-    else
+    }
+    else{
       fileCreatorWrapper.appendString("<ContentUnits>");
+    }
     
     fileCreatorWrapper.newLine();
   }

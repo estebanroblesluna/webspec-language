@@ -13,9 +13,6 @@
 
 package org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration;
 
-import java.io.File;
-
-
 /**
  * @author Franco Giacosa
  */

@@ -23,7 +23,7 @@ public class Locale implements WebModelElement{
 	private String id = "lcl1";
 	private String country = "US";
 	private String language="en";
-	private HashMap<String,PatternConfiguration> patternsConfiguration = new HashMap<String,PatternConfiguration>();
+	private Map<String,PatternConfiguration> patternsConfiguration = new HashMap<String,PatternConfiguration>();
 	
 	public Locale (){
 		this.patternsConfiguration.put("boolean", new PatternConfigurationBoolean());
@@ -52,10 +52,10 @@ public class Locale implements WebModelElement{
 	public void setLanguage(String language) {
 		this.language = language;
 	}
-	public HashMap<String, PatternConfiguration> getPatternsConfiguration() {
+	public Map<String, PatternConfiguration> getPatternsConfiguration() {
 		return patternsConfiguration;
 	}
-	public void setPatternsConfiguration(HashMap<String, PatternConfiguration> patternsConfiguration) {
+	public void setPatternsConfiguration(Map<String, PatternConfiguration> patternsConfiguration) {
 		this.patternsConfiguration = patternsConfiguration;
 	}
 	public void accept(WebModelVisitor visitor) {

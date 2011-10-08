@@ -29,10 +29,10 @@ public class SelectorUnit extends ContentUnit {
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
-  public HashMap<String,Parameter> getInputParameters() {
+  public Map<String,Parameter> getInputParameters() {
     return new HashMap<String,Parameter>();
   }
-  public HashMap<String,Parameter> getOutputParameters() {
+  public Map<String,Parameter> getOutputParameters() {
     return this.getEntity().getParametersPool();
   }
 }

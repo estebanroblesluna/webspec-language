@@ -12,12 +12,11 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 
-import java.util.HashMap;
+import java.util.*;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.DefaultUnitParameter;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
@@ -27,7 +26,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
  */
 public class MultiChoiceIndexUnit extends ContentUnit {
 
-  private HashMap<String,Parameter> defaultOutputParameters = new HashMap<String,Parameter>();
+  private Map<String,Parameter> defaultOutputParameters = new HashMap<String,Parameter>();
 
 	public MultiChoiceIndexUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
@@ -37,21 +36,21 @@ public class MultiChoiceIndexUnit extends ContentUnit {
     defaultOutputParameters.put(defaultUnitParameter1.getName(),defaultUnitParameter1);
        
 	}
-  public HashMap<String, Parameter> getDefaultOutputParameters() {
+  public Map<String, Parameter> getDefaultOutputParameters() {
     return defaultOutputParameters;
   }
   
-  public void setDefaultOutputParameters(HashMap<String, Parameter> defaultOutputParameters) {
+  public void setDefaultOutputParameters(Map<String, Parameter> defaultOutputParameters) {
     this.defaultOutputParameters = defaultOutputParameters;
   }
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
-  public HashMap<String,Parameter> getInputParameters() {
+  public Map<String,Parameter> getInputParameters() {
     return new HashMap<String,Parameter>();
   }
-  public HashMap<String,Parameter> getOutputParameters() {
-    HashMap<String,Parameter> outputParameters = new HashMap<String,Parameter>();
+  public Map<String,Parameter> getOutputParameters() {
+    Map<String,Parameter> outputParameters = new HashMap<String,Parameter>();
     outputParameters.putAll(this.getEntity().getParametersPool());
     outputParameters.putAll(this.getDefaultOutputParameters());
     return outputParameters;

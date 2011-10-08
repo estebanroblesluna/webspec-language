@@ -12,7 +12,7 @@
  */
 package org.webspeclanguage.mockupdd.codegen.webml.datamodel;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * @author Franco Giacosa
@@ -24,10 +24,10 @@ public class Relationship implements DataModelElement{
 	private String name;
 	private Entity sourceEntity;
 	private Entity targetEntity;
-	private ArrayList<RelationshipRole> roles;
+	private List<RelationshipRole> roles;
 	
 	public Relationship(String id, String name, Entity sourceEntity,
-			Entity targetEntity, ArrayList<RelationshipRole> roles) {
+			Entity targetEntity, List<RelationshipRole> roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -60,10 +60,10 @@ public class Relationship implements DataModelElement{
 	public void setTargetEntity(Entity targetEntity) {
 		this.targetEntity = targetEntity;
 	}
-	public ArrayList<RelationshipRole> getRoles() {
+	public List<RelationshipRole> getRoles() {
 		return roles;
 	}
-	public void setRoles(ArrayList<RelationshipRole> roles) {
+	public void setRoles(List<RelationshipRole> roles) {
 		this.roles = roles;
 	}
 	public void accept(DataModelVisitor visitor) {

@@ -18,10 +18,10 @@ import java.util.*;
 /**
  * @author Franco Giacosa
  */
-public class DataModelFacade {
+public final class DataModelFacade {
   
   private DataModelFactory dataModelFactory;
-  private HashMap<String,EntityDecorator> entitys;
+  private Map<String,EntityDecorator> entitys;
   private static DataModelFacade dataModelFacade;
 
   private DataModelFacade() {
@@ -40,7 +40,7 @@ public class DataModelFacade {
     return dataModelFactory;
   }
   
-  public HashMap<String,EntityDecorator> getEntitys(){
+  public Map<String,EntityDecorator> getEntitys(){
     return this.entitys;
   }
   public void addEntity(EntityDecorator entity){

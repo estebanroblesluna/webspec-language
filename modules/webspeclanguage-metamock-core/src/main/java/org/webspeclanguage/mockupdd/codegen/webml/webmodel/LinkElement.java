@@ -22,8 +22,8 @@ import java.util.*;
  */
 public interface LinkElement {
 
-  public String getId();
-  public void addLink(Link link);
-  public HashMap<String,Parameter> getInputParameters();
-  public HashMap<String,Parameter> getOutputParameters();
+  String getId();
+  void addLink(Link link);
+  Map<String, Parameter> getInputParameters();
+  Map<String,Parameter> getOutputParameters();
 }

@@ -13,8 +13,6 @@
 package org.webspeclanguage.mockupdd.codegen.webml.example;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 
 import java.util.*;
 

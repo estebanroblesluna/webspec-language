@@ -27,7 +27,7 @@ public class Link implements WebModelElement{
 	private Boolean automaticCoupling = true;
 	private LinkElement from;
 	private LinkElement to;
-	private ArrayList<ParameterCoupling> parameterCoupling = new ArrayList<ParameterCoupling>();
+	private List<ParameterCoupling> parameterCoupling = new ArrayList<ParameterCoupling>();
 
 	public Link(String id, String name, Boolean automaticCoupling, LinkElement from, LinkElement to) {
 		super();
@@ -40,10 +40,10 @@ public class Link implements WebModelElement{
 	public void addParameterCoupling(ParameterCoupling parameterCoupling){
 	  this.getParameterCoupling().add(parameterCoupling);
 	}
-	public ArrayList<ParameterCoupling> getParameterCoupling() {
+	public List<ParameterCoupling> getParameterCoupling() {
 		return parameterCoupling;
 	}
-	public void setParameterCoupling(ArrayList<ParameterCoupling> parameterCoupling) {
+	public void setParameterCoupling(List<ParameterCoupling> parameterCoupling) {
 		this.parameterCoupling = parameterCoupling;
 	}
 	public String getId() {

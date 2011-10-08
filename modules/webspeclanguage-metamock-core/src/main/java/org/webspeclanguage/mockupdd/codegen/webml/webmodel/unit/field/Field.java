@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field;
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Type;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 import java.util.*;
@@ -50,6 +50,6 @@ public abstract class Field {
 		this.type = type;
 	}
   public abstract void accept(WebModelVisitor visitor);
-  public abstract ArrayList<Parameter> getInputParameters();
-  public abstract ArrayList<Parameter> getOutputParameters();
+  public abstract List<Parameter> getInputParameters();
+  public abstract List<Parameter> getOutputParameters();
 }
