@@ -13,32 +13,20 @@
 
 package org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration;
 import java.io.File;
-import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
-import org.webspeclanguage.mockupdd.codegen.webml.example.WebMLDataModelExample;
-import org.webspeclanguage.mockupdd.codegen.webml.example.WebMLWebModelExample;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModel;
-import org.webspeclanguage.mockupdd.codegen.webml.example.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 
 
@@ -48,7 +36,8 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 public class MainXmlGenerator {
   private String projectName;
   private String versionFolder;
-  
+  private Logger logger = Logger.getLogger(CreatorWrapper.class);
+
   public void mapModels(DataModel dataModel,WebModel webModel){
     this.createVersionFolder();
     
@@ -112,7 +101,7 @@ public class MainXmlGenerator {
     }
     catch (Exception spe)
     {
-        System.out.print(spe.toString());
+      this.getLogger().info(spe.toString());
        return "unknow Version";
     }
         
@@ -132,5 +121,13 @@ public class MainXmlGenerator {
   
   private void setVersionFolder(String versionFolder) {
     this.versionFolder = versionFolder;
+  }
+  
+  public Logger getLogger() {
+    return logger;
+  }
+  
+  public void setLogger(Logger logger) {
+    this.logger = logger;
   }
 }

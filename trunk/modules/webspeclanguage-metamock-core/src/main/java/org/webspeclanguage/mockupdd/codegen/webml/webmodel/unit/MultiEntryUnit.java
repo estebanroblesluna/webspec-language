@@ -16,7 +16,6 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.AttributeDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
@@ -30,7 +29,7 @@ public class MultiEntryUnit extends ContentUnit {
 
   private Map<String,Field> fields = new HashMap<String,Field>();
   private String minLength = "1";
-  private HashMap<String,Parameter> defaultOutputParameters = new HashMap<String,Parameter>();
+  private Map<String,Parameter> defaultOutputParameters = new HashMap<String,Parameter>();
 	public MultiEntryUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
 		WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
@@ -39,8 +38,6 @@ public class MultiEntryUnit extends ContentUnit {
     DefaultUnitParameter defaultUnitParameter2 = webFactory.createDefaultUnitParameter("key","Shown Objects");
 		defaultOutputParameters.put(defaultUnitParameter1.getName(),defaultUnitParameter1);
 		defaultOutputParameters.put(defaultUnitParameter2.getName(),defaultUnitParameter2);
-		
-		// TODO Auto-generated constructor stub
 	}
 	public void addField(Field field){
 	  this.getFields().put(field.getId(), field);
@@ -60,7 +57,7 @@ public class MultiEntryUnit extends ContentUnit {
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
-  public HashMap<String,Parameter> getDefaultOutputParameters() {
+  public Map<String,Parameter> getDefaultOutputParameters() {
     return defaultOutputParameters;
   }
   public void createFields(){
@@ -76,17 +73,17 @@ public class MultiEntryUnit extends ContentUnit {
       }
     }
   }
-  public void setDefaultOutputParameters(HashMap<String,Parameter> defaultOutputParameters) {
+  public void setDefaultOutputParameters(Map<String,Parameter> defaultOutputParameters) {
     this.defaultOutputParameters = defaultOutputParameters;
   }
-  public HashMap<String,Parameter> getInputParameters() {
-    HashMap<String,Parameter> inputParameters = new HashMap<String,Parameter>();
+  public Map<String,Parameter> getInputParameters() {
+    Map<String,Parameter> inputParameters = new HashMap<String,Parameter>();
     
     Iterator<String> iteratorFields = this.getFields().keySet().iterator();
     
     while(iteratorFields.hasNext()){
       String key = (String)iteratorFields.next();
-      ArrayList<Parameter> parameterList = this.getFields().get(key).getInputParameters();
+      List<Parameter> parameterList = this.getFields().get(key).getInputParameters();
       
       Iterator<Parameter> parameterIterator = parameterList.iterator();
       while(parameterIterator.hasNext()){
@@ -96,14 +93,14 @@ public class MultiEntryUnit extends ContentUnit {
     }
     return inputParameters; 
   }
-  public HashMap<String,Parameter> getOutputParameters() {
-    HashMap<String,Parameter> outputParameters = new HashMap<String,Parameter>();
+  public Map<String,Parameter> getOutputParameters() {
+    Map<String,Parameter> outputParameters = new HashMap<String,Parameter>();
     
     Iterator<String> iteratorFields = this.getFields().keySet().iterator();
     
     while(iteratorFields.hasNext()){
       String key = (String)iteratorFields.next();
-      ArrayList<Parameter> parameterList = this.getFields().get(key).getOutputParameters();
+      List<Parameter> parameterList = this.getFields().get(key).getOutputParameters();
       
       Iterator<Parameter> parameterIterator = parameterList.iterator();
       while(parameterIterator.hasNext()){

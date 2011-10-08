@@ -33,7 +33,9 @@ public class DataModelWriter extends DataModelConcreteVisitor {
   
   public DataModelWriter(String rootPath){
     this.rootPath = rootPath;
-    String folderPath = this.getRootPath() + "DataModel" + "/";
+    String folderPath;
+    folderPath = this.getRootPath();
+    folderPath += "DataModel" + "/";
     File newFolder= new File(folderPath); 
     newFolder.mkdir();
     this.file = new CreatorWrapper(folderPath, "Properties.wr");
@@ -45,29 +47,27 @@ public class DataModelWriter extends DataModelConcreteVisitor {
     return file;
   }
   public void visit(DataModel dataModel) {
-    this.beginDataModel(dataModel);
+    this.beginDataModel();
     super.visit(dataModel);
-    this.endDataModel(dataModel);
+    this.endDataModel();
   }
   public void visit(Entity entity) {
     this.beginEntity(entity);
     super.visit(entity);
-    this.endEntity(entity);
+    this.endEntity();
   }
   public void visit(Attribute attribute) {
     this.beginAttribute(attribute);
     super.visit(attribute);
-    this.endAttribute(attribute);
   }
   public void visit(Relationship relationship) {
     this.beginRelationship(relationship);
     super.visit(relationship);
-    this.endRelationship(relationship);
+    this.endRelationship();
   }
   public void visit(RelationshipRole relationshipRole) {
     this.beginRelationshipRole(relationshipRole);
     super.visit(relationshipRole);
-    this.endRelationshipRole(relationshipRole);
   }
   public void beginRelationshipRole(RelationshipRole relationshipRole){
     this.getFile().appendString("<RelationshipRole id=\"");
@@ -78,9 +78,6 @@ public class DataModelWriter extends DataModelConcreteVisitor {
     this.getFile().appendString(relationshipRole.getMaxCard());
     this.getFile().appendString("\"/>");
     this.getFile().newLine();
-  }
-  public void endRelationshipRole(RelationshipRole relationshipRole){
-
   }
   public void beginRelationship(Relationship relationship){
     this.getFile().appendString("<Relationship id=\"");
@@ -94,7 +91,7 @@ public class DataModelWriter extends DataModelConcreteVisitor {
     this.getFile().appendString("\">");
     this.getFile().newLine();
   }
-  public void endRelationship(Relationship relationship){
+  public void endRelationship(){
     this.getFile().appendString("</Relationship>");
     this.getFile().newLine();
   }
@@ -110,9 +107,6 @@ public class DataModelWriter extends DataModelConcreteVisitor {
     this.getFile().appendString("\"/>");
     this.getFile().newLine();
   }
-  public void endAttribute(Attribute attribute){
-  }
-  
   public void beginEntity(Entity entity){
     this.getFile().appendString("<Entity id=\"");
     this.getFile().appendString(entity.getId());
@@ -124,16 +118,15 @@ public class DataModelWriter extends DataModelConcreteVisitor {
     this.getFile().appendString(">");
     this.getFile().newLine();
   }
-  public void endEntity(Entity entity){
+  public void endEntity(){
     this.getFile().appendString("</Entity>");
     this.getFile().newLine();
   }
-  public void beginDataModel(DataModel dataModel){
+  public void beginDataModel(){
     this.getFile().appendString("<DataModel>");
     this.getFile().newLine();
-    
   }
-  public void endDataModel(DataModel dataModel){
+  public void endDataModel(){
     this.getFile().appendString("</DataModel>");
     this.getFile().newLine();
     this.getFile().closeFile();

@@ -11,10 +11,10 @@
  * limitations under the License.
  */
 package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field;
+
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Type;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
-
 import java.util.*;
 
 /**
@@ -28,7 +28,6 @@ public class NormalField extends Field{
 	
   public NormalField(String id, String name, Type type) {
     super(id, name, type);
-
   }
 	public Boolean getPreloaded() {
 		return preloaded;
@@ -46,18 +45,19 @@ public class NormalField extends Field{
 	  visitor.visit(this);
 	}
   @Override
-  public ArrayList<Parameter> getInputParameters() {
-    ArrayList<Parameter> parameters = new ArrayList<Parameter>();
+  public List<Parameter> getInputParameters() {
+    List<Parameter> parameters = new ArrayList<Parameter>();
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-
-    if(preloaded) parameters.add(webFactory.createNormalFieldParameter(this));
     
+    if(preloaded){
+      parameters.add(webFactory.createNormalFieldParameter(this));
+    }
     return parameters;  
   }
   @Override
-  public ArrayList<Parameter> getOutputParameters() {
-    ArrayList<Parameter> parameters = new ArrayList<Parameter>();
+  public List<Parameter> getOutputParameters() {
+    List<Parameter> parameters = new ArrayList<Parameter>();
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
 

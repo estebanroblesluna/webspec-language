@@ -24,8 +24,8 @@ public class SiteView implements WebModelElement{
 	private String name;
 	private Page homePage;
 	private Boolean homeSiteView = false;
-	private HashMap<String,Page> pages = new HashMap<String,Page>();
-	private HashMap<String,OperationUnit> operationUnits = new HashMap<String,OperationUnit>();
+	private Map<String,Page> pages = new HashMap<String,Page>();
+	private Map<String,OperationUnit> operationUnits = new HashMap<String,OperationUnit>();
 	
 	public SiteView(String id, String name, Boolean homeSiteView){
 		this.id = id;
@@ -56,10 +56,10 @@ public class SiteView implements WebModelElement{
 	public void setHomePage(Page homePage) {
 		this.homePage = homePage;
 	}
-	public HashMap<String, Page> getPages() {
+	public Map<String, Page> getPages() {
 		return pages;
 	}
-	public void setPages(HashMap<String, Page> pages) {
+	public void setPages(Map<String, Page> pages) {
 		this.pages = pages;
 	}
 	public void addPage(Page newPage){
@@ -68,10 +68,10 @@ public class SiteView implements WebModelElement{
 	public void addOperationUnit(OperationUnit newOperationUnit){
 		this.getOperationUnits().put(newOperationUnit.getId(), newOperationUnit);
 	}
-	public HashMap<String, OperationUnit> getOperationUnits() {
+	public Map<String, OperationUnit> getOperationUnits() {
 		return operationUnits;
 	}
-	public void setOperationUnits(HashMap<String, OperationUnit> operationUnits) {
+	public void setOperationUnits(Map<String, OperationUnit> operationUnits) {
 		this.operationUnits = operationUnits;
 	}
 	public Boolean getHomeSiteView() {

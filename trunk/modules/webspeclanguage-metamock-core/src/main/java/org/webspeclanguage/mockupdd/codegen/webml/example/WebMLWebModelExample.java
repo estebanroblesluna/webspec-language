@@ -54,12 +54,12 @@ public class WebMLWebModelExample {
     
 		EntryUnit eu1 = webModelFactory.createEntryUnit("entryunit1", entD1);
     eu1.addField(webModelFactory.createSelectionField("selectionfieldinteger", integerType));
-    HashMap<String,Parameter> outputparameteres = eu1.getOutputParameters();
+    Map<String,Parameter> outputparameteres = eu1.getOutputParameters();
     Parameter outputparam = outputparameteres.get("email");
     
     MultiEntryUnit meu1 = webModelFactory.createMultiEntryUnit("multientryunit1", entD1);
     meu1.addField(webModelFactory.createSelectionField("selectionfieldinteger2", integerType));
-    HashMap<String,Parameter> inputparameters = meu1.getInputParameters();
+    Map<String,Parameter> inputparameters = meu1.getInputParameters();
     Parameter inputParam = inputparameters.get("email");
     
     //Content Units added

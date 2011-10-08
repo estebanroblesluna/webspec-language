@@ -13,26 +13,31 @@
 
 package org.webspeclanguage.mockupdd.codegen.webml.datamodel;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-
-
+import java.util.*;
 /**
  * @author Franco Giacosa
  */
 public interface DataModelFactory {
   
-  public abstract Attribute createAttribute(String name, Type type, Boolean key);
-  public abstract DataModel createDataModel(Map<String, Entity> entitys,
+  Attribute createAttribute(String name, Type type, Boolean key);
+  
+  DataModel createDataModel(Map<String, Entity> entitys,
       Map<String, Relationship> relationships);
-  public abstract Entity createEntity(String name, String duration, Map<String, Attribute> attributes);
-  public abstract Relationship createRelationship(String name, Entity sourceEntity,
-          Entity targetEntity, ArrayList<RelationshipRole> roles);
-  public abstract RelationshipRole createRelationshipRole(String name, String maxCard);
-  public abstract Type createType(String type);
-  public abstract EntityDecorator createEntityDecorator(Entity entity);
-  public abstract AttributeDecorator createAttributeDecorator(Attribute attribute);
-  public abstract RelationshipDecorator createRelationshipDecorator(Relationship relationship);
-  public abstract DataModelIds getDataModelIds();
+  
+  Entity createEntity(String name, String duration, Map<String, Attribute> attributes);
+  
+  Relationship createRelationship(String name, Entity sourceEntity,
+          Entity targetEntity, List<RelationshipRole> roles);
+  
+  RelationshipRole createRelationshipRole(String name, String maxCard);
+  
+  Type createType(String type);
+  
+  EntityDecorator createEntityDecorator(Entity entity);
+  
+  AttributeDecorator createAttributeDecorator(Attribute attribute);
+  
+  RelationshipDecorator createRelationshipDecorator(Relationship relationship);
+  
+  DataModelIds getDataModelIds();
 }

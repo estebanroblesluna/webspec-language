@@ -15,7 +15,6 @@ package org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.field.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
@@ -32,7 +31,6 @@ public class EntryUnit extends ContentUnit {
 	
 	public EntryUnit(String id, String name, EntityDecorator entity) {
 		super(id, name, entity);
-		// TODO Auto-generated constructor stub
 	}
 	public EntryUnit(String id, String name){
 	  super(id,name,null);
@@ -61,14 +59,14 @@ public class EntryUnit extends ContentUnit {
       }
     }
 	}
-  public HashMap<String,Parameter> getInputParameters() {
-    HashMap<String,Parameter> inputParameters = new HashMap<String,Parameter>();
+  public Map<String,Parameter> getInputParameters() {
+    Map<String,Parameter> inputParameters = new HashMap<String,Parameter>();
     
     Iterator<String> iteratorFields = this.getFields().keySet().iterator();
     
     while(iteratorFields.hasNext()){
       String key = (String)iteratorFields.next();
-      ArrayList<Parameter> parameterList = this.getFields().get(key).getInputParameters();
+      List<Parameter> parameterList = this.getFields().get(key).getInputParameters();
       
       Iterator<Parameter> parameterIterator = parameterList.iterator();
       while(parameterIterator.hasNext()){
@@ -78,14 +76,14 @@ public class EntryUnit extends ContentUnit {
     }
     return inputParameters;  
   }
-  public HashMap<String,Parameter> getOutputParameters() {
-    HashMap<String,Parameter> outputParameters = new HashMap<String,Parameter>();
+  public Map<String,Parameter> getOutputParameters() {
+    Map<String,Parameter> outputParameters = new HashMap<String,Parameter>();
     
     Iterator<String> iteratorFields = this.getFields().keySet().iterator();
     
     while(iteratorFields.hasNext()){
       String key = (String)iteratorFields.next();
-      ArrayList<Parameter> parameterList = this.getFields().get(key).getOutputParameters();
+      List<Parameter> parameterList = this.getFields().get(key).getOutputParameters();
       
       Iterator<Parameter> parameterIterator = parameterList.iterator();
       while(parameterIterator.hasNext()){

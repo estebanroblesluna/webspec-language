@@ -17,7 +17,6 @@ import java.util.*;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactoryImpl;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.KeyConditionParameter;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.Parameter;
@@ -31,7 +30,6 @@ public class DeleteUnit extends OperationUnit {
 	public DeleteUnit(String id, String name, EntityDecorator entity, Selector selector) {
 		super(id, name, entity);
 		this.selector = selector;
-		// TODO Auto-generated constructor stub
 	}
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
@@ -44,8 +42,8 @@ public class DeleteUnit extends OperationUnit {
   public void setSelector(Selector selector) {
     this.selector = selector;
   }
-  public HashMap<String,Parameter> getInputParameters() {
-    HashMap<String,Parameter> inputParameters = new HashMap<String,Parameter>();
+  public Map<String,Parameter> getInputParameters() {
+    Map<String,Parameter> inputParameters = new HashMap<String,Parameter>();
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     Iterator<String> iteratorK = this.getSelector().getKeyConditions().keySet().iterator();
@@ -56,7 +54,7 @@ public class DeleteUnit extends OperationUnit {
     }
     return inputParameters; 
   }
-  public HashMap<String,Parameter> getOutputParameters() {
+  public Map<String,Parameter> getOutputParameters() {
     return new HashMap<String,Parameter>();
   }
 

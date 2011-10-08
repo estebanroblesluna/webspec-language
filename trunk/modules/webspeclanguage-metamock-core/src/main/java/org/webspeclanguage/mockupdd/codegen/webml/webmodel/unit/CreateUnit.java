@@ -29,10 +29,10 @@ public class CreateUnit extends OperationUnit {
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
-  public HashMap<String,Parameter> getInputParameters() {
+  public Map<String,Parameter> getInputParameters() {
       return this.getEntity().getParametersPool();
   }
-  public HashMap<String,Parameter> getOutputParameters() {
+  public Map<String,Parameter> getOutputParameters() {
       return this.getEntity().getAttributesParametersPool();
   }
 }

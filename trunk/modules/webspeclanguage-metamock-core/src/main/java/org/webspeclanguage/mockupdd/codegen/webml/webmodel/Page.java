@@ -28,8 +28,8 @@ public class Page implements WebModelElement, LinkElement{
 	private Boolean home = false;
 	private Boolean landmark = false;
 	
-	private HashMap<String,Link> links = new HashMap<String,Link>();
-	private HashMap<String,ContentUnit> contentUnits = new HashMap<String,ContentUnit>();
+	private Map<String,Link> links = new HashMap<String,Link>();
+	private Map<String,ContentUnit> contentUnits = new HashMap<String,ContentUnit>();
 	
 	public Page(String id, String name, Boolean home, Boolean landmark){
 		this.id = id;
@@ -49,16 +49,16 @@ public class Page implements WebModelElement, LinkElement{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public HashMap<String, Link> getLinks() {
+	public Map<String, Link> getLinks() {
 		return links;
 	}
-	public void setLinks(HashMap<String, Link> links) {
+	public void setLinks(Map<String, Link> links) {
 		this.links = links;
 	}
-	public HashMap<String, ContentUnit> getContentUnits() {
+	public Map<String, ContentUnit> getContentUnits() {
 		return contentUnits;
 	}
-	public void setContentUnits(HashMap<String, ContentUnit> contentUnits) {
+	public void setContentUnits(Map<String, ContentUnit> contentUnits) {
 		this.contentUnits = contentUnits;
 	}
 	public void addContentUnit(ContentUnit newUnit){
@@ -91,10 +91,10 @@ public class Page implements WebModelElement, LinkElement{
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}
-  public HashMap<String,Parameter> getInputParameters() {
+  public Map<String,Parameter> getInputParameters() {
     return new HashMap<String,Parameter>();
   }
-  public HashMap<String,Parameter> getOutputParameters() {
+  public Map<String,Parameter> getOutputParameters() {
     return new HashMap<String,Parameter>();
   }
 

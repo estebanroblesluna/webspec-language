@@ -19,7 +19,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
  */
 public class AttributeParameter extends Parameter {
 
-	public AttributeDecorator attribute;
+	private AttributeDecorator attribute;
 
 	public AttributeParameter(String id, AttributeDecorator attribute) {
 		super(id,attribute.getName());
