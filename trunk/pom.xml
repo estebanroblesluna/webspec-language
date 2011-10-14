@@ -83,12 +83,23 @@
       	<classifier>jdk15</classifier>
       	<scope>compile</scope>
       </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>3.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-scratchpad</artifactId>
+        <version>3.7</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
   <modules>
     <module>modules/webspeclanguage-core</module>
     <module>modules/webspeclanguage-simulation</module>
+    <module>modules/webspeclanguage-user-stories</module>
     <module>modules/webspeclanguage-test</module>
     <module>modules/webspeclanguage-test-selenium</module>
     <module>modules/webspeclanguage-test-watir</module>
