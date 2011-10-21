@@ -133,7 +133,7 @@ public class SuiDefaultConfig {
                       Arrays.asList(this.getFactory().createTagParameter("type1"), this.getFactory().createTagParameter("type2")),
                       TriggerWidget.class),
               this.getFactory().createTag("Query", 
-                      Arrays.asList(this.getFactory().createTagParameter("queryDescription")),
+                      Arrays.asList(this.getFactory().createTagParameter("type"), this.getFactory().createTagParameter("queryDescription")),
                       CompositeWidget.class)
     ));
   }
