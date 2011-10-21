@@ -74,7 +74,7 @@ public class TagApplicationImpl implements TagApplication {
 
   private void checkParameterWellFormedness(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
     for (TagParameterValue value : parameterValues) {
-      if (!value.getValue().matches("[a-zA-Z0-9]+(:[a-zA-Z0-9]+)?")) {
+      if (!value.getValue().matches("[a-zA-Z0-9]+(:[a-zA-Z0-9]+)?(\\.[a-zA-Z0-9]+)?")) {
         throw new TagApplicationException(widget, tag, parameterValues, "The tag " + tag.getName() + " has an invalid parameter value: \"" + value.getValue() + "\"");
       }
     }
