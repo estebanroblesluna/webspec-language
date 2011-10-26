@@ -13,8 +13,6 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.webspeclanguage.mockupdd.sui.model.Page;
@@ -27,28 +25,13 @@ import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
  * 
  * @author Jose Matias Rivero
  */
-public class NavigationSpec {
+public class NavigationSpec extends WidgetActionsSpec{
 
-  private TriggerWidget from;
   private Page to;
-  private List<ObjectTransferSpec> objectTransfers;
-  private List<ActionSpec> actions;
 
-  public NavigationSpec(TriggerWidget from, Page to) {
-    super();
-    this.setFrom(from);
+  public NavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions) {
+    super(trigger,actions);
     this.setTo(to);
-    this.setObjectTransfers(new ArrayList<ObjectTransferSpec>());
-    this.setActions(new ArrayList<ActionSpec>());
-  }
-
-  public TriggerWidget getFrom() {
-    return from;
-  }
-
-  
-  private void setFrom(TriggerWidget from) {
-    this.from = from;
   }
 
   public Page getTo() {
@@ -57,30 +40,6 @@ public class NavigationSpec {
 
   private void setTo(Page to) {
     this.to = to;
-  }
-
-  public List<ObjectTransferSpec> getObjectTransfers() {
-    return Collections.unmodifiableList(objectTransfers);
-  }
-
-  private void setObjectTransfers(List<ObjectTransferSpec> objectTransfers) {
-    this.objectTransfers = objectTransfers;
-  }
-
-  public void addObjectTransfer(ObjectTransferSpec objectTransfer) {
-    this.objectTransfers.add(objectTransfer);
-  }
-
-  public List<ActionSpec> getActions() {
-    return Collections.unmodifiableList(actions);
-  }
-
-  private void setActions(List<ActionSpec> actions) {
-    this.actions = actions;
-  }
-  
-  public void addActionSpec(ActionSpec actionSpec) {
-    this.actions.add(actionSpec);
   }
 
 }

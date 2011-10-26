@@ -13,39 +13,31 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.sui.model.Widget;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+
 
 /**
- * Represents an individual object transfer from one {@link Page} to another in the context of a 
- * {@link NavigationSpec}
- * 
- * @author Jose Matias Rivero
+ * * Represents a object delete action. The object to be deleted will be taken from an already mapped
+ * {@link CompositeWidget}, in case of a Repetition, it should have a {@link AttributeMappingSpec} Selectable Widget . This mapped is represented by a {@link ClassMappingSpec}.
+ * @author Franco Giacosa
  */
-public class ObjectTransferSpec extends ActionSpec{
+public class DeleteActionSpec extends ActionSpec{
 
-  private Widget from;
-  private Widget to;
+  private ClassMappingSpec spec;
+  
 
-  public ObjectTransferSpec(Widget fom, Widget to) {
+  
+  public DeleteActionSpec(ClassMappingSpec spec) {
     super();
-    this.setFrom(fom);
-    this.setTo(to);
+    this.setSpec(spec);
   }
 
-  public Widget getFrom() {
-    return from;
+  public ClassMappingSpec getSpec() {
+    return spec;
   }
 
-  private void setFrom(Widget from) {
-    this.from = from;
+  private void setSpec(ClassMappingSpec spec) {
+    this.spec = spec;
   }
-
-  public Widget getTo() {
-    return to;
-  }
-
-  private void setTo(Widget to) {
-    this.to = to;
-  }
-
+  
 }
