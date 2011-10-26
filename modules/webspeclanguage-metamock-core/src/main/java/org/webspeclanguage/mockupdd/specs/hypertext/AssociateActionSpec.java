@@ -13,39 +13,36 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.sui.model.Widget;
+import org.webspeclanguage.mockupdd.specs.data.*;
 
 /**
- * Represents an individual object transfer from one {@link Page} to another in the context of a 
- * {@link NavigationSpec}
- * 
- * @author Jose Matias Rivero
+ * Represents an Association between a {@link ClassSpec} and another {@link ClassSpec}
+ * @author Franco Giacosa
  */
-public class ObjectTransferSpec extends ActionSpec{
+public class AssociateActionSpec extends ActionSpec {
+  
+  private ClassSpec type1;
+  private ClassSpec type2;
 
-  private Widget from;
-  private Widget to;
-
-  public ObjectTransferSpec(Widget fom, Widget to) {
+  public AssociateActionSpec(ClassSpec type1, ClassSpec type2) {
     super();
-    this.setFrom(fom);
-    this.setTo(to);
+    this.type1 = type1;
+    this.type2 = type2;
   }
-
-  public Widget getFrom() {
-    return from;
+  
+  public ClassSpec getType1() {
+    return type1;
   }
-
-  private void setFrom(Widget from) {
-    this.from = from;
+  
+  public void setType1(ClassSpec type1) {
+    this.type1 = type1;
   }
-
-  public Widget getTo() {
-    return to;
+  
+  public ClassSpec getType2() {
+    return type2;
   }
-
-  private void setTo(Widget to) {
-    this.to = to;
+  
+  public void setType2(ClassSpec type2) {
+    this.type2 = type2;
   }
-
 }
