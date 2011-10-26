@@ -14,7 +14,6 @@
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
 import java.util.List;
-import org.webspeclanguage.mockupdd.specs.data.*;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 
@@ -28,9 +27,9 @@ import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 public class NavigationSpec extends WidgetActionsSpec{
 
   private Page to;
-  private List<ClassSpec> transfers;
+  private List<ObjectTransferSpec> transfers;
   
-  public NavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions, List<ClassSpec> transfers) {
+  public NavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions, List<ObjectTransferSpec> transfers) {
     super(trigger,actions);
     this.setTo(to);
     this.setTransfers(transfers);
@@ -44,15 +43,15 @@ public class NavigationSpec extends WidgetActionsSpec{
     this.to = to;
   }
 
-  public List<ClassSpec> getTransfers(){
+  public List<ObjectTransferSpec> getTransfers(){
     return transfers;
   }
   
-  public void setTransfers(List<ClassSpec> transfers){
+  public void setTransfers(List<ObjectTransferSpec> transfers){
     this.transfers = transfers;
   }
   
-  public void addTransfer(ClassSpec transfer){
+  public void addTransfer(ObjectTransferSpec transfer){
     this.getTransfers().add(transfer);
   }
   
