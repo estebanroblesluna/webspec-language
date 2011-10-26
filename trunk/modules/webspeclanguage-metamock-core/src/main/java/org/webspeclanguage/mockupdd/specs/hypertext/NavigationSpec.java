@@ -14,24 +14,26 @@
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
 import java.util.List;
-
+import org.webspeclanguage.mockupdd.specs.data.*;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 
 /**
  * Represents a navigation triggered by a {@link TriggerWidget} to an existing {@link Page}.
  * Before executing the navigation, a set of {@link ActionSpec} are executed; then, the navigation
- * is done carrying the objects specified by {@link ObjectTransferSpec}s
+ * is done carrying the objects specified by the transfers List
  * 
  * @author Jose Matias Rivero
  */
 public class NavigationSpec extends WidgetActionsSpec{
 
   private Page to;
-
-  public NavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions) {
+  private List<ClassSpec> transfers;
+  
+  public NavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions, List<ClassSpec> transfers) {
     super(trigger,actions);
     this.setTo(to);
+    this.setTransfers(transfers);
   }
 
   public Page getTo() {
@@ -42,4 +44,16 @@ public class NavigationSpec extends WidgetActionsSpec{
     this.to = to;
   }
 
+  public List<ClassSpec> getTransfers(){
+    return transfers;
+  }
+  
+  public void setTransfers(List<ClassSpec> transfers){
+    this.transfers = transfers;
+  }
+  
+  public void addTransfer(ClassSpec transfer){
+    this.getTransfers().add(transfer);
+  }
+  
 }
