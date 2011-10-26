@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
  * 
  * @author Jose Matias Rivero
  */
-public class SaveActionSpec {
+public class SaveActionSpec extends ActionSpec{
 
   private ClassMappingSpec spec;
 
