@@ -13,38 +13,36 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
-
 
 /**
- * Represents a Dissociation between a {@link ClassSpec} and another {@link ClassSpec} 
+ * Represents a Dissociation between a {@link ClassMappingSpec} and another {@link ClassMappingSpec} 
  * who were Associated in some point
  * @author Franco Giacosa
  */
 public class DissociateActionSpec extends ActionSpec {
 
-  private ClassSpec type1;
-  private ClassSpec type2;
+  private ClassMappingSpec type1;
+  private ClassMappingSpec type2;
   
-  public DissociateActionSpec(ClassSpec type1, ClassSpec type2) {
+  public DissociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2) {
     super();
     this.type1 = type1;
     this.type2 = type2;
   }
   
-  public ClassSpec getType1() {
+  public ClassMappingSpec getType1() {
     return type1;
   }
   
-  public void setType1(ClassSpec type1) {
+  public void setType1(ClassMappingSpec type1) {
     this.type1 = type1;
   }
   
-  public ClassSpec getType2() {
+  public ClassMappingSpec getType2() {
     return type2;
   }
   
-  public void setType2(ClassSpec type2) {
+  public void setType2(ClassMappingSpec type2) {
     this.type2 = type2;
   }
 }

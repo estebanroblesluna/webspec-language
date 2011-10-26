@@ -13,35 +13,34 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
+import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
- * Represents an Association between a {@link ClassMappingSpec} and another {@link ClassMappingSpec}
  * @author Franco Giacosa
  */
-public class AssociateActionSpec extends ActionSpec {
-  
-  private ClassMappingSpec type1;
-  private ClassMappingSpec type2;
+public class ObjectTransferSpec {
+  private Widget from;
+  private Widget to;
 
-  public AssociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2) {
+  public ObjectTransferSpec(Widget fom, Widget to) {
     super();
-    this.type1 = type1;
-    this.type2 = type2;
+    this.setFrom(fom);
+    this.setTo(to);
   }
-  
-  public ClassMappingSpec getType1() {
-    return type1;
+
+  public Widget getFrom() {
+    return from;
   }
-  
-  public void setType1(ClassMappingSpec type1) {
-    this.type1 = type1;
+
+  private void setFrom(Widget from) {
+    this.from = from;
   }
-  
-  public ClassMappingSpec getType2() {
-    return type2;
+
+  public Widget getTo() {
+    return to;
   }
-  
-  public void setType2(ClassMappingSpec type2) {
-    this.type2 = type2;
+
+  private void setTo(Widget to) {
+    this.to = to;
   }
 }
