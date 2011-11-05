@@ -19,5 +19,5 @@ package org.webspeclanguage.mockupdd.specs.data;
  * @author Jose Matias Rivero
  */
 public enum AttributeTypeSpec {
-  STRING, INTEGER, DECIMAL, TIME, DATE_TIME
+  STRING, INTEGER, DECIMAL, TIME, DATE_TIME, PASSWORD
 }
