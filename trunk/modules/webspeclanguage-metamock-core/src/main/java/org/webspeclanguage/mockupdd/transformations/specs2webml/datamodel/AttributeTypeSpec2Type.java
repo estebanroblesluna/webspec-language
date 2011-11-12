@@ -22,21 +22,29 @@ import org.webspeclanguage.mockupdd.specs.data.*;
 public class AttributeTypeSpec2Type {
  
   private AttributeTypeSpec attributeTypeSpec;
+  private Type type;
   
+  public Type getType() {
+    return type;
+  }
+  
+  public void setType(Type type) {
+    this.type = type;
+  }
+
   public AttributeTypeSpec2Type(AttributeTypeSpec attributeTypeSpec){
     this.setAttributeTypeSpec(attributeTypeSpec);
   }
 
-  public Type getType(){
+  public void transform(){
     DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
     DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();
-    
-    return dataFactory.createType(this.getAttributeTypeSpec().name());
+    this.setType(dataFactory.createType(this.getAttributeTypeSpec().name()));
   }
+  
   public AttributeTypeSpec getAttributeTypeSpec() {
     return attributeTypeSpec;
   }
-
   
   public void setAttributeTypeSpec(AttributeTypeSpec attributeTypeSpec) {
     this.attributeTypeSpec = attributeTypeSpec;

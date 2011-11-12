@@ -13,7 +13,6 @@
 
 package org.webspeclanguage.mockupdd.codegen.webml.example;
 
-import org.apache.log4j.PropertyConfigurator;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
 import org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
@@ -21,12 +20,9 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
  * @author Franco Giacosa
  */
 public class ExampleRunner {
-  
-  
 
   public static void main(String[] args) {
-    PropertyConfigurator.configure("log4j.property");
-
+        
     WebMLDataModelExample dmexample = new WebMLDataModelExample();  
     DataModel dm = dmexample.generateDataModel();
     

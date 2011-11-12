@@ -24,7 +24,7 @@ public class DataModelFactoryImpl implements DataModelFactory{
 	public DataModelFactoryImpl(DataModelIds dataModelIds) {
 	    super();
 	    this.dataModelIds = dataModelIds;
-	  }
+	}
 	public Attribute createAttribute(String name, Type type, Boolean key){
 		return new Attribute(this.getDataModelIds().getAttributeId(),name,type,key);
 	}
@@ -76,4 +76,5 @@ public class DataModelFactoryImpl implements DataModelFactory{
 	public DataModelIds getDataModelIds() {
 		return dataModelIds;
 	}
+
 }

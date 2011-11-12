@@ -26,11 +26,12 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.coupling.*;
 public class DataUnit extends ContentUnit {
 
   private Selector selector;
+  
 	public DataUnit(String id, String name, EntityDecorator entity, Selector selector) {
 		super(id, name, entity);
-		this.selector = selector;
-		// TODO Auto-generated constructor stub
+		this.setSelector(selector);
 	}
+	
 	public void accept(WebModelVisitor visitor) {
 		visitor.visit(this);
 	}

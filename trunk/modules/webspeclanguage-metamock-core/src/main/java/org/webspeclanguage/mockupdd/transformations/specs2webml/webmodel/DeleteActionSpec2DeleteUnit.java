@@ -11,33 +11,12 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.codegen.webml.webmodel;
+package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
 
 /**
  * @author Franco Giacosa
  */
-public final class WebModelFacade {
+public class DeleteActionSpec2DeleteUnit {
 
-  private WebModelFactory webModelFactory;
-  private static WebModelFacade webModelFacade;
-
-  private WebModelFacade() {
-    WebModelIds webModelIds = new WebModelIds();
-    webModelFactory = new WebModelFactoryImpl(webModelIds);
-  }
-  public static WebModelFacade getWebModelFacade() {
-    if(webModelFacade==null){
-       webModelFacade = new WebModelFacade();
-    }
-    return webModelFacade;
-  }
-
-  public WebModelFactory getWebModelFactory() {
-    return webModelFactory;
-  }
-
-
-  
- 
 }
