@@ -25,7 +25,6 @@ public interface DataModelFactory {
       Map<String, Relationship> relationships);
   
   Entity createEntity(String name, String duration, Map<String, Attribute> attributes);
-  
   Relationship createRelationship(String name, Entity sourceEntity,
           Entity targetEntity, List<RelationshipRole> roles);
   
