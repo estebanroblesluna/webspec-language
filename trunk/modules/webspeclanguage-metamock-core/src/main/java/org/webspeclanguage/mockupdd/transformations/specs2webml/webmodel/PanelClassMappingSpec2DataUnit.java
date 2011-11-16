@@ -22,22 +22,22 @@ import org.webspeclanguage.mockupdd.specs.hypertext.*;
 /**
  * @author Franco Giacosa
  */
-public class SUIPanel2DataUnit {
+public class PanelClassMappingSpec2DataUnit {
   
     private DataUnit dataUnit;
     
-    private ClassMappingSpec panel;
+    private PanelClassMappingSpec panel;
 
-    public SUIPanel2DataUnit(ClassMappingSpec panel){
+    public PanelClassMappingSpec2DataUnit(PanelClassMappingSpec panel){
       super();
       this.setPanel(panel);
     }
     
-    public ClassMappingSpec getPanel() {
+    public PanelClassMappingSpec getPanel() {
       return panel;
     }
 
-    public void setPanel(ClassMappingSpec panel) {
+    public void setPanel(PanelClassMappingSpec panel) {
       this.panel = panel;
     }
     

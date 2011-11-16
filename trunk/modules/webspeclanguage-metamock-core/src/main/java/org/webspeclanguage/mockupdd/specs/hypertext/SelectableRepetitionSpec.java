@@ -11,33 +11,12 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
-
-import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
+package org.webspeclanguage.mockupdd.specs.hypertext;
 
 
 /**
  * @author Franco Giacosa
  */
-public class SaveActionSpec2CreateUnit {
-  
-  public SaveActionSpec saveActionSpec;
-
-  public SaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec){
-    super();
-    this.setSaveActionSpec(saveActionSpec);
-  }
-  
-  public void transform(){
-    
-  }
-  public SaveActionSpec getSaveActionSpec() {
-    return saveActionSpec;
-  }
-
-  
-  public void setSaveActionSpec(SaveActionSpec saveActionSpec) {
-    this.saveActionSpec = saveActionSpec;
-  }
+public class SelectableRepetitionSpec extends RepetitionClassMappingSpec {
 
 }

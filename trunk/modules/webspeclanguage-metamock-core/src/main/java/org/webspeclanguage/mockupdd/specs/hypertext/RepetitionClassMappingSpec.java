@@ -11,12 +11,31 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
+package org.webspeclanguage.mockupdd.specs.hypertext;
+
+import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.sui.model.Repetition;
 
 
 /**
  * @author Franco Giacosa
  */
-public class SUIRepetition2IndexUnit {
+public class RepetitionClassMappingSpec extends ClassMappingSpec {
 
+  public Repetition widget;
+  
+  public RepetitionClassMappingSpec(Repetition repetition, ClassSpec classSpec) {
+    super(classSpec);
+    this.setWidget(repetition);
+  }
+
+  
+  public Repetition getWidget() {
+    return widget;
+  }
+
+  
+  public void setWidget(Repetition widget) {
+    this.widget = widget;
+  }
 }

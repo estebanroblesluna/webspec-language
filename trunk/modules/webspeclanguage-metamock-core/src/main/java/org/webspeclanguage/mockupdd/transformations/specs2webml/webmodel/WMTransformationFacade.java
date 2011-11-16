@@ -13,32 +13,27 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
-import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
-
-
 /**
  * @author Franco Giacosa
  */
-public class DeleteActionSpec2DeleteUnit {
-
-  public DeleteActionSpec deleteActionSpec;
-
+public final class WMTransformationFacade {
   
-  public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec) {
-    super();
-    this.deleteActionSpec = deleteActionSpec;
-  }
+  private WMTransformationFactory wmTransformationFactory;
+  private static WMTransformationFacade wmTransformationFacade;
 
-  public void transform(){
-    
+  private WMTransformationFacade() {
+    wmTransformationFactory = new WMTransformationFactoryImpl();
   }
-
-  public DeleteActionSpec getDeleteActionSpec() {
-    return deleteActionSpec;
+  public static WMTransformationFacade getWMTransformationFacade() {
+    if(wmTransformationFacade==null){  
+      wmTransformationFacade = new WMTransformationFacade();
+    }  
+    return wmTransformationFacade;
   }
-
   
-  public void setDeleteActionSpec(DeleteActionSpec deleteActionSpec) {
-    this.deleteActionSpec = deleteActionSpec;
+  public WMTransformationFactory getWMTransformationFactory() {
+    return wmTransformationFactory;
   }
+  
+
 }
