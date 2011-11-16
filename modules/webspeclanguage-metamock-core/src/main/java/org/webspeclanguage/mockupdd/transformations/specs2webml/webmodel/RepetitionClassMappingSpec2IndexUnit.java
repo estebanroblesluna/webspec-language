@@ -13,10 +13,33 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
+
 
 /**
  * @author Franco Giacosa
  */
-public class SUISelectableRepetition2MultiChoiceIndexUnit {
+public class RepetitionClassMappingSpec2IndexUnit {
+  
+  private RepetitionClassMappingSpec repetition;
+  
+
+  public RepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetition){
+    super();
+    this.setRepetition(repetition);
+  }
+
+  public void transform(){
+    
+  }
+  public RepetitionClassMappingSpec getRepetition() {
+    return repetition;
+  }
+
+  
+  public void setRepetition(RepetitionClassMappingSpec repetition) {
+    this.repetition = repetition;
+  }
 
 }

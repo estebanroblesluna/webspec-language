@@ -13,32 +13,34 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
-import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
 
 
 /**
  * @author Franco Giacosa
  */
-public class DeleteActionSpec2DeleteUnit {
-
-  public DeleteActionSpec deleteActionSpec;
+public class InputPanelSpec2EntryUnit {
+  
+  public InputPanelSpec inputPanelSpec;
 
   
-  public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec) {
+  public InputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec) {
     super();
-    this.deleteActionSpec = deleteActionSpec;
+    this.setInputPanelSpec(inputPanelSpec);
   }
 
   public void transform(){
     
   }
 
-  public DeleteActionSpec getDeleteActionSpec() {
-    return deleteActionSpec;
+  public InputPanelSpec getInputPanelSpec() {
+    return inputPanelSpec;
   }
 
   
-  public void setDeleteActionSpec(DeleteActionSpec deleteActionSpec) {
-    this.deleteActionSpec = deleteActionSpec;
+  public void setInputPanelSpec(InputPanelSpec inputPanelSpec) {
+    this.inputPanelSpec = inputPanelSpec;
   }
+
+  
 }

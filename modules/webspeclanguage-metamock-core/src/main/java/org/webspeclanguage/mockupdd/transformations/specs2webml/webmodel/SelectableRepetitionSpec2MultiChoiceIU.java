@@ -13,32 +13,40 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
-import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
 
 
 /**
  * @author Franco Giacosa
  */
-public class DeleteActionSpec2DeleteUnit {
+public class SelectableRepetitionSpec2MultiChoiceIU {
 
-  public DeleteActionSpec deleteActionSpec;
+  public SelectableRepetitionSpec selectableRepetitionSpec;
 
   
-  public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec) {
+  public SelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec) {
     super();
-    this.deleteActionSpec = deleteActionSpec;
+    this.setSelectableRepetitionSpec(selectableRepetitionSpec);
   }
 
-  public void transform(){
+  
+  public SelectableRepetitionSpec getSelectableRepetitionSpec() {
+    return selectableRepetitionSpec;
+  }
+
+  
+  public void setSelectableRepetitionSpec(SelectableRepetitionSpec selectableRepetitionSpec) {
+    this.selectableRepetitionSpec = selectableRepetitionSpec;
+  }
+
+  public void tranform(){
     
   }
 
-  public DeleteActionSpec getDeleteActionSpec() {
-    return deleteActionSpec;
+
+  public void transform() {
   }
 
-  
-  public void setDeleteActionSpec(DeleteActionSpec deleteActionSpec) {
-    this.deleteActionSpec = deleteActionSpec;
-  }
+
+
 }

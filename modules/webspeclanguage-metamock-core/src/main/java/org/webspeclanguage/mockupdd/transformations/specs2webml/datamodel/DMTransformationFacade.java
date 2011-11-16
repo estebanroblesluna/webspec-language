@@ -25,7 +25,7 @@ public final class DMTransformationFacade {
   private DMTransformationFacade() {
     dmTransformationFactory = new DMTransformationFactoryImpl();
   }
-  public static DMTransformationFacade getWebModelFacade() {
+  public static DMTransformationFacade getDMTransformationFacade() {
     if(dmTransformationFacade==null){  
       dmTransformationFacade = new DMTransformationFacade();
     }  

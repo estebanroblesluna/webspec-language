@@ -11,34 +11,31 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
+package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
+import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.sui.model.Panel;
 
 
 /**
  * @author Franco Giacosa
  */
-public class DeleteActionSpec2DeleteUnit {
+public class PanelClassMappingSpec extends ClassMappingSpec {
 
-  public DeleteActionSpec deleteActionSpec;
-
+  public Panel widget;
   
-  public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec) {
-    super();
-    this.deleteActionSpec = deleteActionSpec;
-  }
-
-  public void transform(){
-    
-  }
-
-  public DeleteActionSpec getDeleteActionSpec() {
-    return deleteActionSpec;
+  public PanelClassMappingSpec(Panel panel, ClassSpec classSpec) {
+    super(classSpec);
+    this.setWidget(panel);
   }
 
   
-  public void setDeleteActionSpec(DeleteActionSpec deleteActionSpec) {
-    this.deleteActionSpec = deleteActionSpec;
+  public Panel getWidget() {
+    return widget;
+  }
+
+  
+  public void setWidget(Panel widget) {
+    this.widget = widget;
   }
 }

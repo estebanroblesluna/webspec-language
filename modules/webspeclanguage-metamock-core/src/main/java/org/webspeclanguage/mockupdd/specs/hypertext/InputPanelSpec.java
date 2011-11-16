@@ -11,12 +11,12 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
+package org.webspeclanguage.mockupdd.specs.hypertext;
 
 
 /**
  * @author Franco Giacosa
  */
-public class SUIInputPanel2EntryUnit {
+public class InputPanelSpec extends PanelClassMappingSpec {
 
 }

@@ -13,8 +13,6 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
-import org.webspeclanguage.mockupdd.sui.model.*;
 
 
 /**
@@ -44,6 +42,9 @@ public class SUIPage2Page {
     
     public void setWebmlPage(org.webspeclanguage.mockupdd.codegen.webml.webmodel.Page webmlPage) {
       this.webmlPage = webmlPage;
+    }
+
+    public void transform() {
     }
     
 }

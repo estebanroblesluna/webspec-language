@@ -29,23 +29,13 @@ import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
  */
 public class ClassMappingSpec extends ActionSpec {
 
-  private CompositeWidget widget;
   private ClassSpec classSpec;
   private List<AttributeMappingSpec> attributeMappings;
 
-  public ClassMappingSpec(CompositeWidget widgetSource, ClassSpec classSpec) {
+  public ClassMappingSpec(ClassSpec classSpec) {
     super();
-    this.setWidgetSource(widgetSource);
     this.setClassSpec(classSpec);
     this.setAttributeMappings(new ArrayList<AttributeMappingSpec>());
-  }
-
-  public CompositeWidget getWidgetSource() {
-    return widget;
-  }
-
-  private void setWidgetSource(CompositeWidget widgetSource) {
-    this.widget = widgetSource;
   }
 
   public ClassSpec getClassSpec() {
