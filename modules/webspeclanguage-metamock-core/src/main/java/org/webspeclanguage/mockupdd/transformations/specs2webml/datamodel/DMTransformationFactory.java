@@ -14,6 +14,8 @@
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
 import java.util.*;
+
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.specs.data.*;
 
 
@@ -29,4 +31,5 @@ public interface DMTransformationFactory {
       AttributeSpec2Attribute transformAttributeSpec2Attribute(AttributeSpec attributeSpec);
       AttributeTypeSpec2Type transformAttributeTypeSpec2Type(AttributeTypeSpec attributeTypeSpec);
       ClassSpec2Entity transformClassSpec2Entity(ClassSpec classSpec);
+      EntityDecorator getEntity(String classSpecName);
 }

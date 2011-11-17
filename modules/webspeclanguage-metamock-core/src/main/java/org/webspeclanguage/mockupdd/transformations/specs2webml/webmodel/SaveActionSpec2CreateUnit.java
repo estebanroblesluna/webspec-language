@@ -13,7 +13,13 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.CreateUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 
 /**
@@ -22,6 +28,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
 public class SaveActionSpec2CreateUnit {
   
   public SaveActionSpec saveActionSpec;
+  public CreateUnit createUnit;
 
   public SaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec){
     super();
@@ -29,15 +36,28 @@ public class SaveActionSpec2CreateUnit {
   }
   
   public void transform(){
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
+    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
     
+    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getSaveActionSpec().getSpec().getClassSpec().getName());    
+    this.setCreateUnit(webFactory.createCreateUnit(this.getSaveActionSpec().getSpec().getClassSpec().getName(), entityDecorator));    
   }
+
   public SaveActionSpec getSaveActionSpec() {
     return saveActionSpec;
   }
-
   
   public void setSaveActionSpec(SaveActionSpec saveActionSpec) {
     this.saveActionSpec = saveActionSpec;
   }
+    
+  public CreateUnit getCreateUnit() {
+    return createUnit;
+  }
 
+  public void setCreateUnit(CreateUnit createUnit) {
+    this.createUnit = createUnit;
+  }
 }

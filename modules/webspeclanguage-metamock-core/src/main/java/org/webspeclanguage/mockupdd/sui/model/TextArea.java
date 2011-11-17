@@ -17,6 +17,6 @@ package org.webspeclanguage.mockupdd.sui.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface TextArea extends SimpleWidget {
+public interface TextArea extends SimpleWidget, InputWidget {
 
 }

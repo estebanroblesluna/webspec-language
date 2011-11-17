@@ -17,6 +17,6 @@ package org.webspeclanguage.mockupdd.sui.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface TextBox extends SimpleWidget {
+public interface TextBox extends SimpleWidget, InputWidget {
 
 }

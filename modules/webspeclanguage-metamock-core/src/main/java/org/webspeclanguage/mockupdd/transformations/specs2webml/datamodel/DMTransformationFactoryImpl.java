@@ -14,6 +14,8 @@
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
 import java.util.*;
+
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.specs.data.*;
 
 /**
@@ -52,6 +54,21 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
     classSpec2Entity.transform();
     DMTransformationFactory.classSpec2Entitys.add(classSpec2Entity);
     return classSpec2Entity;    
+  }
+
+  public EntityDecorator getEntity(String classSpecName) {
+    
+    EntityDecorator entityDecorator = null;
+    
+    Iterator<ClassSpec2Entity> iterator = DMTransformationFactory.classSpec2Entitys.iterator();
+    while(iterator.hasNext()){
+      ClassSpec2Entity classSpec2Entity = (ClassSpec2Entity)iterator.next();
+      if(classSpec2Entity.getClassSpec().getName().equals(classSpecName)){
+        entityDecorator = classSpec2Entity.getEntity();
+      }
+    }
+    
+    return entityDecorator;
   }
 
 }

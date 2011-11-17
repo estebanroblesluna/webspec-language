@@ -13,10 +13,11 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
 import org.webspeclanguage.mockupdd.specs.hypertext.*;
-
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.*;
 
 
 /**
@@ -42,12 +43,13 @@ public class PanelClassMappingSpec2DataUnit {
     }
     
     public void transform(){
-      
       WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
       WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+      DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
+      DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
       
-     // this.setDataUnit(webFactory.)
-      
+      EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getPanel().getClassSpec().getName());    
+      this.setDataUnit(webFactory.createDataUnit(this.getPanel().getWidget().getWidgetId(), entityDecorator));
     }
     
     public DataUnit getDataUnit() {

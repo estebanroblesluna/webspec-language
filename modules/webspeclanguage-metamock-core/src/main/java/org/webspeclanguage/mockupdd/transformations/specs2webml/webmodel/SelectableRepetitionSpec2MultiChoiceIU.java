@@ -13,7 +13,13 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.MultiChoiceIndexUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 
 /**
@@ -22,31 +28,40 @@ import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
 public class SelectableRepetitionSpec2MultiChoiceIU {
 
   public SelectableRepetitionSpec selectableRepetitionSpec;
-
+  public MultiChoiceIndexUnit multiChoiceIndexUnit;
   
   public SelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec) {
     super();
     this.setSelectableRepetitionSpec(selectableRepetitionSpec);
   }
-
+  
+  public MultiChoiceIndexUnit getMultiChoiceIndexUnit() {
+    return multiChoiceIndexUnit;
+  }
+  
+  public void setMultiChoiceIndexUnit(MultiChoiceIndexUnit multiChoiceIndexUnit) {
+    this.multiChoiceIndexUnit = multiChoiceIndexUnit;
+  }
   
   public SelectableRepetitionSpec getSelectableRepetitionSpec() {
     return selectableRepetitionSpec;
   }
-
   
   public void setSelectableRepetitionSpec(SelectableRepetitionSpec selectableRepetitionSpec) {
     this.selectableRepetitionSpec = selectableRepetitionSpec;
   }
 
-  public void tranform(){
-    
+  public void transform(){
+      
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
+    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
+      
+    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getSelectableRepetitionSpec().getClassSpec().getName());    
+    this.setMultiChoiceIndexUnit(webFactory.createMultiChoiceIndexUnit(this.getSelectableRepetitionSpec().getWidget().getWidgetId(), entityDecorator));    
   }
-
-
-  public void transform() {
-  }
-
+ 
 
 
 }

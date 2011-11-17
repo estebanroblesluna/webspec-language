@@ -13,8 +13,13 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
-import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.IndexUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 
 /**
@@ -23,7 +28,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
 public class RepetitionClassMappingSpec2IndexUnit {
   
   private RepetitionClassMappingSpec repetition;
-  
+  private IndexUnit indexUnit;
 
   public RepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetition){
     super();
@@ -32,14 +37,29 @@ public class RepetitionClassMappingSpec2IndexUnit {
 
   public void transform(){
     
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
+    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
+    
+    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getRepetition().getClassSpec().getName());    
+    this.setIndexUnit(webFactory.createIndexUnit(this.getRepetition().getWidget().getWidgetId(), entityDecorator));    
   }
+  
   public RepetitionClassMappingSpec getRepetition() {
     return repetition;
   }
-
   
   public void setRepetition(RepetitionClassMappingSpec repetition) {
     this.repetition = repetition;
+  }
+  
+  public IndexUnit getIndexUnit() {
+    return indexUnit;
+  }
+  
+  public void setIndexUnit(IndexUnit indexUnit) {
+    this.indexUnit = indexUnit;
   }
 
 }
