@@ -17,7 +17,7 @@ package org.webspeclanguage.mockupdd.sui.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface SelectableList extends List {
+public interface SelectableList extends List, InputWidget {
 
   Boolean getMultipleSelection();
 

@@ -13,10 +13,30 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
+import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.sui.model.Repetition;
+import org.webspeclanguage.mockupdd.sui.model.SelectionWidget;
+
 
 /**
  * @author Franco Giacosa
  */
 public class SelectableRepetitionSpec extends RepetitionClassMappingSpec {
+  
+    private SelectionWidget selectable;
+
+    public SelectableRepetitionSpec(Repetition repetition, ClassSpec classSpec, SelectionWidget selectable) {
+      super(repetition, classSpec);
+      this.setSelectable(selectable);
+    }
+    
+    public SelectionWidget getSelectable() {
+      return selectable;
+    }
+
+    
+    public void setSelectable(SelectionWidget selectable) {
+      this.selectable = selectable;
+    }
 
 }

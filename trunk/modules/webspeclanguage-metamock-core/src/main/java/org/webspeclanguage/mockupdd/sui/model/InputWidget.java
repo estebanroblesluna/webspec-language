@@ -10,13 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.webspeclanguage.mockupdd.sui.model;
 
+
 /**
- * Represents a date picker widget (an assisted widget for date input)
- * 
- * @author Jose Matias Rivero
+ * @author Franco Giacosa
  */
-public interface DatePicker extends SimpleWidget, InputWidget {
+public interface InputWidget {
 
 }

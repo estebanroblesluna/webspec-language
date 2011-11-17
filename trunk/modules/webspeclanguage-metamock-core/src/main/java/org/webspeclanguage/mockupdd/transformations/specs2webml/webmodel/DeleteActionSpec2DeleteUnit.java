@@ -13,7 +13,13 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.DeleteUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 
 /**
@@ -22,8 +28,8 @@ import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
 public class DeleteActionSpec2DeleteUnit {
 
   public DeleteActionSpec deleteActionSpec;
+  public DeleteUnit deleteUnit;
 
-  
   public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec) {
     super();
     this.deleteActionSpec = deleteActionSpec;
@@ -31,14 +37,28 @@ public class DeleteActionSpec2DeleteUnit {
 
   public void transform(){
     
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
+    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
+    
+    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getDeleteActionSpec().getSpec().getClassSpec().getName());    
+    this.setDeleteUnit(webFactory.createDeleteUnit(this.getDeleteActionSpec().getSpec().getClassSpec().getName(), entityDecorator));  
   }
 
   public DeleteActionSpec getDeleteActionSpec() {
     return deleteActionSpec;
   }
-
   
   public void setDeleteActionSpec(DeleteActionSpec deleteActionSpec) {
     this.deleteActionSpec = deleteActionSpec;
+  }
+  
+  public DeleteUnit getDeleteUnit() {
+    return deleteUnit;
+  }
+
+  public void setDeleteUnit(DeleteUnit deleteUnit) {
+    this.deleteUnit = deleteUnit;
   }
 }

@@ -13,6 +13,9 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+
 
 
 /**
@@ -45,6 +48,11 @@ public class SUIPage2Page {
     }
 
     public void transform() {
+      WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+      WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+      
+      this.setWebmlPage(webFactory.createPage(this.getSuiPage().getWidgetId(), false, true));
+      
     }
     
 }

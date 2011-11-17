@@ -13,7 +13,13 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.EntryUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 
 /**
@@ -22,8 +28,8 @@ import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
 public class InputPanelSpec2EntryUnit {
   
   public InputPanelSpec inputPanelSpec;
+  public EntryUnit entryUnit;
 
-  
   public InputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec) {
     super();
     this.setInputPanelSpec(inputPanelSpec);
@@ -31,16 +37,29 @@ public class InputPanelSpec2EntryUnit {
 
   public void transform(){
     
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
+    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
+    
+    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getInputPanelSpec().getClassSpec().getName());    
+    this.setEntryUnit(webFactory.createEntryUnit(this.getInputPanelSpec().getWidget().getWidgetId(), entityDecorator));
   }
 
   public InputPanelSpec getInputPanelSpec() {
     return inputPanelSpec;
   }
 
-  
   public void setInputPanelSpec(InputPanelSpec inputPanelSpec) {
     this.inputPanelSpec = inputPanelSpec;
   }
-
+  
+  public EntryUnit getEntryUnit() {
+    return entryUnit;
+  }
+  
+  public void setEntryUnit(EntryUnit entryUnit) {
+    this.entryUnit = entryUnit;
+  }
   
 }
