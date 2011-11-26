@@ -11,36 +11,24 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.specs.hypertext;
+package org.webspeclanguage.mockupdd.specs.data;
 
-import org.webspeclanguage.mockupdd.sui.model.Widget;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Franco Giacosa
  */
-public class ObjectTransferSpec {
-  private Widget from;
-  private Widget to;
+public interface DataSpecFactory {
 
-  public ObjectTransferSpec(Widget from, Widget to) {
-    super();
-    this.setFrom(from);
-    this.setTo(to);
-  }
+  List<AssociationSpec> associationSpecs = new ArrayList<AssociationSpec>();
+  List<AttributeSpec> attributeSpecs = new ArrayList<AttributeSpec>();
+  List<ClassSpec> classSpecs = new ArrayList<ClassSpec>();
 
-  public Widget getFrom() {
-    return from;
-  }
+  
+  AssociationSpec createAssociationSpec(ClassSpec destinationClass, String associationName, MaximumCardinality maximumCardinality);
+  AttributeSpec createAttributeSpec(String name, AttributeTypeSpec type);
+  ClassSpec createClassSpec(String name);
 
-  private void setFrom(Widget from) {
-    this.from = from;
-  }
-
-  public Widget getTo() {
-    return to;
-  }
-
-  private void setTo(Widget to) {
-    this.to = to;
-  }
+  
 }

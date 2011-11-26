@@ -13,34 +13,27 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.sui.model.Widget;
-
 /**
  * @author Franco Giacosa
  */
-public class ObjectTransferSpec {
-  private Widget from;
-  private Widget to;
+public class HypertextSpecFacade {
+  
+  private HypertextSpecFactory hypertextSpecFactory;
+  private static HypertextSpecFacade hypertextSpecFacade;
 
-  public ObjectTransferSpec(Widget from, Widget to) {
-    super();
-    this.setFrom(from);
-    this.setTo(to);
+  private HypertextSpecFacade() {
+    hypertextSpecFactory = new HypertextSpecFactoryImpl();
+  }
+  public static HypertextSpecFacade getHypertextSpecFacade() {
+    if(hypertextSpecFacade==null){  
+      hypertextSpecFacade = new HypertextSpecFacade();
+    }  
+    return hypertextSpecFacade;
+  }
+  
+  public HypertextSpecFactory getHypertextSpecFactory() {
+    return hypertextSpecFactory;
   }
 
-  public Widget getFrom() {
-    return from;
-  }
 
-  private void setFrom(Widget from) {
-    this.from = from;
-  }
-
-  public Widget getTo() {
-    return to;
-  }
-
-  private void setTo(Widget to) {
-    this.to = to;
-  }
 }
