@@ -11,36 +11,27 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.specs.hypertext;
-
-import org.webspeclanguage.mockupdd.sui.model.Widget;
+package org.webspeclanguage.mockupdd.specs.data;
 
 /**
  * @author Franco Giacosa
  */
-public class ObjectTransferSpec {
-  private Widget from;
-  private Widget to;
+public class DataSpecFacade {
+  private DataSpecFactory dataSpecFactory;
+  private static DataSpecFacade dataSpecFacade;
 
-  public ObjectTransferSpec(Widget from, Widget to) {
-    super();
-    this.setFrom(from);
-    this.setTo(to);
+  private DataSpecFacade() {
+    dataSpecFactory = new DataSpecFactoryImpl();
+  }
+  public static DataSpecFacade getDataSpecFacade() {
+    if(dataSpecFacade==null){  
+      dataSpecFacade = new DataSpecFacade();
+    }  
+    return dataSpecFacade;
+  }
+  
+  public DataSpecFactory getDataSpecFactory() {
+    return dataSpecFactory;
   }
 
-  public Widget getFrom() {
-    return from;
-  }
-
-  private void setFrom(Widget from) {
-    this.from = from;
-  }
-
-  public Widget getTo() {
-    return to;
-  }
-
-  private void setTo(Widget to) {
-    this.to = to;
-  }
 }
