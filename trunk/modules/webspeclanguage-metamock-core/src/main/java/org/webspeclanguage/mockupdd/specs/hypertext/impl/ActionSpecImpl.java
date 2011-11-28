@@ -11,17 +11,15 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.specs.hypertext;
+package org.webspeclanguage.mockupdd.specs.hypertext.impl;
 
-import org.webspeclanguage.mockupdd.sui.model.SelectionWidget;
+import org.webspeclanguage.mockupdd.specs.hypertext.ActionSpec;
 
 /**
- * @author Franco Giacosa
+ * Abstract action class
+ * 
+ * @author Jose Matias Rivero
  */
-public interface SelectableRepetitionSpec extends RepetitionClassMappingSpec{
-
-  public abstract SelectionWidget getSelectable();
-
-  public abstract void setSelectable(SelectionWidget selectable);
-
+public abstract class ActionSpecImpl implements ActionSpec {
+  
 }

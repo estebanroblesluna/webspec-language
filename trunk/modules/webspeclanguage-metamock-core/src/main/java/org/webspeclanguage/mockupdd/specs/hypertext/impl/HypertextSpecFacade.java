@@ -11,7 +11,11 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.specs.hypertext;
+package org.webspeclanguage.mockupdd.specs.hypertext.impl;
+
+import org.webspeclanguage.mockupdd.specs.hypertext.HypertextSpecFactory;
+
+
 
 /**
  * @author Franco Giacosa

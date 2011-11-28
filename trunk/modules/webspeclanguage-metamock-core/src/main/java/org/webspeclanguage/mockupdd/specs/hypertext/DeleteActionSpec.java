@@ -13,31 +13,11 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
-
-
 /**
- * Represents a object delete action. The object to be deleted will be taken from an already mapped
- * {@link CompositeWidget}, in case of a Repetition, it should have a {@link AttributeMappingSpec} Selectable Widget . This mapped is represented by a {@link ClassMappingSpec}.
  * @author Franco Giacosa
  */
-public class DeleteActionSpec extends ActionSpec{
+public interface DeleteActionSpec extends ActionSpec {
 
-  private ClassMappingSpec spec;
-  
+  public abstract ClassMappingSpec getSpec();
 
-  
-  public DeleteActionSpec(ClassMappingSpec spec) {
-    super();
-    this.setSpec(spec);
-  }
-
-  public ClassMappingSpec getSpec() {
-    return spec;
-  }
-
-  private void setSpec(ClassMappingSpec spec) {
-    this.spec = spec;
-  }
-  
 }

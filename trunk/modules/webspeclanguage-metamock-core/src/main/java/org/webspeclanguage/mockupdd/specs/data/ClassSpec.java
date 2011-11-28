@@ -13,59 +13,21 @@
 
 package org.webspeclanguage.mockupdd.specs.data;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-
 /**
- * Represents a class specifications (its name, attributes and associations to other classes)
- * 
- * @author Jose Matias Rivero
+ * @author Franco Giacosa
  */
-public class ClassSpec {
+public interface ClassSpec {
 
-  private String name;
-  private List<AttributeSpec> attributes;
-  private List<AssociationSpec> associations;
+  public abstract String getName();
 
-  public ClassSpec(String name) {
-    super();
-    this.setName(name);
-    this.setAttributes(new ArrayList<AttributeSpec>());
-    this.setAssociations(new ArrayList<AssociationSpec>());
-  }
+  public abstract List<AttributeSpec> getAttributes();
 
-  public String getName() {
-    return name;
-  }
+  public abstract void addAttribute(AttributeSpec attribute);
 
-  private void setName(String name) {
-    this.name = name;
-  }
+  public abstract List<AssociationSpec> getAssociations();
 
-  public List<AttributeSpec> getAttributes() {
-    return Collections.unmodifiableList(attributes);
-  }
-
-  private void setAttributes(List<AttributeSpec> attributes) {
-    this.attributes = attributes;
-  }
-  
-  public void addAttribute(AttributeSpec attribute) {
-    this.attributes.add(attribute);
-  }
-
-  public List<AssociationSpec> getAssociations() {
-    return Collections.unmodifiableList(associations);
-  }
-
-  private void setAssociations(List<AssociationSpec> associations) {
-    this.associations = associations;
-  }
-  
-  public void addAssociation(AssociationSpec associationSpec) {
-    this.associations.add(associationSpec);
-  }
+  public abstract void addAssociation(AssociationSpec associationSpec);
 
 }

@@ -13,11 +13,13 @@
 
 package org.webspeclanguage.mockupdd.specs.data;
 
+import org.webspeclanguage.mockupdd.specs.data.AttributeTypeSpec;
+
 /**
  * Represents a data type for an {@link AttributeSpec}
  * 
  * @author Jose Matias Rivero
  */
-public enum AttributeTypeSpec {
+public enum AttributeTypeSpec  {
   STRING, INTEGER, DECIMAL, TIME, DATE_TIME, PASSWORD
 }

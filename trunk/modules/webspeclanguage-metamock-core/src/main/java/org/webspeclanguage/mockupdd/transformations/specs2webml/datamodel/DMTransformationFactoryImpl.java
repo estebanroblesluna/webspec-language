@@ -17,6 +17,7 @@ import java.util.*;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.specs.data.*;
+import org.webspeclanguage.mockupdd.specs.data.impl.AttributeSpecImpl;
 
 /**
  * @author Franco Giacosa
@@ -48,7 +49,7 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
       attributeSpec2Attributes.add(this.transformAttributeSpec2Attribute(atts));      
     }
     //we add the Entity OID
-    attributeSpec2Attributes.add(this.transformAttributeSpec2Attribute(new AttributeSpec("OID", AttributeTypeSpec.INTEGER)));
+    attributeSpec2Attributes.add(this.transformAttributeSpec2Attribute(new AttributeSpecImpl("OID", AttributeTypeSpec.INTEGER)));
     
     ClassSpec2Entity classSpec2Entity = new ClassSpec2Entity(classSpec,attributeSpec2Attributes);
     classSpec2Entity.transform();
@@ -70,5 +71,7 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
     
     return entityDecorator;
   }
+
+
 
 }

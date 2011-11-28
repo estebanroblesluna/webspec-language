@@ -14,10 +14,8 @@
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
 /**
- * Abstract action class
- * 
- * @author Jose Matias Rivero
+ * @author Franco Giacosa
  */
-public abstract class ActionSpec {
-  
+public interface ActionSpec {
+
 }

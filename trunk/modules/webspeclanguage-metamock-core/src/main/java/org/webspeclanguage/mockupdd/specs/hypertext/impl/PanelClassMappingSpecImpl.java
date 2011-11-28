@@ -11,17 +11,30 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.specs.hypertext;
+package org.webspeclanguage.mockupdd.specs.hypertext.impl;
 
+import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
 import org.webspeclanguage.mockupdd.sui.model.Panel;
+
 
 /**
  * @author Franco Giacosa
  */
-public interface PanelClassMappingSpec extends ClassMappingSpec{
+public class PanelClassMappingSpecImpl extends ClassMappingSpecImpl implements PanelClassMappingSpec {
 
-  public abstract Panel getWidget();
-
-  public abstract void setWidget(Panel widget);
-
+  public Panel widget;
+  
+  public PanelClassMappingSpecImpl(Panel panel, ClassSpec classSpec) {
+    super(classSpec);
+    this.setWidget(panel);
+  }
+  
+  public Panel getWidget() {
+    return widget;
+  }
+  
+  public void setWidget(Panel widget) {
+    this.widget = widget;
+  }
 }

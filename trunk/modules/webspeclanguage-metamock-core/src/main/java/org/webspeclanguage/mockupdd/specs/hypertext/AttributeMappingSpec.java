@@ -17,36 +17,12 @@ import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 
 /**
- * Represents an individual mapping between an {@link AttributeSpec} and a {@link SimpleWidget} in
- * the context of an {@link ClassMappingSpec} 
- * 
- * @author Jose Matias Rivero
+ * @author Franco Giacosa
  */
-public class AttributeMappingSpec {
+public interface AttributeMappingSpec {
 
-  private SimpleWidget widget;
-  private AttributeSpec attributeSpec;
+  public abstract SimpleWidget getWidget();
 
-  public AttributeMappingSpec(SimpleWidget widget, AttributeSpec attributeSpec) {
-    super();
-    this.setWidget(widget);
-    this.setAttributeSpec(attributeSpec);
-  }
-
-  public SimpleWidget getWidget() {
-    return widget;
-  }
-
-  private void setWidget(SimpleWidget widget) {
-    this.widget = widget;
-  }
-
-  public AttributeSpec getAttributeSpec() {
-    return attributeSpec;
-  }
-
-  private void setAttributeSpec(AttributeSpec attributeSpec) {
-    this.attributeSpec = attributeSpec;
-  }
+  public abstract AttributeSpec getAttributeSpec();
 
 }

@@ -13,36 +13,14 @@
 
 package org.webspeclanguage.mockupdd.specs.data;
 
+
 /**
- * Represents an individual attribute in the context of a {@link ClassSpec}
- * 
- * @author Jose Matias Rivero
+ * @author Franco Giacosa
  */
-public class AttributeSpec {
+public interface AttributeSpec {
 
-  private String name;
-  private AttributeTypeSpec type;
+  public abstract String getName();
 
-  public AttributeSpec(String name, AttributeTypeSpec type) {
-    super();
-    this.setName(name);
-    this.setType(type);
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  private void setName(String name) {
-    this.name = name;
-  }
-
-  public AttributeTypeSpec getType() {
-    return type;
-  }
-
-  private void setType(AttributeTypeSpec type) {
-    this.type = type;
-  }
+  public abstract AttributeTypeSpec getType();
 
 }

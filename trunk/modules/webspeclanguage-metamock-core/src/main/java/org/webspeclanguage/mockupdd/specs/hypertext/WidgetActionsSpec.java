@@ -18,37 +18,18 @@ import java.util.List;
 import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 
 /**
- * Represents a set of {@link ActionSpec} associated to a {@link TriggerWidget}
- * 
  * @author Franco Giacosa
  */
-public class WidgetActionsSpec {
+public interface WidgetActionsSpec {
 
-  private List<ActionSpec> actions;
-  private TriggerWidget trigger;
-  
-  public WidgetActionsSpec(TriggerWidget trigger, List<ActionSpec> actions) {
-    super();
-    this.setTrigger(trigger);
-    this.setActions(actions);
-  }
+  public abstract List<ActionSpec> getActions();
 
-  public List<ActionSpec> getActions() {
-    return actions;
-  }
-  
-  public void setActions(List<ActionSpec> actions) {
-    this.actions = actions;
-  }
-  
-  public void addAction(ActionSpec action){
-    this.getActions().add(action);
-  }
-  public TriggerWidget getTrigger() {
-    return trigger;
-  }
-  
-  public void setTrigger(TriggerWidget trigger) {
-    this.trigger = trigger;
-  }
+  public abstract void setActions(List<ActionSpec> actions);
+
+  public abstract void addAction(ActionSpec action);
+
+  public abstract TriggerWidget getTrigger();
+
+  public abstract void setTrigger(TriggerWidget trigger);
+
 }

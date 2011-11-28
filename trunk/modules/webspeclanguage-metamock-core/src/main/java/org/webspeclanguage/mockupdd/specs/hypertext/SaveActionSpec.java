@@ -13,29 +13,11 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
-
 /**
- * Represents a object save action. The object to be saved will be taken from an already mapped
- * {@link CompositeWidget}. This mapped is represented by a {@link ClassMappingSpec}.
- * 
- * @author Jose Matias Rivero
+ * @author Franco Giacosa
  */
-public class SaveActionSpec extends ActionSpec{
+public interface SaveActionSpec extends ActionSpec {
 
-  private ClassMappingSpec spec;
+  public abstract ClassMappingSpec getSpec();
 
-  public SaveActionSpec(ClassMappingSpec spec) {
-    super();
-    this.setSpec(spec);
-  }
-
-  public ClassMappingSpec getSpec() {
-    return spec;
-  }
-
-  private void setSpec(ClassMappingSpec spec) {
-    this.spec = spec;
-  }
-  
 }

@@ -13,7 +13,6 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
@@ -31,20 +30,6 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
  * @author Franco Giacosa
  */
 public interface HypertextSpecFactory {
-
-  final List<AssociateActionSpec> associateActionSpecs = new ArrayList<AssociateActionSpec>();
-  final List<AttributeMappingSpec> attributeMappingSpecs = new ArrayList<AttributeMappingSpec>();
-  final List<ClassMappingSpec> classMappingSpecs = new ArrayList<ClassMappingSpec>();
-  final List<DeleteActionSpec> deleteActionSpecs = new ArrayList<DeleteActionSpec>();
-  final List<DissociateActionSpec> dissociateActionSpecs = new ArrayList<DissociateActionSpec>();
-  final List<InputPanelSpec> inputPanelSpecs = new ArrayList<InputPanelSpec>();
-  final List<NavigationSpec> navigationSpecs = new ArrayList<NavigationSpec>();
-  final List<ObjectTransferSpec> objectTransferSpecs = new ArrayList<ObjectTransferSpec>();
-  final List<PanelClassMappingSpec> panelClassMappingSpecs = new ArrayList<PanelClassMappingSpec>();
-  final List<RepetitionClassMappingSpec> repetitionClassMappingSpecs = new ArrayList<RepetitionClassMappingSpec>();
-  final List<SaveActionSpec> saveActionSpecs = new ArrayList<SaveActionSpec>();
-  final List<SelectableRepetitionSpec> selectableRepetitionSpecs = new ArrayList<SelectableRepetitionSpec>();
-  final List<WidgetActionsSpec> widgetActionsSpecs = new ArrayList<WidgetActionsSpec>();
   
   AssociateActionSpec createAssociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2);
   AttributeMappingSpec createAttributeMappingSpec(SimpleWidget widget, AttributeSpec attributeSpec);

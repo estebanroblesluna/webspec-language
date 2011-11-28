@@ -14,45 +14,20 @@
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
 import java.util.List;
+
 import org.webspeclanguage.mockupdd.sui.model.Page;
-import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 
 /**
- * Represents a navigation triggered by a {@link TriggerWidget} to an existing {@link Page}.
- * Before executing the navigation, a set of {@link ActionSpec} are executed; then, the navigation
- * is done carrying the objects specified by the transfers List
- * 
- * @author Jose Matias Rivero
+ * @author Franco Giacosa
  */
-public class NavigationSpec extends WidgetActionsSpec{
+public interface NavigationSpec {
 
-  private Page to;
-  private List<ObjectTransferSpec> transfers;
-  
-  public NavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions, List<ObjectTransferSpec> transfers) {
-    super(trigger,actions);
-    this.setTo(to);
-    this.setTransfers(transfers);
-  }
+  public abstract Page getTo();
 
-  public Page getTo() {
-    return to;
-  }
+  public abstract List<ObjectTransferSpec> getTransfers();
 
-  private void setTo(Page to) {
-    this.to = to;
-  }
+  public abstract void setTransfers(List<ObjectTransferSpec> transfers);
 
-  public List<ObjectTransferSpec> getTransfers(){
-    return transfers;
-  }
-  
-  public void setTransfers(List<ObjectTransferSpec> transfers){
-    this.transfers = transfers;
-  }
-  
-  public void addTransfer(ObjectTransferSpec transfer){
-    this.getTransfers().add(transfer);
-  }
-  
+  public abstract void addTransfer(ObjectTransferSpec transfer);
+
 }

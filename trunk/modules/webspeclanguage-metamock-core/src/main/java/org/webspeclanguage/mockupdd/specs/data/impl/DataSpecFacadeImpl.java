@@ -11,21 +11,23 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.specs.data;
+package org.webspeclanguage.mockupdd.specs.data.impl;
+
+import org.webspeclanguage.mockupdd.specs.data.DataSpecFactory;
 
 /**
  * @author Franco Giacosa
  */
-public class DataSpecFacade {
+public class DataSpecFacadeImpl {
   private DataSpecFactory dataSpecFactory;
-  private static DataSpecFacade dataSpecFacade;
+  private static DataSpecFacadeImpl dataSpecFacade;
 
-  private DataSpecFacade() {
+  private DataSpecFacadeImpl() {
     dataSpecFactory = new DataSpecFactoryImpl();
   }
-  public static DataSpecFacade getDataSpecFacade() {
+  public static DataSpecFacadeImpl getDataSpecFacade() {
     if(dataSpecFacade==null){  
-      dataSpecFacade = new DataSpecFacade();
+      dataSpecFacade = new DataSpecFacadeImpl();
     }  
     return dataSpecFacade;
   }
