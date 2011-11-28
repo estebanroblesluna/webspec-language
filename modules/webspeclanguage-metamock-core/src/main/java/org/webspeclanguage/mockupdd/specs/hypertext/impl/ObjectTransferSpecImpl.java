@@ -11,17 +11,37 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.specs.hypertext;
+package org.webspeclanguage.mockupdd.specs.hypertext.impl;
 
+import org.webspeclanguage.mockupdd.specs.hypertext.ObjectTransferSpec;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
  * @author Franco Giacosa
  */
-public interface ObjectTransferSpec {
+public class ObjectTransferSpecImpl implements ObjectTransferSpec {
+  private Widget from;
+  private Widget to;
 
-  public abstract Widget getFrom();
+  public ObjectTransferSpecImpl(Widget from, Widget to) {
+    super();
+    this.setFrom(from);
+    this.setTo(to);
+  }
 
-  public abstract Widget getTo();
+  public Widget getFrom() {
+    return from;
+  }
 
+  private void setFrom(Widget from) {
+    this.from = from;
+  }
+
+  public Widget getTo() {
+    return to;
+  }
+
+  private void setTo(Widget to) {
+    this.to = to;
+  }
 }

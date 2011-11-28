@@ -13,29 +13,15 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.sui.model.Repetition;
-
 
 /**
  * @author Franco Giacosa
  */
-public class RepetitionClassMappingSpec extends ClassMappingSpec {
+public interface RepetitionClassMappingSpec extends ClassMappingSpec{
 
-  public Repetition widget;
-  
-  public RepetitionClassMappingSpec(Repetition repetition, ClassSpec classSpec) {
-    super(classSpec);
-    this.setWidget(repetition);
-  }
+  public abstract Repetition getWidget();
 
-  
-  public Repetition getWidget() {
-    return widget;
-  }
+  public abstract void setWidget(Repetition widget);
 
-  
-  public void setWidget(Repetition widget) {
-    this.widget = widget;
-  }
 }

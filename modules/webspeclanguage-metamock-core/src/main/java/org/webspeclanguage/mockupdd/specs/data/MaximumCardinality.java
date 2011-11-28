@@ -13,6 +13,8 @@
 
 package org.webspeclanguage.mockupdd.specs.data;
 
+import org.webspeclanguage.mockupdd.specs.data.MaximumCardinality;
+
 /**
  * A maximum cardinality for {@link AssociationSpec}
  * 

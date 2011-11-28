@@ -11,21 +11,32 @@
  * limitations under the License.
  */
 
-package org.webspeclanguage.mockupdd.specs.hypertext;
-
-import java.util.List;
+package org.webspeclanguage.mockupdd.specs.hypertext.impl;
 
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
+import org.webspeclanguage.mockupdd.sui.model.Repetition;
+
 
 /**
  * @author Franco Giacosa
  */
-public interface ClassMappingSpec {
+public class RepetitionClassMappingSpecImpl extends ClassMappingSpecImpl implements RepetitionClassMappingSpec {
 
-  public abstract ClassSpec getClassSpec();
+  public Repetition widget;
+  
+  public RepetitionClassMappingSpecImpl(Repetition repetition, ClassSpec classSpec) {
+    super(classSpec);
+    this.setWidget(repetition);
+  }
 
-  public abstract List<AttributeMappingSpec> getAttributeMappings();
+  
+  public Repetition getWidget() {
+    return widget;
+  }
 
-  public abstract void addAttributeMapping(AttributeMappingSpec attributeMappingSpec);
-
+  
+  public void setWidget(Repetition widget) {
+    this.widget = widget;
+  }
 }

@@ -13,35 +13,17 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-
 /**
- * Represents an Association between a {@link ClassMappingSpec} and another {@link ClassMappingSpec}
  * @author Franco Giacosa
  */
-public class AssociateActionSpec extends ActionSpec {
-  
-  private ClassMappingSpec type1;
-  private ClassMappingSpec type2;
+public interface AssociateActionSpec extends ActionSpec {
 
-  public AssociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2) {
-    super();
-    this.type1 = type1;
-    this.type2 = type2;
-  }
-  
-  public ClassMappingSpec getType1() {
-    return type1;
-  }
-  
-  public void setType1(ClassMappingSpec type1) {
-    this.type1 = type1;
-  }
-  
-  public ClassMappingSpec getType2() {
-    return type2;
-  }
-  
-  public void setType2(ClassMappingSpec type2) {
-    this.type2 = type2;
-  }
+  public abstract ClassMappingSpec getType1();
+
+  public abstract void setType1(ClassMappingSpec type1);
+
+  public abstract ClassMappingSpec getType2();
+
+  public abstract void setType2(ClassMappingSpec type2);
+
 }

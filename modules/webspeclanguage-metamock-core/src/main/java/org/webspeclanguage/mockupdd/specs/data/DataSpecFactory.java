@@ -13,18 +13,11 @@
 
 package org.webspeclanguage.mockupdd.specs.data;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Franco Giacosa
  */
 public interface DataSpecFactory {
-
-  List<AssociationSpec> associationSpecs = new ArrayList<AssociationSpec>();
-  List<AttributeSpec> attributeSpecs = new ArrayList<AttributeSpec>();
-  List<ClassSpec> classSpecs = new ArrayList<ClassSpec>();
-
   
   AssociationSpec createAssociationSpec(ClassSpec destinationClass, String associationName, MaximumCardinality maximumCardinality);
   AttributeSpec createAttributeSpec(String name, AttributeTypeSpec type);

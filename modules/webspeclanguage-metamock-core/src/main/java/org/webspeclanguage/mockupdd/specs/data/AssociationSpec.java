@@ -13,46 +13,16 @@
 
 package org.webspeclanguage.mockupdd.specs.data;
 
+
 /**
- * Represents an directed association to an {@link ClassSpec} 
- * 
- * @author Jose Matias Rivero
+ * @author Franco Giacosa
  */
-public class AssociationSpec {
+public interface AssociationSpec {
 
-  private ClassSpec destinationClass;
-  private String associationName;
-  private MaximumCardinality maximumCardinality;
+  public abstract ClassSpec getDestinationClass();
 
-  public AssociationSpec(ClassSpec destinationClass, String associationName, MaximumCardinality maximumCardinality) {
-    super();
-    this.setDestinationClass(destinationClass);
-    this.setAssociationName(associationName);
-    this.setMaximumCardinality(maximumCardinality);
-  }
+  public abstract String getAssociationName();
 
-  public ClassSpec getDestinationClass() {
-    return destinationClass;
-  }
-
-  private void setDestinationClass(ClassSpec destinationClass) {
-    this.destinationClass = destinationClass;
-  }
-
-  public String getAssociationName() {
-    return associationName;
-  }
-
-  private void setAssociationName(String associationName) {
-    this.associationName = associationName;
-  }
-
-  public MaximumCardinality getMaximumCardinality() {
-    return maximumCardinality;
-  }
-
-  private void setMaximumCardinality(MaximumCardinality maximumCardinality) {
-    this.maximumCardinality = maximumCardinality;
-  }
+  public abstract MaximumCardinality getMaximumCardinality();
 
 }
