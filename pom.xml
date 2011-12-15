@@ -108,7 +108,15 @@
     <module>modules/webspeclanguage-webdiagrameditor</module>
     <module>modules/webspeclanguage-io</module>
     <module>modules/webspeclanguage-plugin</module>
-    <module>modules/webspeclanguage-metamock-core</module>
+    
+    <module>modules/webspeclanguage-mockupdd-core</module>
+    <module>modules/webspeclanguage-mockupdd-codegen</module>
+    <module>modules/webspeclanguage-mockupdd-codegen-webml</module>
+    <module>modules/webspeclanguage-mockupdd-io</module>
+    <module>modules/webspeclanguage-mockupdd-translators</module>
+    <module>modules/webspeclanguage-mockupdd-specs</module>
+    
+    <!-- <module>modules/webspeclanguage-webapp</module> -->
   </modules>
 
 </project>
