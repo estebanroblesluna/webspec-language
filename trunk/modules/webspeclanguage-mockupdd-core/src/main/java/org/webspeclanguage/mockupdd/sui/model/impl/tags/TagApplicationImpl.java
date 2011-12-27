@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.webspeclanguage.mockupdd.config.SuiDefaultConfig;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.content.TagContentParsingException;
 import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
@@ -52,7 +54,12 @@ public class TagApplicationImpl implements TagApplication {
       if (i < tag.getParameters().size()) {
         currentParameter = tag.getParameters().get(i);
       }
-      values.add(new TagParameterValueImpl(currentParameter, parameterValues.get(i)));
+      try {
+        values.add(new TagParameterValueImpl(currentParameter, 
+                SuiDefaultConfig.getInstance().getTagParameterValueContentParser().parse(parameterValues.get(i))));
+      } catch (TagContentParsingException e) {
+        throw new TagApplicationException(widget, tag, null, "Tag parameter value parsing error :" + e.getMessage());
+      }
     }
     return new TagApplicationImpl(widget, tag, values);
   }
@@ -67,14 +74,14 @@ public class TagApplicationImpl implements TagApplication {
 
   private void validateParams(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
     this.checkApplicability(widget, tag, parameterValues);
-    this.checkParameterWellFormedness(widget, tag, parameterValues);
+    //this.checkParameterWellFormedness(widget, tag, parameterValues);
     this.checkParameterCount(widget, tag, parameterValues);
     this.checkParameters(widget, tag, parameterValues);
   }
 
   private void checkParameterWellFormedness(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
     for (TagParameterValue value : parameterValues) {
-      if (!value.getValue().matches("[a-zA-Z0-9]+(:[a-zA-Z0-9]+)?(\\.[a-zA-Z0-9]+)?")) {
+      if (!value.getValue().getTextualRepresentation().matches("[a-zA-Z0-9]+(:[a-zA-Z0-9]+)?(\\.[a-zA-Z0-9]+)?")) {
         throw new TagApplicationException(widget, tag, parameterValues, "The tag " + tag.getName() + " has an invalid parameter value: \"" + value.getValue() + "\"");
       }
     }

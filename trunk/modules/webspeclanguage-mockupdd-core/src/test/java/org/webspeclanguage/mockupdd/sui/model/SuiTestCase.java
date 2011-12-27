@@ -26,6 +26,7 @@ public abstract class SuiTestCase extends TestCase {
   private SuiFactory factory;
   private TagSet testTagSet;
   private Tag compositeWidgetTag;
+  private SuiDefaultConfig suiConfig;
 
   public SuiTestCase() {
     super();
@@ -44,6 +45,7 @@ public abstract class SuiTestCase extends TestCase {
     super.setUp();
     this.setFactory(SuiDefaultConfig.getInstance().getFactory());
     this.setCompositeWidgetTag(SuiDefaultConfig.getInstance().getTagSetByName("Data").getTagByName("Data"));
+    this.setSuiConfig(SuiDefaultConfig.getInstance());
   }
 
   protected Tag getCompositeWidgetTag() {
@@ -52,6 +54,14 @@ public abstract class SuiTestCase extends TestCase {
 
   private void setCompositeWidgetTag(Tag compositeWidgetTag) {
     this.compositeWidgetTag = compositeWidgetTag;
+  }
+
+  protected SuiDefaultConfig getSuiConfig() {
+    return suiConfig;
+  }
+
+  private void setSuiConfig(SuiDefaultConfig suiConfig) {
+    this.suiConfig = suiConfig;
   }
   
 }

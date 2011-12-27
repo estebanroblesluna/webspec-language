@@ -20,7 +20,7 @@ import org.webspeclanguage.mockupdd.sui.model.Page;
 /**
  * @author Franco Giacosa
  */
-public interface NavigationSpec {
+public interface NavigationSpec extends WidgetActionsSpec {
 
   public abstract Page getTo();
 

@@ -58,6 +58,9 @@ import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagImpl;
 import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagParameterImpl;
 import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagParameterValueImpl;
 import org.webspeclanguage.mockupdd.sui.model.impl.tags.TagSetImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.content.DataPathNodeImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.content.DataPathTagParameterValueContentImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.content.SimpleTagParameterValueContentImpl;
 import org.webspeclanguage.mockupdd.sui.model.layout.GridBagLayout;
 import org.webspeclanguage.mockupdd.sui.model.layout.VerticalBoxLayout;
 import org.webspeclanguage.mockupdd.sui.model.layout.impl.GridBagLayoutImpl;
@@ -69,6 +72,9 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
+import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathNode;
+import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathTagParameterValueContent;
+import org.webspeclanguage.mockupdd.sui.model.tags.content.SimpleTagParameterValueContent;
 import org.webspeclanguage.mockupdd.translator.DefaultWidgetGroupImpl;
 import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 import org.webspeclanguage.mockupdd.utils.SuiUtil;
@@ -219,11 +225,31 @@ public class SuiFactoryImpl implements SuiFactory {
   }
 
   public TagParameterValue createTagParameterValue(TagParameter tagParameter, String value) {
-    return new TagParameterValueImpl(tagParameter, value);
+    return new TagParameterValueImpl(tagParameter, new SimpleTagParameterValueContentImpl(value));
   }
 
   public TagApplication createTagApplication(Widget widget, Tag tag, java.util.List<TagParameterValue> parameterValues) throws TagApplicationException {
     return new TagApplicationImpl(widget, tag, parameterValues);
+  }
+
+  @Override
+  public SimpleTagParameterValueContent createSimpleTagParameterValueContent(String valueContent) {
+    return new SimpleTagParameterValueContentImpl(valueContent);
+  }
+
+  @Override
+  public DataPathTagParameterValueContent createDataPathTagParameterValueContent(String widgetId, DataPathNode rootNode) {
+    return new DataPathTagParameterValueContentImpl(widgetId, rootNode);
+  }
+
+  @Override
+  public DataPathNode createDataPathNode(String className, String accessorName) {
+    return new DataPathNodeImpl(accessorName, className);
+  }
+
+  @Override
+  public DataPathNode createDataPathNode(String className) {
+    return new DataPathNodeImpl(className);
   }
 
 }

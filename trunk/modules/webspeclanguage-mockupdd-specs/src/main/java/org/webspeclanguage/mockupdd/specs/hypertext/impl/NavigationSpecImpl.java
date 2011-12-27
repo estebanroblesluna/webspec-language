@@ -27,7 +27,7 @@ import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
  * 
  * @author Jose Matias Rivero
  */
-public class NavigationSpecImpl extends WidgetActionsSpecImpl implements NavigationSpec{
+public class NavigationSpecImpl extends WidgetActionsSpecImpl implements NavigationSpec {
 
   private Page to;
   private List<ObjectTransferSpec> transfers;

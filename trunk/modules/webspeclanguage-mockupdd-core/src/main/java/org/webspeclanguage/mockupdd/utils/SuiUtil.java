@@ -194,23 +194,27 @@ public final class SuiUtil {
 	 */
 	@SuppressWarnings("unchecked")
   public static Collection<Widget> getAllWidgetsRecursively(CompositeWidget c) {
-		Collection<Widget> allCtrls = new ArrayList<Widget>();
-		Collection<Widget> ctrls = new ArrayList<Widget>();
+		Collection<Widget> allCtrls = new HashSet<Widget>();
 		// TODO an individual collection for widgets in CC shouldn't exists. The children widgets
 		// should be kept in the layout and not replicated in CC. 
-		if (c.getLayout() != null) {
-			ctrls = c.getLayout().getWidgets();
-		} else {
-			ctrls = c.getWidgets();
-		}
-		for (Widget ctrl : ctrls) {
+		for (Widget ctrl : c.getWidgets()) {
 			allCtrls.add(ctrl);
 		}
 		for (Widget ctrl : 
-				SuiUtil.filterWidgetsByType(ctrls, CompositeWidget.class)) {
+				SuiUtil.filterWidgetsByType(c.getWidgets(), CompositeWidget.class)) {
 			allCtrls.addAll(SuiUtil.getAllWidgetsRecursively((CompositeWidget) ctrl));
 		}
 		return allCtrls;
+	}
+	
+	/**
+   * The same that <code>getAllWidgetsRecursively</code>, but also returns the parent
+   * widget
+   */
+	public static Collection<Widget> getAllWidgetsRecursivelyIncludingParent(CompositeWidget c) {
+	  Collection<Widget> widgets = getAllWidgetsRecursively(c);
+	  widgets.add(c);
+	  return widgets;	
 	}
 
 	/**
@@ -365,8 +369,8 @@ public final class SuiUtil {
 	/**
 	 * Returns a collection of all the parents of <code>c</code>
 	 */
-	public static Collection<Widget> getParents(Widget c) {
-		Collection<Widget> ctrls = new ArrayList<Widget>();
+	public static List<Widget> getParents(Widget c) {
+		List<Widget> ctrls = new ArrayList<Widget>();
 		Widget currWidget = c.getParent();
 		while (currWidget != null) {
 			ctrls.add(currWidget);

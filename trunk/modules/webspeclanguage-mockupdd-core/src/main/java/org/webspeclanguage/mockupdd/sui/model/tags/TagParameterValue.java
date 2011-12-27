@@ -12,6 +12,8 @@
  */
 package org.webspeclanguage.mockupdd.sui.model.tags;
 
+import org.webspeclanguage.mockupdd.sui.model.tags.content.TagParameterValueContent;
+
 /**
  * @author Jose Matias Rivero
  */
@@ -19,6 +21,6 @@ public interface TagParameterValue {
 
   TagParameter getTagParameter();
   
-  String getValue();
+  TagParameterValueContent getValue();
   
 }

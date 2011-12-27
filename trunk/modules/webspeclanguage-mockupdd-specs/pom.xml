@@ -27,6 +27,21 @@
       <artifactId>webspeclanguage-mockupdd-core</artifactId>
       <version>${version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.webspeclanguage</groupId>
+      <artifactId>webspeclanguage-mockupdd-core</artifactId>
+      <version>${version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-jxpath</groupId>
+	  <artifactId>commons-jxpath</artifactId>
+    </dependency>
+    <dependency>
+       <groupId>net.sourceforge.collections</groupId>
+       <artifactId>collections-generic</artifactId>
+     </dependency>
   </dependencies>
 
   <build>

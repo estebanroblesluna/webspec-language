@@ -54,7 +54,7 @@ public class TagsTestCase extends SuiTestCase {
     assertEquals(b.getAppliedTags().iterator().next(), at);
     assertEquals(at.getTag(), t);
     assertEquals(t.getParameters().iterator().next(), at.getParameterValues().get(0).getTagParameter());
-    assertEquals("value1", at.getParameterValues().get(0).getValue());
+    assertEquals("value1", at.getParameterValues().get(0).getValue().getTextualRepresentation());
     at.remove();
     assertNull(at.getWidget());
     assertEquals(0, b.getAppliedTags().size());    
@@ -85,9 +85,9 @@ public class TagsTestCase extends SuiTestCase {
     assertEquals(widget.getAppliedTags().iterator().next(), at);
     assertEquals(at.getTag(), t);
     assertEquals(param, at.getParameterValues().get(0).getTagParameter());
-    assertEquals("value1", at.getParameterValues().get(0).getValue());
+    assertEquals("value1", at.getParameterValues().get(0).getValue().getTextualRepresentation());
     assertEquals(param, at.getParameterValues().get(1).getTagParameter());
-    assertEquals("value2", at.getParameterValues().get(1).getValue());
+    assertEquals("value2", at.getParameterValues().get(1).getValue().getTextualRepresentation());
   }
   
   @Test

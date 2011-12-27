@@ -27,10 +27,15 @@ import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
 import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.impl.SuiFactoryImpl;
+import org.webspeclanguage.mockupdd.sui.model.impl.tags.content.TagParameterValueContentParserImpl;
 import org.webspeclanguage.mockupdd.sui.model.layout.LayoutFactory;
 import org.webspeclanguage.mockupdd.sui.model.layout.impl.ScanBasedGridBagLayoutFactory;
+import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
+import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
+import org.webspeclanguage.mockupdd.sui.model.tags.content.TagParameterValueContentParser;
 import org.webspeclanguage.mockupdd.translator.DefaultRepetitionDetectorImpl;
 import org.webspeclanguage.mockupdd.translator.MockupProcessor;
 import org.webspeclanguage.mockupdd.translator.annotation.JsonAnnotationParser;
@@ -64,12 +69,14 @@ public class SuiDefaultConfig {
   private List<MockupProcessor> mockupProcessors;
   private List<MockupProcessor> mockupPostProcessors;
   private LayoutFactory defaultLayoutFactory;
+  private TagParameterValueContentParser tagParameterValueContentParser;
   
   private SuiDefaultConfig() {
     this.setFactory(new SuiFactoryImpl());
     this.setAnnotationParser(new JsonAnnotationParser(this.getFactory()));
     this.setMockupProcessors(this.initializeMockupProcessors());
     this.setMockupPostProcessors(this.initializeMockupPostProcessors());
+    this.setTagParameterValueContentParser(new TagParameterValueContentParserImpl(this.getFactory()));
     this.initializeTagSets();
   }
 
@@ -174,9 +181,30 @@ public class SuiDefaultConfig {
     return this.tagSetsByName.get(tagSetName);
   }
   
+  public Tag getTag(String tagSetName, String tagName) {
+    TagSet tagSet = this.getTagSetByName(tagSetName);
+    if (tagSet == null) {
+      return null;
+    }
+    return tagSet.getTagByName(tagName);
+  }
+  
+  public TagApplication createTagApplication(Widget w, String tagSetName, String tagName, String... values) throws TagApplicationException {
+    Tag t = this.getTag(tagSetName, tagName);
+    return t.applyOverWithValues(w, Arrays.asList(values));
+  }
+  
   @SuppressWarnings("unchecked")
   public Class<? extends Widget>[] getExcludedWidgets() {
     return new Class[]{Annotation.class};
+  }
+
+  public TagParameterValueContentParser getTagParameterValueContentParser() {
+    return this.tagParameterValueContentParser;
+  }
+
+  private void setTagParameterValueContentParser(TagParameterValueContentParser tagParameterValueContentParser) {
+    this.tagParameterValueContentParser = tagParameterValueContentParser;
   }
 
 }
