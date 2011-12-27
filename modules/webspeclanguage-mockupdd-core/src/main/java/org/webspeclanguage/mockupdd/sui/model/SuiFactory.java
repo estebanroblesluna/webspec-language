@@ -30,6 +30,9 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameter;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagParameterValue;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
+import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathNode;
+import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathTagParameterValueContent;
+import org.webspeclanguage.mockupdd.sui.model.tags.content.SimpleTagParameterValueContent;
 import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 
 /**
@@ -110,6 +113,14 @@ public interface SuiFactory {
   TagParameter createTagParameter(String parameterName);
   
   TagParameterValue createTagParameterValue(TagParameter tagParameter, String value);
+  
+  SimpleTagParameterValueContent createSimpleTagParameterValueContent(String valueContent);
+  
+  DataPathTagParameterValueContent createDataPathTagParameterValueContent(String widgetId, DataPathNode rootNode);
+  
+  DataPathNode createDataPathNode(String className, String accessorName);
+  
+  DataPathNode createDataPathNode(String className);
   
   TagApplication createTagApplication(Widget widget, Tag tag, java.util.List<TagParameterValue> parameterValues) throws TagApplicationException;
   

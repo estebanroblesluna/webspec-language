@@ -100,9 +100,9 @@ public class SuiParserTestCase extends TestCase {
       TagApplication tag = iterator.next();
       assertEquals(1, tag.getParameterValues().size());
       if (tag.getTag().getName().equals("Data")) {
-        assertEquals("User", tag.getParameterValues().get(0).getValue());
+        assertEquals("User", tag.getParameterValues().get(0).getValue().getTextualRepresentation());
       } else if (tag.getTag().getName().equals("Node")) {
-        assertEquals("Login", tag.getParameterValues().get(0).getValue());
+        assertEquals("Login", tag.getParameterValues().get(0).getValue().getTextualRepresentation());
       }
     }
     

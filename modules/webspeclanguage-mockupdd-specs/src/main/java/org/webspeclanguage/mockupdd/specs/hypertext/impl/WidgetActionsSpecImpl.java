@@ -46,6 +46,7 @@ public class WidgetActionsSpecImpl implements WidgetActionsSpec {
   public void addAction(ActionSpec action){
     this.getActions().add(action);
   }
+  
   public TriggerWidget getTrigger() {
     return trigger;
   }

@@ -25,24 +25,35 @@ import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 
-
 /**
  * @author Franco Giacosa
  */
 public interface HypertextSpecFactory {
-  
+
   AssociateActionSpec createAssociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2);
-  AttributeMappingSpec createAttributeMappingSpec(SimpleWidget widget, AttributeSpec attributeSpec);
-  ClassMappingSpec createClassMappingSpec(ClassSpec classSpec);
-  DeleteActionSpec createDeleteActionSpec(ClassMappingSpec spec);
-  DissociateActionSpec createDissociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2);
-  InputPanelSpec createInputPanelSpec(Panel panel, ClassSpec classSpec, List<InputWidget> inputs);
-  NavigationSpec createNavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions, List<ObjectTransferSpec> transfers);
-  ObjectTransferSpec createObjectTransferSpec(Widget from, Widget to);
-  PanelClassMappingSpec createPanelClassMappingSpec(Panel panel, ClassSpec classSpec);
-  RepetitionClassMappingSpec createRepetitionClassMappingSpec(Repetition repetition, ClassSpec classSpec);
-  SaveActionSpec createSaveActionSpec(ClassMappingSpec spec);
-  SelectableRepetitionSpec createSelectableRepetitionSpec(Repetition repetition, ClassSpec classSpec, SelectionWidget selectable);
-  WidgetActionsSpec createWidgetActionsSpec(TriggerWidget trigger, List<ActionSpec> actions);
   
+  AttributeMappingSpec createAttributeMappingSpec(SimpleWidget widget, AttributeSpec attributeSpec);
+  
+  ClassMappingSpec createClassMappingSpec(ClassSpec classSpec);
+  
+  DeleteActionSpec createDeleteActionSpec(ClassMappingSpec spec);
+  
+  DissociateActionSpec createDissociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2);
+  
+  InputPanelSpec createInputPanelSpec(Panel panel, ClassSpec classSpec, List<InputWidget> inputs);
+  
+  NavigationSpec createNavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions, List<ObjectTransferSpec> transfers);
+  
+  ObjectTransferSpec createObjectTransferSpec(Widget from, Widget to);
+  
+  PanelClassMappingSpec createPanelClassMappingSpec(Panel panel, ClassSpec classSpec);
+  
+  RepetitionClassMappingSpec createRepetitionClassMappingSpec(Repetition repetition, ClassSpec classSpec);
+  
+  SaveActionSpec createSaveActionSpec(ClassMappingSpec spec);
+  
+  SelectableRepetitionSpec createSelectableRepetitionSpec(Repetition repetition, ClassSpec classSpec, SelectionWidget selectable);
+  
+  WidgetActionsSpec createWidgetActionsSpec(TriggerWidget trigger, List<ActionSpec> actions);
+
 }

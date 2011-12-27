@@ -20,8 +20,9 @@ package org.webspeclanguage.mockupdd.specs.data;
 public interface DataSpecFactory {
   
   AssociationSpec createAssociationSpec(ClassSpec destinationClass, String associationName, MaximumCardinality maximumCardinality);
+  
   AttributeSpec createAttributeSpec(String name, AttributeTypeSpec type);
+  
   ClassSpec createClassSpec(String name);
 
-  
 }

@@ -16,16 +16,34 @@ package org.webspeclanguage.mockupdd.specs.hypertext;
 import java.util.List;
 
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 
 /**
- * @author Franco Giacosa
+ * Represents a mapping between a {@link CompositeWidget} and a {@link ClassSpec}. 
+ * The semantics of this spec is that the {@link CompositeWidget} reads or manages in some way
+ * instances of the class represented by the {@link ClassSpec}.
+ * 
+ * @author Jose Matias Rivero
  */
 public interface ClassMappingSpec {
+  
+  /**
+   * @return The Widget from which instance is taken (if defined)
+   */
+  CompositeWidget getDataSource();
+  
+  /**
+   * @return The class mapped to the Widget
+   */
+  ClassSpec getClassSpec();
 
-  public abstract ClassSpec getClassSpec();
+  /**
+   * @return The list of attributes mapped from the class
+   */
+  List<AttributeMappingSpec> getAttributeMappings();
 
-  public abstract List<AttributeMappingSpec> getAttributeMappings();
+  void addAttributeMapping(AttributeMappingSpec attributeMappingSpec);
 
-  public abstract void addAttributeMapping(AttributeMappingSpec attributeMappingSpec);
+  void setDataSource(CompositeWidget dataSource);
 
 }

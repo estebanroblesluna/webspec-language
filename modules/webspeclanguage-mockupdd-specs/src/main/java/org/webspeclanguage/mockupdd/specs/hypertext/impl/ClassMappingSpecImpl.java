@@ -22,11 +22,10 @@ import org.webspeclanguage.mockupdd.specs.hypertext.ActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
- * Represents a mapping between a {@link CompositeWidget} and a {@link ClassSpec}. 
- * The semantics of this spec is that the {@link CompositeWidget} reads or manages in some way
- * instances of the class represented by the {@link ClassSpec}.
+ * Default implementation for {@link ClassMappingSpec}
  * 
  * @author Jose Matias Rivero
  */
@@ -34,6 +33,7 @@ public class ClassMappingSpecImpl implements ActionSpec, ClassMappingSpec {
 
   private ClassSpec classSpec;
   private List<AttributeMappingSpec> attributeMappings;
+  private CompositeWidget dataSource;
 
   public ClassMappingSpecImpl(ClassSpec classSpec) {
     super();
@@ -59,6 +59,16 @@ public class ClassMappingSpecImpl implements ActionSpec, ClassMappingSpec {
   
   public void addAttributeMapping(AttributeMappingSpec attributeMappingSpec) {
     this.attributeMappings.add(attributeMappingSpec);
+  }
+
+  @Override
+  public CompositeWidget getDataSource() {
+    return dataSource;
+  }
+
+  @Override
+  public void setDataSource(CompositeWidget dataSource) {
+    this.dataSource = dataSource;
   }
   
 }

@@ -18,7 +18,7 @@ import org.webspeclanguage.mockupdd.sui.model.Repetition;
 /**
  * @author Franco Giacosa
  */
-public interface RepetitionClassMappingSpec extends ClassMappingSpec{
+public interface RepetitionClassMappingSpec extends ClassMappingSpec {
 
   public abstract Repetition getWidget();
 

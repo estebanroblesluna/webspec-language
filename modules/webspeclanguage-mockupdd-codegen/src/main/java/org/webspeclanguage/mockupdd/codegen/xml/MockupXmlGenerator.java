@@ -219,7 +219,7 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
     for (TagApplication ta : widget.getAppliedTags()) {
       List<Element> values = new ArrayList<Element>();
       for (TagParameterValue pv : ta.getParameterValues()) {
-        values.add(this.createElement("param").setAttribute("value", pv.getValue()));
+        values.add(this.createElement("param").setAttribute("value", pv.getValue().getTextualRepresentation()));
       }
       tags.addContent(this.createElement("tag")
               .setAttribute("name", ta.getTag().getName())
