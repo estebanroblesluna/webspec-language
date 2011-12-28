@@ -23,20 +23,26 @@ import org.webspeclanguage.mockupdd.specs.data.impl.AttributeSpecImpl;
  * @author Franco Giacosa
  */
 public class DMTransformationFactoryImpl implements DMTransformationFactory {
-
+	
+	
   public AttributeSpec2Attribute transformAttributeSpec2Attribute(AttributeSpec attributeSpec) {
     
     AttributeSpec2Attribute attributeSpec2Attribute = new AttributeSpec2Attribute(attributeSpec, this.transformAttributeTypeSpec2Type(attributeSpec.getType()));
     attributeSpec2Attribute.transform();
-    DMTransformationFactory.attributeSpec2Attributes.add(attributeSpec2Attribute);
     return attributeSpec2Attribute;   
   }
-
+  
+  public AssociationSpec2Relationship transformAssociationSpec2Relationship(AssociationSpec associationSpec, ClassSpec associationSource){
+	AssociationSpec2Relationship associationSpec2Relationship = new AssociationSpec2Relationship(associationSpec);
+	associationSpec2Relationship.transform(associationSource);
+	return associationSpec2Relationship;	  
+  }
+  
   public AttributeTypeSpec2Type transformAttributeTypeSpec2Type(AttributeTypeSpec attributeTypeSpec) {
         
     AttributeTypeSpec2Type attributeTypeSpec2Type = new AttributeTypeSpec2Type(attributeTypeSpec);
     attributeTypeSpec2Type.transform();
-    DMTransformationFactory.attributeTypeSpec2Types.add(attributeTypeSpec2Type);
+    this.getAttributeTypeSpec2Types().add(attributeTypeSpec2Type);
     return attributeTypeSpec2Type;
   }
 
@@ -53,25 +59,8 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
     
     ClassSpec2Entity classSpec2Entity = new ClassSpec2Entity(classSpec,attributeSpec2Attributes);
     classSpec2Entity.transform();
-    DMTransformationFactory.classSpec2Entitys.add(classSpec2Entity);
     return classSpec2Entity;    
   }
-
-  public EntityDecorator getEntity(String classSpecName) {
-    
-    EntityDecorator entityDecorator = null;
-    
-    Iterator<ClassSpec2Entity> iterator = DMTransformationFactory.classSpec2Entitys.iterator();
-    while(iterator.hasNext()){
-      ClassSpec2Entity classSpec2Entity = (ClassSpec2Entity)iterator.next();
-      if(classSpec2Entity.getClassSpec().getName().equals(classSpecName)){
-        entityDecorator = classSpec2Entity.getEntity();
-      }
-    }
-    
-    return entityDecorator;
-  }
-
 
 
 }
