@@ -13,6 +13,11 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
+
 
 /**
  * @author Franco Giacosa
@@ -20,6 +25,7 @@ package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 public final class DMTransformationFacade {
 
   private DMTransformationFactory dmTransformationFactory;
+  private List<DataSpecs2WebMLDataModel> dataSpecsTransformations = new ArrayList<DataSpecs2WebMLDataModel>();
   private static DMTransformationFacade dmTransformationFacade;
 
   private DMTransformationFacade() {
@@ -34,6 +40,18 @@ public final class DMTransformationFacade {
   
   public DMTransformationFactory getDMTransformationFactory() {
     return dmTransformationFactory;
+  }
+  
+  public DataSpecs2WebMLDataModel transformData(SuiSpecsInferenceState suiSpecsInferenceState){
+	  DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel = new DataSpecs2WebMLDataModel(suiSpecsInferenceState);
+	  dataSpecs2WebMLDataModel.transform();
+	  return dataSpecs2WebMLDataModel;
+  }
+  public void setDataSpecsTransformations(List<DataSpecs2WebMLDataModel> dataSpecsTransformations) {
+	this.dataSpecsTransformations = dataSpecsTransformations;
+  }
+  public List<DataSpecs2WebMLDataModel> getDataSpecsTransformations() {
+	return dataSpecsTransformations;
   }
  
  

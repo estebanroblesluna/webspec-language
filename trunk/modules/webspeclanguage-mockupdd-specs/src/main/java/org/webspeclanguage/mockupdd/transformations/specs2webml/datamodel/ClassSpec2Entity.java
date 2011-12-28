@@ -38,14 +38,15 @@ public class ClassSpec2Entity {
       DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
       DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();
            
-      this.setEntity(dataFactory.createEntityDecorator(dataFactory.createEntity(this.getClassSpec().getName(), "persistent", new HashMap<String,Attribute>())));
+      this.setEntity(
+    		  dataFactory.createEntityDecorator(
+    		  dataFactory.createEntity(this.getClassSpec().getName(), "persistent", new HashMap<String,Attribute>())));
       
       Iterator<AttributeSpec2Attribute> iteratorAtt = this.getAttributeSpec2Attributes().iterator();
       while(iteratorAtt.hasNext()){
         AttributeSpec2Attribute attSpec2Att = (AttributeSpec2Attribute)iteratorAtt.next();
         this.getEntity().addAttribute(attSpec2Att.getAttribute());   
-      }
-            
+      }            
     }
 
     public ClassSpec getClassSpec() {
@@ -55,8 +56,7 @@ public class ClassSpec2Entity {
     public void setClassSpec(ClassSpec classSpec) {
       this.classSpec = classSpec;
     }
-    
-    
+       
     public List<AttributeSpec2Attribute> getAttributeSpec2Attributes() {
       return attributeSpec2Attributes;
     }

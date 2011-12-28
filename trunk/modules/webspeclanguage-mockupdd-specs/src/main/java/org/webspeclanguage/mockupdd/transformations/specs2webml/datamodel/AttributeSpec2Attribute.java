@@ -13,58 +13,61 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
-
-import org.webspeclanguage.mockupdd.specs.data.*;
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Attribute;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.AttributeDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Type;
+import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 
 /**
  * @author Franco Giacosa
  */
 public class AttributeSpec2Attribute {
 
-    private AttributeSpec attributeSpec;
-    private AttributeDecorator attribute;
-    private AttributeTypeSpec2Type attributeTypeSpec2Type;
+	private AttributeSpec attributeSpec;
+	private AttributeDecorator attribute;
+	private AttributeTypeSpec2Type attributeTypeSpec2Type;
 
-    public AttributeSpec2Attribute(AttributeSpec attributeSpec, AttributeTypeSpec2Type attributeTypeSpec2Type ){
-      super();
-      this.setAttributeSpec(attributeSpec);
-      this.setAttributeTypeSpec2Type(attributeTypeSpec2Type);
-    }
-    
-    public AttributeTypeSpec2Type getAttributeTypeSpec2Type() {
-      return attributeTypeSpec2Type;
-    }
-    
-    public void setAttributeTypeSpec2Type(AttributeTypeSpec2Type attributeTypeSpec2Type) {
-      this.attributeTypeSpec2Type = attributeTypeSpec2Type;
-    }
+	public AttributeSpec2Attribute(AttributeSpec attributeSpec,
+			AttributeTypeSpec2Type attributeTypeSpec2Type) {
+		super();
+		this.setAttributeSpec(attributeSpec);
+		this.setAttributeTypeSpec2Type(attributeTypeSpec2Type);
+	}
 
-    public AttributeDecorator getAttribute() {
-      return attribute;
-    }
+	public AttributeTypeSpec2Type getAttributeTypeSpec2Type() {
+		return attributeTypeSpec2Type;
+	}
 
-    public void setAttribute(AttributeDecorator attribute) {
-      this.attribute = attribute;
-      
-    }
-    
-    public void transform(){
-      DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
-      DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();
-      
-      AttributeTypeSpec2Type ats2t = new AttributeTypeSpec2Type(this.getAttributeSpec().getType()); 
-      Type type = ats2t.getType();
-      Attribute att1 = dataFactory.createAttribute(this.getAttributeSpec().getName(),type,false);
-      this.setAttribute(dataFactory.createAttributeDecorator(att1));
-    }
-    
-    public AttributeSpec getAttributeSpec() {
-      return attributeSpec;
-    }
-    
-    public void setAttributeSpec(AttributeSpec attributeSpec) {
-      this.attributeSpec = attributeSpec;
-    }
+	public void setAttributeTypeSpec2Type(
+			AttributeTypeSpec2Type attributeTypeSpec2Type) {
+		this.attributeTypeSpec2Type = attributeTypeSpec2Type;
+	}
+
+	public AttributeDecorator getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(AttributeDecorator attribute) {
+		this.attribute = attribute;
+
+	}
+
+	public void transform() {
+		DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
+		DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();		
+		Type type = this.getAttributeTypeSpec2Type().getType();
+		Attribute att1 = dataFactory.createAttribute(this.getAttributeSpec().getName(), type, false);
+		this.setAttribute(dataFactory.createAttributeDecorator(att1));
+	}
+
+	public AttributeSpec getAttributeSpec() {
+		return attributeSpec;
+	}
+
+	public void setAttributeSpec(AttributeSpec attributeSpec) {
+		this.attributeSpec = attributeSpec;
+	}
 
 }

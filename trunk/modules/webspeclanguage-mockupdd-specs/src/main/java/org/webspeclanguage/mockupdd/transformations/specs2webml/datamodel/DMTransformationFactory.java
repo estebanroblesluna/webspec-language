@@ -13,23 +13,26 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
-import java.util.*;
-
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
-import org.webspeclanguage.mockupdd.specs.data.*;
-
+import org.webspeclanguage.mockupdd.specs.data.AssociationSpec;
+import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
+import org.webspeclanguage.mockupdd.specs.data.AttributeTypeSpec;
+import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 
 /**
  * @author Franco Giacosa
  */
 public interface DMTransformationFactory {
 
-      final List<AttributeSpec2Attribute> attributeSpec2Attributes = new ArrayList<AttributeSpec2Attribute>();
-      final List<AttributeTypeSpec2Type> attributeTypeSpec2Types = new ArrayList<AttributeTypeSpec2Type>();
-      final List<ClassSpec2Entity> classSpec2Entitys = new ArrayList<ClassSpec2Entity>();
-      
-      AttributeSpec2Attribute transformAttributeSpec2Attribute(AttributeSpec attributeSpec);
-      AttributeTypeSpec2Type transformAttributeTypeSpec2Type(AttributeTypeSpec attributeTypeSpec);
-      ClassSpec2Entity transformClassSpec2Entity(ClassSpec classSpec);
-      EntityDecorator getEntity(String classSpecName);
+	AssociationSpec2Relationship transformAssociationSpec2Relationship(
+			AssociationSpec associationSpec, ClassSpec associationSource);
+
+	AttributeSpec2Attribute transformAttributeSpec2Attribute(
+			AttributeSpec attributeSpec);
+
+	AttributeTypeSpec2Type transformAttributeTypeSpec2Type(
+			AttributeTypeSpec attributeTypeSpec);
+
+	ClassSpec2Entity transformClassSpec2Entity(ClassSpec classSpec);
+
+
 }
