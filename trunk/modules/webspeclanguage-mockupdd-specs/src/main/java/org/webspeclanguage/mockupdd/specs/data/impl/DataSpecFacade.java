@@ -18,16 +18,16 @@ import org.webspeclanguage.mockupdd.specs.data.DataSpecFactory;
 /**
  * @author Franco Giacosa
  */
-public class DataSpecFacadeImpl {
+public class DataSpecFacade {
   private DataSpecFactory dataSpecFactory;
-  private static DataSpecFacadeImpl dataSpecFacade;
+  private static DataSpecFacade dataSpecFacade;
 
-  private DataSpecFacadeImpl() {
+  private DataSpecFacade() {
     dataSpecFactory = new DataSpecFactoryImpl();
   }
-  public static DataSpecFacadeImpl getDataSpecFacade() {
+  public static DataSpecFacade getDataSpecFacade() {
     if(dataSpecFacade==null){  
-      dataSpecFacade = new DataSpecFacadeImpl();
+      dataSpecFacade = new DataSpecFacade();
     }  
     return dataSpecFacade;
   }

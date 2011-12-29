@@ -13,7 +13,17 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
-import org.webspeclanguage.mockupdd.specs.hypertext.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
 
 
 /**
@@ -21,61 +31,73 @@ import org.webspeclanguage.mockupdd.specs.hypertext.*;
  */
 public class WMTransformationFactoryImpl implements WMTransformationFactory {
 
-
-
-  public RepetitionClassMappingSpec2IndexUnit transformRepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetitionClassMappingSpec) {
+  public NavigationSpec2NavigationPUnitToPUnit transformNavigationSpec2NavigationPUnitToPUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
+	  
+	  NavigationSpec2NavigationPUnitToPUnit navigationSpec2NavigationPUnitToPUnit = new NavigationSpec2NavigationPUnitToPUnit(navigationSpec,hypertextSpec2WebMLWebModel);
+	  navigationSpec2NavigationPUnitToPUnit.transform();
+	  return navigationSpec2NavigationPUnitToPUnit;
+  }
+  
+  public NavigationSpec2IntraNavigationUnitToUnit transformNavigationSpec2IntraNavigationUnitToUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+	  
+	  NavigationSpec2IntraNavigationUnitToUnit navigationSpec2IntraNavigationUnitToUnit = new NavigationSpec2IntraNavigationUnitToUnit(navigationSpec,hypertextSpec2WebMLWebModel);
+	  navigationSpec2IntraNavigationUnitToUnit.transform();
+	  return navigationSpec2IntraNavigationUnitToUnit;	  
+  }
+  public NavigationSpec2NavigationPageToPage transformNavigationSpec2NavigationPageToPage(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
+	  
+	  NavigationSpec2NavigationPageToPage navigationSpec2NavigationPageToPage = new NavigationSpec2NavigationPageToPage(navigationSpec,hypertextSpec2WebMLWebModel);
+	  navigationSpec2NavigationPageToPage.transform();
+	  return navigationSpec2NavigationPageToPage;	  
+  }
+	
+  public RepetitionClassMappingSpec2IndexUnit transformRepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetitionClassMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
-    RepetitionClassMappingSpec2IndexUnit suiRepetition2IndexUnit = new RepetitionClassMappingSpec2IndexUnit(repetitionClassMappingSpec);
+    RepetitionClassMappingSpec2IndexUnit suiRepetition2IndexUnit = new RepetitionClassMappingSpec2IndexUnit(repetitionClassMappingSpec,hypertextSpec2WebMLWebModel);
     suiRepetition2IndexUnit.transform();
-    WMTransformationFactory.repetitionClassMappingSpec2IndexUnits.add(suiRepetition2IndexUnit);
     return suiRepetition2IndexUnit;   
   }
 
-  public PanelClassMappingSpec2DataUnit transformPanelClassMappingSpec2DataUnit(PanelClassMappingSpec suiPanel) {
+  public PanelClassMappingSpec2DataUnit transformPanelClassMappingSpec2DataUnit(PanelClassMappingSpec suiPanel, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
 
-    PanelClassMappingSpec2DataUnit suiPanel2DataUnit = new PanelClassMappingSpec2DataUnit(suiPanel);
+    PanelClassMappingSpec2DataUnit suiPanel2DataUnit = new PanelClassMappingSpec2DataUnit(suiPanel,hypertextSpec2WebMLWebModel);
     suiPanel2DataUnit.transform();
-    WMTransformationFactory.panelClassMapping2DataUnits.add(suiPanel2DataUnit);
     return suiPanel2DataUnit;
   }
 
-  public SUIPage2Page transformSUIPage2Page(org.webspeclanguage.mockupdd.sui.model.Page suiPage) {
+  public SUIPage2Page transformSUIPage2Page(org.webspeclanguage.mockupdd.sui.model.Page suiPage, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
-    SUIPage2Page suiPage2Page = new SUIPage2Page(suiPage);
+    SUIPage2Page suiPage2Page = new SUIPage2Page(suiPage,hypertextSpec2WebMLWebModel);
     suiPage2Page.transform();
-    WMTransformationFactory.suiPage2Pages.add(suiPage2Page);
     return suiPage2Page;
   }
 
-  public SaveActionSpec2CreateUnit transformSaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec) {
+  public SaveActionSpec2CreateUnit transformSaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
-    SaveActionSpec2CreateUnit saveActionSpec2CreateUnit = new SaveActionSpec2CreateUnit(saveActionSpec);
+    SaveActionSpec2CreateUnit saveActionSpec2CreateUnit = new SaveActionSpec2CreateUnit(saveActionSpec,hypertextSpec2WebMLWebModel);
     saveActionSpec2CreateUnit.transform();
-    WMTransformationFactory.saveActionSpec2CreateUnits.add(saveActionSpec2CreateUnit);
     return saveActionSpec2CreateUnit;
   }
 
-  public DeleteActionSpec2DeleteUnit transformDeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec) {
+  public DeleteActionSpec2DeleteUnit transformDeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
 
-    DeleteActionSpec2DeleteUnit deleteActionSpec2DeleteUnit = new DeleteActionSpec2DeleteUnit(deleteActionSpec);
+    DeleteActionSpec2DeleteUnit deleteActionSpec2DeleteUnit = new DeleteActionSpec2DeleteUnit(deleteActionSpec,hypertextSpec2WebMLWebModel);
     deleteActionSpec2DeleteUnit.transform();
-    WMTransformationFactory.deleteActionSpec2DeleteUnits.add(deleteActionSpec2DeleteUnit);
     return deleteActionSpec2DeleteUnit;
   }
   
-  public InputPanelSpec2EntryUnit transformInputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec) {
+  public InputPanelSpec2EntryUnit transformInputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
-    InputPanelSpec2EntryUnit suiInputPanel2EntryUnit = new InputPanelSpec2EntryUnit(inputPanelSpec);
+    InputPanelSpec2EntryUnit suiInputPanel2EntryUnit = new InputPanelSpec2EntryUnit(inputPanelSpec,hypertextSpec2WebMLWebModel);
     suiInputPanel2EntryUnit.transform();
-    WMTransformationFactory.inputPanelSpec2EntryUnits.add(suiInputPanel2EntryUnit);
     return suiInputPanel2EntryUnit;
   }
   
-  public SelectableRepetitionSpec2MultiChoiceIU transformSelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec) {
+  public SelectableRepetitionSpec2MultiChoiceIU transformSelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
-    SelectableRepetitionSpec2MultiChoiceIU selectableRepetitionSpec2MultiChoiceIU = new SelectableRepetitionSpec2MultiChoiceIU(selectableRepetitionSpec);
+    SelectableRepetitionSpec2MultiChoiceIU selectableRepetitionSpec2MultiChoiceIU = new SelectableRepetitionSpec2MultiChoiceIU(selectableRepetitionSpec,hypertextSpec2WebMLWebModel);
     selectableRepetitionSpec2MultiChoiceIU.transform();
-    WMTransformationFactory.selectableRepetitionSpec2MultiChoiceIUs.add(selectableRepetitionSpec2MultiChoiceIU);
+    this.getSelectableRepetitionSpec2MultiChoiceIUs().add(selectableRepetitionSpec2MultiChoiceIU);
     return selectableRepetitionSpec2MultiChoiceIU;
   }
 

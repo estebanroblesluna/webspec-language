@@ -15,7 +15,6 @@ package org.webspeclanguage.mockupdd.specs.data.impl;
 
 import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.data.AttributeTypeSpec;
-import org.webspeclanguage.mockupdd.specs.data.AttributeTypeSpec;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 
 /**

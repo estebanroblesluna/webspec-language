@@ -45,6 +45,7 @@ public final class DMTransformationFacade {
   public DataSpecs2WebMLDataModel transformData(SuiSpecsInferenceState suiSpecsInferenceState){
 	  DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel = new DataSpecs2WebMLDataModel(suiSpecsInferenceState);
 	  dataSpecs2WebMLDataModel.transform();
+	  this.getDataSpecsTransformations().add(dataSpecs2WebMLDataModel);
 	  return dataSpecs2WebMLDataModel;
   }
   public void setDataSpecsTransformations(List<DataSpecs2WebMLDataModel> dataSpecsTransformations) {

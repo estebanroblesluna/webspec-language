@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,9 +25,11 @@ import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
 import org.webspeclanguage.mockupdd.specs.processors.SuiModelProcessingError;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
+import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.utils.MultiArrayListHashMap;
 import org.webspeclanguage.mockupdd.utils.MultiListMap;
 import org.webspeclanguage.mockupdd.utils.TagIndexer;
+
 
 /**
  * @author José Matías Rivero
@@ -48,6 +51,17 @@ public class SuiSpecsInferenceState {
     this.classSpecsByName = new HashMap<String, ClassSpec>();
   }
 
+  public Page getPageByWidget(Widget widget){
+	  Page selectedPage = null;
+	  Iterator<Page> pIt = this.getModel().getPages().iterator();
+	  while((pIt.hasNext()) && (selectedPage == null)){
+		  Page p = pIt.next();
+		  if(p.getWidgetById(widget.getWidgetId()) != null ){
+			  selectedPage = p; 
+		  }
+	  }	  
+	  return selectedPage;
+  }
   public List<NavigationSpec> getNavigationSpecsForPage(Page p) {
     return Collections.unmodifiableList(this.getNavigationSpecs().get(p));
   }

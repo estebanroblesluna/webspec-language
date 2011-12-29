@@ -25,10 +25,11 @@ public class SUIPage2Page {
   
     private org.webspeclanguage.mockupdd.codegen.webml.webmodel.Page webmlPage;
     private org.webspeclanguage.mockupdd.sui.model.Page suiPage;
-
-    public SUIPage2Page(org.webspeclanguage.mockupdd.sui.model.Page suiPage){
+    private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+    public SUIPage2Page(org.webspeclanguage.mockupdd.sui.model.Page suiPage, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
       super();
       this.setSuiPage(suiPage);
+      this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
     }
     
     public org.webspeclanguage.mockupdd.sui.model.Page getSuiPage() {
@@ -54,5 +55,14 @@ public class SUIPage2Page {
       this.setWebmlPage(webFactory.createPage(this.getSuiPage().getWidgetId(), false, true));
       
     }
+
+	public void setHypertextSpec2WebMLWebModel(
+			HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+		this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
+	}
+
+	public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+		return hypertextSpec2WebMLWebModel;
+	}
     
 }

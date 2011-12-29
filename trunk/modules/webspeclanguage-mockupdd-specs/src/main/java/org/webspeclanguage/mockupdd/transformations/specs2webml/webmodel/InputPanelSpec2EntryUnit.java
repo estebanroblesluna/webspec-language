@@ -18,8 +18,6 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.EntryUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 
 /**
@@ -27,22 +25,20 @@ import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTran
  */
 public class InputPanelSpec2EntryUnit {
   
-  public InputPanelSpec inputPanelSpec;
-  public EntryUnit entryUnit;
-
-  public InputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec) {
+  private InputPanelSpec inputPanelSpec;
+  private EntryUnit entryUnit;
+  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+  public InputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
     super();
     this.setInputPanelSpec(inputPanelSpec);
+    this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
   }
 
   public void transform(){
     
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
-    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
-    
-    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getInputPanelSpec().getClassSpec().getName());    
+    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getInputPanelSpec().getClassSpec().getName());    
     this.setEntryUnit(webFactory.createEntryUnit(this.getInputPanelSpec().getWidget().getWidgetId(), entityDecorator));
   }
 
@@ -61,5 +57,13 @@ public class InputPanelSpec2EntryUnit {
   public void setEntryUnit(EntryUnit entryUnit) {
     this.entryUnit = entryUnit;
   }
+
+public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
+}
+
+public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+	return hypertextSpec2WebMLWebModel;
+}
   
 }
