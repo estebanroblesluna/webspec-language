@@ -20,6 +20,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.DeleteUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
 import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
 import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
 
 
 /**
@@ -27,22 +28,20 @@ import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTran
  */
 public class DeleteActionSpec2DeleteUnit {
 
-  public DeleteActionSpec deleteActionSpec;
-  public DeleteUnit deleteUnit;
-
-  public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec) {
+  private DeleteActionSpec deleteActionSpec;
+  private DeleteUnit deleteUnit;
+  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+  public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
     super();
     this.deleteActionSpec = deleteActionSpec;
+    this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
   }
 
   public void transform(){
     
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
-    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
-    
-    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getDeleteActionSpec().getSpec().getClassSpec().getName());    
+    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getDeleteActionSpec().getSpec().getClassSpec().getName());    
     this.setDeleteUnit(webFactory.createDeleteUnit(this.getDeleteActionSpec().getSpec().getClassSpec().getName(), entityDecorator));  
   }
 
@@ -61,4 +60,12 @@ public class DeleteActionSpec2DeleteUnit {
   public void setDeleteUnit(DeleteUnit deleteUnit) {
     this.deleteUnit = deleteUnit;
   }
+
+public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
+}
+
+public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+	return hypertextSpec2WebMLWebModel;
+}
 }

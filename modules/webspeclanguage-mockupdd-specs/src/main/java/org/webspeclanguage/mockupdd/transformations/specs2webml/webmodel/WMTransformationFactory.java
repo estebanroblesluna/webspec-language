@@ -15,35 +15,28 @@ package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
 import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
-
-import java.util.*;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
 
 
 /**
  * @author Franco Giacosa
  */
 public interface WMTransformationFactory {
-  
-  final java.util.List<SelectableRepetitionSpec2MultiChoiceIU> selectableRepetitionSpec2MultiChoiceIUs = new ArrayList<SelectableRepetitionSpec2MultiChoiceIU>();
-  final java.util.List<RepetitionClassMappingSpec2IndexUnit> repetitionClassMappingSpec2IndexUnits = new ArrayList<RepetitionClassMappingSpec2IndexUnit>();
-  final java.util.List<PanelClassMappingSpec2DataUnit> panelClassMapping2DataUnits = new ArrayList<PanelClassMappingSpec2DataUnit>();
-  final java.util.List<SUIPage2Page> suiPage2Pages = new ArrayList<SUIPage2Page>();
-  final java.util.List<InputPanelSpec2EntryUnit> inputPanelSpec2EntryUnits = new ArrayList<InputPanelSpec2EntryUnit>();
-  final java.util.List<SaveActionSpec2CreateUnit> saveActionSpec2CreateUnits = new ArrayList<SaveActionSpec2CreateUnit>();
-  final java.util.List<DeleteActionSpec2DeleteUnit> deleteActionSpec2DeleteUnits = new ArrayList<DeleteActionSpec2DeleteUnit>();
-  
-  
-  RepetitionClassMappingSpec2IndexUnit transformRepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetitionClassMappingSpec);
-  PanelClassMappingSpec2DataUnit transformPanelClassMappingSpec2DataUnit(PanelClassMappingSpec panelClassMappingSpec);
-  SUIPage2Page transformSUIPage2Page(org.webspeclanguage.mockupdd.sui.model.Page suiPage);
-  
-  InputPanelSpec2EntryUnit transformInputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpecsuiInputPanel);
-  SaveActionSpec2CreateUnit transformSaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec);
-  DeleteActionSpec2DeleteUnit transformDeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec);
-  SelectableRepetitionSpec2MultiChoiceIU transformSelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec);
-  
+   
+  RepetitionClassMappingSpec2IndexUnit transformRepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetitionClassMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  PanelClassMappingSpec2DataUnit transformPanelClassMappingSpec2DataUnit(PanelClassMappingSpec panelClassMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  SUIPage2Page transformSUIPage2Page(org.webspeclanguage.mockupdd.sui.model.Page suiPage, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);  
+  InputPanelSpec2EntryUnit transformInputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpecsuiInputPanel, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  SaveActionSpec2CreateUnit transformSaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  DeleteActionSpec2DeleteUnit transformDeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  SelectableRepetitionSpec2MultiChoiceIU transformSelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  NavigationSpec2NavigationPageToPage transformNavigationSpec2NavigationPageToPage(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  NavigationSpec2IntraNavigationUnitToUnit  transformNavigationSpec2IntraNavigationUnitToUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  NavigationSpec2NavigationPUnitToPUnit transformNavigationSpec2NavigationPUnitToPUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+
 }

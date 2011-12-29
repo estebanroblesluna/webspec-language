@@ -29,10 +29,11 @@ public class RepetitionClassMappingSpec2IndexUnit {
   
   private RepetitionClassMappingSpec repetition;
   private IndexUnit indexUnit;
-
-  public RepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetition){
+  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+  public RepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetition, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
     super();
     this.setRepetition(repetition);
+    this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
   }
 
   public void transform(){
@@ -42,7 +43,7 @@ public class RepetitionClassMappingSpec2IndexUnit {
     DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
     DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
     
-    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getRepetition().getClassSpec().getName());    
+    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getRepetition().getClassSpec().getName());    
     this.setIndexUnit(webFactory.createIndexUnit(this.getRepetition().getWidget().getWidgetId(), entityDecorator));    
   }
   
@@ -61,5 +62,13 @@ public class RepetitionClassMappingSpec2IndexUnit {
   public void setIndexUnit(IndexUnit indexUnit) {
     this.indexUnit = indexUnit;
   }
+
+public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
+}
+
+public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+	return hypertextSpec2WebMLWebModel;
+}
 
 }

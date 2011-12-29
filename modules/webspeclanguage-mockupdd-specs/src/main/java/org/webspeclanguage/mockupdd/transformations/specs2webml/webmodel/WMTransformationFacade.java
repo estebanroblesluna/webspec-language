@@ -13,27 +13,53 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
+
 /**
  * @author Franco Giacosa
  */
 public final class WMTransformationFacade {
-  
-  private WMTransformationFactory wmTransformationFactory;
-  private static WMTransformationFacade wmTransformationFacade;
 
-  private WMTransformationFacade() {
-    wmTransformationFactory = new WMTransformationFactoryImpl();
-  }
-  public static WMTransformationFacade getWMTransformationFacade() {
-    if(wmTransformationFacade==null){  
-      wmTransformationFacade = new WMTransformationFacade();
-    }  
-    return wmTransformationFacade;
-  }
-  
-  public WMTransformationFactory getWMTransformationFactory() {
-    return wmTransformationFactory;
-  }
-  
+	private WMTransformationFactory wmTransformationFactory;
+	private static WMTransformationFacade wmTransformationFacade;
+	private List<HypertextSpec2WebMLWebModel> hypertextSpecsTransformations = new ArrayList<HypertextSpec2WebMLWebModel>();
+
+	private WMTransformationFacade() {
+		wmTransformationFactory = new WMTransformationFactoryImpl();
+	}
+
+	public static WMTransformationFacade getWMTransformationFacade() {
+		if (wmTransformationFacade == null) {
+			wmTransformationFacade = new WMTransformationFacade();
+		}
+		return wmTransformationFacade;
+	}
+
+	public WMTransformationFactory getWMTransformationFactory() {
+		return wmTransformationFactory;
+	}
+
+	public HypertextSpec2WebMLWebModel transformHypertext(
+			SuiSpecsInferenceState suiSpecsInferenceState) {
+		HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel = new HypertextSpec2WebMLWebModel(
+				suiSpecsInferenceState);
+		hypertextSpec2WebMLWebModel.transform();
+		this.getHypertextSpecsTransformations()
+				.add(hypertextSpec2WebMLWebModel);
+		return hypertextSpec2WebMLWebModel;
+	}
+
+	public void setHypertextSpecsTransformations(
+			List<HypertextSpec2WebMLWebModel> hypertextSpecsTransformations) {
+		this.hypertextSpecsTransformations = hypertextSpecsTransformations;
+	}
+
+	public List<HypertextSpec2WebMLWebModel> getHypertextSpecsTransformations() {
+		return hypertextSpecsTransformations;
+	}
 
 }

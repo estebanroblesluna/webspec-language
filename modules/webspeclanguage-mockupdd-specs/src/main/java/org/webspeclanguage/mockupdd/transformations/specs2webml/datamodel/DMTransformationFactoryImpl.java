@@ -42,7 +42,6 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
         
     AttributeTypeSpec2Type attributeTypeSpec2Type = new AttributeTypeSpec2Type(attributeTypeSpec);
     attributeTypeSpec2Type.transform();
-    this.getAttributeTypeSpec2Types().add(attributeTypeSpec2Type);
     return attributeTypeSpec2Type;
   }
 

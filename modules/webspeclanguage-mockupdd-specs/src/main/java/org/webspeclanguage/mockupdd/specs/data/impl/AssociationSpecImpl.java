@@ -18,45 +18,46 @@ import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.specs.data.MaximumCardinality;
 
 /**
- * Represents an directed association to an {@link ClassSpec} 
+ * Represents an directed association to an {@link ClassSpec}
  * 
  * @author Jose Matias Rivero
  */
 public class AssociationSpecImpl implements AssociationSpec {
 
-  private ClassSpec destinationClass;
-  private String associationName;
-  private MaximumCardinality maximumCardinality;
+	private ClassSpec destinationClass;
+	private String associationName;
+	private MaximumCardinality maximumCardinality;
 
-  public AssociationSpecImpl(ClassSpec destinationClass, String associationName, MaximumCardinality maximumCardinality) {
-    super();
-    this.setDestinationClass(destinationClass);
-    this.setAssociationName(associationName);
-    this.setMaximumCardinality(maximumCardinality);
-  }
+	public AssociationSpecImpl(ClassSpec destinationClass,
+			String associationName, MaximumCardinality maximumCardinality) {
+		super();
+		this.setDestinationClass(destinationClass);
+		this.setAssociationName(associationName);
+		this.setMaximumCardinality(maximumCardinality);
+	}
 
-  public ClassSpec getDestinationClass() {
-    return destinationClass;
-  }
+	public ClassSpec getDestinationClass() {
+		return destinationClass;
+	}
 
-  private void setDestinationClass(ClassSpec destinationClass) {
-    this.destinationClass = destinationClass;
-  }
+	private void setDestinationClass(ClassSpec destinationClass) {
+		this.destinationClass = destinationClass;
+	}
 
-  public String getAssociationName() {
-    return associationName;
-  }
+	public String getAssociationName() {
+		return associationName;
+	}
 
-  private void setAssociationName(String associationName) {
-    this.associationName = associationName;
-  }
+	private void setAssociationName(String associationName) {
+		this.associationName = associationName;
+	}
 
-  public MaximumCardinality getMaximumCardinality() {
-    return maximumCardinality;
-  }
+	public MaximumCardinality getMaximumCardinality() {
+		return maximumCardinality;
+	}
 
-  private void setMaximumCardinality(MaximumCardinality maximumCardinality) {
-    this.maximumCardinality = maximumCardinality;
-  }
+	private void setMaximumCardinality(MaximumCardinality maximumCardinality) {
+		this.maximumCardinality = maximumCardinality;
+	}
 
 }

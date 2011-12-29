@@ -1,4 +1,4 @@
-/* Licensed under the Apache License, Version 2.0 (the "License");
+	/* Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
@@ -27,21 +27,19 @@ import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTran
  */
 public class SaveActionSpec2CreateUnit {
   
-  public SaveActionSpec saveActionSpec;
-  public CreateUnit createUnit;
-
-  public SaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec){
+  private SaveActionSpec saveActionSpec;
+  private CreateUnit createUnit;
+  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+  public SaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
     super();
     this.setSaveActionSpec(saveActionSpec);
+    this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
   }
   
   public void transform(){
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
-    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
-    
-    EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getSaveActionSpec().getSpec().getClassSpec().getName());    
+    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getSaveActionSpec().getSpec().getClassSpec().getName());    
     this.setCreateUnit(webFactory.createCreateUnit(this.getSaveActionSpec().getSpec().getClassSpec().getName(), entityDecorator));    
   }
 
@@ -60,4 +58,12 @@ public class SaveActionSpec2CreateUnit {
   public void setCreateUnit(CreateUnit createUnit) {
     this.createUnit = createUnit;
   }
+
+public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
+}
+
+public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+	return hypertextSpec2WebMLWebModel;
+}
 }

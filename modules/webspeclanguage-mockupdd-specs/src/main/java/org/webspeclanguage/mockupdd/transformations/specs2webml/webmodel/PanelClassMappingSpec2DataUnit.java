@@ -25,13 +25,14 @@ import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.*;
  */
 public class PanelClassMappingSpec2DataUnit {
   
-    private DataUnit dataUnit;
-    
+    private DataUnit dataUnit; 
     private PanelClassMappingSpec panel;
+    private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
 
-    public PanelClassMappingSpec2DataUnit(PanelClassMappingSpec panel){
+    public PanelClassMappingSpec2DataUnit(PanelClassMappingSpec panel, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
       super();
       this.setPanel(panel);
+      this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
     }
     
     public PanelClassMappingSpec getPanel() {
@@ -45,10 +46,7 @@ public class PanelClassMappingSpec2DataUnit {
     public void transform(){
       WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
       WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-      DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
-      DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
-      
-      EntityDecorator entityDecorator = dmTransformationFactory.getEntity(this.getPanel().getClassSpec().getName());    
+      EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getPanel().getClassSpec().getName());    
       this.setDataUnit(webFactory.createDataUnit(this.getPanel().getWidget().getWidgetId(), entityDecorator));
     }
     
@@ -59,5 +57,14 @@ public class PanelClassMappingSpec2DataUnit {
     public void setDataUnit(DataUnit dataUnit) {
       this.dataUnit = dataUnit;
     }
+
+	public void setHypertextSpec2WebMLWebModel(
+			HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+		this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
+	}
+
+	public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+		return hypertextSpec2WebMLWebModel;
+	}
 
 }
