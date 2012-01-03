@@ -20,14 +20,16 @@ import java.util.List;
  */
 public interface ClassSpec {
 
-  public abstract String getName();
+  String getName();
 
-  public abstract List<AttributeSpec> getAttributes();
+  List<AttributeSpec> getAttributes();
+  
+  AttributeSpec getAttributeByName(String name);
+  
+  void addAttribute(AttributeSpec attribute);
 
-  public abstract void addAttribute(AttributeSpec attribute);
+  List<AssociationSpec> getAssociations();
 
-  public abstract List<AssociationSpec> getAssociations();
-
-  public abstract void addAssociation(AssociationSpec associationSpec);
+  void addAssociation(AssociationSpec associationSpec);
 
 }

@@ -25,14 +25,14 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 /**
  * @author José Matías Rivero
  */
-public class LinkSpecInfererTestCase extends SuiTestCase {
+public class NavigationSpecInfererTestCase extends SuiTestCase {
 
-  private LinkSpecInferer linkSpecInferer;
+  private NavigationSpecInferer linkSpecInferer;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.linkSpecInferer = new LinkSpecInferer();
+    this.linkSpecInferer = new NavigationSpecInferer();
   }
 
   public void testLinkSpecInference() throws TagApplicationException {

@@ -20,7 +20,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 
 
 /**
- * Represents an Association between a {@link ClassMappingSpec} and another {@link ClassMappingSpec}
+ * Represents an Association between a {@link ClassClassMappingSpec} and another {@link ClassClassMappingSpec}
  * @author Franco Giacosa
  */
 public class AssociateActionSpecImpl implements ActionSpec, AssociateActionSpec {

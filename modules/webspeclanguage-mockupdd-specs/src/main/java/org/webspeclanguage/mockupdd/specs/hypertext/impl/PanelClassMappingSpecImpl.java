@@ -15,13 +15,14 @@ package org.webspeclanguage.mockupdd.specs.hypertext.impl;
 
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Panel;
 
 
 /**
  * @author Franco Giacosa
  */
-public class PanelClassMappingSpecImpl extends ClassMappingSpecImpl implements PanelClassMappingSpec {
+public class PanelClassMappingSpecImpl extends ClassMappingSpecImpl<Panel> implements PanelClassMappingSpec {
 
   public Panel widget;
   

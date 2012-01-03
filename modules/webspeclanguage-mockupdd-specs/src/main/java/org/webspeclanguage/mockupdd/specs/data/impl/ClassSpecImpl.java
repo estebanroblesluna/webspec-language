@@ -15,8 +15,11 @@ package org.webspeclanguage.mockupdd.specs.data.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.webspeclanguage.mockupdd.specs.data.AssociationSpec;
 import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
@@ -32,12 +35,14 @@ public class ClassSpecImpl implements ClassSpec {
   private String name;
   private List<AttributeSpec> attributes;
   private List<AssociationSpec> associations;
+  private Map<String, AttributeSpec> attributesByName;
 
   public ClassSpecImpl(String name) {
     super();
     this.setName(name);
     this.setAttributes(new ArrayList<AttributeSpec>());
     this.setAssociations(new ArrayList<AssociationSpec>());
+    this.setAttributesByName(new HashMap<String, AttributeSpec>());
   }
 
   public String getName() {
@@ -57,7 +62,11 @@ public class ClassSpecImpl implements ClassSpec {
   }
   
   public void addAttribute(AttributeSpec attribute) {
+    Validate.notNull(attribute);
+    Validate.notNull(attribute.getName());
+    
     this.attributes.add(attribute);
+    this.attributesByName.put(attribute.getName(), attribute);
   }
 
   public List<AssociationSpec> getAssociations() {
@@ -71,5 +80,20 @@ public class ClassSpecImpl implements ClassSpec {
   public void addAssociation(AssociationSpec associationSpec) {
     this.associations.add(associationSpec);
   }
+
+  private Map<String, AttributeSpec> getAttributesByName() {
+    return attributesByName;
+  }
+
+  private void setAttributesByName(Map<String, AttributeSpec> attributesByName) {
+    this.attributesByName = attributesByName;
+  }
+
+  @Override
+  public AttributeSpec getAttributeByName(String name) {
+    return this.getAttributesByName().get(name);
+  }
+  
+  
 
 }

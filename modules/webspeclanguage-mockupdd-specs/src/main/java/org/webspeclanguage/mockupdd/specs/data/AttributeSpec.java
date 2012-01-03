@@ -19,8 +19,8 @@ package org.webspeclanguage.mockupdd.specs.data;
  */
 public interface AttributeSpec {
 
-  public abstract String getName();
+  String getName();
 
-  public abstract AttributeTypeSpec getType();
+  AttributeTypeSpec getType();
 
 }

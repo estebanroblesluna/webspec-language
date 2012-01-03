@@ -13,16 +13,26 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
-import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
- * @author Franco Giacosa
+ * Represents an abstract data mapping to a underlying {@link Widget}
+ * 
+ * @author José Matías Rivero
  */
-public interface AttributeMappingSpec {
+public interface MappingSpec<W extends CompositeWidget> {
 
-  SimpleWidget getWidget();
+  /**
+   * @return The widget being mapped
+   */
+  W getWidget();
 
-  AttributeSpec getAttributeSpec();
+  /**
+   * @return The Widget from which instance is taken (if defined)
+   */
+  CompositeWidget getDataSource();
+
+  void setDataSource(CompositeWidget dataSource);
 
 }

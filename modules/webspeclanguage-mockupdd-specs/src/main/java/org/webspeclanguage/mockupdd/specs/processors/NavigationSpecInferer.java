@@ -30,7 +30,7 @@ import org.webspeclanguage.mockupdd.utils.SuiCollectionUtils.Indexer;
 /**
  * @author José Matías Rivero
  */
-public class LinkSpecInferer implements SuiModelProcessor {
+public class NavigationSpecInferer implements SuiModelProcessor {
 
   @Override
   public void process(SuiSpecsInferenceState specs) {

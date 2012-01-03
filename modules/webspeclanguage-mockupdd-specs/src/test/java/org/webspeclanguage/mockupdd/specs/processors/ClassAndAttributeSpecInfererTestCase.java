@@ -40,25 +40,27 @@ public class ClassAndAttributeSpecInfererTestCase extends SuiTestCase {
     Page p2 = this.getFactory().createPage("page2", 0, 0, 0, 0, "page2", "page2");
     Panel panel1 = this.getFactory().createPanel("panel1", 0, 0, 0, 0, "panel1");
     Panel panel2 = this.getFactory().createPanel("panel2", 0, 0, 0, 0, "panel2");
+    Panel panel3 = this.getFactory().createPanel("panel3", 0, 0, 0, 0, "panel3");
     TextBox tb = this.getFactory().createTextBox("tb1", 0, 0, 0, 0);
     
     p1.addChild(panel1);
+    p2.addChild(panel3);
     p2.addChild(panel2);
     panel1.addChild(tb);
      
-
     SuiModel model = this.getFactory().createSuiModel();
     model.addPage(p1);
     model.addPage(p2);
 
     this.getSuiConfig().createTagApplication(panel1, "Data", "Data", "Class1");
-    this.getSuiConfig().createTagApplication(panel2, "Data", "Data", "w1:Class2.attr -> Class3");
+    this.getSuiConfig().createTagApplication(panel2, "Data", "Data", "panel3:Class2.attr -> Class3");
     this.getSuiConfig().createTagApplication(tb, "Data", "Data", "Class1.attrib1");
 
     SuiSpecsInferenceState suiSpecs = new SuiSpecsInferenceState(model);
 
     this.inferer.process(suiSpecs);
     
+    assertEquals(0, suiSpecs.getErrors().size());
     assertEquals(3, suiSpecs.getClassSpecs().size());
     
     ClassSpec class1 = suiSpecs.getClassSpecByName("Class1");
@@ -74,6 +76,18 @@ public class ClassAndAttributeSpecInfererTestCase extends SuiTestCase {
     assertEquals(1, class2.getAssociations().size());
     assertEquals("attr", class2.getAssociations().iterator().next().getAssociationName());
     assertSame(class3, class2.getAssociations().iterator().next().getDestinationClass());
+    
+    assertNotNull(suiSpecs.getClassMappingSpecForWidget(panel1));
+    assertSame(class1, suiSpecs.getClassMappingSpecForWidget(panel1).getClassSpec());
+    assertSame(panel1, suiSpecs.getClassMappingSpecForWidget(panel1).getWidget());
+    assertNotNull(suiSpecs.getClassMappingSpecForWidget(panel2));
+    assertSame(class3, suiSpecs.getClassMappingSpecForWidget(panel2).getClassSpec());
+    assertSame(panel2, suiSpecs.getClassMappingSpecForWidget(panel2).getWidget());
+    
+    assertNotNull(suiSpecs.getAttributeMappingSpecForWidget(tb));
+    assertEquals("attrib1", suiSpecs.getAttributeMappingSpecForWidget(tb).getAttributeSpec().getName());
+    assertSame(tb, suiSpecs.getAttributeMappingSpecForWidget(tb).getWidget());
+    
   }
 
 }

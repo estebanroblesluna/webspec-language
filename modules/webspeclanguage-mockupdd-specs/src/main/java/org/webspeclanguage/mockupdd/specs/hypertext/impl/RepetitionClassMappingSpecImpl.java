@@ -15,13 +15,14 @@ package org.webspeclanguage.mockupdd.specs.hypertext.impl;
 
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Repetition;
 
 
 /**
  * @author Franco Giacosa
  */
-public class RepetitionClassMappingSpecImpl extends ClassMappingSpecImpl implements RepetitionClassMappingSpec {
+public class RepetitionClassMappingSpecImpl extends ClassMappingSpecImpl<Repetition> implements RepetitionClassMappingSpec {
 
   public Repetition widget;
   
@@ -29,7 +30,6 @@ public class RepetitionClassMappingSpecImpl extends ClassMappingSpecImpl impleme
     super(classSpec);
     this.setWidget(repetition);
   }
-
   
   public Repetition getWidget() {
     return widget;
