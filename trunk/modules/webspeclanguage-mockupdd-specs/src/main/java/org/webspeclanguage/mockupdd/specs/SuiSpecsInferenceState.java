@@ -20,10 +20,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
 import org.webspeclanguage.mockupdd.specs.processors.SuiModelProcessingError;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Page;
+import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.utils.MultiArrayListHashMap;
@@ -41,6 +46,8 @@ public class SuiSpecsInferenceState {
   private List<SuiModelProcessingError> errors;
   private MultiListMap<Page, NavigationSpec> navigationSpecs;
   private Map<String, ClassSpec> classSpecsByName;
+  private Map<Widget, ClassMappingSpec<CompositeWidget>> classMappingSpecsByWidget;
+  private Map<SimpleWidget, AttributeMappingSpec> attributeMappingSpecsByWidget;
 
   public SuiSpecsInferenceState(SuiModel model) {
     super();
@@ -49,6 +56,8 @@ public class SuiSpecsInferenceState {
     this.errors = new ArrayList<SuiModelProcessingError>();
     this.navigationSpecs = new MultiArrayListHashMap<Page, NavigationSpec>();
     this.classSpecsByName = new HashMap<String, ClassSpec>();
+    this.classMappingSpecsByWidget = new HashMap<Widget, ClassMappingSpec<CompositeWidget>>();
+    this.attributeMappingSpecsByWidget = new HashMap<SimpleWidget, AttributeMappingSpec>();
   }
 
   public Page getPageByWidget(Widget widget){
@@ -62,11 +71,14 @@ public class SuiSpecsInferenceState {
 	  }	  
 	  return selectedPage;
   }
+  
   public List<NavigationSpec> getNavigationSpecsForPage(Page p) {
     return Collections.unmodifiableList(this.getNavigationSpecs().get(p));
   }
 
   public void addNavigationSpec(NavigationSpec ns) {
+    Validate.notNull(ns);
+    
     this.getNavigationSpecs().putOnce(ns.getTrigger().getPage(), ns);
   }
 
@@ -79,15 +91,20 @@ public class SuiSpecsInferenceState {
   }
 
   public void addError(SuiModelProcessingError error) {
-    this.getErrors().add(error);
+    Validate.notNull(error);
+    
+    this.errors.add(error);
   }
   
   public ClassSpec getClassSpecByName(String name) {
     return this.classSpecsByName.get(name);
   }
 
-  public ClassSpec addClassSpec(ClassSpec classSpec) {
-    return this.classSpecsByName.put(classSpec.getName(), classSpec);
+  public ClassSpec addClassSpec(ClassSpec cs) {
+    Validate.notNull(cs);
+    
+    this.classSpecsByName.put(cs.getName(), cs);
+    return cs;
   }
   
   public Collection<ClassSpec> getClassSpecs() {
@@ -100,6 +117,27 @@ public class SuiSpecsInferenceState {
   
   public SuiModel getModel() {
     return this.model;
+  }
+
+  public void addClassMappingSpec(ClassMappingSpec<CompositeWidget> mapping) {
+    Validate.notNull(mapping);
+    
+    this.classMappingSpecsByWidget.put(mapping.getWidget(), mapping);
+  }
+  
+  public ClassMappingSpec<CompositeWidget> getClassMappingSpecForWidget(CompositeWidget w) {
+    return this.classMappingSpecsByWidget.get(w);
+  }
+
+  public void addAttributeMappingSpec(AttributeMappingSpec ams) {
+    Validate.notNull(ams);
+    Validate.notNull(ams.getWidget());
+    
+    this.attributeMappingSpecsByWidget.put(ams.getWidget(), ams);
+  }
+  
+  public AttributeMappingSpec getAttributeMappingSpecForWidget(SimpleWidget w) {
+    return this.attributeMappingSpecsByWidget.get(w);
   }
 
 }

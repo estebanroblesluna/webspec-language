@@ -14,8 +14,10 @@
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
 import java.util.List;
+
 import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.InputWidget;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.Panel;
@@ -30,15 +32,13 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
  */
 public interface HypertextSpecFactory {
 
-  AssociateActionSpec createAssociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2);
+  <W extends CompositeWidget> AssociateActionSpec createAssociateActionSpec(ClassMappingSpec<W> type1, ClassMappingSpec<W> type2);
   
   AttributeMappingSpec createAttributeMappingSpec(SimpleWidget widget, AttributeSpec attributeSpec);
   
-  ClassMappingSpec createClassMappingSpec(ClassSpec classSpec);
+  <W extends CompositeWidget> DeleteActionSpec createDeleteActionSpec(ClassMappingSpec<W> spec);
   
-  DeleteActionSpec createDeleteActionSpec(ClassMappingSpec spec);
-  
-  DissociateActionSpec createDissociateActionSpec(ClassMappingSpec type1, ClassMappingSpec type2);
+  <W extends CompositeWidget> DissociateActionSpec createDissociateActionSpec(ClassMappingSpec<W> type1, ClassMappingSpec<W> type2);
   
   InputPanelSpec createInputPanelSpec(Panel panel, ClassSpec classSpec, List<InputWidget> inputs);
   
@@ -50,7 +50,7 @@ public interface HypertextSpecFactory {
   
   RepetitionClassMappingSpec createRepetitionClassMappingSpec(Repetition repetition, ClassSpec classSpec);
   
-  SaveActionSpec createSaveActionSpec(ClassMappingSpec spec);
+  <W extends CompositeWidget> SaveActionSpec createSaveActionSpec(ClassMappingSpec<W> spec);
   
   SelectableRepetitionSpec createSelectableRepetitionSpec(Repetition repetition, ClassSpec classSpec, SelectionWidget selectable);
   

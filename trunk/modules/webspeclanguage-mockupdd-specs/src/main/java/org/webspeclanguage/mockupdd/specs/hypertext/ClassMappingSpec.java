@@ -25,25 +25,18 @@ import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
  * 
  * @author Jose Matias Rivero
  */
-public interface ClassMappingSpec {
-  
-  /**
-   * @return The Widget from which instance is taken (if defined)
-   */
-  CompositeWidget getDataSource();
+public interface ClassMappingSpec<W extends CompositeWidget> extends MappingSpec<W> {
   
   /**
    * @return The class mapped to the Widget
    */
   ClassSpec getClassSpec();
-
+  
   /**
    * @return The list of attributes mapped from the class
    */
   List<AttributeMappingSpec> getAttributeMappings();
 
   void addAttributeMapping(AttributeMappingSpec attributeMappingSpec);
-
-  void setDataSource(CompositeWidget dataSource);
 
 }

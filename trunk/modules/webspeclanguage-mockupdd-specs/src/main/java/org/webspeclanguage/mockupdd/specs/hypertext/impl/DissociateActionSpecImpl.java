@@ -20,7 +20,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.DissociateActionSpec;
 
 
 /**
- * Represents a Dissociation between a {@link ClassMappingSpec} and another {@link ClassMappingSpec} 
+ * Represents a Dissociation between a {@link ClassClassMappingSpec} and another {@link ClassClassMappingSpec} 
  * who were Associated in some point
  * @author Franco Giacosa
  */

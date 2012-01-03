@@ -18,7 +18,7 @@ import org.webspeclanguage.mockupdd.sui.model.Panel;
 /**
  * @author Franco Giacosa
  */
-public interface PanelClassMappingSpec extends ClassMappingSpec {
+public interface PanelClassMappingSpec extends ClassMappingSpec<Panel> {
 
   public abstract Panel getWidget();
 

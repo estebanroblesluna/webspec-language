@@ -22,14 +22,13 @@ import org.webspeclanguage.mockupdd.specs.hypertext.ActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
-import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
  * Default implementation for {@link ClassMappingSpec}
  * 
  * @author Jose Matias Rivero
  */
-public class ClassMappingSpecImpl implements ActionSpec, ClassMappingSpec {
+public abstract class ClassMappingSpecImpl<W extends CompositeWidget> implements ActionSpec, ClassMappingSpec<W> {
 
   private ClassSpec classSpec;
   private List<AttributeMappingSpec> attributeMappings;
