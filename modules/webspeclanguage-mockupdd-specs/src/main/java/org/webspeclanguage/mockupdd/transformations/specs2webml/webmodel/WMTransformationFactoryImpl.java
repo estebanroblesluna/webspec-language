@@ -97,7 +97,6 @@ public class WMTransformationFactoryImpl implements WMTransformationFactory {
     
     SelectableRepetitionSpec2MultiChoiceIU selectableRepetitionSpec2MultiChoiceIU = new SelectableRepetitionSpec2MultiChoiceIU(selectableRepetitionSpec,hypertextSpec2WebMLWebModel);
     selectableRepetitionSpec2MultiChoiceIU.transform();
-    this.getSelectableRepetitionSpec2MultiChoiceIUs().add(selectableRepetitionSpec2MultiChoiceIU);
     return selectableRepetitionSpec2MultiChoiceIU;
   }
 

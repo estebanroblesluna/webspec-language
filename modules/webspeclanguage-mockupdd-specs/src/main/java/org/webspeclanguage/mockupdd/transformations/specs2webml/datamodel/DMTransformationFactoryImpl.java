@@ -13,10 +13,14 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
-import org.webspeclanguage.mockupdd.specs.data.*;
+import org.webspeclanguage.mockupdd.specs.data.AssociationSpec;
+import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
+import org.webspeclanguage.mockupdd.specs.data.AttributeTypeSpec;
+import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.specs.data.impl.AttributeSpecImpl;
 
 /**
@@ -32,8 +36,8 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
     return attributeSpec2Attribute;   
   }
   
-  public AssociationSpec2Relationship transformAssociationSpec2Relationship(AssociationSpec associationSpec, ClassSpec associationSource){
-	AssociationSpec2Relationship associationSpec2Relationship = new AssociationSpec2Relationship(associationSpec);
+  public AssociationSpec2Relationship transformAssociationSpec2Relationship(AssociationSpec associationSpec, ClassSpec associationSource, DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel){
+	AssociationSpec2Relationship associationSpec2Relationship = new AssociationSpec2Relationship(associationSpec, dataSpecs2WebMLDataModel);
 	associationSpec2Relationship.transform(associationSource);
 	return associationSpec2Relationship;	  
   }

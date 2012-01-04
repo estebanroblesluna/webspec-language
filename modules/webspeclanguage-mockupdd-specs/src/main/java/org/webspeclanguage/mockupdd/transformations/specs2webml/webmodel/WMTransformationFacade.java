@@ -44,9 +44,9 @@ public final class WMTransformationFacade {
 	}
 
 	public HypertextSpec2WebMLWebModel transformHypertext(
-			SuiSpecsInferenceState suiSpecsInferenceState) {
+			SuiSpecsInferenceState suiSpecsInferenceState,DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel) {
 		HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel = new HypertextSpec2WebMLWebModel(
-				suiSpecsInferenceState);
+				suiSpecsInferenceState,dataSpecs2WebMLDataModel);
 		hypertextSpec2WebMLWebModel.transform();
 		this.getHypertextSpecsTransformations()
 				.add(hypertextSpec2WebMLWebModel);
