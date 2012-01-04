@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.HypertextSpecFactory;
 import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
@@ -20,7 +21,7 @@ public class HypertextSpec2WebMLWebModel {
 	private DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel;
 	private HypertextSpecFacade hypertextSpecFacade = HypertextSpecFacade
 			.getHypertextSpecFacade();
-	private HypertextSpecFactoryImpl hypertextSpecFactory = (HypertextSpecFactoryImpl) getHypertextSpecFacade()
+	private HypertextSpecFactory hypertextSpecFactory = (HypertextSpecFactoryImpl) getHypertextSpecFacade()
 			.getHypertextSpecFactory();
 	private WMTransformationFacade webModelTransformationFacade = WMTransformationFacade
 			.getWMTransformationFacade();
@@ -61,7 +62,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformSeletableRepetitionSpec(){
-		Iterator<SelectableRepetitionSpec> srIt = this.getHypertextSpecFactory().getSelectableRepetitionSpecs().iterator();
+		Iterator<SelectableRepetitionSpec> srIt = this.getSuiSpecsInferenceState().getSelectableRepetitionSpecs().iterator();
 		while(srIt.hasNext()){
 			SelectableRepetitionSpec selectableSpec = srIt.next();
 			this.getSelectableRepetitionSpec2MultiChoiceIUs().add(this.getWebModelTransformationFactory().transformSelectableRepetitionSpec2MultiChoiceIU(selectableSpec,this));
@@ -76,11 +77,10 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformPUnit2PUnitNavigationSpec() {
-		Iterator<NavigationSpec> navIt = this.getHypertextSpecFactory()
-				.getNavigationSpecs().iterator();
+		Iterator<NavigationSpec> navIt = this.getSuiSpecsInferenceState().getNavigationSpecs().iterator();
 		while (navIt.hasNext()) {
 			NavigationSpec nav = navIt.next();
-			if ((nav.getTo() != null) && (!nav.getTransfers().isEmpty())) {
+			if (nav.getTo() == null) {
 				this.getNavigationSpec2NavigationPUnitToPUnitList().add(this.getWebModelTransformationFactory()
 						.transformNavigationSpec2NavigationPUnitToPUnit(nav,this));
 			}
@@ -88,8 +88,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformUnit2UnitNavigationSpec() {
-		Iterator<NavigationSpec> navIt = this.getHypertextSpecFactory()
-				.getNavigationSpecs().iterator();
+		Iterator<NavigationSpec> navIt = this.getSuiSpecsInferenceState().getNavigationSpecs().iterator();
 		while (navIt.hasNext()) {
 			NavigationSpec nav = navIt.next();
 			if (nav.getTo() == null) {
@@ -100,8 +99,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformPage2PageNavigationSpec() {
-		Iterator<NavigationSpec> navIt = this.getHypertextSpecFactory()
-				.getNavigationSpecs().iterator();
+		Iterator<NavigationSpec> navIt = this.getSuiSpecsInferenceState().getNavigationSpecs().iterator();
 		while (navIt.hasNext()) {
 			NavigationSpec nav = navIt.next();
 			if (nav.getTransfers().isEmpty()) {
@@ -112,9 +110,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformSelectableRepetition() {
-		Iterator<SelectableRepetitionSpec> srIt = this
-				.getHypertextSpecFactory().getSelectableRepetitionSpecs()
-				.iterator();
+		Iterator<SelectableRepetitionSpec> srIt = this.getSuiSpecsInferenceState().getSelectableRepetitionSpecs().iterator();
 		while (srIt.hasNext()) {
 			SelectableRepetitionSpec selectableRepetitionSpec = srIt.next();
 			this.getWebModelTransformationFactory()
@@ -124,8 +120,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformDeleteAction() {
-		Iterator<DeleteActionSpec> dIt = this.getHypertextSpecFactory()
-				.getDeleteActionSpecs().iterator();
+		Iterator<DeleteActionSpec> dIt = this.getSuiSpecsInferenceState().getDeleteActionSpecs().iterator();
 		while (dIt.hasNext()) {
 			DeleteActionSpec deleteActionSpec = dIt.next();
 			this.getDeleteActionSpec2DeleteUnits().add(
@@ -135,8 +130,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformSaveAction() {
-		Iterator<SaveActionSpec> sIt = this.getHypertextSpecFactory()
-				.getSaveActionSpecs().iterator();
+		Iterator<SaveActionSpec> sIt = this.getSuiSpecsInferenceState().getSaveActionSpecs().iterator();
 		while (sIt.hasNext()) {
 			SaveActionSpec saveActionSpec = sIt.next();
 			this.getSaveActionSpec2CreateUnits()
@@ -146,8 +140,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformInputPanelSpec() {
-		Iterator<InputPanelSpec> ipIt = this.getHypertextSpecFactory()
-				.getInputPanelSpecs().iterator();
+		Iterator<InputPanelSpec> ipIt = this.getSuiSpecsInferenceState().getInputPanelSpecs().iterator();
 		while (ipIt.hasNext()) {
 			InputPanelSpec inputPanelSpec = ipIt.next();
 			this.getInputPanelSpec2EntryUnits().add(
@@ -157,8 +150,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformPanelClassMapping() {
-		Iterator<PanelClassMappingSpec> pIt = this.getHypertextSpecFactory()
-				.getPanelClassMappingSpecs().iterator();
+		Iterator<PanelClassMappingSpec> pIt = this.getSuiSpecsInferenceState().getPanelClassMappingSpecs().iterator();
 		while (pIt.hasNext()) {
 			PanelClassMappingSpec panelClass = pIt.next();
 			this.getPanelClassMapping2DataUnits()
@@ -169,9 +161,7 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformRepetitionClassMapping() {
-		Iterator<RepetitionClassMappingSpec> rIt = this
-				.getHypertextSpecFactory().getRepetitionClassMappingSpecs()
-				.iterator();
+		Iterator<RepetitionClassMappingSpec> rIt = this.getSuiSpecsInferenceState().getRepetitionClassMappingSpecs().iterator();
 		while (rIt.hasNext()) {
 			RepetitionClassMappingSpec repClass = rIt.next();
 			this.getRepetitionClassMappingSpec2IndexUnits().add(
@@ -186,7 +176,7 @@ public class HypertextSpec2WebMLWebModel {
 		this.hypertextSpecFactory = hypertextSpecFactory;
 	}
 
-	public HypertextSpecFactoryImpl getHypertextSpecFactory() {
+	public HypertextSpecFactory getHypertextSpecFactory() {
 		return hypertextSpecFactory;
 	}
 

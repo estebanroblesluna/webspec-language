@@ -14,10 +14,12 @@ public class AssociationSpec2Relationship {
 
 	private AssociationSpec associationSpec;
 	private RelationshipDecorator relationshipDecorator;
-
-	public AssociationSpec2Relationship(AssociationSpec associationSpec) {
+	private DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel;
+	
+	public AssociationSpec2Relationship(AssociationSpec associationSpec, DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel) {
 		super();
 		this.associationSpec = associationSpec;
+		this.dataSpecs2WebMLDataModel = dataSpecs2WebMLDataModel;
 	}
 
 	public void setAssociationSpec(AssociationSpec associationSpec) {
@@ -50,12 +52,9 @@ public class AssociationSpec2Relationship {
 
 		this.setRelationshipDecorator(dataFactory.createRelationshipDecorator(dataFactory
 				.createRelationship(this.getAssociationSpec()
-						.getAssociationName(), (DMTransformationFacade
-						.getDMTransformationFacade()
-						.getDMTransformationFactory()
+						.getAssociationName(), (this.getDataSpecs2WebMLDataModel()
 						.getEntity(associationSource.getName())).getEntity(),
-						(DMTransformationFacade.getDMTransformationFacade()
-								.getDMTransformationFactory().getEntity(this
+						(this.getDataSpecs2WebMLDataModel().getEntity(this
 								.getAssociationSpec().getDestinationClass()
 								.getName())).getEntity(), relationshipRoleList)));
 
@@ -70,6 +69,14 @@ public class AssociationSpec2Relationship {
 			cardinality = "N";
 		}
 		return cardinality;
+	}
+
+	public void setDataSpecs2WebMLDataModel(DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel) {
+		this.dataSpecs2WebMLDataModel = dataSpecs2WebMLDataModel;
+	}
+
+	public DataSpecs2WebMLDataModel getDataSpecs2WebMLDataModel() {
+		return dataSpecs2WebMLDataModel;
 	}
 
 }

@@ -48,7 +48,9 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
  */
 public class HypertextSpecFactoryImpl implements HypertextSpecFactory {
   
+
   public <W extends CompositeWidget> AssociateActionSpec createAssociateActionSpec(ClassMappingSpec<W> type1, ClassMappingSpec<W> type2) {
+
     AssociateActionSpec associateActionSpec = new AssociateActionSpecImpl(type1, type2);
     return associateActionSpec;
  }
@@ -107,5 +109,5 @@ public class HypertextSpecFactoryImpl implements HypertextSpecFactory {
     WidgetActionsSpec widgetActionsSpec = new WidgetActionsSpecImpl(trigger, actions);
     return widgetActionsSpec;
   }
-  
+
 }

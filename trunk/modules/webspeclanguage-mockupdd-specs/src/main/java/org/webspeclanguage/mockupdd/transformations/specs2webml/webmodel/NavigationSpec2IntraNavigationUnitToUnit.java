@@ -23,17 +23,9 @@ public class NavigationSpec2IntraNavigationUnitToUnit {
 	public void transform() {
 		WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
 	    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-	    WMTransformationFacade wmTransformationFacade = WMTransformationFacade.getWMTransformationFacade();
-	    WMTransformationFactory wmTransformationFactory = wmTransformationFacade.getWMTransformationFactory();
-	    
-	    Page fromPage;
-	    
-	    
-	    Page toPage = wmTransformationFactory.getPage(this.getNavigationSpec().getTo()); 
-	    
-		this.setLink(webFactory.createTransportLink(fromPage.getName() + "to" + toPage.getName(), true, fromPage, toPage));
-
-		
+	    Page fromPage = this.getHypertextSpec2WebMLWebModel().getPage(this.getNavigationSpec().getTrigger().getPage());
+	    Page toPage = this.getHypertextSpec2WebMLWebModel().getPage(this.getNavigationSpec().getTo());	   
+		this.setLink(webFactory.createTransportLink(fromPage.getName() + "to" + toPage.getName(), true, fromPage, toPage));		
 	}
 
 	public NavigationSpec getNavigationSpec() {

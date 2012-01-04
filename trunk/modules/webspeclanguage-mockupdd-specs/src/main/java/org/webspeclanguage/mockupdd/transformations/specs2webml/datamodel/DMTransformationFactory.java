@@ -24,7 +24,7 @@ import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 public interface DMTransformationFactory {
 
 	AssociationSpec2Relationship transformAssociationSpec2Relationship(
-			AssociationSpec associationSpec, ClassSpec associationSource);
+			AssociationSpec associationSpec, ClassSpec associationSource, DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel);
 
 	AttributeSpec2Attribute transformAttributeSpec2Attribute(
 			AttributeSpec attributeSpec);

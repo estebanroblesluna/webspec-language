@@ -40,9 +40,6 @@ public class RepetitionClassMappingSpec2IndexUnit {
     
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-    DMTransformationFacade dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
-    DMTransformationFactory dmTransformationFactory = dmTransformationFacade.getDMTransformationFactory();
-    
     EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getRepetition().getClassSpec().getName());    
     this.setIndexUnit(webFactory.createIndexUnit(this.getRepetition().getWidget().getWidgetId(), entityDecorator));    
   }

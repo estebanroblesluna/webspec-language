@@ -92,7 +92,7 @@ public class DataSpecs2WebMLDataModel {
 			this.getAssociationSpec2Relationships().add(
 					getDataModelTransformationFactory()
 							.transformAssociationSpec2Relationship(ass,
-									sourceCS));
+									sourceCS,this));
 		}
 	}
 
