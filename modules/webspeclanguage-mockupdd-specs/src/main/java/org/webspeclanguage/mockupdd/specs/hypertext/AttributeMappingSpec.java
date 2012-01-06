@@ -19,7 +19,7 @@ import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 /**
  * @author Franco Giacosa
  */
-public interface AttributeMappingSpec {
+public interface AttributeMappingSpec extends MappingSpec<SimpleWidget> {
 
   SimpleWidget getWidget();
 

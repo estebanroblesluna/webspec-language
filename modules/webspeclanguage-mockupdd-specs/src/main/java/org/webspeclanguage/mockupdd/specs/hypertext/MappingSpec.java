@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
  * 
  * @author José Matías Rivero
  */
-public interface MappingSpec<W extends CompositeWidget> {
+public interface MappingSpec<W extends Widget> {
 
   /**
    * @return The widget being mapped

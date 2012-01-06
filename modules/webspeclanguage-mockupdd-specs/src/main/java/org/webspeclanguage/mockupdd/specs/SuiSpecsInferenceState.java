@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang.Validate;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.AssociateActionSpec;
@@ -27,8 +28,6 @@ import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.DissociateActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
-import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
-import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ObjectTransferSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
@@ -97,17 +96,17 @@ public class SuiSpecsInferenceState {
   }
   
   public List<NavigationSpec> getNavigationSpecsForPage(Page p) {
-    return Collections.unmodifiableList(this.getnavigationSpecsPerPage().get(p));
+    return Collections.unmodifiableList(this.getNavigationSpecsPerPage().get(p));
   }
 
   public void addNavigationSpec(NavigationSpec ns) {
     Validate.notNull(ns);
     
-    this.getnavigationSpecsPerPage().putOnce(ns.getTrigger().getPage(), ns);
-
+    this.getNavigationSpecsPerPage().putOnce(ns.getTrigger().getPage(), ns);
+    this.navigationSpecs.add(ns);
   }
 
-  public MultiListMap<Page, NavigationSpec> getnavigationSpecsPerPage() {
+  public MultiListMap<Page, NavigationSpec> getNavigationSpecsPerPage() {
     return navigationSpecsPerPage;
   }
 
@@ -256,7 +255,7 @@ public void setNavigationSpecs(List<NavigationSpec> navigationSpecs) {
 }
 
 public List<NavigationSpec> getNavigationSpecs() {
-	return navigationSpecs;
+	return Collections.unmodifiableList(navigationSpecs);
 }
 
 }

@@ -25,7 +25,7 @@ import org.webspeclanguage.mockupdd.utils.SuiUtil;
 /**
  * @author José Matías Rivero
  */
-public class WidgetIdInferer implements SuiModelProcessor {
+public class WidgetIdInferer extends SuiModelProcessor {
 
   @Override
   public void process(SuiSpecsInferenceState specs) {

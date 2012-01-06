@@ -12,18 +12,33 @@
  */
 package org.webspeclanguage.mockupdd.specs.processors;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
-import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 
 /**
  * @author José Matías Rivero
  */
-public abstract class SuiModelProcessor {
+public class CompositeSuiModelProcessor extends SuiModelProcessor {
 
-  public abstract void process(SuiSpecsInferenceState specs);
+  private List<SuiModelProcessor> processors;
+
+  public CompositeSuiModelProcessor(List<SuiModelProcessor> processors) {
+    super();
+    this.processors = processors;
+  }
   
-  public void process(SuiModel model) {
-    this.process(new SuiSpecsInferenceState(model));
+  public CompositeSuiModelProcessor(SuiModelProcessor... processors) {
+    super();
+    this.processors = Arrays.asList(processors);
+  }
+
+  @Override
+  public void process(SuiSpecsInferenceState specs) {
+    for (SuiModelProcessor processor : this.processors) {
+      processor.process(specs);
+    }
   }
 
 }

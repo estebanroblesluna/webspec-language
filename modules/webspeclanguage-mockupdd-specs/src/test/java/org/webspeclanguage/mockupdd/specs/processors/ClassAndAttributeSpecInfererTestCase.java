@@ -14,11 +14,11 @@ package org.webspeclanguage.mockupdd.specs.processors;
 
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
+import org.webspeclanguage.mockupdd.sui.model.Label;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.Panel;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.sui.model.SuiTestCase;
-import org.webspeclanguage.mockupdd.sui.model.TextBox;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 
 
@@ -41,12 +41,14 @@ public class ClassAndAttributeSpecInfererTestCase extends SuiTestCase {
     Panel panel1 = this.getFactory().createPanel("panel1", 0, 0, 0, 0, "panel1");
     Panel panel2 = this.getFactory().createPanel("panel2", 0, 0, 0, 0, "panel2");
     Panel panel3 = this.getFactory().createPanel("panel3", 0, 0, 0, 0, "panel3");
-    TextBox tb = this.getFactory().createTextBox("tb1", 0, 0, 0, 0);
+    Panel panel4 = this.getFactory().createPanel("panel4", 0, 0, 0, 0, "panel4");
+    Label l = this.getFactory().createLabel("tb1", 0, 0, 0, 0, "label1");
     
     p1.addChild(panel1);
+    p1.addChild(panel4);
     p2.addChild(panel3);
     p2.addChild(panel2);
-    panel1.addChild(tb);
+    panel1.addChild(l);
      
     SuiModel model = this.getFactory().createSuiModel();
     model.addPage(p1);
@@ -54,8 +56,8 @@ public class ClassAndAttributeSpecInfererTestCase extends SuiTestCase {
 
     this.getSuiConfig().createTagApplication(panel1, "Data", "Data", "Class1");
     this.getSuiConfig().createTagApplication(panel2, "Data", "Data", "panel3:Class2.attr -> Class3");
-    this.getSuiConfig().createTagApplication(tb, "Data", "Data", "Class1.attrib1");
-
+    this.getSuiConfig().createTagApplication(l, "Data", "Data", "panel4:Class1.attrib1");
+    
     SuiSpecsInferenceState suiSpecs = new SuiSpecsInferenceState(model);
 
     this.inferer.process(suiSpecs);
@@ -84,9 +86,10 @@ public class ClassAndAttributeSpecInfererTestCase extends SuiTestCase {
     assertSame(class3, suiSpecs.getClassMappingSpecForWidget(panel2).getClassSpec());
     assertSame(panel2, suiSpecs.getClassMappingSpecForWidget(panel2).getWidget());
     
-    assertNotNull(suiSpecs.getAttributeMappingSpecForWidget(tb));
-    assertEquals("attrib1", suiSpecs.getAttributeMappingSpecForWidget(tb).getAttributeSpec().getName());
-    assertSame(tb, suiSpecs.getAttributeMappingSpecForWidget(tb).getWidget());
+    assertNotNull(suiSpecs.getAttributeMappingSpecForWidget(l));
+    assertEquals("attrib1", suiSpecs.getAttributeMappingSpecForWidget(l).getAttributeSpec().getName());
+    assertSame(l, suiSpecs.getAttributeMappingSpecForWidget(l).getWidget());
+    assertSame(panel4, suiSpecs.getAttributeMappingSpecForWidget(l).getDataSource());
     
   }
 

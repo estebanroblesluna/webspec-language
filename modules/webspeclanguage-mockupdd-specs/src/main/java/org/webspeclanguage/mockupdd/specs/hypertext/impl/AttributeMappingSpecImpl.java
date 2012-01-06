@@ -16,6 +16,7 @@ package org.webspeclanguage.mockupdd.specs.hypertext.impl;
 import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 
 /**
@@ -28,6 +29,7 @@ public class AttributeMappingSpecImpl implements AttributeMappingSpec {
 
   private SimpleWidget widget;
   private AttributeSpec attributeSpec;
+  private CompositeWidget dataSource;
 
   public AttributeMappingSpecImpl(SimpleWidget widget, AttributeSpec attributeSpec) {
     super();
@@ -49,6 +51,16 @@ public class AttributeMappingSpecImpl implements AttributeMappingSpec {
 
   private void setAttributeSpec(AttributeSpec attributeSpec) {
     this.attributeSpec = attributeSpec;
+  }
+
+  @Override
+  public CompositeWidget getDataSource() {
+    return this.dataSource;
+  }
+
+  @Override
+  public void setDataSource(CompositeWidget dataSource) {
+    this.dataSource = dataSource;    
   }
 
 }

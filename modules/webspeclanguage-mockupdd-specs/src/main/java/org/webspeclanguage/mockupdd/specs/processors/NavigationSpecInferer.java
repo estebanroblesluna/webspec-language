@@ -30,7 +30,7 @@ import org.webspeclanguage.mockupdd.utils.SuiCollectionUtils.Indexer;
 /**
  * @author José Matías Rivero
  */
-public class NavigationSpecInferer implements SuiModelProcessor {
+public class NavigationSpecInferer extends SuiModelProcessor {
 
   @Override
   public void process(SuiSpecsInferenceState specs) {
@@ -39,11 +39,12 @@ public class NavigationSpecInferer implements SuiModelProcessor {
       Collection<TagApplication> links = getLinks(specs, p);
       for (TagApplication ta : links) {
         String linkId = ta.getParameterValues().get(0).getValue().getTextualRepresentation();
-        Page destPage = (Page) nodes.get(linkId).getWidget();
-        if (destPage == null) {
+        TagApplication node = nodes.get(linkId);
+        if (node == null) {
           specs.addError(new SuiModelProcessingError(this, ta.getWidget(), "Destination node \"" + linkId + "\" not found."));
           continue;
         }
+        Page destPage = (Page) nodes.get(linkId).getWidget();
         specs.addNavigationSpec(SuiSpecsConfig.getInstance()
                 .getHypertextSpecFactory().createNavigationSpec(destPage, (TriggerWidget) ta.getWidget(), 
                         new ArrayList<ActionSpec>(), new ArrayList<ObjectTransferSpec>()));
