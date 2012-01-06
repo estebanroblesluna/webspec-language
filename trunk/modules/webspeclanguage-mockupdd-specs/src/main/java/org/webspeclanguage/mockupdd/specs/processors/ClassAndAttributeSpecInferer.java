@@ -24,6 +24,7 @@ import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.data.AttributeTypeSpec;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.specs.data.MaximumCardinality;
+import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.MappingSpec;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
@@ -42,7 +43,7 @@ import org.webspeclanguage.mockupdd.utils.SuiUtil;
 /**
  * @author José Matías Rivero
  */
-public class ClassAndAttributeSpecInferer implements SuiModelProcessor {
+public class ClassAndAttributeSpecInferer extends SuiModelProcessor {
 
   private ClassSpecInfererVisitor classSpecVisitor;
   private AssociationSpecVisitor associationSpecVisitor;
@@ -111,7 +112,7 @@ public class ClassAndAttributeSpecInferer implements SuiModelProcessor {
     return spec;
   }
   
-  private <W extends CompositeWidget> void setDataSourceIfPresent(DataPathTagParameterValueContent valueContent, MappingSpec<W> classMappingSpec, TagApplication ta, SuiSpecsInferenceState s) {
+  private <W extends Widget> void setDataSourceIfPresent(DataPathTagParameterValueContent valueContent, MappingSpec<W> mappingSpec, TagApplication ta, SuiSpecsInferenceState s) {
     // TODO Validate data source class equality
     if (valueContent.getWidgetId() != null) {
       Widget w = (Widget) ta.getWidget().getPage()
@@ -124,7 +125,7 @@ public class ClassAndAttributeSpecInferer implements SuiModelProcessor {
           s.addError(new SuiModelProcessingError(ClassAndAttributeSpecInferer.this, 
                   w, "Widget \"" + valueContent.getWidgetId() + "\" must be composite to be referenced as a data source from another"));
         } else {
-          classMappingSpec.setDataSource((CompositeWidget) w);
+          mappingSpec.setDataSource((CompositeWidget) w);
         }
       }
     }
@@ -230,8 +231,9 @@ public class ClassAndAttributeSpecInferer implements SuiModelProcessor {
     @Override
     public AttributeSpec visitDataPathTagParameterValueContent(DataPathTagParameterValueContent valueContent) {
       AttributeSpec as = this.visitDataPathNode(valueContent.getRootNode());
-      this.state.addAttributeMappingSpec(
-      SuiSpecsConfig.getInstance().getHypertextSpecFactory().createAttributeMappingSpec((SimpleWidget) this.currentTagApplication.getWidget(), as));
+      AttributeMappingSpec ams = SuiSpecsConfig.getInstance().getHypertextSpecFactory().createAttributeMappingSpec((SimpleWidget) this.currentTagApplication.getWidget(), as);
+      this.state.addAttributeMappingSpec(ams);
+      setDataSourceIfPresent(valueContent, ams, this.currentTagApplication, this.state);
       return as;
     }
 
