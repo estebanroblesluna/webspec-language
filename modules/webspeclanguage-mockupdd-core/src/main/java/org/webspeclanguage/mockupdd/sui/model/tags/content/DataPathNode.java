@@ -27,4 +27,6 @@ public interface DataPathNode extends TagParameterValueContent {
   
   int size();
 
+  DataPathNode lastNode();
+
 }

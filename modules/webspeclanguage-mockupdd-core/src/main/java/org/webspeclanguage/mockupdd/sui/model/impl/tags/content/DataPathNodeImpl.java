@@ -87,4 +87,14 @@ public class DataPathNodeImpl implements DataPathNode {
     return 1;
   }
 
+  @Override
+  public DataPathNode lastNode() {
+    if (this.getNextNode() == null) {
+      return this;
+    } else {
+      return this.getNextNode().lastNode();
+    }
+      
+  }
+
 }
