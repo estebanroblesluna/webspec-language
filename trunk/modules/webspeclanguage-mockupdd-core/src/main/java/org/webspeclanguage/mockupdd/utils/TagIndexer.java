@@ -67,7 +67,11 @@ public class TagIndexer {
   }
   
   public Collection<TagApplication> getTagApplicationsFor(Tag tag) {
-    return this.tagApplicationByTag.get(tag);
+    Collection<TagApplication> ta = this.tagApplicationByTag.get(tag);
+    if (ta == null) {
+      return Collections.emptySet();
+    }
+    return ta;
   }
   
   public Collection<TagApplication> getTagApplicationsFor(Tag tag, Page page) {
