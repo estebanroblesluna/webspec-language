@@ -40,6 +40,7 @@ import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
+import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.utils.MultiArrayListHashMap;
 import org.webspeclanguage.mockupdd.utils.MultiListMap;
@@ -71,6 +72,7 @@ public class SuiSpecsInferenceState {
   private List<WidgetActionsSpec> widgetActionsSpecs = new ArrayList<WidgetActionsSpec>();
   private Map<Widget, ClassMappingSpec<CompositeWidget>> classMappingSpecsByWidget;
   private Map<SimpleWidget, AttributeMappingSpec> attributeMappingSpecsByWidget;
+  private Map<TriggerWidget, SaveActionSpec> saveActionSpecsByWidget;
 
   public SuiSpecsInferenceState(SuiModel model) {
     super();
@@ -81,6 +83,7 @@ public class SuiSpecsInferenceState {
     this.classSpecsByName = new HashMap<String, ClassSpec>();
     this.classMappingSpecsByWidget = new HashMap<Widget, ClassMappingSpec<CompositeWidget>>();
     this.attributeMappingSpecsByWidget = new HashMap<SimpleWidget, AttributeMappingSpec>();
+    this.saveActionSpecsByWidget = new HashMap<TriggerWidget, SaveActionSpec>();
   }
 
   public Page getPageByWidget(Widget widget){
@@ -123,7 +126,7 @@ public class SuiSpecsInferenceState {
   public ClassSpec getClassSpecByName(String name) {
     return this.classSpecsByName.get(name);
   }
-
+  
   public ClassSpec addClassSpec(ClassSpec cs) {
     Validate.notNull(cs);
     
@@ -143,7 +146,8 @@ public class SuiSpecsInferenceState {
     return this.model;
   }
 
-  public void addClassMappingSpec(ClassMappingSpec<CompositeWidget> mapping) {
+  @SuppressWarnings("rawtypes")
+  public void addClassMappingSpec(ClassMappingSpec mapping) {
     Validate.notNull(mapping);
     
     this.classMappingSpecsByWidget.put(mapping.getWidget(), mapping);
@@ -231,7 +235,7 @@ public void setSaveActionSpecs(List<SaveActionSpec> saveActionSpecs) {
 }
 
 public List<SaveActionSpec> getSaveActionSpecs() {
-	return saveActionSpecs;
+	return Collections.unmodifiableList(this.saveActionSpecs);
 }
 
 public void setSelectableRepetitionSpecs(List<SelectableRepetitionSpec> selectableRepetitionSpecs) {
@@ -256,6 +260,11 @@ public void setNavigationSpecs(List<NavigationSpec> navigationSpecs) {
 
 public List<NavigationSpec> getNavigationSpecs() {
 	return Collections.unmodifiableList(navigationSpecs);
+}
+
+public void addSaveActionSpec(TriggerWidget triggerWidget, SaveActionSpec saveActionSpec) {
+  this.saveActionSpecsByWidget.put(triggerWidget, saveActionSpec);
+  this.saveActionSpecs.add(saveActionSpec);
 }
 
 }
