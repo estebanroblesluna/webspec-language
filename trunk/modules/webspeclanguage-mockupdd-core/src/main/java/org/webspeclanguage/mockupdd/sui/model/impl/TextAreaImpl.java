@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.utils.SuiVisitor;
  * 
  * @author Jose Matias Rivero
  */
-public class TextAreaImpl extends SimpleWidgetImpl implements TextArea {
+public class TextAreaImpl extends SimpleInputWidgetImpl implements TextArea {
 
   public TextAreaImpl(String widgetID, int x, int y, int width, int height) {
     super(widgetID, x, y, width, height);

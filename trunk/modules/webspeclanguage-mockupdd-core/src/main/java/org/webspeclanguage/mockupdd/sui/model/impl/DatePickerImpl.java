@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.utils.SuiVisitor;
  * 
  * @author Jose Matias Rivero
  */
-public class DatePickerImpl extends SimpleWidgetImpl implements DatePicker {
+public class DatePickerImpl extends SimpleInputWidgetImpl implements DatePicker {
 
   public DatePickerImpl(String widgetID, Integer x, Integer y, Integer width, Integer height) {
     super(widgetID, x, y, width, height);

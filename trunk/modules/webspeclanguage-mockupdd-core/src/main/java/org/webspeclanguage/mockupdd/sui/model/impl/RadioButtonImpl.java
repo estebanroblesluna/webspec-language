@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.utils.SuiVisitor;
  * 
  * @author Jose Matias Rivero
  */
-public class RadioButtonImpl extends SimpleWidgetImpl implements RadioButton {
+public class RadioButtonImpl extends SimpleInputWidgetImpl implements RadioButton {
 
   private String text;
 

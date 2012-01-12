@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.utils.SuiVisitor;
  * 
  * @author Jose Matias Rivero
  */
-public class TextBoxImpl extends SimpleWidgetImpl implements TextBox {
+public class TextBoxImpl extends SimpleInputWidgetImpl implements TextBox {
 
   public TextBoxImpl(String widgetID, Integer x, Integer y, Integer width, Integer height) {
     super(widgetID, x, y, width, height);

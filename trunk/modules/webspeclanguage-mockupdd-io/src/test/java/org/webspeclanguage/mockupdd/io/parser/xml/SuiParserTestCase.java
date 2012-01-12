@@ -56,6 +56,7 @@ public class SuiParserTestCase extends TestCase {
     
     TextBox tb = (TextBox) page.getWidgetById("usernameTextbox");
     assertWidgetFeatures(tb, "usernameTextbox", 125, 10, 100, 25);
+    assertEquals("username1", tb.getSampleData());
     
     Panel panel = (Panel) page.getWidgetById("loginPanel");
     assertWidgetFeatures(panel, "loginPanel", 10, 65, 200, 50);
@@ -80,6 +81,7 @@ public class SuiParserTestCase extends TestCase {
     
     ComboBox comboBox = (ComboBox) panel.getWidgetById("loginAs");
     assertWidgetFeatures(comboBox, "loginAs", 30, 240, 200, 200);
+    assertEquals("administrator", comboBox.getSampleData());
     
     Image image = (Image) panel.getWidgetById("loginBanner");
     assertWidgetFeatures(image, "loginBanner", 20, 160, 80, 30);

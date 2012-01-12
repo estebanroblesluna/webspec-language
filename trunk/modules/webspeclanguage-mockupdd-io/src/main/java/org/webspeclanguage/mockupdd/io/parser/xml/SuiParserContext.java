@@ -24,7 +24,6 @@ import org.webspeclanguage.mockupdd.config.SuiDefaultConfig;
 import org.webspeclanguage.mockupdd.io.parser.SuiParser;
 import org.webspeclanguage.mockupdd.io.parser.SuiParsingException;
 import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
-import org.webspeclanguage.mockupdd.sui.model.TextBox;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
@@ -55,32 +54,33 @@ public class SuiParserContext {
     this.parsersByTagName = new HashMap<String, SuiParser<Element, SuiParserContext>>();
     this.parentParsers = new HashMap<SuiParser<Element, SuiParserContext>, SuiParser<Element, SuiParserContext>>();
     CompositeWidgetParser cwp = new CompositeWidgetParser();
+    InputWidgetParser iwp = new InputWidgetParser();
     WidgetParser wp = new WidgetParser();
     this.addParentParser(cwp, wp);
+    this.addParentParser(iwp, wp);
     this.addParser("ui", new PageParser(), cwp);
     this.addParser("panel", new PanelParser(), cwp);
     this.addParser("repetition", new RepetitonParser(), cwp);
     this.addParser("label", new LabelParser(), wp);
-    this.addParser("textBox", new TextBoxParser(), wp);
+    this.addParser("textBox", new TextBoxParser(), iwp);
     this.addParser("checkBox", new CheckBoxParser(), wp);
-    this.addParser("comboBox", new ComboBoxParser(), wp);
+    this.addParser("comboBox", new ComboBoxParser(), iwp);
     this.addParser("button", new ButtonParser(), wp);
     this.addParser("link", new LinkParser(), wp);
-    this.addParser("list", new ListParser(), wp);
+    this.addParser("list", new ListParser(), iwp);
     this.addParser("image", new ImageParser(), wp);
     this.addParser("radioButton", new RadioButtonParser(), wp);
     this.addParser("tag", new TagParser(), null);    
   }
-  
-  
 
   private void addParser(String tagName, SuiParser<Element, SuiParserContext> parser, SuiParser<Element, SuiParserContext> parentParser) {
     this.parsersByTagName.put(tagName, parser);
     addParentParser(parser, parentParser);
   }
 
-  private void addParentParser(SuiParser<Element, SuiParserContext> parser, SuiParser<Element, SuiParserContext> parentParser) {
+  private SuiParser<Element, SuiParserContext> addParentParser(SuiParser<Element, SuiParserContext> parser, SuiParser<Element, SuiParserContext> parentParser) {
     this.parentParsers.put(parser, parentParser);
+    return parser;
   }
 
   public SuiFactory getSuiFactory() {

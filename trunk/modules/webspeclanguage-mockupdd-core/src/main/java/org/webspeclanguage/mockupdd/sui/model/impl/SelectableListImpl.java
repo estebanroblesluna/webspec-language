@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.utils.SuiVisitor;
  * 
  * @author Jose Matias Rivero
  */
-public class SelectableListImpl extends ListImpl implements SelectableList {
+public class SelectableListImpl extends SimpleInputWidgetImpl implements SelectableList {
 
   private Boolean multipleSelection;
 
