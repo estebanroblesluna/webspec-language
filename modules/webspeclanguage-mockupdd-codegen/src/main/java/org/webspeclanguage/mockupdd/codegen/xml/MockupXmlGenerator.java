@@ -27,6 +27,7 @@ import org.webspeclanguage.mockupdd.sui.model.CheckBox;
 import org.webspeclanguage.mockupdd.sui.model.ComboBox;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Image;
+import org.webspeclanguage.mockupdd.sui.model.InputWidget;
 import org.webspeclanguage.mockupdd.sui.model.Label;
 import org.webspeclanguage.mockupdd.sui.model.Link;
 import org.webspeclanguage.mockupdd.sui.model.Page;
@@ -210,6 +211,12 @@ public class MockupXmlGenerator extends DefaultWidgetGenerator<Element> implemen
     }
     if (widget.getAppliedTags().size() > 0) {
       this.addAppliedTags(e, widget);
+    }
+    if (widget instanceof InputWidget) {
+      String sampleData = ((InputWidget) widget).getSampleData();
+      if (sampleData != null) {
+        e.setAttribute("sampleData", sampleData);
+      }
     }
     return e;
   }
