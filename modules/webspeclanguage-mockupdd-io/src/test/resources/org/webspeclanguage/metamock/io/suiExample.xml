@@ -18,7 +18,7 @@
                 </layoutInfo>
                 <originalPosition x="10" y="10" width="100" height="25" />
             </label>
-            <textBox id="usernameTextbox">
+            <textBox id="usernameTextbox" sampleData="username1">
                 <layoutInfo>
                     <gridBoxLayoutInfo column="2" row="1" />
                 </layoutInfo>
@@ -30,7 +30,7 @@
                 </layoutInfo>
                 <originalPosition x="10" y="50" width="100" height="25" />
             </label>
-            <textBox id="passwordTextbox">
+            <textBox id="passwordTextbox" sampleData="*******">
                 <layoutInfo>
                     <gridBoxLayoutInfo column="2" row="2" />
                 </layoutInfo>
@@ -65,7 +65,7 @@
                     <radioButton id="facebookLogin" label="Facebook login">
                         <originalPosition x="20" y="160" width="80" height="30" />
                     </radioButton>
-                    <comboBox id="loginAs">
+                    <comboBox id="loginAs" sampleData="administrator">
                         <originalPosition x="30" y="240" width="200" height="200" />
                     </comboBox>
                 </widgets>

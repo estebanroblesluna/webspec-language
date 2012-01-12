@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.utils.SuiVisitor;
  * 
  * @author Jose Matias Rivero
  */
-public class CheckBoxImpl extends SimpleWidgetImpl implements CheckBox {
+public class CheckBoxImpl extends SimpleInputWidgetImpl implements CheckBox {
 
   private String text;
 

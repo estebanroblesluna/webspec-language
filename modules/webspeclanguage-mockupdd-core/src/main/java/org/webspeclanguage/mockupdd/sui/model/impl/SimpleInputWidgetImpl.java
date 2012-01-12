@@ -10,29 +10,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.webspeclanguage.mockupdd.sui.model.impl;
 
-import org.webspeclanguage.mockupdd.sui.model.ComboBox;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.utils.SuiVisitor;
 
 /**
- * Default implementation of {@link ComboBox}
- * 
- * @author Jose Matias Rivero
+ * @author José Matías Rivero
  */
-public class ComboBoxImpl extends SimpleInputWidgetImpl implements ComboBox {
+public abstract class SimpleInputWidgetImpl extends SimpleWidgetImpl {
 
-  public ComboBoxImpl(String widgetID, Integer x, Integer y, Integer width, Integer height) {
+  private String sampleData;
+
+  public SimpleInputWidgetImpl(String widgetID, int x, int y, int width, int height) {
     super(widgetID, x, y, width, height);
   }
 
-  public final <T> T accept(SuiVisitor<T> v) {
-    return v.visitComboBox(this);
+  public String getSampleData() {
+    return sampleData;
   }
 
-  @Override
-  public Widget copyConcreteWidget() {
-    return new ComboBoxImpl(this.getWidgetId(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+  public void setSampleData(String sampleData) {
+    this.sampleData = sampleData;
   }
+
 }

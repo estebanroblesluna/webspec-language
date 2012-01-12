@@ -19,4 +19,8 @@ package org.webspeclanguage.mockupdd.sui.model;
  */
 public interface InputWidget {
 
+  String getSampleData();
+  
+  void setSampleData(String sampleData);
+  
 }
