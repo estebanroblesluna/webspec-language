@@ -60,7 +60,6 @@ public class SuiSpecsInferenceState {
   private List<NavigationSpec> navigationSpecs = new ArrayList<NavigationSpec>();
   private List<AssociateActionSpec> associateActionSpecs = new ArrayList<AssociateActionSpec>();
   private List<AttributeMappingSpec> attributeMappingSpecs = new ArrayList<AttributeMappingSpec>();
-  private List<ClassMappingSpec> classMappingSpecs = new ArrayList<ClassMappingSpec>();
   private List<DeleteActionSpec> deleteActionSpecs = new ArrayList<DeleteActionSpec>();
   private List<DissociateActionSpec> dissociateActionSpecs = new ArrayList<DissociateActionSpec>();
   private List<InputPanelSpec> inputPanelSpecs = new ArrayList<InputPanelSpec>();

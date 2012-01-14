@@ -18,8 +18,6 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.CreateUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 
 /**

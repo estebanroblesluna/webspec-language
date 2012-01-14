@@ -14,7 +14,6 @@ package org.webspeclanguage.mockupdd.specs.processors;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.apache.commons.collections15.CollectionUtils;
 import org.apache.commons.collections15.Predicate;
 import org.webspeclanguage.mockupdd.config.SuiDefaultConfig;
