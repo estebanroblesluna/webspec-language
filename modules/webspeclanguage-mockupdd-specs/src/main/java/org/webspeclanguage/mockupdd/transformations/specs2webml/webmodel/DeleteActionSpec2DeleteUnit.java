@@ -17,11 +17,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.DeleteUnit;
-import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
-
+import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;;
 
 /**
  * @author Franco Giacosa

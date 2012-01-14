@@ -15,7 +15,6 @@ package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import org.webspeclanguage.mockupdd.specs.data.*;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
 import java.util.*;

@@ -2,7 +2,6 @@ package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.RelationshipDecorator;
