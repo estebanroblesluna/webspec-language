@@ -13,6 +13,7 @@
 
 package org.webspeclanguage.mockupdd.specs.processors;
 
+import org.junit.Ignore;
 import org.webspeclanguage.mockupdd.specs.data.DataSpecFactory;
 import org.webspeclanguage.mockupdd.specs.data.impl.DataSpecFactoryImpl;
 import org.webspeclanguage.mockupdd.specs.hypertext.HypertextSpecFactory;
@@ -22,6 +23,7 @@ import org.webspeclanguage.mockupdd.sui.model.SuiTestCase;
 /**
  * @author José Matías Rivero
  */
+@Ignore
 public class SuiSpecsTestCase extends SuiTestCase {
 
   protected HypertextSpecFactory hypertextFactory;
