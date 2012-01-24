@@ -1,13 +1,19 @@
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Map;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModel;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Entity;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Relationship;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.RelationshipDecorator;
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 import org.webspeclanguage.mockupdd.specs.data.AssociationSpec;
-import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.specs.data.impl.DataSpecFacade;
 import org.webspeclanguage.mockupdd.specs.data.impl.DataSpecFactoryImpl;
@@ -28,7 +34,8 @@ public class DataSpecs2WebMLDataModel {
 	private List<AttributeTypeSpec2Type> attributeTypeSpec2Types = new ArrayList<AttributeTypeSpec2Type>();
 	private List<AssociationSpec2Relationship> associationSpec2Relationships = new ArrayList<AssociationSpec2Relationship>();
 	private List<ClassSpec2Entity> classSpec2Entitys = new ArrayList<ClassSpec2Entity>();
-
+	private DataModel dataModel;
+	
 	public DataSpecs2WebMLDataModel(
 			SuiSpecsInferenceState suiSpecsInferenceState) {
 		this.setSuiSpecsInferenceState(suiSpecsInferenceState);
@@ -36,49 +43,39 @@ public class DataSpecs2WebMLDataModel {
 
 	public void transform() {
 		this.transformClass();
-		this.transformAttributes();
 		this.transformAssociations();
+		this.setDataModel(this.createDataModel()); 
+	}
+
+	private DataModel createDataModel() {
+	    DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
+	    DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();
+	    
+	    Map<String,Entity> entityMap = new HashMap<String,Entity>();
+	    Map<String,Relationship> relationshipsMap = new HashMap<String,Relationship>();
+	    for(EntityDecorator entD: dataModelFacade.getEntitys().values()){
+	    	entityMap.put(entD.getId(), entD.getEntity());    	
+	    	
+	    	for(RelationshipDecorator rD: entD.getRelationships().values()){
+	    		relationshipsMap.put(rD.getId(),rD.getRelationship());
+	    	}	    	
+	    }	    	  
+	    return dataFactory.createDataModel(entityMap, relationshipsMap);	    		
 	}
 
 	private void transformClass() {
-		Iterator<ClassSpec> csIt = getDataSpecFactory().getClassSpecs().iterator();
-		while (csIt.hasNext()) {
-			ClassSpec cs = csIt.next();
-			this.getClassSpec2Entitys().add(
-					getDataModelTransformationFactory()
-							.transformClassSpec2Entity(cs));
-		}
-	}
-
-	private void transformAttributes() {
-		Iterator<AttributeSpec> asIt = getDataSpecFactory().getAttributeSpecs()
-				.iterator();
-		while (asIt.hasNext()) {
-			AttributeSpec as = asIt.next();
-			AttributeSpec2Attribute attributeSpec2Attribute = getDataModelTransformationFactory().transformAttributeSpec2Attribute(as);
-			
-			this.getAttributeSpec2Attributes().add(attributeSpec2Attribute);
-			this.getAttributeTypeSpec2Types().add(attributeSpec2Attribute.getAttributeTypeSpec2Type());
-		}
+		for (ClassSpec cs : getDataSpecFactory().getClassSpecs()){
+			this.getClassSpec2Entitys().add(getDMTFactory().transformClassSpec2Entity(cs));
+		}	
 	}
 
 	private void transformAssociations() {
-		Iterator<AssociationSpec> assIt = getDataSpecFactory().getAssociationSpecs()
-				.iterator();
-
-		while (assIt.hasNext()) {
-			AssociationSpec ass = assIt.next();
-
+		for(AssociationSpec ass : getDataSpecFactory().getAssociationSpecs()){
 			boolean ok = false;
 			ClassSpec sourceCS = null;
-			Iterator<ClassSpec> cs2It = getDataSpecFactory().getClassSpecs()
-					.iterator();
-
-			while (cs2It.hasNext()) {
-				ClassSpec cs2 = cs2It.next();
-
-				Iterator<AssociationSpec> sourceASIt = cs2.getAssociations()
-						.iterator();
+			
+			for(ClassSpec cs2 : getDataSpecFactory().getClassSpecs()){
+				Iterator<AssociationSpec> sourceASIt = cs2.getAssociations().iterator();
 				while ((sourceASIt.hasNext()) && (!ok)) {
 					AssociationSpec sourceAS = sourceASIt.next();
 					if (sourceAS.equals(ass)) {
@@ -89,10 +86,8 @@ public class DataSpecs2WebMLDataModel {
 					sourceCS = cs2;
 				}
 			}
-			this.getAssociationSpec2Relationships().add(
-					getDataModelTransformationFactory()
-							.transformAssociationSpec2Relationship(ass,
-									sourceCS,this));
+			AssociationSpec2Relationship as2r = this.getDMTFactory().transformAssociationSpec2Relationship(ass,sourceCS,this);
+			this.getAssociationSpec2Relationships().add(as2r);
 		}
 	}
 
@@ -141,14 +136,8 @@ public class DataSpecs2WebMLDataModel {
 	}
 
 	public EntityDecorator getEntity(String classSpecName) {
-
 		EntityDecorator entityDecorator = null;
-
-		Iterator<ClassSpec2Entity> iterator = this.getClassSpec2Entitys()
-				.iterator();
-		while (iterator.hasNext()) {
-			ClassSpec2Entity classSpec2Entity = (ClassSpec2Entity) iterator
-					.next();
+		for(ClassSpec2Entity classSpec2Entity : this.getClassSpec2Entitys()){
 			if (classSpec2Entity.getClassSpec().getName().equals(classSpecName)) {
 				entityDecorator = classSpec2Entity.getEntity();
 			}
@@ -172,8 +161,7 @@ public class DataSpecs2WebMLDataModel {
 		return dataSpecFacade;
 	}
 
-	public void setDataModelTransformationFacade(
-			DMTransformationFacade dataModelTransformationFacade) {
+	public void setDataModelTransformationFacade(DMTransformationFacade dataModelTransformationFacade) {
 		this.dataModelTransformationFacade = dataModelTransformationFacade;
 	}
 
@@ -181,12 +169,19 @@ public class DataSpecs2WebMLDataModel {
 		return dataModelTransformationFacade;
 	}
 
-	public void setDataModelTransformationFactory(
-			DMTransformationFactory dataModelTransformationFactory) {
-		this.dataModelTransformationFactory = dataModelTransformationFactory;
+	public void setDMTFactory(DMTransformationFactory dataMTFactory) {
+		this.dataModelTransformationFactory = dataMTFactory;
 	}
 
-	public DMTransformationFactory getDataModelTransformationFactory() {
+	public DMTransformationFactory getDMTFactory() {
 		return dataModelTransformationFactory;
+	}
+
+	public void setDataModel(DataModel dataModel) {
+		this.dataModel = dataModel;
+	}
+
+	public DataModel getDataModel() {
+		return dataModel;
 	}
 }

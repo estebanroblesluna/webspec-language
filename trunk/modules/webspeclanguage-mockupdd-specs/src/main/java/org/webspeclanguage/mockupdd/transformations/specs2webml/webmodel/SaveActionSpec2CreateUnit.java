@@ -18,6 +18,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.CreateUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 
 
 /**
@@ -28,6 +29,7 @@ public class SaveActionSpec2CreateUnit {
   private SaveActionSpec saveActionSpec;
   private CreateUnit createUnit;
   private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+  
   public SaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
     super();
     this.setSaveActionSpec(saveActionSpec);
@@ -38,7 +40,8 @@ public class SaveActionSpec2CreateUnit {
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getSaveActionSpec().getSpec().getClassSpec().getName());    
-    this.setCreateUnit(webFactory.createCreateUnit(this.getSaveActionSpec().getSpec().getClassSpec().getName(), entityDecorator));    
+    this.setCreateUnit(webFactory.createCreateUnit(this.getSaveActionSpec().getSpec().getClassSpec().getName(), entityDecorator));
+    this.getHypertextSpec2WebMLWebModel().addOperationUnit(this.getCreateUnit(),(CompositeWidget)this.getSaveActionSpec().getSpec().getWidget());
   }
 
   public SaveActionSpec getSaveActionSpec() {
@@ -57,11 +60,11 @@ public class SaveActionSpec2CreateUnit {
     this.createUnit = createUnit;
   }
 
-public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
 	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
-}
+  }
 
-public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+  public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 	return hypertextSpec2WebMLWebModel;
-}
+  }
 }

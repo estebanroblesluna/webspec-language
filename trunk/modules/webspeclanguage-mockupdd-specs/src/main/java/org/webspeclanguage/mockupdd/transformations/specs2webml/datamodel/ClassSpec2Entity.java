@@ -45,7 +45,8 @@ public class ClassSpec2Entity {
       while(iteratorAtt.hasNext()){
         AttributeSpec2Attribute attSpec2Att = (AttributeSpec2Attribute)iteratorAtt.next();
         this.getEntity().addAttribute(attSpec2Att.getAttribute());   
-      }            
+      }       
+      dataModelFacade.addEntity(getEntity());
     }
 
     public ClassSpec getClassSpec() {
@@ -70,6 +71,10 @@ public class ClassSpec2Entity {
  
     public void setEntity(EntityDecorator entity) {
       this.entity = entity;
+    }
+    
+    public void addAttributeSpec2Attributes(AttributeSpec2Attribute aSpec2Attribute){
+    	this.getAttributeSpec2Attributes().add(aSpec2Attribute);
     }
 
 }

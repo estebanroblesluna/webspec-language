@@ -14,9 +14,9 @@
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.AttributeDecorator;
 import org.webspeclanguage.mockupdd.specs.data.AssociationSpec;
 import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.data.AttributeTypeSpec;
@@ -52,16 +52,20 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
   public ClassSpec2Entity transformClassSpec2Entity(ClassSpec classSpec) {
     
     List<AttributeSpec2Attribute> attributeSpec2Attributes = new ArrayList<AttributeSpec2Attribute>();
-    Iterator<AttributeSpec> iteratorA = classSpec.getAttributes().iterator();
-    while(iteratorA.hasNext()){
-      AttributeSpec atts = (AttributeSpec)iteratorA.next();
-      attributeSpec2Attributes.add(this.transformAttributeSpec2Attribute(atts));      
+    for(AttributeSpec atts : classSpec.getAttributes()){
+    	attributeSpec2Attributes.add(this.transformAttributeSpec2Attribute(atts));      
     }
     //we add the Entity OID
     attributeSpec2Attributes.add(this.transformAttributeSpec2Attribute(new AttributeSpecImpl("OID", AttributeTypeSpec.INTEGER)));
     
     ClassSpec2Entity classSpec2Entity = new ClassSpec2Entity(classSpec,attributeSpec2Attributes);
     classSpec2Entity.transform();
+    for(AttributeSpec2Attribute as2a : classSpec2Entity.getAttributeSpec2Attributes()){
+    	AttributeDecorator attribute = as2a.getAttribute();
+    	classSpec2Entity.getEntity().addAttribute(attribute);
+    }
+    
+    
     return classSpec2Entity;    
   }
 

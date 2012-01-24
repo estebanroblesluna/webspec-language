@@ -13,9 +13,7 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
+import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
@@ -23,7 +21,6 @@ import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
 
 
 /**
@@ -33,20 +30,23 @@ public class WMTransformationFactoryImpl implements WMTransformationFactory {
 
   public NavigationSpec2NavigationPUnitToPUnit transformNavigationSpec2NavigationPUnitToPUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
 	  
-	  NavigationSpec2NavigationPUnitToPUnit navigationSpec2NavigationPUnitToPUnit = new NavigationSpec2NavigationPUnitToPUnit(navigationSpec,hypertextSpec2WebMLWebModel);
+	  NavigationSpec2NavigationPUnitToPUnit navigationSpec2NavigationPUnitToPUnit = 
+		  new NavigationSpec2NavigationPUnitToPUnit(navigationSpec,hypertextSpec2WebMLWebModel);
 	  navigationSpec2NavigationPUnitToPUnit.transform();
 	  return navigationSpec2NavigationPUnitToPUnit;
   }
   
-  public NavigationSpec2IntraNavigationUnitToUnit transformNavigationSpec2IntraNavigationUnitToUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public NavigationSpec2IntraNavigationUnitToUnit transformNavigationSpec2IntraNavigationUnitToUnit(ClassMappingSpec classMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
 	  
-	  NavigationSpec2IntraNavigationUnitToUnit navigationSpec2IntraNavigationUnitToUnit = new NavigationSpec2IntraNavigationUnitToUnit(navigationSpec,hypertextSpec2WebMLWebModel);
+	  NavigationSpec2IntraNavigationUnitToUnit navigationSpec2IntraNavigationUnitToUnit = 
+		  new NavigationSpec2IntraNavigationUnitToUnit(classMappingSpec,hypertextSpec2WebMLWebModel);
 	  navigationSpec2IntraNavigationUnitToUnit.transform();
 	  return navigationSpec2IntraNavigationUnitToUnit;	  
   }
   public NavigationSpec2NavigationPageToPage transformNavigationSpec2NavigationPageToPage(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
 	  
-	  NavigationSpec2NavigationPageToPage navigationSpec2NavigationPageToPage = new NavigationSpec2NavigationPageToPage(navigationSpec,hypertextSpec2WebMLWebModel);
+	  NavigationSpec2NavigationPageToPage navigationSpec2NavigationPageToPage = 
+		  new NavigationSpec2NavigationPageToPage(navigationSpec,hypertextSpec2WebMLWebModel);
 	  navigationSpec2NavigationPageToPage.transform();
 	  return navigationSpec2NavigationPageToPage;	  
   }

@@ -5,14 +5,13 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.NormalLink;
 import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 public class NavigationSpec2NavigationPageToPage {
 
 	private NavigationSpec navigationSpec;
 	private NormalLink link;
 	private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;	
+	
 	public NavigationSpec2NavigationPageToPage(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
 		super();
 		this.navigationSpec = navigationSpec;
@@ -22,8 +21,8 @@ public class NavigationSpec2NavigationPageToPage {
 	public void transform() {
 		WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
 	    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-	    Page fromPage = this.getHypertextSpec2WebMLWebModel().getPage(this.getNavigationSpec().getTrigger().getPage());
-	    Page toPage = this.getHypertextSpec2WebMLWebModel().getPage(this.getNavigationSpec().getTo());	   
+	    Page fromPage = this.getHypertextSpec2WebMLWebModel().getPage(this.getHypertextSpec2WebMLWebModel().getSuiSpecsInferenceState().getPageByWidget(this.getNavigationSpec().getTrigger()));  	    
+	    Page toPage = this.getHypertextSpec2WebMLWebModel().getPage(this.getNavigationSpec().getTo());
 		this.setLink(webFactory.createNormalLink(fromPage.getName() + "to" + toPage.getName(), true, fromPage, toPage));
 	}
 
@@ -51,9 +50,5 @@ public class NavigationSpec2NavigationPageToPage {
 	public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 		return hypertextSpec2WebMLWebModel;
 	}
-
-	
-
-	
 
 }

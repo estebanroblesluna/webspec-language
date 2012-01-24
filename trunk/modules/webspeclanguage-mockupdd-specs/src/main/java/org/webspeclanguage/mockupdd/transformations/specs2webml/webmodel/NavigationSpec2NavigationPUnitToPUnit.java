@@ -1,10 +1,13 @@
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.Page;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.NormalLink;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.ContentUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.ObjectTransferSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.Page;
 
 public class NavigationSpec2NavigationPUnitToPUnit {
 
@@ -21,9 +24,19 @@ public class NavigationSpec2NavigationPUnitToPUnit {
 	public void transform() {
 		WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
 	    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-	    Page fromPage = this.getHypertextSpec2WebMLWebModel().getPage(this.getNavigationSpec().getTrigger().getPage());
-	    Page toPage = this.getHypertextSpec2WebMLWebModel().getPage(this.getNavigationSpec().getTo());	   
-		this.setLink(webFactory.createNormalLink(fromPage.getName() + "to" + toPage.getName(), true, fromPage, toPage));
+	    CompositeWidget cw = this.getNavigationSpec().getTrigger().getParent();
+	    ContentUnit fromCU = this.getHypertextSpec2WebMLWebModel().findContentUnit(cw);
+	    
+	    Page toPage = this.getNavigationSpec().getTo();
+	    ContentUnit toCU = null;
+	    
+	    for(ObjectTransferSpec obj : this.getNavigationSpec().getTransfers()){
+	    	Page objToPage = this.getHypertextSpec2WebMLWebModel().getSuiSpecsInferenceState().getPageByWidget(obj.getTo());
+	    	if(objToPage.equals(toPage)){
+	    		toCU = this.getHypertextSpec2WebMLWebModel().findContentUnit((CompositeWidget)obj.getTo());
+	    	}
+	    }   	    
+		this.setLink(webFactory.createNormalLink(fromCU.getName() + "to" + toCU.getName(), true, fromCU, toCU));
 	}
 
 	public NavigationSpec getNavigationSpec() {
