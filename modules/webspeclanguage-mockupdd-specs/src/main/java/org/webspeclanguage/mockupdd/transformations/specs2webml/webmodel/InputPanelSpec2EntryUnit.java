@@ -23,7 +23,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
 /**
  * @author Franco Giacosa
  */
-public class InputPanelSpec2EntryUnit {
+public class InputPanelSpec2EntryUnit implements Spec2ContentUnit{
   
   private InputPanelSpec inputPanelSpec;
   private EntryUnit entryUnit;
@@ -38,11 +38,12 @@ public class InputPanelSpec2EntryUnit {
     
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getInputPanelSpec().getClassSpec().getName());    
-    this.setEntryUnit(webFactory.createEntryUnit(this.getInputPanelSpec().getWidget().getWidgetId(), entityDecorator));
+    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getSpec().getClassSpec().getName());    
+    this.setEntryUnit(webFactory.createEntryUnit(this.getSpec().getWidget().getWidgetId(), entityDecorator));
+    this.getHypertextSpec2WebMLWebModel().addContentUnitToPage(this.getSpec().getWidget(),this.getContentUnit());
   }
 
-  public InputPanelSpec getInputPanelSpec() {
+  public InputPanelSpec getSpec() {
     return inputPanelSpec;
   }
 
@@ -50,7 +51,7 @@ public class InputPanelSpec2EntryUnit {
     this.inputPanelSpec = inputPanelSpec;
   }
   
-  public EntryUnit getEntryUnit() {
+  public EntryUnit getContentUnit() {
     return entryUnit;
   }
   

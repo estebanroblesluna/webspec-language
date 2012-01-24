@@ -14,16 +14,16 @@
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.*;
-import org.webspeclanguage.mockupdd.codegen.webml.webmodel.*;
-import org.webspeclanguage.mockupdd.specs.hypertext.*;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.*;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.DataUnit;
+import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
 
 
 /**
  * @author Franco Giacosa
  */
-public class PanelClassMappingSpec2DataUnit {
+public class PanelClassMappingSpec2DataUnit implements Spec2ContentUnit{
   
     private DataUnit dataUnit; 
     private PanelClassMappingSpec panel;
@@ -35,7 +35,7 @@ public class PanelClassMappingSpec2DataUnit {
       this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
     }
     
-    public PanelClassMappingSpec getPanel() {
+    public PanelClassMappingSpec getSpec() {
       return panel;
     }
 
@@ -46,11 +46,12 @@ public class PanelClassMappingSpec2DataUnit {
     public void transform(){
       WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
       WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-      EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getPanel().getClassSpec().getName());    
-      this.setDataUnit(webFactory.createDataUnit(this.getPanel().getWidget().getWidgetId(), entityDecorator));
+      EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getSpec().getClassSpec().getName());    
+      this.setDataUnit(webFactory.createDataUnit(this.getSpec().getWidget().getWidgetId(), entityDecorator));
+      this.getHypertextSpec2WebMLWebModel().addContentUnitToPage(this.getSpec().getWidget(),this.getContentUnit());
     }
     
-    public DataUnit getDataUnit() {
+    public DataUnit getContentUnit() {
       return dataUnit;
     }
     

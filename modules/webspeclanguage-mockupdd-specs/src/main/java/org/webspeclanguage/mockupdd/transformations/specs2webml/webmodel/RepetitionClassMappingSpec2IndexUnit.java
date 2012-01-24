@@ -18,14 +18,12 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.IndexUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
-import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFactory;
 
 
 /**
  * @author Franco Giacosa
  */
-public class RepetitionClassMappingSpec2IndexUnit {
+public class RepetitionClassMappingSpec2IndexUnit implements Spec2ContentUnit {
   
   private RepetitionClassMappingSpec repetition;
   private IndexUnit indexUnit;
@@ -40,11 +38,12 @@ public class RepetitionClassMappingSpec2IndexUnit {
     
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getRepetition().getClassSpec().getName());    
-    this.setIndexUnit(webFactory.createIndexUnit(this.getRepetition().getWidget().getWidgetId(), entityDecorator));    
+    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getSpec().getClassSpec().getName());    
+    this.setIndexUnit(webFactory.createIndexUnit(this.getSpec().getWidget().getWidgetId(), entityDecorator));
+    this.getHypertextSpec2WebMLWebModel().addContentUnitToPage(this.getSpec().getWidget(),this.getContentUnit());
   }
   
-  public RepetitionClassMappingSpec getRepetition() {
+  public RepetitionClassMappingSpec getSpec() {
     return repetition;
   }
   
@@ -52,7 +51,7 @@ public class RepetitionClassMappingSpec2IndexUnit {
     this.repetition = repetition;
   }
   
-  public IndexUnit getIndexUnit() {
+  public IndexUnit getContentUnit() {
     return indexUnit;
   }
   

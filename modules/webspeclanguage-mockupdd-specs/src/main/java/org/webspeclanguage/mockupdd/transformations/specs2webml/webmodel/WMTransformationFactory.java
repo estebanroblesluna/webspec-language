@@ -13,6 +13,7 @@
 
 package org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel;
 
+import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
@@ -36,7 +37,7 @@ public interface WMTransformationFactory {
   DeleteActionSpec2DeleteUnit transformDeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
   SelectableRepetitionSpec2MultiChoiceIU transformSelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
   NavigationSpec2NavigationPageToPage transformNavigationSpec2NavigationPageToPage(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
-  NavigationSpec2IntraNavigationUnitToUnit  transformNavigationSpec2IntraNavigationUnitToUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
+  NavigationSpec2IntraNavigationUnitToUnit  transformNavigationSpec2IntraNavigationUnitToUnit(ClassMappingSpec classMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
   NavigationSpec2NavigationPUnitToPUnit transformNavigationSpec2NavigationPUnitToPUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel);
 
 }

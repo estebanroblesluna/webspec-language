@@ -1,9 +1,12 @@
 package org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Relationship;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.RelationshipDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.RelationshipRole;
 import org.webspeclanguage.mockupdd.specs.data.AssociationSpec;
@@ -48,15 +51,15 @@ public class AssociationSpec2Relationship {
 		relationshipRoleList.add(dataFactory.createRelationshipRole(this
 				.getAssociationSpec().getDestinationClass().getName(),
 				this.getCardinality()));
-
-		this.setRelationshipDecorator(dataFactory.createRelationshipDecorator(dataFactory
-				.createRelationship(this.getAssociationSpec()
-						.getAssociationName(), (this.getDataSpecs2WebMLDataModel()
-						.getEntity(associationSource.getName())).getEntity(),
-						(this.getDataSpecs2WebMLDataModel().getEntity(this
-								.getAssociationSpec().getDestinationClass()
-								.getName())).getEntity(), relationshipRoleList)));
-
+		
+		String name = this.getAssociationSpec().getAssociationName();
+		EntityDecorator sourceEntity = (this.getDataSpecs2WebMLDataModel().getEntity(associationSource.getName()));
+		EntityDecorator targetEntity = (this.getDataSpecs2WebMLDataModel().getEntity(this.getAssociationSpec().getDestinationClass().getName()));
+		
+		Relationship relationship = dataFactory.createRelationship(name,sourceEntity.getEntity(),targetEntity.getEntity(), relationshipRoleList);
+		RelationshipDecorator rd = dataFactory.createRelationshipDecorator(relationship);
+		sourceEntity.addRelationship(rd);
+		this.setRelationshipDecorator(rd);
 	}
 
 	public String getCardinality() {
@@ -64,8 +67,10 @@ public class AssociationSpec2Relationship {
 		switch (this.getAssociationSpec().getMaximumCardinality()) {
 		case ONE:
 			cardinality = "1";
+			break;
 		case MANY:
 			cardinality = "N";
+			break;
 		}
 		return cardinality;
 	}

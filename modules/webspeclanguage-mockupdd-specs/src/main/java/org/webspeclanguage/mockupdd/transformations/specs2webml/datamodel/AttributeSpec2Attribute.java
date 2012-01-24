@@ -36,6 +36,14 @@ public class AttributeSpec2Attribute {
 		this.setAttributeTypeSpec2Type(attributeTypeSpec2Type);
 	}
 
+	public void transform() {
+		DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
+		DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();		
+		Type type = this.getAttributeTypeSpec2Type().getType();
+		Attribute att1 = dataFactory.createAttribute(this.getAttributeSpec().getName(), type, false);
+		this.setAttribute(dataFactory.createAttributeDecorator(att1));	
+	}
+
 	public AttributeTypeSpec2Type getAttributeTypeSpec2Type() {
 		return attributeTypeSpec2Type;
 	}
@@ -53,15 +61,6 @@ public class AttributeSpec2Attribute {
 		this.attribute = attribute;
 
 	}
-
-	public void transform() {
-		DataModelFacade dataModelFacade = DataModelFacade.getDataModelFacade();
-		DataModelFactory dataFactory = dataModelFacade.getDataModelFactory();		
-		Type type = this.getAttributeTypeSpec2Type().getType();
-		Attribute att1 = dataFactory.createAttribute(this.getAttributeSpec().getName(), type, false);
-		this.setAttribute(dataFactory.createAttributeDecorator(att1));
-	}
-
 	public AttributeSpec getAttributeSpec() {
 		return attributeSpec;
 	}

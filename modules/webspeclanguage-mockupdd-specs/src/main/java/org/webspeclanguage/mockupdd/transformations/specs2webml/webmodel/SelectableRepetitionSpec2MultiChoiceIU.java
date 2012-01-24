@@ -23,7 +23,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
 /**
  * @author Franco Giacosa
  */
-public class SelectableRepetitionSpec2MultiChoiceIU {
+public class SelectableRepetitionSpec2MultiChoiceIU implements Spec2ContentUnit{
 
   private SelectableRepetitionSpec selectableRepetitionSpec;
   private MultiChoiceIndexUnit multiChoiceIndexUnit;
@@ -34,8 +34,16 @@ public class SelectableRepetitionSpec2MultiChoiceIU {
     this.setSelectableRepetitionSpec(selectableRepetitionSpec);
     this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
   }
+
+  public void transform(){      
+    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getSpec().getClassSpec().getName());    
+    this.setMultiChoiceIndexUnit(webFactory.createMultiChoiceIndexUnit(this.getSpec().getWidget().getWidgetId(), entityDecorator));
+    this.getHypertextSpec2WebMLWebModel().addContentUnitToPage(this.getSpec().getWidget(),this.getContentUnit());
+  }
   
-  public MultiChoiceIndexUnit getMultiChoiceIndexUnit() {
+  public MultiChoiceIndexUnit getContentUnit() {
     return multiChoiceIndexUnit;
   }
   
@@ -43,7 +51,7 @@ public class SelectableRepetitionSpec2MultiChoiceIU {
     this.multiChoiceIndexUnit = multiChoiceIndexUnit;
   }
   
-  public SelectableRepetitionSpec getSelectableRepetitionSpec() {
+  public SelectableRepetitionSpec getSpec() {
     return selectableRepetitionSpec;
   }
   
@@ -51,21 +59,12 @@ public class SelectableRepetitionSpec2MultiChoiceIU {
     this.selectableRepetitionSpec = selectableRepetitionSpec;
   }
 
-  public void transform(){      
-    WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
-    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-    EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getSelectableRepetitionSpec().getClassSpec().getName());    
-    this.setMultiChoiceIndexUnit(webFactory.createMultiChoiceIndexUnit(this.getSelectableRepetitionSpec().getWidget().getWidgetId(), entityDecorator));    
+  public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
   }
 
-public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
-	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
-}
-
-public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+  public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 	return hypertextSpec2WebMLWebModel;
-}
- 
-
+  }
 
 }

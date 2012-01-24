@@ -168,102 +168,102 @@ public class SuiSpecsInferenceState {
   }
 
 
-public List<ObjectTransferSpec> getObjectTransferSpecs() {
-	return objectTransferSpecs;
-}
+  public List<ObjectTransferSpec> getObjectTransferSpecs() {
+	  return objectTransferSpecs;
+  }
 
-public void setInputPanelSpecs(List<InputPanelSpec> inputPanelSpecs) {
-	this.inputPanelSpecs = inputPanelSpecs;
-}
+  public void setInputPanelSpecs(List<InputPanelSpec> inputPanelSpecs) {
+	  this.inputPanelSpecs = inputPanelSpecs;
+  }
 
-public List<InputPanelSpec> getInputPanelSpecs() {
-	return inputPanelSpecs;
-}
+  public List<InputPanelSpec> getInputPanelSpecs() {
+	  return inputPanelSpecs;
+  }
 
-public void setDissociateActionSpecs(List<DissociateActionSpec> dissociateActionSpecs) {
-	this.dissociateActionSpecs = dissociateActionSpecs;
-}
+  public void setDissociateActionSpecs(List<DissociateActionSpec> dissociateActionSpecs) {
+	  this.dissociateActionSpecs = dissociateActionSpecs;
+  }
 
-public List<DissociateActionSpec> getDissociateActionSpecs() {
-	return dissociateActionSpecs;
-}
+  public List<DissociateActionSpec> getDissociateActionSpecs() {
+	  return dissociateActionSpecs;
+  }
 
-public void setDeleteActionSpecs(List<DeleteActionSpec> deleteActionSpecs) {
-	this.deleteActionSpecs = deleteActionSpecs;
-}
+  public void setDeleteActionSpecs(List<DeleteActionSpec> deleteActionSpecs) {
+	  this.deleteActionSpecs = deleteActionSpecs;
+  }
 
-public List<DeleteActionSpec> getDeleteActionSpecs() {
-	return deleteActionSpecs;
-}
+  public List<DeleteActionSpec> getDeleteActionSpecs() {
+	  return deleteActionSpecs;
+  }
 
-public void setAttributeMappingSpecs(List<AttributeMappingSpec> attributeMappingSpecs) {
-	this.attributeMappingSpecs = attributeMappingSpecs;
-}
+  public void setAttributeMappingSpecs(List<AttributeMappingSpec> attributeMappingSpecs) {
+	  this.attributeMappingSpecs = attributeMappingSpecs;
+  }
 
-public List<AttributeMappingSpec> getAttributeMappingSpecs() {
-	return attributeMappingSpecs;
-}
+  public List<AttributeMappingSpec> getAttributeMappingSpecs() {
+	  return attributeMappingSpecs;
+  }
 
-public void setAssociateActionSpecs(List<AssociateActionSpec> associateActionSpecs) {
-	this.associateActionSpecs = associateActionSpecs;
-}
+  public void setAssociateActionSpecs(List<AssociateActionSpec> associateActionSpecs) {
+	  this.associateActionSpecs = associateActionSpecs;
+  }
 
-public List<AssociateActionSpec> getAssociateActionSpecs() {
-	return associateActionSpecs;
-}
+  public List<AssociateActionSpec> getAssociateActionSpecs() {
+	  return associateActionSpecs;
+  }
 
-public void setPanelClassMappingSpecs(List<PanelClassMappingSpec> panelClassMappingSpecs) {
-	this.panelClassMappingSpecs = panelClassMappingSpecs;
-}
+  public void setPanelClassMappingSpecs(List<PanelClassMappingSpec> panelClassMappingSpecs) {
+	  this.panelClassMappingSpecs = panelClassMappingSpecs;
+  }
 
-public List<PanelClassMappingSpec> getPanelClassMappingSpecs() {
-	return panelClassMappingSpecs;
-}
+  public List<PanelClassMappingSpec> getPanelClassMappingSpecs() {
+	  return panelClassMappingSpecs;
+  }
 
-public void setRepetitionClassMappingSpecs(
-		List<RepetitionClassMappingSpec> repetitionClassMappingSpecs) {
-	this.repetitionClassMappingSpecs = repetitionClassMappingSpecs;
-}
+  public void setRepetitionClassMappingSpecs(
+		  List<RepetitionClassMappingSpec> repetitionClassMappingSpecs) {
+	  this.repetitionClassMappingSpecs = repetitionClassMappingSpecs;
+  }
 
-public List<RepetitionClassMappingSpec> getRepetitionClassMappingSpecs() {
-	return repetitionClassMappingSpecs;
-}
+  public List<RepetitionClassMappingSpec> getRepetitionClassMappingSpecs() {
+	  return repetitionClassMappingSpecs;
+  }
 
-public void setSaveActionSpecs(List<SaveActionSpec> saveActionSpecs) {
-	this.saveActionSpecs = saveActionSpecs;
-}
+  public void setSaveActionSpecs(List<SaveActionSpec> saveActionSpecs) {
+	  this.saveActionSpecs = saveActionSpecs;
+  }
 
-public List<SaveActionSpec> getSaveActionSpecs() {
-	return Collections.unmodifiableList(this.saveActionSpecs);
-}
+  public List<SaveActionSpec> getSaveActionSpecs() {
+	  return Collections.unmodifiableList(this.saveActionSpecs);
+  }
 
-public void setSelectableRepetitionSpecs(List<SelectableRepetitionSpec> selectableRepetitionSpecs) {
-	this.selectableRepetitionSpecs = selectableRepetitionSpecs;
-}
+  public void setSelectableRepetitionSpecs(List<SelectableRepetitionSpec> selectableRepetitionSpecs) {
+	  this.selectableRepetitionSpecs = selectableRepetitionSpecs;
+  }
 
-public List<SelectableRepetitionSpec> getSelectableRepetitionSpecs() {
-	return selectableRepetitionSpecs;
-}
+  public List<SelectableRepetitionSpec> getSelectableRepetitionSpecs() {
+	  return selectableRepetitionSpecs;
+  }
 
-public void setWidgetActionsSpecs(List<WidgetActionsSpec> widgetActionsSpecs) {
-	this.widgetActionsSpecs = widgetActionsSpecs;
-}
+  public void setWidgetActionsSpecs(List<WidgetActionsSpec> widgetActionsSpecs) {
+	  this.widgetActionsSpecs = widgetActionsSpecs;
+  }
 
-public List<WidgetActionsSpec> getWidgetActionsSpecs() {
-	return widgetActionsSpecs;
-}
+  public List<WidgetActionsSpec> getWidgetActionsSpecs() {
+	  return widgetActionsSpecs;
+  }
 
-public void setNavigationSpecs(List<NavigationSpec> navigationSpecs) {
-	this.navigationSpecs = navigationSpecs;
-}
+  public void setNavigationSpecs(List<NavigationSpec> navigationSpecs) {
+	  this.navigationSpecs = navigationSpecs;
+  }
 
-public List<NavigationSpec> getNavigationSpecs() {
-	return Collections.unmodifiableList(navigationSpecs);
-}
+  public List<NavigationSpec> getNavigationSpecs() {
+	  return Collections.unmodifiableList(navigationSpecs);
+  }
 
-public void addSaveActionSpec(TriggerWidget triggerWidget, SaveActionSpec saveActionSpec) {
-  this.saveActionSpecsByWidget.put(triggerWidget, saveActionSpec);
-  this.saveActionSpecs.add(saveActionSpec);
-}
+  public void addSaveActionSpec(TriggerWidget triggerWidget, SaveActionSpec saveActionSpec) {
+	  this.saveActionSpecsByWidget.put(triggerWidget, saveActionSpec);
+	  this.saveActionSpecs.add(saveActionSpec);
+  }
 
 }

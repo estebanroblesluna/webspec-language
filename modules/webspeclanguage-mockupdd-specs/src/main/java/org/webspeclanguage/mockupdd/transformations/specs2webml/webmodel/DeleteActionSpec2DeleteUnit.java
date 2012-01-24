@@ -17,7 +17,8 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.DeleteUnit;
-import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;;
+import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 
 /**
  * @author Franco Giacosa
@@ -38,7 +39,8 @@ public class DeleteActionSpec2DeleteUnit {
     WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
     WebModelFactory webFactory = webModelFacade.getWebModelFactory();
     EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getDeleteActionSpec().getSpec().getClassSpec().getName());    
-    this.setDeleteUnit(webFactory.createDeleteUnit(this.getDeleteActionSpec().getSpec().getClassSpec().getName(), entityDecorator));  
+    this.setDeleteUnit(webFactory.createDeleteUnit(this.getDeleteActionSpec().getSpec().getClassSpec().getName(), entityDecorator));
+    this.getHypertextSpec2WebMLWebModel().addOperationUnit(this.getDeleteUnit(),(CompositeWidget)this.getDeleteActionSpec().getSpec().getWidget());
   }
 
   public DeleteActionSpec getDeleteActionSpec() {
