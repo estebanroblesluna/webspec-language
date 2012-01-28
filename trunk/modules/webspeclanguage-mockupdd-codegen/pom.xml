@@ -28,6 +28,11 @@
       <version>${version}</version>
     </dependency>
     <dependency>
+      <groupId>org.webspeclanguage</groupId>
+      <artifactId>webspeclanguage-mockupdd-translators</artifactId>
+      <version>${version}</version>
+    </dependency>
+    <dependency>
 	   <groupId>net.sourceforge.collections</groupId>
        <artifactId>collections-generic</artifactId>
 	</dependency>

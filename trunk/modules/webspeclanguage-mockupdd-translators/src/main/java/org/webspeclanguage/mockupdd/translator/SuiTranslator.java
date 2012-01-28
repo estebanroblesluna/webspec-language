@@ -14,7 +14,7 @@ package org.webspeclanguage.mockupdd.translator;
 
 import java.util.Collection;
 
-import org.webspeclanguage.mockupdd.codegen.generator.Mockup;
+import org.webspeclanguage.mockupdd.mockups.Mockup;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 
 /**

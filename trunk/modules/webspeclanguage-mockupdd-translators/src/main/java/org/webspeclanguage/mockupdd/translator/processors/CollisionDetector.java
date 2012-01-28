@@ -12,16 +12,16 @@
  */
 package org.webspeclanguage.mockupdd.translator.processors;
 
+import org.webspeclanguage.mockupdd.mockups.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.sui.model.Annotation;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
+import org.webspeclanguage.mockupdd.sui.model.WidgetGroup;
 import org.webspeclanguage.mockupdd.translator.CollidingWidgetsException;
-import org.webspeclanguage.mockupdd.translator.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.translator.MockupProcessingEngine;
 import org.webspeclanguage.mockupdd.translator.MockupProcessor;
 import org.webspeclanguage.mockupdd.translator.SuiTranslationException;
-import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 import org.webspeclanguage.mockupdd.utils.SuiUtil;
 
 /**

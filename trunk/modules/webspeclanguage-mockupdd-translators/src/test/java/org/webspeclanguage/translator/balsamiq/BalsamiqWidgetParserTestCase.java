@@ -13,16 +13,14 @@
 package org.webspeclanguage.translator.balsamiq;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
-import org.webspeclanguage.mockupdd.codegen.generator.Mockup;
+import org.webspeclanguage.mockupdd.mockups.Mockup;
+import org.webspeclanguage.mockupdd.mockups.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
-import org.webspeclanguage.mockupdd.translator.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.translator.MockupProcessingEngine;
-import org.webspeclanguage.mockupdd.translator.SuiTranslationException;
 import org.webspeclanguage.mockupdd.translator.SuiTranslator;
 import org.webspeclanguage.mockupdd.translator.annotation.JsonAnnotationParser;
 import org.webspeclanguage.mockupdd.translator.balsamiq.BalsamiqWidgetParser;

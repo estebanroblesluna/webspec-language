@@ -33,7 +33,6 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathNode;
 import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathTagParameterValueContent;
 import org.webspeclanguage.mockupdd.sui.model.tags.content.SimpleTagParameterValueContent;
-import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 
 /**
  * Factory interface for constructing Sui elements instances
