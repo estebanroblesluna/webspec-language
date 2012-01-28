@@ -38,6 +38,7 @@ import org.webspeclanguage.mockupdd.sui.model.TableColumn;
 import org.webspeclanguage.mockupdd.sui.model.TextArea;
 import org.webspeclanguage.mockupdd.sui.model.TextBox;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
+import org.webspeclanguage.mockupdd.sui.model.WidgetGroup;
 import org.webspeclanguage.mockupdd.sui.model.annotation.CompositeWidgetAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.annotation.GridBagLayoutAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.annotation.LayoutAnnotation;
@@ -75,8 +76,6 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagSet;
 import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathNode;
 import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathTagParameterValueContent;
 import org.webspeclanguage.mockupdd.sui.model.tags.content.SimpleTagParameterValueContent;
-import org.webspeclanguage.mockupdd.translator.DefaultWidgetGroupImpl;
-import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 import org.webspeclanguage.mockupdd.utils.SuiUtil;
 
 /**

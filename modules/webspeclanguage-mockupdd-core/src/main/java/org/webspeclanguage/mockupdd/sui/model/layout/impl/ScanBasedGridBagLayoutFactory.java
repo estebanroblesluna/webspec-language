@@ -24,7 +24,6 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.layout.GridBagLayout;
 import org.webspeclanguage.mockupdd.sui.model.layout.GridBagLayoutException;
 import org.webspeclanguage.mockupdd.sui.model.layout.LayoutFactory;
-import org.webspeclanguage.mockupdd.translator.logger.SuiLogging;
 import org.webspeclanguage.mockupdd.utils.HorizontalOrientationStrategy;
 import org.webspeclanguage.mockupdd.utils.VerticalOrientationStrategy;
 import org.webspeclanguage.mockupdd.utils.WidgetOrientationStrategy;
@@ -56,7 +55,7 @@ public class ScanBasedGridBagLayoutFactory implements LayoutFactory {
     try {
       this.buildGridBagLayout(gbl, state);
     } catch (GridBagLayoutException e) {
-      SuiLogging.getDefaultLogger().logGridBagLayoutException(e);
+      //SuiLogging.getDefaultLogger().logGridBagLayoutException(e);
     }
     return gbl;
   }

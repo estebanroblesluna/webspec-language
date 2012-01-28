@@ -10,20 +10,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.mockupdd.translator;
+package org.webspeclanguage.mockupdd.sui.model.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.WidgetGroup;
 
 /**
- * Represents a class that takes a source mockup and returns a plain list of non-sorted
- * widget groups. Every group represents a set of widgets in a common graphical space (e.g., a page)
- *
+ * Default {@link WidgetGroup} implementation
+ * 
  * @author Jose Matias Rivero
  */
-public interface WidgetParser<TSource> {
+public class DefaultWidgetGroupImpl implements WidgetGroup {
 
-	Collection<WidgetGroup> parseWidgets(TSource source)  throws MockupSourceParsingException;
-	
+	private Collection<Widget> widgets;
+
+
+	public DefaultWidgetGroupImpl(Collection<Widget> widgets) {
+		super();
+		this.setWidgets(new ArrayList<Widget>(widgets));
+	}
+
+	private void setWidgets(Collection<Widget> widgets) {
+		this.widgets = widgets;
+	}
+
+	public Collection<Widget> getWidgets() {
+		return widgets;
+	}
+
+	public void addWidget(Widget c) {
+		this.getWidgets().add(c);
+	}
+
 }

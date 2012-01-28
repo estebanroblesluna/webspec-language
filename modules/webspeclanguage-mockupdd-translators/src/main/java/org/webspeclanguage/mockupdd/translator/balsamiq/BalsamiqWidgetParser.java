@@ -37,9 +37,9 @@ import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
 import org.webspeclanguage.mockupdd.sui.model.Table;
 import org.webspeclanguage.mockupdd.sui.model.TextBox;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
-import org.webspeclanguage.mockupdd.translator.DefaultWidgetGroupImpl;
+import org.webspeclanguage.mockupdd.sui.model.WidgetGroup;
+import org.webspeclanguage.mockupdd.sui.model.impl.DefaultWidgetGroupImpl;
 import org.webspeclanguage.mockupdd.translator.MockupSourceParsingException;
-import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 import org.webspeclanguage.mockupdd.translator.WidgetParser;
 
 /**

@@ -14,16 +14,17 @@ package org.webspeclanguage.mockupdd.io.facade;
 
 import java.util.Arrays;
 
-import org.webspeclanguage.mockupdd.codegen.generator.Mockup;
 import org.webspeclanguage.mockupdd.config.SuiDefaultConfig;
 import org.webspeclanguage.mockupdd.io.SuiXmlSerializer;
+import org.webspeclanguage.mockupdd.mockups.Mockup;
+import org.webspeclanguage.mockupdd.mockups.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
-import org.webspeclanguage.mockupdd.translator.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.translator.MockupProcessingEngine;
 import org.webspeclanguage.mockupdd.translator.MockupSourceParsingException;
 import org.webspeclanguage.mockupdd.translator.SuiTranslationException;
 import org.webspeclanguage.mockupdd.translator.annotation.WidgetAnnotationParser;
 import org.webspeclanguage.mockupdd.translator.balsamiq.BalsamiqWidgetParser;
+import org.webspeclanguage.mockupdd.translator.config.SuiTranslatorConfig;
 
 /**
  * @author Jose Matias Rivero
@@ -48,7 +49,7 @@ public class SuiSerializationFacade {
   }
 
   private WidgetAnnotationParser getAnnotationParser() {
-    return SuiDefaultConfig.getInstance().getAnnotationParser();
+    return SuiTranslatorConfig.getInstance().getAnnotationParser();
   }
 
   private SuiFactory getFactory() {

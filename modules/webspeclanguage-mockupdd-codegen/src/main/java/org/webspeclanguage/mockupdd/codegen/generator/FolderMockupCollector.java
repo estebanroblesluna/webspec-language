@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.webspeclanguage.mockupdd.translator.MockupContainerInfo;
+import org.webspeclanguage.mockupdd.mockups.Mockup;
+import org.webspeclanguage.mockupdd.mockups.MockupContainerInfo;
 
 /**
  * @author Jose Matias Rivero

@@ -12,15 +12,15 @@
  */
 package org.webspeclanguage.mockupdd.translator.processors;
 
-import org.webspeclanguage.mockupdd.codegen.framework.core.CodegenUtil;
+import org.webspeclanguage.mockupdd.mockups.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
-import org.webspeclanguage.mockupdd.translator.MockupContainerInfo;
+import org.webspeclanguage.mockupdd.sui.model.WidgetGroup;
 import org.webspeclanguage.mockupdd.translator.MockupProcessingEngine;
 import org.webspeclanguage.mockupdd.translator.MockupProcessor;
 import org.webspeclanguage.mockupdd.translator.SuiTranslationException;
-import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 import org.webspeclanguage.mockupdd.utils.Rectangle;
+import org.webspeclanguage.mockupdd.utils.StringUtils;
 import org.webspeclanguage.mockupdd.utils.SuiUtil;
 
 /**
@@ -34,7 +34,7 @@ public class PageCreator implements MockupProcessor {
     if (SuiUtil.filterWidgetsByType(widgetGroup.getWidgets(), Page.class).size() == 0) {
       Rectangle r = SuiUtil.getSurroundingRectangle(widgetGroup.getWidgets(), 1);
       Page p = engine.getFactory().createPage(containerInfo.getName(), r.getLeft(), r.getTop(), r.getWidth(), r.getHeight(),
-              CodegenUtil.camelCaseToSpaces(containerInfo.getName()), containerInfo.getName());
+              StringUtils.camelCaseToSpaces(containerInfo.getName()), containerInfo.getName());
       widgetGroup.addWidget(p);
     }
   }

@@ -20,6 +20,7 @@ import org.webspeclanguage.mockupdd.sui.model.annotation.CompositeWidgetAnnotati
 import org.webspeclanguage.mockupdd.sui.model.annotation.RepetitionAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.annotation.SuiAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.annotation.TemplateAnnotation;
+import org.webspeclanguage.mockupdd.sui.model.impl.Template;
 import org.webspeclanguage.mockupdd.translator.annotation.AnnotationInterpreter;
 
 /**

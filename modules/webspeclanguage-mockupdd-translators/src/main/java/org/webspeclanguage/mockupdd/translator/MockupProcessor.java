@@ -12,7 +12,9 @@
  */
 package org.webspeclanguage.mockupdd.translator;
 
+import org.webspeclanguage.mockupdd.mockups.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
+import org.webspeclanguage.mockupdd.sui.model.WidgetGroup;
 
 /**
  * @author Jose Matias Rivero

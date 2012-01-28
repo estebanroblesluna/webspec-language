@@ -13,7 +13,6 @@
 package org.webspeclanguage.mockupdd.codegen.generator.facade;
 
 import java.io.FileWriter;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Collection;
 
@@ -35,6 +34,7 @@ import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.translator.annotation.WidgetAnnotationParser;
 import org.webspeclanguage.mockupdd.translator.balsamiq.BalsamiqWidgetParser;
+import org.webspeclanguage.mockupdd.translator.config.SuiTranslatorConfig;
 
 /**
  * @author Jose Matias Rivero
@@ -94,7 +94,7 @@ public class SuiCodeGenerationFacade {
   }
 
   private WidgetAnnotationParser getAnnotationParser() {
-    return SuiDefaultConfig.getInstance().getAnnotationParser();
+    return SuiTranslatorConfig.getInstance().getAnnotationParser();
   }
   
   public MockupCodeGenerator<String, Collection<DocumentFile>> createBalsamiq2XmlCodegen(String balsamiqMockupsFolder) {

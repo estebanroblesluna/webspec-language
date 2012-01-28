@@ -10,17 +10,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.webspeclanguage.mockupdd.codegen.generator;
+package org.webspeclanguage.mockupdd.sui.model;
 
-import java.util.List;
+import java.util.Collection;
 
-import org.webspeclanguage.mockupdd.mockups.Mockup;
+import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
+ * Represents an aribitraty group of widgets
+ * 
  * @author Jose Matias Rivero
  */
-public interface MockupCollector<MockupRepresentation> {
+public interface WidgetGroup {
 
-  List<Mockup<MockupRepresentation>> collectMockups();
+  Collection<Widget> getWidgets();
+  
+  void addWidget(Widget w);
 
 }

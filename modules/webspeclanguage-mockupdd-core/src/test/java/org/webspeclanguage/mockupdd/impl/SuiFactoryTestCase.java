@@ -47,9 +47,9 @@ import org.webspeclanguage.mockupdd.sui.model.annotation.TemplateAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.annotation.TemplateInstantiationAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.annotation.VerticalBoxLayoutAnnotation;
 import org.webspeclanguage.mockupdd.sui.model.annotation.WidgetAnnotation;
+import org.webspeclanguage.mockupdd.sui.model.impl.Template;
 import org.webspeclanguage.mockupdd.sui.model.layout.GridBagLayout;
 import org.webspeclanguage.mockupdd.sui.model.layout.VerticalBoxLayout;
-import org.webspeclanguage.mockupdd.translator.Template;
 
 /**
  * @author Jose Matias Rivero

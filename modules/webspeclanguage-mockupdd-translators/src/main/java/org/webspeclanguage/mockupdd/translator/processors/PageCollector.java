@@ -12,15 +12,15 @@
  */
 package org.webspeclanguage.mockupdd.translator.processors;
 
-import org.webspeclanguage.mockupdd.codegen.framework.core.CodegenUtil;
+import org.webspeclanguage.codegen.framework.core.CodegenUtil;
+import org.webspeclanguage.mockupdd.mockups.MockupContainerInfo;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.sui.model.SuiModelElement;
-import org.webspeclanguage.mockupdd.translator.MockupContainerInfo;
+import org.webspeclanguage.mockupdd.sui.model.WidgetGroup;
 import org.webspeclanguage.mockupdd.translator.MockupProcessingEngine;
 import org.webspeclanguage.mockupdd.translator.MockupProcessor;
 import org.webspeclanguage.mockupdd.translator.SuiTranslationException;
-import org.webspeclanguage.mockupdd.translator.WidgetGroup;
 import org.webspeclanguage.mockupdd.utils.SuiUtil;
 
 /**

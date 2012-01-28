@@ -21,7 +21,6 @@ import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.sui.model.SuiModelElement;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
-import org.webspeclanguage.mockupdd.translator.Template;
 import org.webspeclanguage.mockupdd.utils.SuiVisitor;
 
 /**

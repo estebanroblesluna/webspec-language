@@ -15,6 +15,7 @@ package org.webspeclanguage.mockupdd.codegen.generator;
 import java.util.List;
 
 import org.webspeclanguage.mockupdd.codegen.common.SuiCodeGenerator;
+import org.webspeclanguage.mockupdd.mockups.Mockup;
 import org.webspeclanguage.mockupdd.sui.model.SuiFactory;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.translator.MockupProcessingEngine;
