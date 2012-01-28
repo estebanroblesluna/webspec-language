@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 
 /**
  * Represents a mapping between a {@link CompositeWidget} and a {@link ClassSpec}. 
@@ -25,7 +26,7 @@ import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
  * 
  * @author Jose Matias Rivero
  */
-public interface ClassMappingSpec<W extends CompositeWidget> extends MappingSpec<W> {
+public interface ClassMappingSpec<W extends DataBoundWidget> extends MappingSpec<W> {
   
   /**
    * @return The class mapped to the Widget

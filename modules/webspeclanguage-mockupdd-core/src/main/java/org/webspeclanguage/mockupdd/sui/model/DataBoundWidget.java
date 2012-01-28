@@ -10,14 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.webspeclanguage.mockupdd.sui.model;
 
 /**
- * Represents a simple list widgets (a widget containing zero or more textual
- * elements)
+ * Represents a {@link Widget} capable of showing and/or handling one or more
+ * instances of a class
  * 
- * @author Jose Matias Rivero
+ * @author José Matías Rivero
  */
-public interface List extends SimpleWidget, DataBoundWidget {
+public interface DataBoundWidget extends Widget {
 
 }
