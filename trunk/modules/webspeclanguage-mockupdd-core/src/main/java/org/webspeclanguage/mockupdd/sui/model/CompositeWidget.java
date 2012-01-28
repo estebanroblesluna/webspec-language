@@ -22,7 +22,7 @@ import org.webspeclanguage.mockupdd.sui.model.layout.Layout;
  * 
  * @author Jose Matias Rivero
  */
-public interface CompositeWidget extends Widget {
+public interface CompositeWidget extends Widget, DataBoundWidget {
 
   Collection<Widget> getWidgets();
 

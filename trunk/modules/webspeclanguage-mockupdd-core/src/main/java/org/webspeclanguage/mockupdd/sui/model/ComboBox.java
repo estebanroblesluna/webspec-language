@@ -17,6 +17,6 @@ package org.webspeclanguage.mockupdd.sui.model;
  * 
  * @author Jose Matias Rivero
  */
-public interface ComboBox extends SimpleWidget, InputWidget  {
+public interface ComboBox extends SimpleWidget, InputWidget, DataBoundWidget  {
 
 }

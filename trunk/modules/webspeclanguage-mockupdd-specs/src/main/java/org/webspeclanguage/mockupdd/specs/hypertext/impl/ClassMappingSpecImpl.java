@@ -22,6 +22,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.ActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 
 /**
  * Default implementation for {@link ClassMappingSpec}
@@ -32,7 +33,7 @@ public abstract class ClassMappingSpecImpl<W extends CompositeWidget> implements
 
   private ClassSpec classSpec;
   private List<AttributeMappingSpec> attributeMappings;
-  private CompositeWidget dataSource;
+  private DataBoundWidget dataSource;
 
   public ClassMappingSpecImpl(ClassSpec classSpec) {
     super();
@@ -61,12 +62,12 @@ public abstract class ClassMappingSpecImpl<W extends CompositeWidget> implements
   }
 
   @Override
-  public CompositeWidget getDataSource() {
+  public DataBoundWidget getDataSource() {
     return dataSource;
   }
 
   @Override
-  public void setDataSource(CompositeWidget dataSource) {
+  public void setDataSource(DataBoundWidget dataSource) {
     this.dataSource = dataSource;
   }
   

@@ -13,7 +13,7 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 
 /**
@@ -31,8 +31,8 @@ public interface MappingSpec<W extends Widget> {
   /**
    * @return The Widget from which instance is taken (if defined)
    */
-  CompositeWidget getDataSource();
+  DataBoundWidget getDataSource();
 
-  void setDataSource(CompositeWidget dataSource);
+  void setDataSource(DataBoundWidget dataSource);
 
 }
