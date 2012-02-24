@@ -1,8 +1,20 @@
-@import <AppKit/CPView.j>
-@import "Figure.j"
-@import "Tool.j"
-@import "SelectionTool.j"
+/**
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+/**
+ * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
+ */
 @implementation Drawing : CPView 
 {
 	Tool _currentTool;
@@ -20,7 +32,7 @@
 		_gridSize = 20;
 		_showGrid = false;
 		_snapToGrid = false;
-		_gridColor = [CPColor colorWithHexString: @"EFEFEF"];
+		_gridColor = [CPColor colorWithHexString: @"F7F0F3"];
 		return self;
 	}
 } 
@@ -32,6 +44,7 @@
 	CGContextFillRect(context, rect);
 	
 	if (_showGrid) {
+		CGContextSetLineWidth(context, 0.25);
 		for (var p = 0; p <= 3000 ; p = p + _gridSize) {
 			[self drawGridLineX: p y: 0 x: p y: 3000 context: context];
 			[self drawGridLineX: 0 y: p x: 3000 y: p context: context];
@@ -44,7 +57,6 @@
 	CGContextMoveToPoint(context, x1, y1);
 	CGContextAddLineToPoint(context, x2, y2);
 	CGContextSetStrokeColor(context, _gridColor);
-	CGContextSetLineWidth(context, 0.25);
     CGContextStrokePath(context);
 }
 
@@ -128,6 +140,11 @@
 	}
 	
 	return nil;
+}
+
+- (void) tool: (Tool) aTool
+{
+	_currentTool = aTool;
 }
 
 @end
