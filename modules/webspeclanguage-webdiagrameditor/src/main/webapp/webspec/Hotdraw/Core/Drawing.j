@@ -127,7 +127,7 @@
 	[_currentTool keyDown: anEvent];
 }
 
-- (void)figureAt:(CPPoint)aPoint
+- (id) figureAt:(CPPoint)aPoint
 {
 	var subviews = [self subviews];
 	

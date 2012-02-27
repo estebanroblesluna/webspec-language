@@ -12,19 +12,29 @@
  * limitations under the License.
  */
 
+@import <Foundation/CPObject.j>
+@import <Foundation/Foundation.j>
+
+@import <AppKit/CPView.j>
+@import <AppKit/CPTextField.j>
+
+@import "Interaction.j"
+@import "Widget.j"
+@import "ProjectFigure.j"
+
+@import "WebSpecDrawing.j"
+
+@import "CreateConnectionTool.j"
+@import "CreateInteractionTool.j"
+@import "CreateWidgetTool.j"
+
+@import "WebSpecToolbox.j"
+
+
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CompositeFigure : Figure 
+@implementation WebSpec : CPObject
 {
-}
-
-- (void)drawRect:(CGRect)rect 
-{
-	/**
-    var context = [[CPGraphicsContext currentContext] graphicsPort];
-	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FF0000"]);
-	CGContextFillRect(context, rect);
-	*/
 }
 @end

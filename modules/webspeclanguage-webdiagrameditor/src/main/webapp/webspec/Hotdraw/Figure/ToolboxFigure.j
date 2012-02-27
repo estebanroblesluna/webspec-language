@@ -34,12 +34,16 @@
 	if (self) {
 		_drawing = aDrawing;
 		_buttonsMapping = [CPDictionary dictionary];
-		
-		[self addTool: [[SelectionTool alloc] initWithDrawing: aDrawing] withTitle: @"Selection" image: @""];
-		[self addTool: [[CreateImageTool alloc] initWithDrawing: aDrawing] withTitle: @"Image" image: @""];
-		[self addTool: [[CreateLabelTool alloc] initWithDrawing: aDrawing] withTitle: @"Label" image: @""];
+		[self addDefaultTools];
 		return self;
 	}
+}
+
+- (void) addDefaultTools
+{
+	[self addTool: [[SelectionTool alloc] initWithDrawing: _drawing] withTitle: @"Selection" image: @""];
+	[self addTool: [[CreateImageTool alloc] initWithDrawing: _drawing] withTitle: @"Image" image: @""];
+	[self addTool: [[CreateLabelTool alloc] initWithDrawing: _drawing] withTitle: @"Label" image: @""];
 }
 
 - (void) addTool: (Tool) aTool withTitle: (id) aTitle image: (id) url

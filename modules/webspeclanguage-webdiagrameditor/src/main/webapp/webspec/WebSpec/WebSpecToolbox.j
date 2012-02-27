@@ -15,16 +15,16 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CompositeFigure : Figure 
+@implementation WebSpecToolbox : ToolboxFigure 
 {
 }
 
-- (void)drawRect:(CGRect)rect 
+- (void) addDefaultTools
 {
-	/**
-    var context = [[CPGraphicsContext currentContext] graphicsPort];
-	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FF0000"]);
-	CGContextFillRect(context, rect);
-	*/
+	[self addTool: [[SelectionTool alloc] initWithDrawing: _drawing] withTitle: @"Selection" image: @""];
+	[self addTool: [[CreateInteractionTool alloc] initWithDrawing: _drawing] withTitle: @"Interaction" image: @""];
+	[self addTool: [[CreateWidgetTool alloc] initWithDrawing: _drawing] withTitle: @"Widget" image: @""];
+	[self addTool: [[CreateConnectionTool alloc] initWithDrawing: _drawing] withTitle: @"Connection" image: @""];
 }
+
 @end

@@ -26,8 +26,12 @@
 	CPPoint _p2Arrow;
 } 
 
++ (Connection) source: (Figure) aSourceFigure target: (Figure) aTargetFigure
+{
+	return [[self alloc] initWithSource: aSourceFigure target: aTargetFigure];
+}
 
-- (id)initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure
+- (id) initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure
 { 
 	_sourceFigure = aSourceFigure;
 	_targetFigure = aTargetFigure;
@@ -36,9 +40,6 @@
 	[points addObject: [_sourceFigure center]];
 	[points addObject: [_targetFigure center]];
 	
-	//CPLog.debug(points);
-	//CPLog.debug(_sourceFigure center);
-
 	self = [super initWithPoints: points];
 	
 	if (self) {

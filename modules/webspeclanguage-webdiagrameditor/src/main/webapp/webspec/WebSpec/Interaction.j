@@ -21,7 +21,20 @@
 	CPView _widgetContainer;
 } 
 
-- (id)initWithFrame:(CGRect)aFrame 
++ (Interaction) newAt: (CGPoint) aPoint
+{
+	return [self newAt: aPoint name: @"Interaction"];
+}
+
++ (Interaction) newAt: (CGPoint) aPoint name: (String) aName
+{
+	var frame = CGRectMake(aPoint.x, aPoint.y, 150, 100);
+	var interaction = [[self alloc] initWithFrame: frame];
+	[interaction name: aName];
+	return interaction;
+}
+
+- (id) initWithFrame:(CGRect)aFrame 
 { 
 	self = [super initWithFrame:aFrame];
 	if (self) {
@@ -131,6 +144,12 @@
 - (void) setEditionResult: (String) aValue
 {
 	[_label setObjectValue: aValue];
+	[_label sizeToFit];
+}
+
+- (void) name: (String) aValue
+{
+	[_label setStringValue: aValue];
 	[_label sizeToFit];
 }
 
