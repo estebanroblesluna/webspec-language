@@ -15,16 +15,21 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CompositeFigure : Figure 
+@implementation CreateWidgetTool : AbstractCreateFigureTool
 {
 }
 
-- (void)drawRect:(CGRect)rect 
+- (void) createFigureAt: (id) aPoint on: (id) aDrawing
 {
-	/**
-    var context = [[CPGraphicsContext currentContext] graphicsPort];
-	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FF0000"]);
-	CGContextFillRect(context, rect);
-	*/
+	var figure = [aDrawing figureAt: aPoint];
+	var interaction = [aDrawing interactionOf: figure];
+	if (interaction != nil) {
+		var interactionOrigin = [interaction frameOrigin];
+		aPoint = CGPointMake(aPoint.x - interactionOrigin.x - 4, aPoint.y - interactionOrigin.y - 32);
+		var widget = [Widget newAt: aPoint];
+		[interaction addWidget: widget];
+		[widget switchToEditMode];
+		[self activateSelectionTool];
+	}
 }
 @end

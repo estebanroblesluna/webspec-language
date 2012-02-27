@@ -20,7 +20,14 @@
 	CPTextField _label;
 } 
 
-- (id)initWithFrame:(CGRect)aFrame 
++ (Widget) newAt: (CGPoint) aPoint
+{
+	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
+	var widget = [[self alloc] initWithFrame: frame];
+	return widget;
+}
+
+- (id) initWithFrame: (CGRect) aFrame 
 { 
 	self = [super initWithFrame:aFrame];
 	if (self) {

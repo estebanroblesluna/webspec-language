@@ -22,7 +22,7 @@ var CachedNotificationCenter    = nil;
 	CPMutableArray _points;
 } 
 
-- (id)initWithPoints: (CPArray) anArrayOfPoints
+- (id) initWithPoints: (CPArray) anArrayOfPoints
 { 
 	CachedNotificationCenter = [CPNotificationCenter defaultCenter];
 	var frame = [GeometryUtils computeFrameFor: anArrayOfPoints];

@@ -12,19 +12,25 @@
  * limitations under the License.
  */
 
+
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CompositeFigure : Figure 
+@implementation WebSpecDrawing : Drawing
 {
 }
 
-- (void)drawRect:(CGRect)rect 
+- (Interaction) interactionOf: (Figure) aFigure
 {
-	/**
-    var context = [[CPGraphicsContext currentContext] graphicsPort];
-	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FF0000"]);
-	CGContextFillRect(context, rect);
-	*/
+	var current = aFigure;
+	while (current != nil && ![current isKindOfClass:[Interaction class]] && ![current isKindOfClass:[Drawing class]]) {
+		current = [current superview];
+	}
+	
+	if ([current isKindOfClass:[Interaction class]]) {
+		return current;
+	} else {
+		return nil;
+	}
 }
 @end

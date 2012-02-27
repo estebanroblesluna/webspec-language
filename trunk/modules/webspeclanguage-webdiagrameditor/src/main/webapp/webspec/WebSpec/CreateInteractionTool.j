@@ -15,16 +15,16 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CompositeFigure : Figure 
+@implementation CreateInteractionTool : AbstractCreateFigureTool
 {
 }
 
-- (void)drawRect:(CGRect)rect 
+- (void) createFigureAt: (id) aPoint on: (id) aDrawing
 {
-	/**
-    var context = [[CPGraphicsContext currentContext] graphicsPort];
-	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FF0000"]);
-	CGContextFillRect(context, rect);
-	*/
+	var interaction = [Interaction newAt: aPoint];
+	[aDrawing addSubview: interaction];
+	
+	[interaction switchToEditMode];
+	[self activateSelectionTool];
 }
 @end
