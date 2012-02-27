@@ -48,14 +48,6 @@
 	[drawing gridSize: 20];
 	[drawing snapToGrid: YES];
 
-	var interaction1 = [Interaction newAt: CGPointMake(140, 10)];
-	var interaction2 = [Interaction newAt: CGPointMake(400, 150) name: @"Search2"];
-	var connection = [Connection source: interaction1 target: interaction2];
-
-	[drawing addSubview: interaction1];
-	[drawing addSubview: interaction2];
-	[drawing addSubview: connection];
-
 	var toolBox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(10,10)];
 	[drawing addSubview: toolBox];
 
