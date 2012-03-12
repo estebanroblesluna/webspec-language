@@ -38,6 +38,12 @@
 
 	var points = [CPMutableArray array];
 	[points addObject: [_sourceFigure center]];
+	if (_sourceFigure == _targetFigure) {
+		var center = [_sourceFigure center];
+		[points addObject: CGPointMake(center.x + 100, center.y)];
+		[points addObject: CGPointMake(center.x + 100, center.y - 100)];
+		[points addObject: CGPointMake(center.x      , center.y - 100)];
+	}
 	[points addObject: [_targetFigure center]];
 	
 	self = [super initWithPoints: points];
@@ -57,7 +63,7 @@
 	}
 }
 
-- (void)drawRect:(CGRect) rect on: (id) context
+- (void) drawRect:(CGRect) rect on: (id) context
 {
 	[super drawRect: rect on: context];
 	
@@ -70,6 +76,7 @@
 	CGContextAddLineToPoint(context, _p2Arrow.x - origin.x, _p2Arrow.y - origin.y);
 	CGContextAddLineToPoint(context, point.x    - origin.x, point.y    - origin.y);
 	CGContextClosePath(context);
+	CGContextSetFillColor(context, [self foregroundColor]);
 	CGContextFillPath(context);
 }
 

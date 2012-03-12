@@ -15,52 +15,17 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
-{
-	Drawing _drawing;
-}
-
-+ (id) drawing: (Drawing) aDrawing
-{
-	return [[self alloc] initWithDrawing: aDrawing];
-}
-
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	self = [super init];
-	if (self) {
-		_drawing = aDrawing;
-		return self;
-	}
-}
-
-- (Drawing) drawing	 
-{
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	[_drawing tool: [[SelectionTool alloc] initWithDrawing: _drawing ]];
-}
-
-- (void) mouseDown:(CPEvent) anEvent	 
+@implementation WidgetModel : Model
 {
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (id) init
 {
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
+	[super init];
+	
+	[self addProperty: @"Name" value: @""];
+	[self addProperty: @"Location" value: @""];
+	
+	return self;
 }
 @end

@@ -62,6 +62,12 @@
 				}
 
 				[_selectedFigures addObject: figureUnderPoint];
+
+				if ([_selectedFigures count] == 1) {
+					[_drawing selectedFigure: figureUnderPoint];	
+				} else {
+					[_drawing selectedFigure: nil];
+				}
 			}
 
 			if ([figureUnderPoint isMoveable] && !([_moveableFigures containsObject: figureUnderPoint])) {
@@ -83,6 +89,7 @@
 	[_selectedFigures removeAllObjects];
 	[_moveableFigures removeAllObjects];
 	[_initialPositions removeAllObjects];
+	[_drawing selectedFigure: nil];
 }
 
 - (void) mouseDragged:(CPEvent) anEvent

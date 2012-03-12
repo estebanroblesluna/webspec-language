@@ -25,6 +25,9 @@
 
 @import "Core/Drawing.j"
 
+@import "Model/Model.j"
+@import "Model/Property.j"
+
 @import "Figure/Figure.j"
 @import "Figure/Handle.j"
 @import "Figure/CompositeFigure.j"
@@ -33,7 +36,7 @@
 @import "Figure/ImageFigure.j"
 @import "Figure/ToolboxFigure.j"
 @import "Figure/LabelFigure.j"
-
+@import "Figure/PropertiesFigure.j"
 
 @import "Tool/Tool.j"
 @import "Tool/SelectionTool.j"

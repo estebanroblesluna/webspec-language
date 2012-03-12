@@ -21,6 +21,11 @@
 	id _offset;
 }
 
++ (ImageFigure) initializeWithImage: (id) stringResource x: (id) anX y: (id) anY
+{
+	return [self initializeWithImage: stringResource x: anX y: anY offset: 0];
+}
+
 + (ImageFigure) initializeWithImage: (id) stringResource x: (id) anX y: (id) anY offset: (id) anOffset
 {
 	var figure = [[self alloc] initializeWithImage: stringResource x: anX y: anY offset: anOffset];

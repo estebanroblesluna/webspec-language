@@ -15,16 +15,16 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CreateInteractionTool : AbstractCreateFigureTool
+@implementation NavigationFigure : Connection 
 {
 }
 
-- (void) createFigureAt: (id) aPoint on: (id) aDrawing
-{
-	var interaction = [Interaction newAt: aPoint];
-	[aDrawing addSubview: interaction];
-	
-	[interaction switchToEditMode];
-	[self activateSelectionTool];
+- (id) initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure
+{ 
+	self = [super initWithSource: aSourceFigure target: aTargetFigure];
+	[self model: [NavigationModel new]];
+	_foregroundColor = [CPColor colorWithHexString: @"777777"];
+	return self;
 }
+
 @end

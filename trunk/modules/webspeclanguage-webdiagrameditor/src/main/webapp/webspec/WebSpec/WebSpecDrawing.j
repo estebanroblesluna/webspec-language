@@ -23,11 +23,11 @@
 - (Interaction) interactionOf: (Figure) aFigure
 {
 	var current = aFigure;
-	while (current != nil && ![current isKindOfClass:[Interaction class]] && ![current isKindOfClass:[Drawing class]]) {
+	while (current != nil && ![current isKindOfClass:[InteractionFigure class]] && ![current isKindOfClass:[Drawing class]]) {
 		current = [current superview];
 	}
 	
-	if ([current isKindOfClass:[Interaction class]]) {
+	if ([current isKindOfClass:[InteractionFigure class]]) {
 		return current;
 	} else {
 		return nil;

@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Interaction : Figure 
+@implementation InteractionFigure : Figure 
 { 
 	CPTextField _label;
 	CPView _widgetContainer;
@@ -38,6 +38,8 @@
 { 
 	self = [super initWithFrame:aFrame];
 	if (self) {
+		[self model: [InteractionModel new]];
+		
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topLeft"]];
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topMiddle"]];
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topRight"]];

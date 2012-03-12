@@ -15,52 +15,12 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
-{
-	Drawing _drawing;
-}
-
-+ (id) drawing: (Drawing) aDrawing
-{
-	return [[self alloc] initWithDrawing: aDrawing];
-}
-
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	self = [super init];
-	if (self) {
-		_drawing = aDrawing;
-		return self;
-	}
-}
-
-- (Drawing) drawing	 
-{
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	[_drawing tool: [[SelectionTool alloc] initWithDrawing: _drawing ]];
-}
-
-- (void) mouseDown:(CPEvent) anEvent	 
+@implementation ListOfContainerFigure : WidgetFigure 
 {
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (id) iconURL
 {
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
+	return @"Resources/ListOfContainer.gif"
 }
 @end

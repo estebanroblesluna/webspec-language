@@ -19,6 +19,8 @@
 {
 	Drawing _drawing;
 	CPDictionary _buttonsMapping;
+	boolean _firstColumn;
+	int _currentY;
 }
 
 + (ToolboxFigure) initializeWith: (Drawing) aDrawing at: (CPPoint) aPoint
@@ -33,6 +35,8 @@
 	self = [super initWithFrame: frame];
 	if (self) {
 		_drawing = aDrawing;
+		_firstColumn = true;
+		_currentY = 15;
 		_buttonsMapping = [CPDictionary dictionary];
 		[self addDefaultTools];
 		return self;
@@ -46,18 +50,36 @@
 	[self addTool: [[CreateLabelTool alloc] initWithDrawing: _drawing] withTitle: @"Label" image: @""];
 }
 
+- (void) addSeparator
+{
+	if (!_firstColumn) {
+		_currentY = _currentY + 25;
+	}
+	//_currentY = _currentY + 3;
+	_firstColumn = true;
+}
+
 - (void) addTool: (Tool) aTool withTitle: (id) aTitle image: (id) url
 {
-	var button = [CPButton buttonWithTitle: aTitle];
+	var buttonWidth = 30;
+	var buttonHeight = 25;
+	var button = [CPButton buttonWithTitle: @""];
 
-	var y = [_buttonsMapping count] * 25 + 15;
-	var origin = CGPointMake(0, y);
+	var y = _currentY;
+	var x = 0;
+	if (!_firstColumn) {
+		x = buttonWidth;
+	}
+	var origin = CGPointMake(x, y);
 	[button setFrameOrigin: origin];
 
 	var icon = [[CPImage alloc]
 	            initWithContentsOfFile: url];
 	[button setImage: icon];
-	[button setFrameSize: CGSizeMake(100, 25)];
+	[button setButtonType: CPToggleButton];
+	[button setBordered: YES];
+	[button setBezelStyle: CPRegularSquareBezelStyle];
+	[button setFrameSize: CGSizeMake(buttonWidth, buttonHeight)];
 
 	[self addSubview: button];
 
@@ -66,8 +88,13 @@
 
 	[_buttonsMapping setObject: aTool forKey: button];
 	
-	var newSize = CGSizeMake(100, 25 * [_buttonsMapping count] + 15);
+	if (!_firstColumn) {
+		_currentY = _currentY + buttonHeight;
+	}
+	var newSize = CGSizeMake(buttonWidth * 2, _currentY + buttonHeight);
 	[self setFrameSize: newSize];
+	
+	_firstColumn = !_firstColumn;
 }
 
 - (void) selectTool: (CPButton) aButton
@@ -78,7 +105,7 @@
 
 - (void)drawRect:(CGRect)rect on: (id)context
 {
-    CGContextSetFillColor(context, [CPColor grayColor]); 
+    CGContextSetFillColor(context, [CPColor lightGrayColor]); 
     CGContextFillRect(context, [self bounds]); 
 }
 
