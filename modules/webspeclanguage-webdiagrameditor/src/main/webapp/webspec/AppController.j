@@ -36,20 +36,23 @@
         contentView = [theWindow contentView];
 
 
-	[self initializeWebSpecDrawing: contentView];
+	[self initializeWebSpecDrawing: contentView window: theWindow];
     [theWindow orderFront: self];
 	[theWindow makeFirstResponder: drawing];
 }
 
-- (void)initializeWebSpecDrawing:(id) contentView
+- (void)initializeWebSpecDrawing:(id) contentView window: (id) theWindow
 {
 	var drawing = [[WebSpecDrawing alloc] initWithFrame: [contentView bounds]];
 	[drawing showGrid: YES];
 	[drawing gridSize: 20];
 	[drawing snapToGrid: YES];
 
-	var toolBox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(10,10)];
+	var toolBox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(20,20)];
 	[drawing addSubview: toolBox];
+	
+	var properties = [PropertiesFigure newAt: CGPointMake(20,400) drawing: drawing];
+	[drawing addSubview: properties];
 
 	[contentView addSubview: drawing];
 }

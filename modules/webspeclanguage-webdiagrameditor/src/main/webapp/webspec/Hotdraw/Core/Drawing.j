@@ -12,6 +12,8 @@
  * limitations under the License.
  */
 
+DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
+
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
@@ -22,14 +24,16 @@
 	bool _showGrid;
 	CPColor _gridColor;
 	bool _snapToGrid;
+	id _selectedFigure;
 } 
 
-- (id)initWithFrame:(CGRect)aFrame 
+- (id) initWithFrame: (CGRect) aFrame 
 { 
 	self = [super initWithFrame:aFrame];
 	if (self) {
 		_currentTool = [[SelectionTool alloc] initWithDrawing: self];
 		_gridSize = 20;
+		_selectedFigure = nil;
 		_showGrid = false;
 		_snapToGrid = false;
 		_gridColor = [CPColor colorWithHexString: @"F7F0F3"];
@@ -37,7 +41,7 @@
 	}
 } 
 
-- (void)drawRect:(CGRect)rect 
+- (void) drawRect: (CGRect) rect 
 {
     var context = [[CPGraphicsContext currentContext] graphicsPort];
 	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FEFEFE"]);
@@ -142,9 +146,31 @@
 	return nil;
 }
 
+- (void) unselectAll
+{
+	var subviews = [self subviews];
+	for (var i = [subviews count] -1; i >= 0 ; i--) { 
+	    var figure = [subviews objectAtIndex:i];
+		[figure unselect];
+	}
+}
+
 - (void) tool: (Tool) aTool
 {
 	_currentTool = aTool;
+}
+
+- (id) selectedFigure
+{
+	return _selectedFigure;
+}
+
+- (void) selectedFigure: (id) aFigure
+{
+	_selectedFigure = aFigure;
+	[[CPNotificationCenter defaultCenter] 
+		postNotificationName: DrawingSelectionChangedNotification 
+		object: self];
 }
 
 @end

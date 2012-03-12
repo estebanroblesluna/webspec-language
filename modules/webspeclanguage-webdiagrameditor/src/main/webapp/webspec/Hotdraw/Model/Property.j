@@ -15,52 +15,36 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
+@implementation Property : CPObject
 {
-	Drawing _drawing;
+	id _name;
+	id _value;
 }
 
-+ (id) drawing: (Drawing) aDrawing
++ (Property) name: (id) aPropertyName value: (id) aValue
 {
-	return [[self alloc] initWithDrawing: aDrawing];
+	return [[self alloc] initWithName: aPropertyName value: aValue];
 }
 
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	self = [super init];
-	if (self) {
-		_drawing = aDrawing;
-		return self;
-	}
+- (id) initWithName: (id) aPropertyName value: (id) aValue
+{
+	_name = aPropertyName;
+	_value = aValue;
+	return self;
 }
 
-- (Drawing) drawing	 
+- (id) name
 {
-	return _drawing;
+	return _name;
 }
 
-- (void) activateSelectionTool
+- (id) value
 {
-	[_drawing tool: [[SelectionTool alloc] initWithDrawing: _drawing ]];
+	return _value;
 }
 
-- (void) mouseDown:(CPEvent) anEvent	 
+- (void) value: aValue
 {
-}
-
-- (void) mouseDragged:(CPEvent) anEvent
-{
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
+	_value = aValue;
 }
 @end

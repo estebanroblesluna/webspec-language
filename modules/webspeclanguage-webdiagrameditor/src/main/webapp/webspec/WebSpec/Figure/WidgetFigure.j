@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Widget : Figure 
+@implementation WidgetFigure : Figure 
 { 
 	CPTextField _label;
 } 
@@ -34,7 +34,7 @@
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"middleLeft"]];
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"middleRight"]];
 
-		//DRAW INTERACTION NAME
+		//DRAW WIDGET NAME
 		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
 		[label setStringValue: @"Widget"];
 		[label setTextColor:[CPColor blackColor]];
@@ -45,7 +45,7 @@
 
 		//DRAW ICON
 		var icon = [[CPImage alloc]
-		            initWithContentsOfFile: @"Resources/Label.gif" 
+		            initWithContentsOfFile: [self iconURL]
 		            size:CGSizeMake(16, 16)];
 		
 		var iconView = [[CPImageView alloc] initWithFrame:CGRectMake(4, 4, 16, 160)];
@@ -59,6 +59,11 @@
 		
 		return self;
 	}
+} 
+
+- (id) iconURL
+{
+	
 } 
 
 - (bool) isSelectable

@@ -19,6 +19,19 @@
 {
 	Connection _connection;
 	Interaction _initialInteraction;
+	id _figureClass;
+}
+
++ (id) drawing: (Drawing) aDrawing figure: (id) aFigureClass
+{
+	var tool = [super drawing: aDrawing];
+	[tool figureClass: aFigureClass];
+	return tool;
+}
+
+- (void) figureClass: (id) aFigureClass
+{
+	_figureClass = aFigureClass;
 }
 
 - (void) mouseDown: (CPEvent) anEvent	 
@@ -58,7 +71,7 @@
 		var endInteraction = [_drawing interactionOf: figure];
 		
 		if (endInteraction != nil) {
-			var connection = [Connection source: _initialInteraction target: endInteraction];
+			var connection = [_figureClass source: _initialInteraction target: endInteraction];
 			[_drawing addSubview: connection];
 		}
 		

@@ -20,10 +20,15 @@
 	CPMutableArray handles;
 	CPMutableArray _inConnections;
 	CPMutableArray _outConnections;
+	
+	CPColor _backgroundColor;
+	CPColor _foregroundColor;
+	
+	Model _model;
 	bool _selected;
 } 
 
-- (id)initWithFrame:(CGRect)aFrame 
+- (id) initWithFrame: (CGRect) aFrame 
 { 
 	self = [super initWithFrame:aFrame];
 	if (self) {
@@ -32,8 +37,10 @@
 		_inConnections = [CPMutableArray array];
 		_outConnections = [CPMutableArray array];
 		_selected = false;
+		_backgroundColor = [CPColor blackColor];
+		_foregroundColor = _backgroundColor;
 		
-		[self setPostsFrameChangedNotifications:YES]; 
+		[self setPostsFrameChangedNotifications: YES]; 
 		return self;
 	}
 } 
@@ -135,11 +142,13 @@
 
 - (void) select
 { 
+	//CPLog.info(@"select");
 	_selected = true;
 	var container = [self superview];
 	for (var i = 0; i < [handles count]; i++) { 
 	    var handle = [handles objectAtIndex:i];
 		[container addSubview: handle];
+		//CPLog.info(handle);
 	}
 }
 
@@ -282,5 +291,25 @@
 	var heightOffset = aPoint.y - (oldFrame.origin.y + oldFrame.size.height);
 	var newFrame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, oldFrame.size.width + widthOffset, oldFrame.size.height + heightOffset);
 	[self setFrame: newFrame];
+}
+
+- (id) backgroundColor
+{
+	return _backgroundColor;
+}
+
+- (id) foregroundColor
+{
+	return _foregroundColor;
+}
+
+- (id) model
+{
+	return _model;
+}
+
+- (void) model: aModel
+{
+	_model = aModel;
 }
 @end

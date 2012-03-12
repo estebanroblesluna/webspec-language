@@ -185,7 +185,7 @@ var CachedNotificationCenter    = nil;
 	[self setFrame: newFrame];
 }
 
-- (void)drawRect:(CGRect) rect on: (id) context
+- (void) drawRect:(CGRect) rect on: (id) context
 {
 	//CGContextSetFillColor(context, [CPColor yellowColor]);
 	//CGContextFillRect(context, rect);
@@ -204,7 +204,7 @@ var CachedNotificationCenter    = nil;
 	}			
 	
 	//CGContextClosePath(context);
-	CGContextSetStrokeColor(context, [CPColor blackColor]);
+	CGContextSetStrokeColor(context, [self foregroundColor]);
 	CGContextSetLineWidth(context, 0.5);
     CGContextStrokePath(context);
 }

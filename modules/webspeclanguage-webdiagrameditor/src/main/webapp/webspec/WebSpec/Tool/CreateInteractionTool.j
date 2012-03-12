@@ -15,52 +15,16 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
-{
-	Drawing _drawing;
-}
-
-+ (id) drawing: (Drawing) aDrawing
-{
-	return [[self alloc] initWithDrawing: aDrawing];
-}
-
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	self = [super init];
-	if (self) {
-		_drawing = aDrawing;
-		return self;
-	}
-}
-
-- (Drawing) drawing	 
-{
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	[_drawing tool: [[SelectionTool alloc] initWithDrawing: _drawing ]];
-}
-
-- (void) mouseDown:(CPEvent) anEvent	 
+@implementation CreateInteractionTool : AbstractCreateFigureTool
 {
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (void) createFigureAt: (id) aPoint on: (id) aDrawing
 {
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
+	var interaction = [InteractionFigure newAt: aPoint];
+	[aDrawing addSubview: interaction];
+	
+	[interaction switchToEditMode];
+	[self activateSelectionTool];
 }
 @end

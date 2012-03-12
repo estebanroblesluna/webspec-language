@@ -15,52 +15,21 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
+@implementation LabelFigure : WidgetFigure 
 {
-	Drawing _drawing;
 }
 
-+ (id) drawing: (Drawing) aDrawing
-{
-	return [[self alloc] initWithDrawing: aDrawing];
-}
-
-- (id) initWithDrawing: (Drawing) aDrawing 
+- (id) initWithFrame: (CGRect) aFrame 
 { 
-	self = [super init];
+	self = [super initWithFrame:aFrame];
 	if (self) {
-		_drawing = aDrawing;
+		[self model: [LabelModel new]];
 		return self;
 	}
 }
 
-- (Drawing) drawing	 
+- (id) iconURL
 {
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	[_drawing tool: [[SelectionTool alloc] initWithDrawing: _drawing ]];
-}
-
-- (void) mouseDown:(CPEvent) anEvent	 
-{
-}
-
-- (void) mouseDragged:(CPEvent) anEvent
-{
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
+	return @"Resources/Label.gif"
 }
 @end

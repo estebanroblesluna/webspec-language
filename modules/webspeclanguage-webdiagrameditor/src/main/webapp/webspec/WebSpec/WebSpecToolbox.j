@@ -19,12 +19,45 @@
 {
 }
 
+- (void) selectTool: (CPButton) aButton
+{
+	[super selectTool: aButton];
+	[_drawing unselectAll];
+}
+
 - (void) addDefaultTools
 {
-	[self addTool: [[SelectionTool alloc] initWithDrawing: _drawing] withTitle: @"Selection" image: @""];
-	[self addTool: [[CreateInteractionTool alloc] initWithDrawing: _drawing] withTitle: @"Interaction" image: @""];
-	[self addTool: [[CreateWidgetTool alloc] initWithDrawing: _drawing] withTitle: @"Widget" image: @""];
-	[self addTool: [[CreateConnectionTool alloc] initWithDrawing: _drawing] withTitle: @"Connection" image: @""];
+	[self addTool: [SelectionTool drawing: _drawing] withTitle: @"Selection" image: @"Resources/Selection.png"];
+	
+	//[self addSeparator];
+	
+	[self addTool: [CreateInteractionTool drawing: _drawing] withTitle: @"Interaction" image: @"Resources/Interaction.gif"];
+
+	//[self addSeparator];
+
+	[self addTool: [CreateConnectionTool drawing: _drawing figure: [NavigationFigure class]] withTitle: @"Connection" image: @"Resources/Navigation.gif"];
+	[self addTool: [CreateConnectionTool drawing: _drawing figure: [RichBehaviorFigure class]] withTitle: @"Connection" image: @"Resources/RichBehavior.gif"];
+
+	//[self addSeparator];
+
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [ButtonFigure class]] withTitle: @"Widget" image: @"Resources/Button.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [CheckBoxFigure class]] withTitle: @"Widget" image: @"Resources/CheckBox.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [ComboBoxFigure class]] withTitle: @"Widget" image: @"Resources/ComboBox.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [LabelFigure class]] withTitle: @"Widget" image: @"Resources/Label.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [LinkFigure class]] withTitle: @"Widget" image: @"Resources/Link.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [ListBoxFigure class]] withTitle: @"Widget" image: @"Resources/ListBox.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [RadioButtonFigure class]] withTitle: @"Widget" image: @"Resources/RadioButton.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [TextFieldFigure class]] withTitle: @"Widget" image: @"Resources/TextField.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [PanelContainerFigure class]] withTitle: @"Widget" image: @"Resources/PanelContainer.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [ListOfContainerFigure class]] withTitle: @"Widget" image: @"Resources/ListOfContainer.gif"];
+
+	//[self addSeparator];
+
+	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/OneOfStrings.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/OneOfNumbers.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/OneOfArray.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/StringGenerator.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/UniformNumberDistribution.gif"];
 }
 
 @end

@@ -15,52 +15,16 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
+@implementation RichBehaviorFigure : Connection 
 {
-	Drawing _drawing;
 }
 
-+ (id) drawing: (Drawing) aDrawing
-{
-	return [[self alloc] initWithDrawing: aDrawing];
-}
-
-- (id) initWithDrawing: (Drawing) aDrawing 
+- (id) initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure
 { 
-	self = [super init];
-	if (self) {
-		_drawing = aDrawing;
-		return self;
-	}
+	self = [super initWithSource: aSourceFigure target: aTargetFigure];
+	[self model: [RichBehaviorModel new]];
+	_foregroundColor = [CPColor colorWithHexString: @"FF0000"];
+	return self;
 }
 
-- (Drawing) drawing	 
-{
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	[_drawing tool: [[SelectionTool alloc] initWithDrawing: _drawing ]];
-}
-
-- (void) mouseDown:(CPEvent) anEvent	 
-{
-}
-
-- (void) mouseDragged:(CPEvent) anEvent
-{
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
-}
 @end
