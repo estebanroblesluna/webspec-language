@@ -15,18 +15,18 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CheckBoxFigure : WidgetFigure 
+@implementation OneOfManyNumbersFigure : IconLabelFigure 
 {
+}
+
++ (OneOfManyNumbersFigure) newAt: (CGPoint) aPoint
+{
+	return [super newAt: aPoint iconUrl: @"Resources/OneOfNumbers.gif"];
 }
 
 - (id) init
 { 
-	[self model: [CheckBoxModel new]];
+	[self model: [OneOfManyNumbersModel new]];
 	return self;
-}
-
-+ (id) iconURL
-{
-	return @"Resources/CheckBox.gif"
 }
 @end

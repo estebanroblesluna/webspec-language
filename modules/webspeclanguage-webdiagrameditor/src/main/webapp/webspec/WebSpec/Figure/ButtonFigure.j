@@ -19,16 +19,13 @@
 {
 }
 
-- (id) initWithFrame: (CGRect) aFrame 
+- (id) init
 { 
-	self = [super initWithFrame:aFrame];
-	if (self) {
-		[self model: [ButtonModel new]];
-		return self;
-	}
+	[self model: [ButtonModel new]];
+	return self;
 }
 
-- (id) iconURL
++ (id) iconURL
 {
 	return @"Resources/Button.gif"
 }

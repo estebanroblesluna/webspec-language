@@ -15,18 +15,18 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CheckBoxFigure : WidgetFigure 
+@implementation UniformDistributionFigure : IconLabelFigure 
 {
+}
+
++ (UniformDistributionFigure) newAt: (CGPoint) aPoint
+{
+	return [super newAt: aPoint iconUrl: @"Resources/UniformNumberDistribution.gif"];
 }
 
 - (id) init
 { 
-	[self model: [CheckBoxModel new]];
+	[self model: [UniformDistributionModel new]];
 	return self;
-}
-
-+ (id) iconURL
-{
-	return @"Resources/CheckBox.gif"
 }
 @end

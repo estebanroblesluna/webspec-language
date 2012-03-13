@@ -53,11 +53,11 @@
 
 	//[self addSeparator];
 
-	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/OneOfStrings.gif"];
-	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/OneOfNumbers.gif"];
-	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/OneOfArray.gif"];
-	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/StringGenerator.gif"];
-	[self addTool: [CreateWidgetTool drawing: _drawing] withTitle: @"Widget" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addTool: [CreateGeneratorTool drawing: _drawing figure: [OneOfManyStringsFigure class]] withTitle: @"One of many strings" image: @"Resources/OneOfStrings.gif"];
+	[self addTool: [CreateGeneratorTool drawing: _drawing figure: [OneOfManyNumbersFigure class]] withTitle: @"One of many numbers" image: @"Resources/OneOfNumbers.gif"];
+	[self addTool: [CreateGeneratorTool drawing: _drawing figure: [OneOfManyArraysFigure class]] withTitle: @"One of many arrays" image: @"Resources/OneOfArray.gif"];
+	[self addTool: [CreateGeneratorTool drawing: _drawing figure: [RandomStringFigure class]] withTitle: @"Random string" image: @"Resources/StringGenerator.gif"];
+	[self addTool: [CreateGeneratorTool drawing: _drawing figure: [UniformDistributionFigure class]] withTitle: @"Uniform distribution of numbers" image: @"Resources/UniformNumberDistribution.gif"];
 }
 
 @end

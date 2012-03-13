@@ -19,16 +19,13 @@
 {
 }
 
-- (id) initWithFrame: (CGRect) aFrame 
+- (id) init
 { 
-	self = [super initWithFrame:aFrame];
-	if (self) {
-		[self model: [TextFieldModel new]];
-		return self;
-	}
+	[self model: [TextFieldModel new]];
+	return self;
 }
 
-- (id) iconURL
++ (id) iconURL
 {
 	return @"Resources/TextField.gif"
 }

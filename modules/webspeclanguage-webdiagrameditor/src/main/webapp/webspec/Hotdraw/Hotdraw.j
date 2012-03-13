@@ -37,6 +37,8 @@
 @import "Figure/ToolboxFigure.j"
 @import "Figure/LabelFigure.j"
 @import "Figure/PropertiesFigure.j"
+@import "Figure/IconLabelFigure.j"
+
 
 @import "Tool/Tool.j"
 @import "Tool/SelectionTool.j"
