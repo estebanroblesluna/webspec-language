@@ -19,16 +19,13 @@
 {
 }
 
-- (id) initWithFrame: (CGRect) aFrame 
+- (id) init
 { 
-	self = [super initWithFrame:aFrame];
-	if (self) {
-		[self model: [LinkModel new]];
-		return self;
-	}
+	[self model: [LinkModel new]];
+	return self;
 }
 
-- (id) iconURL
++ (id) iconURL
 {
 	return @"Resources/Link.gif"
 }

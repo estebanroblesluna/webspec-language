@@ -30,6 +30,11 @@
 @import "Model/ListBoxModel.j"
 @import "Model/RadioButtonModel.j"
 @import "Model/TextFieldModel.j"
+@import "Model/OneOfManyStringsModel.j"
+@import "Model/OneOfManyNumbersModel.j"
+@import "Model/OneOfManyArraysModel.j"
+@import "Model/RandomStringModel.j"
+@import "Model/UniformDistributionModel.j"
 
 @import "Figure/InteractionFigure.j"
 @import "Figure/WidgetFigure.j"
@@ -45,12 +50,18 @@
 @import "Figure/ListOfContainerFigure.j"
 @import "Figure/NavigationFigure.j"
 @import "Figure/RichBehaviorFigure.j"
+@import "Figure/OneOfManyStringsFigure.j"
+@import "Figure/OneOfManyNumbersFigure.j"
+@import "Figure/OneOfManyArraysFigure.j"
+@import "Figure/RandomStringFigure.j"
+@import "Figure/UniformDistributionFigure.j"
 
 @import "WebSpecDrawing.j"
 
 @import "Tool/CreateConnectionTool.j"
 @import "Tool/CreateInteractionTool.j"
 @import "Tool/CreateWidgetTool.j"
+@import "Tool/CreateGeneratorTool.j"
 
 @import "WebSpecToolbox.j"
 

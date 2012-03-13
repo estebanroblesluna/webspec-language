@@ -15,89 +15,12 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation WidgetFigure : Figure 
+@implementation WidgetFigure : IconLabelFigure 
 { 
-	CPTextField _label;
 } 
 
 + (Widget) newAt: (CGPoint) aPoint
 {
-	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
-	var widget = [[self alloc] initWithFrame: frame];
-	return widget;
-}
-
-- (id) initWithFrame: (CGRect) aFrame 
-{ 
-	self = [super initWithFrame:aFrame];
-	if (self) {
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"middleLeft"]];
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"middleRight"]];
-
-		//DRAW WIDGET NAME
-		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"Widget"];
-		[label setTextColor:[CPColor blackColor]];
-		[label sizeToFit];
-		[label setFrameOrigin:CGPointMake(22, 4)];
-		[self addSubview: label];
-		_label = label;
-
-		//DRAW ICON
-		var icon = [[CPImage alloc]
-		            initWithContentsOfFile: [self iconURL]
-		            size:CGSizeMake(16, 16)];
-		
-		var iconView = [[CPImageView alloc] initWithFrame:CGRectMake(4, 4, 16, 160)];
-		[iconView setHasShadow:NO];
-		[iconView setImageScaling:CPScaleNone];
-		
-		var iconSize = [icon size];
-		[iconView setFrameSize: iconSize];
-		[iconView setImage: icon];
-		[self addSubview: iconView];
-		
-		return self;
-	}
-} 
-
-- (id) iconURL
-{
-	
-} 
-
-- (bool) isSelectable
-{ 
-	return true;
-}
-
-- (bool) isMoveable
-{ 
-	return true;
-}
-
-- (bool) isEditable
-{ 
-	return true;
-}
-
-- (void) switchToEditMode
-{
-	var editorDelegate = [[EditorDelegate alloc] 
-		initWithWidget: _label 
-		value: [_label objectValue]
-		window: [self window]
-		figureContainer: self
-		drawing: [self drawing]];
-}
-
-- (void) setEditionResult: (String) aValue
-{
-	[_label setObjectValue: aValue];
-	[_label sizeToFit];
-	
-	var currentFrameSize = [self frameSize];
-	currentFrameSize.width = [_label frameOrigin].x + [_label frameSize].width;
-	[self setFrameSize: currentFrameSize];
+	return [super newAt: aPoint iconUrl: [self iconURL]];
 }
 @end

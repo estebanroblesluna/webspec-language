@@ -15,18 +15,29 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CheckBoxFigure : WidgetFigure 
+@implementation CreateGeneratorTool : AbstractCreateFigureTool
 {
+	id _figureClass;
 }
 
-- (id) init
-{ 
-	[self model: [CheckBoxModel new]];
-	return self;
++ (id) drawing: (Drawing) aDrawing figure: (id) aFigureClass
+{
+	var tool = [super drawing: aDrawing];
+	[tool figureClass: aFigureClass];
+	return tool;
 }
 
-+ (id) iconURL
+- (void) figureClass: (id) aFigureClass
 {
-	return @"Resources/CheckBox.gif"
+	_figureClass = aFigureClass;
+}
+
+- (void) createFigureAt: (id) aPoint on: (id) aDrawing
+{
+	var generatorFigure = [_figureClass newAt: aPoint];
+	[aDrawing addSubview: generatorFigure];
+	
+	[generatorFigure switchToEditMode];
+	[self activateSelectionTool];
 }
 @end

@@ -15,18 +15,17 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CheckBoxFigure : WidgetFigure 
+@implementation OneOfManyStringsModel : Model
 {
 }
 
 - (id) init
-{ 
-	[self model: [CheckBoxModel new]];
-	return self;
-}
-
-+ (id) iconURL
 {
-	return @"Resources/CheckBox.gif"
+	[super init];
+	
+	[self addProperty: @"Name" value: @""];
+	[self addProperty: @"Strings" value: @""];
+	
+	return self;
 }
 @end

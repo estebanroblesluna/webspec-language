@@ -19,7 +19,7 @@
 {
 }
 
-- (id) iconURL
++ (id) iconURL
 {
 	return @"Resources/PanelContainer.gif"
 }

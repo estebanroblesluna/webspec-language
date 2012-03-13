@@ -15,18 +15,20 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CheckBoxFigure : WidgetFigure 
+@implementation RandomStringModel : Model
 {
 }
 
 - (id) init
-{ 
-	[self model: [CheckBoxModel new]];
+{
+	[super init];
+	
+	[self addProperty: @"Name" value: @""];
+	[self addProperty: @"Min length" value: @""];
+	[self addProperty: @"Max length" value: @""];
+	
 	return self;
 }
-
-+ (id) iconURL
-{
-	return @"Resources/CheckBox.gif"
-}
 @end
+
+
