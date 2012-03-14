@@ -12,17 +12,21 @@
  * limitations under the License.
  */
 
+ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
+
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
 @implementation Model : CPObject
 {
 	CPMutableArray _properties;
+	CPDictionary _propertiesByName;
 }
 
 - (id) init
 {
 	_properties = [CPMutableArray array];
+	_propertiesByName = [CPDictionary dictionary];
 	return self;
 }
 
@@ -36,6 +40,7 @@
 {
 	var property = [Property name: aPropertyName value: aValue];
 	[_properties addObject: property];
+	[_propertiesByName setObject: property forKey: aPropertyName];
 }
 
 - (id) propertiesSize
@@ -43,21 +48,43 @@
 	return [_properties count];
 }
 
-- (id) propertyName: (id) anIndex
+- (id) propertyNameAt: (id) anIndex
 {
 	var property = [_properties objectAtIndex: anIndex];
 	return [property name];
 }
 
-- (id) propertyValue: (id) anIndex
+- (id) propertyValueAt: (id) anIndex
 {
 	var property = [_properties objectAtIndex: anIndex];
 	return [property value];	
 }
 
-- (void) propertyValue: (id) anIndex be: (id) aValue
+- (id) propertyValue: (id) aName
+{
+	var property = [_propertiesByName objectForKey: aName];
+	return [property value];	
+}
+
+- (void) propertyValue: (id) aName be: (id) aValue
+{
+	var property = [_propertiesByName objectForKey: aName];
+	[property value: aValue];
+	CPLog.info([property name]);
+	CPLog.info(aValue);
+	[[CPNotificationCenter defaultCenter] 
+		postNotificationName: ModelPropertyChangedNotification 
+		object: self];
+}
+
+- (void) propertyValueAt: (id) anIndex be: (id) aValue
 {
 	var property = [_properties objectAtIndex: anIndex];
-	[property value: aValue];	
+	[property value: aValue];
+	CPLog.info([property name]);
+	CPLog.info(aValue);
+	[[CPNotificationCenter defaultCenter] 
+		postNotificationName: ModelPropertyChangedNotification 
+		object: self];
 }
 @end

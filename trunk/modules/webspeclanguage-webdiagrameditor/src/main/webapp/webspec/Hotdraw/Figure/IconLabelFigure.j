@@ -22,6 +22,7 @@
 	boolean _selectable;
 	boolean _moveable;
 	boolean _editable;
+	id _modelFeature;
 } 
 
 + (IconLabelFigure) newAt: (CGPoint) aPoint iconUrl: (id) iconUrl
@@ -85,6 +86,21 @@
 	return _editable;
 }
 
+- (void) selectable: (boolean) aValue
+{
+	_selectable = aValue;
+}
+
+- (void) moveable: (boolean) aValue
+{
+	_moveable = aValue;
+}
+
+- (void) editable: (boolean) aValue
+{
+	_editable = aValue;
+}
+
 - (void) switchToEditMode
 {
 	if (_editable) {
@@ -99,11 +115,47 @@
 
 - (void) setEditionResult: (String) aValue
 {
+	if (_modelFeature != nil && ([self model] != nil)) {
+		[[self model] propertyValue: _modelFeature be: aValue];
+	} else {
+		[self setLabelValue: aValue];
+	}
+}
+
+- (void) setLabelValue: (String) aValue
+{
 	[_label setObjectValue: aValue];
 	[_label sizeToFit];
 	
 	var currentFrameSize = [self frameSize];
 	currentFrameSize.width = [_label frameOrigin].x + [_label frameSize].width;
 	[self setFrameSize: currentFrameSize];
+}
+
+- (void) propertyChanged
+{
+	var value = [[self model] propertyValue: _modelFeature];
+	[self setLabelValue: value];
+}
+
+- (void) checkModelFeature: (id) aModelFeature
+{
+	if (_modelFeature != nil && ([self model] != nil)) {
+		[[CPNotificationCenter defaultCenter] 
+			removeObserver: self 
+			name: ModelPropertyChangedNotification 
+			object: [self model]];
+		
+	}
+
+	_modelFeature = aModelFeature
+
+	if (_modelFeature != nil && ([self model] != nil)) {
+		[[CPNotificationCenter defaultCenter] 
+			addObserver: self 
+			selector: @selector(propertyChanged) 
+			name: ModelPropertyChangedNotification 
+			object: [self model]];
+	}
 }
 @end
