@@ -40,6 +40,7 @@
 		var interactionOrigin = [interaction frameOrigin];
 		aPoint = CGPointMake(aPoint.x - interactionOrigin.x - 4, aPoint.y - interactionOrigin.y - 32);
 		var widget = [_figureClass newAt: aPoint];
+		[widget checkModelFeature: @"Name"];
 		[interaction addWidget: widget];
 		[widget switchToEditMode];
 		[self activateSelectionTool];

@@ -19,6 +19,7 @@
 { 
 	CPTextField _label;
 	CPView _widgetContainer;
+	IconLabelFigure _titleWidget;
 } 
 
 + (Interaction) newAt: (CGPoint) aPoint
@@ -52,7 +53,7 @@
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"bottomRight"]];
 		
 		//DRAW INTERACTION NAME
-		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
+		/*var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
 		[label setStringValue: @"Interaction"];
 		[label setTextColor: [CPColor blackColor]];
 		[label setFrameOrigin: CGPointMake(22, 4)];
@@ -77,6 +78,14 @@
 		[iconView setFrameSize: iconSize];
 		[iconView setImage: icon];
 		[self addSubview: iconView];
+		*/
+		
+		_titleWidget = [IconLabelFigure newAt: CGPointMake(2, 2) iconUrl: @"Resources/Interaction.gif"];
+		[_titleWidget model: [self model]];
+		[_titleWidget checkModelFeature: @"Name"];
+		[_titleWidget selectable: NO];
+		[_titleWidget moveable: NO];
+		[self addSubview: _titleWidget];
 		
 		//WIDGET CONTAINER
 		_widgetContainer = [[CompositeFigure alloc] initWithFrame: CGRectMake(2, 28, [self frameSize].width - 4, [self frameSize].height - 31)];
@@ -135,12 +144,13 @@
 
 - (void) switchToEditMode
 {
-	var editorDelegate = [[EditorDelegate alloc] 
+	[_titleWidget switchToEditMode];
+	/*var editorDelegate = [[EditorDelegate alloc] 
 		initWithWidget: _label 
 		value: [_label objectValue]
 		window: [self window]
 		figureContainer: self
-		drawing: [self superview]];
+		drawing: [self superview]];*/
 }
 
 - (void) setEditionResult: (String) aValue

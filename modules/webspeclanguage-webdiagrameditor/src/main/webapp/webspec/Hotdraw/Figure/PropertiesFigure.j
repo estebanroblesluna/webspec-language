@@ -108,9 +108,9 @@
 {
 	var model = [_selectedFigure model];
 	if (_nameColumn == aTableColumn) {
-		return [model propertyName: rowIndex];
+		return [model propertyNameAt: rowIndex];
 	} else {
-		return [model propertyValue: rowIndex];
+		return [model propertyValueAt: rowIndex];
 	}
 }
 
@@ -118,13 +118,40 @@
 {
 	var model = [_selectedFigure model];
 	if (aTableColumn == _valueColumn) {
-		return [model propertyValue: rowIndex be: aValue];
-	}}
+		return [model propertyValueAt: rowIndex be: aValue];
+	}
+}
 
 - (void) selectionChanged
 {
+	if (_selectedFigure != nil) {
+		var model = [_selectedFigure model];
+		if (model != nil) {
+			[[CPNotificationCenter defaultCenter] 
+				removeObserver: self 
+				name: ModelPropertyChangedNotification 
+				object: model];
+		}
+	}
+
 	_selectedFigure = [_drawing selectedFigure];
-	[_tableView reloadData];
+
+	if (_selectedFigure != nil) {
+		var model = [_selectedFigure model];
+		if (model != nil) {
+			[[CPNotificationCenter defaultCenter] 
+				addObserver: self 
+				selector: @selector(reloadData) 
+				name: ModelPropertyChangedNotification 
+				object: model];
+		}
+	}
+
+	[self reloadData];	
+}
+
+- (void) reloadData {
+	[_tableView reloadData];	
 }
 
 - (bool) isMoveable
