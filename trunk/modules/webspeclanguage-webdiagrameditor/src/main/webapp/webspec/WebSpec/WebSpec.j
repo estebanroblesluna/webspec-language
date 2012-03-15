@@ -55,6 +55,7 @@
 @import "Figure/OneOfManyArraysFigure.j"
 @import "Figure/RandomStringFigure.j"
 @import "Figure/UniformDistributionFigure.j"
+@import "Figure/TransitionIconLabelFigure.j"
 
 @import "WebSpecDrawing.j"
 

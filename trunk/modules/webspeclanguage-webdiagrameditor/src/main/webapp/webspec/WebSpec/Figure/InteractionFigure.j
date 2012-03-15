@@ -40,7 +40,7 @@
 	self = [super initWithFrame:aFrame];
 	if (self) {
 		[self model: [InteractionModel new]];
-		
+
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topLeft"]];
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topMiddle"]];
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topRight"]];
@@ -51,34 +51,6 @@
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"bottomLeft"]];
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"bottomMiddle"]];
 		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"bottomRight"]];
-		
-		//DRAW INTERACTION NAME
-		/*var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"Interaction"];
-		[label setTextColor: [CPColor blackColor]];
-		[label setFrameOrigin: CGPointMake(22, 4)];
-		[label sizeToFit];
-		[label setDelegate: self];
-		[label setBordered: NO];
-		[label setBezeled: NO];
-		[self addSubview: label];
-
-		_label = label;
-
-		//DRAW ICON
-		var icon = [[CPImage alloc]
-		            initWithContentsOfFile: @"Resources/Interaction.gif" 
-		            size:CGSizeMake(16, 16)];
-		
-		var iconView = [[CPImageView alloc] initWithFrame:CGRectMake(4, 4, 16, 160)];
-		[iconView setHasShadow:NO];
-		[iconView setImageScaling:CPScaleNone];
-		
-		var iconSize = [icon size];
-		[iconView setFrameSize: iconSize];
-		[iconView setImage: icon];
-		[self addSubview: iconView];
-		*/
 		
 		_titleWidget = [IconLabelFigure newAt: CGPointMake(2, 2) iconUrl: @"Resources/Interaction.gif"];
 		[_titleWidget model: [self model]];
@@ -91,6 +63,7 @@
 		_widgetContainer = [[CompositeFigure alloc] initWithFrame: CGRectMake(2, 28, [self frameSize].width - 4, [self frameSize].height - 31)];
 		[_widgetContainer setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
 		[self addSubview: _widgetContainer];
+		
 		
 		return self;
 	}

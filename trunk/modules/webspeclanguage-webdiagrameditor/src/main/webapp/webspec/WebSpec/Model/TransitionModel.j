@@ -23,7 +23,7 @@
 {
 	[super init];
 	
-	[self addProperty: @"Name" value: @""];
+	[self addProperty: @"Name" value: @"Transition"];
 	[self addProperty: @"Precondition" value: @""];
 	[self addProperty: @"Actions" value: @""];
 	

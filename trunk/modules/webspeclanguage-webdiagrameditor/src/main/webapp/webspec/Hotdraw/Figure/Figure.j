@@ -72,6 +72,10 @@
 		}
 	}
 	
+	return [self primFigureAt: aPoint];
+}
+
+- (id) primFigureAt: (CPPoint) aPoint {	
 	//otherwise check our frame
 	var frame = [self frame];
 	if (CPRectContainsPoint(frame, aPoint)) {
@@ -80,6 +84,8 @@
 		return nil;
 	}
 }
+
+
 
 - (void) addInConnection: (id) aConnection
 {
@@ -279,12 +285,12 @@
 	[self setFrame: newFrame];
 }
 
-- (CPPoint)bottomRight
+- (CPPoint) bottomRight
 { 
 	return CGPointMake([self frame].origin.x + [self frame].size.width, [self frame].origin.y + [self frame].size.height);
 }
 
-- (void)bottomRight: aPoint
+- (void) bottomRight: aPoint
 { 
 	var oldFrame = [self frame];
 	var widthOffset = aPoint.x - (oldFrame.origin.x + oldFrame.size.width);

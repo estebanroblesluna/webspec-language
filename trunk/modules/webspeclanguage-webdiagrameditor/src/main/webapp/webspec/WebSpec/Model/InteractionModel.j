@@ -23,7 +23,7 @@
 {
 	[super init];
 	
-	[self addProperty: @"Name" value: @""];
+	[self addProperty: @"Name" value: @"Interaction"];
 	[self addProperty: @"Location" value: @""];
 	[self addProperty: @"Invariant" value: @""];
 	
