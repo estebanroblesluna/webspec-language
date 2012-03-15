@@ -42,8 +42,8 @@
 
 	if (interaction != nil) {
 		var points = [CPMutableArray array];
-		[points addObject: [figure center]];
-		[points addObject: [figure center]];
+		[points addObject: [interaction center]];
+		[points addObject: [interaction center]];
 
 		var connection = [[Connection alloc] initWithPoints: points];
 		[connection recomputeFrame];
@@ -71,8 +71,17 @@
 		var endInteraction = [_drawing interactionOf: figure];
 		
 		if (endInteraction != nil) {
-			var connection = [_figureClass source: _initialInteraction target: endInteraction];
-			[_drawing addSubview: connection];
+			var connectionFigure = [_figureClass source: _initialInteraction target: endInteraction];
+			
+			var model = [connectionFigure model];
+			var labelFigure = [TransitionIconLabelFigure newAt: [connectionFigure center] iconUrl: @"Resources/Navigation.gif"];
+			[labelFigure model: model];
+			[labelFigure checkModelFeature: @"Name"];
+			
+			[_drawing addSubview: connectionFigure];
+			[_drawing addSubview: labelFigure];
+
+			[labelFigure switchToEditMode];
 		}
 		
 		[_connection removeFromSuperview];

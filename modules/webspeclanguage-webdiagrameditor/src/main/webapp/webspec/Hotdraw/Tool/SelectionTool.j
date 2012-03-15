@@ -52,6 +52,11 @@
 			[_moveableFigures addObject: figureUnderPoint];
 			[_initialPositions setObject: [figureUnderPoint frameOrigin] forKey: figureUnderPoint];
 		} else {
+			//check parent figures till you find one selectable
+			while (figureUnderPoint != _drawing && ![figureUnderPoint isSelectable]) {
+				figureUnderPoint = [figureUnderPoint superview];
+			}
+			
 			if ([figureUnderPoint isSelectable] && !([_selectedFigures containsObject: figureUnderPoint])) {
 				//if the element is selectable select it and add in case of ctrl
 				[figureUnderPoint select];

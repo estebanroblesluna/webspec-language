@@ -23,6 +23,7 @@
 	boolean _moveable;
 	boolean _editable;
 	id _modelFeature;
+	CPImageView _iconView;
 } 
 
 + (IconLabelFigure) newAt: (CGPoint) aPoint iconUrl: (id) iconUrl
@@ -46,7 +47,7 @@
 
 		//DRAW WIDGET NAME
 		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"Widget"];
+		[label setStringValue: @""];
 		[label setTextColor:[CPColor blackColor]];
 		[label sizeToFit];
 		[label setFrameOrigin:CGPointMake(22, 4)];
@@ -61,6 +62,7 @@
 		var iconView = [[CPImageView alloc] initWithFrame:CGRectMake(4, 4, 16, 160)];
 		[iconView setHasShadow:NO];
 		[iconView setImageScaling:CPScaleNone];
+		_iconView = iconView;
 		
 		var iconSize = [icon size];
 		[iconView setFrameSize: iconSize];
@@ -113,10 +115,20 @@
 	}
 }
 
+- (id) value
+{
+	return [[self model] propertyValue: _modelFeature];
+}
+
+- (void) value: (id) aValue
+{
+	[[self model] propertyValue: _modelFeature be: aValue];	
+}
+
 - (void) setEditionResult: (String) aValue
 {
 	if (_modelFeature != nil && ([self model] != nil)) {
-		[[self model] propertyValue: _modelFeature be: aValue];
+		[self value: aValue];
 	} else {
 		[self setLabelValue: aValue];
 	}
@@ -124,17 +136,22 @@
 
 - (void) setLabelValue: (String) aValue
 {
+	if (aValue == nil) {
+		aValue = @"";
+	}
+	
 	[_label setObjectValue: aValue];
 	[_label sizeToFit];
 	
 	var currentFrameSize = [self frameSize];
-	currentFrameSize.width = [_label frameOrigin].x + [_label frameSize].width;
+	currentFrameSize.width = [_label frameOrigin].x + [_label frameSize].width + [_iconView frameSize].width;
+	currentFrameSize.height = [_label frameOrigin].y + [_label frameSize].height;
 	[self setFrameSize: currentFrameSize];
 }
 
 - (void) propertyChanged
 {
-	var value = [[self model] propertyValue: _modelFeature];
+	var value = [self value];
 	[self setLabelValue: value];
 }
 
@@ -156,6 +173,8 @@
 			selector: @selector(propertyChanged) 
 			name: ModelPropertyChangedNotification 
 			object: [self model]];
+			
+		[self propertyChanged];
 	}
 }
 @end
