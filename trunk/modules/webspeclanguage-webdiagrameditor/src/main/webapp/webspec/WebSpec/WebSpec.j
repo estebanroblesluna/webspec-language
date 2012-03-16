@@ -17,6 +17,7 @@
 @import <AppKit/CPView.j>
 @import <AppKit/CPTextField.j>
 
+@import "Model/GeneratorModel.j"
 @import "Model/WidgetModel.j"
 @import "Model/ButtonModel.j"
 @import "Model/InteractionModel.j"
@@ -35,6 +36,9 @@
 @import "Model/OneOfManyArraysModel.j"
 @import "Model/RandomStringModel.j"
 @import "Model/UniformDistributionModel.j"
+@import "Model/PanelContainerModel.j"
+@import "Model/ListOfContainerModel.j"
+
 
 @import "Figure/InteractionFigure.j"
 @import "Figure/WidgetFigure.j"
@@ -46,6 +50,7 @@
 @import "Figure/ListBoxFigure.j"
 @import "Figure/RadioButtonFigure.j"
 @import "Figure/TextFieldFigure.j"
+@import "Figure/ContainerFigure.j"
 @import "Figure/PanelContainerFigure.j"
 @import "Figure/ListOfContainerFigure.j"
 @import "Figure/NavigationFigure.j"
@@ -63,6 +68,7 @@
 @import "Tool/CreateInteractionTool.j"
 @import "Tool/CreateWidgetTool.j"
 @import "Tool/CreateGeneratorTool.j"
+@import "Tool/CreateContainerTool.j"
 
 @import "WebSpecToolbox.j"
 

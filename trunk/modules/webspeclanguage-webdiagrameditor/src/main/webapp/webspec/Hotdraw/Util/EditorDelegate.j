@@ -23,11 +23,12 @@
 	id _window;
 }
 
-- (id) initWithWidget: (Figure) aFigure value: (String) currentValue window: (id) aWindow figureContainer: (Figure) aContainer drawing: (Drawing) aDrawing
+- (id) initWithWidget: (Figure) aFigure label: (CPTextField) aLabel window: (id) aWindow figureContainer: (Figure) aContainer drawing: (Drawing) aDrawing
 { 
 	self = [super init];
 	if (self) {
-		var width = [aContainer frameSize].width - 30;
+		var width = [aLabel frameSize].width + (6 * 2);
+		var currentValue = [aLabel objectValue];
 
 		var position = [aDrawing 
 			convertPoint: CPPointMake(-5, -5)
@@ -40,6 +41,7 @@
 
 		[editableLabel setEditable: YES];
 		[editableLabel setBordered: NO];
+		[editableLabel sizeToFit];
 		[editableLabel setFrameOrigin: position];
 		[editableLabel cancelator: self];
 		

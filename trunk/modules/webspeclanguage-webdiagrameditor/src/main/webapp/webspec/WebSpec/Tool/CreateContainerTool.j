@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CreateWidgetTool : AbstractCreateFigureTool
+@implementation CreateContainerTool : AbstractCreateFigureTool
 {
 	id _figureClass;
 }
@@ -42,9 +42,7 @@
 		//TODO corregir translacion
 		//aPoint = CGPointMake(aPoint.x - widgetContainerOrigin.x - 4, aPoint.y - widgetContainerOrigin.y - 32);
 		var widget = [_figureClass newAt: widgetContainerOrigin];
-		[widget checkModelFeature: @"Name"];
 		[widgetContainer addWidget: widget];
-		[widget switchToEditMode];
 		[self activateSelectionTool];
 	}
 }

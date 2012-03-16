@@ -19,9 +19,6 @@
 { 
 	CPTextField _label;
 	CPString _iconUrl;
-	boolean _selectable;
-	boolean _moveable;
-	boolean _editable;
 	id _modelFeature;
 	CPImageView _iconView;
 } 
@@ -38,9 +35,6 @@
 	self = [super initWithFrame:aFrame];
 	if (self) {
 		_iconUrl = iconUrl;
-		_selectable = true;
-		_moveable = true;
-		_editable = true;
 		
 		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"middleLeft"]];
 		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"middleRight"]];
@@ -50,7 +44,8 @@
 		[label setStringValue: @""];
 		[label setTextColor:[CPColor blackColor]];
 		[label sizeToFit];
-		[label setFrameOrigin:CGPointMake(22, 4)];
+		[label setFrameOrigin: CGPointMake(22, 4)];
+		//[label setFrameSize: CGSizeMake(100, 16)];
 		[self addSubview: label];
 		_label = label;
 
@@ -73,42 +68,12 @@
 	}
 }
 
-- (bool) isSelectable
-{ 
-	return _selectable;
-}
-
-- (bool) isMoveable
-{ 
-	return _moveable;
-}
-
-- (bool) isEditable
-{ 
-	return _editable;
-}
-
-- (void) selectable: (boolean) aValue
-{
-	_selectable = aValue;
-}
-
-- (void) moveable: (boolean) aValue
-{
-	_moveable = aValue;
-}
-
-- (void) editable: (boolean) aValue
-{
-	_editable = aValue;
-}
-
 - (void) switchToEditMode
 {
-	if (_editable) {
+	if ([self isEditable]) {
 		var editorDelegate = [[EditorDelegate alloc] 
 			initWithWidget: _label 
-			value: [_label objectValue]
+			label: _label
 			window: [self window]
 			figureContainer: self
 			drawing: [self drawing]];
@@ -144,7 +109,7 @@
 	[_label sizeToFit];
 	
 	var currentFrameSize = [self frameSize];
-	currentFrameSize.width = [_label frameOrigin].x + [_label frameSize].width + [_iconView frameSize].width;
+	currentFrameSize.width = [_label frameOrigin].x + [_label frameSize].width;
 	currentFrameSize.height = [_label frameOrigin].y + [_label frameSize].height;
 	[self setFrameSize: currentFrameSize];
 }

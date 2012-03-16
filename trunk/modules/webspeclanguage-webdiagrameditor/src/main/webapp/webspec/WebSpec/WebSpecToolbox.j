@@ -48,8 +48,8 @@
 	[self addTool: [CreateWidgetTool drawing: _drawing figure: [ListBoxFigure class]] withTitle: @"Widget" image: @"Resources/ListBox.gif"];
 	[self addTool: [CreateWidgetTool drawing: _drawing figure: [RadioButtonFigure class]] withTitle: @"Widget" image: @"Resources/RadioButton.gif"];
 	[self addTool: [CreateWidgetTool drawing: _drawing figure: [TextFieldFigure class]] withTitle: @"Widget" image: @"Resources/TextField.gif"];
-	[self addTool: [CreateWidgetTool drawing: _drawing figure: [PanelContainerFigure class]] withTitle: @"Widget" image: @"Resources/PanelContainer.gif"];
-	[self addTool: [CreateWidgetTool drawing: _drawing figure: [ListOfContainerFigure class]] withTitle: @"Widget" image: @"Resources/ListOfContainer.gif"];
+	[self addTool: [CreateContainerTool drawing: _drawing figure: [PanelContainerFigure class]] withTitle: @"Widget" image: @"Resources/PanelContainer.gif"];
+	[self addTool: [CreateContainerTool drawing: _drawing figure: [ListOfContainerFigure class]] withTitle: @"Widget" image: @"Resources/ListOfContainer.gif"];
 
 	//[self addSeparator];
 

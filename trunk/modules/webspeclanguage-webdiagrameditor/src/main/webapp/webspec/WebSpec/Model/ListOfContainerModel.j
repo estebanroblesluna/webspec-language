@@ -15,18 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation OneOfManyArraysModel : GeneratorModel
+@implementation ListOfContainerModel : WidgetModel
 {
-}
-
-- (id) init
-{
-	[super init];
-	
-	[self addProperty: @"Arrays" value: @""];
-	
-	return self;
 }
 @end
-
-

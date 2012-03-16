@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation OneOfManyNumbersModel : Model
+@implementation OneOfManyNumbersModel : GeneratorModel
 {
 }
 
@@ -23,7 +23,6 @@
 {
 	[super init];
 	
-	[self addProperty: @"Name" value: @""];
 	[self addProperty: @"Numbers" value: @""];
 	
 	return self;

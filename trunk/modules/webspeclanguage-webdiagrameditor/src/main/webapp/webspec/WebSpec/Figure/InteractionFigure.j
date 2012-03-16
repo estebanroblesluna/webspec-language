@@ -19,6 +19,7 @@
 { 
 	CPTextField _label;
 	CPView _widgetContainer;
+	ImageFigure _invariantFigure;
 	IconLabelFigure _titleWidget;
 } 
 
@@ -59,17 +60,43 @@
 		[_titleWidget moveable: NO];
 		[self addSubview: _titleWidget];
 		
+		_invariantFigure = [ImageFigure initializeWithImage: @"Resources/Invariant.gif" x: 23 y: 6];
+		[_invariantFigure showBorder: NO];
+		[_invariantFigure selectable: NO];
+		[_invariantFigure moveable: NO];
+		[_invariantFigure setFrameOrigin: CGPointMake([self frameSize].width - 20, 6)];
+		[_invariantFigure setAutoresizingMask:  CPViewMinXMargin];
+		[self validateInvariantIcon];
+		[self addSubview: _invariantFigure];
+		
 		//WIDGET CONTAINER
-		_widgetContainer = [[CompositeFigure alloc] initWithFrame: CGRectMake(2, 28, [self frameSize].width - 4, [self frameSize].height - 31)];
+		//_widgetContainer = [[CompositeFigure alloc] initWithFrame: ];
+		var widgetContainerFrame = CGRectMake(2, 28, [self frameSize].width - 4, [self frameSize].height - 31);
+		var widgetContainerOrigin = widgetContainerFrame.origin;
+		_widgetContainer = [PanelContainerFigure newAt: widgetContainerOrigin];
+		[_widgetContainer setFrame: widgetContainerFrame];
+		[_widgetContainer selectable: NO];
+		[_widgetContainer hideBorder];
 		[_widgetContainer setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
 		[self addSubview: _widgetContainer];
-		
 		
 		return self;
 	}
 } 
 
-- (void)drawRect:(CGRect)rect on: (id)context
+- (void) modelChanged
+{
+	[self validateInvariantIcon];
+}
+
+- (void) validateInvariantIcon
+{
+	var invariant = [[[self model] propertyValue: @"Invariant"] stringByTrimmingWhitespace];
+	var hasInvariant = [@"" isEqualToString: invariant];
+	[_invariantFigure setHidden: hasInvariant];	
+}
+
+- (void) drawRect:(CGRect)rect on: (id)context
 {
 		//DRAW RECTANGLE
         var radius = 6.0;
@@ -105,7 +132,7 @@
 	return true;
 }
 
-- (bool)isEditable
+- (bool) isEditable
 { 
 	return true;
 }
@@ -118,12 +145,6 @@
 - (void) switchToEditMode
 {
 	[_titleWidget switchToEditMode];
-	/*var editorDelegate = [[EditorDelegate alloc] 
-		initWithWidget: _label 
-		value: [_label objectValue]
-		window: [self window]
-		figureContainer: self
-		drawing: [self superview]];*/
 }
 
 - (void) setEditionResult: (String) aValue
@@ -137,5 +158,4 @@
 	[_label setStringValue: aValue];
 	[_label sizeToFit];
 }
-
 @end

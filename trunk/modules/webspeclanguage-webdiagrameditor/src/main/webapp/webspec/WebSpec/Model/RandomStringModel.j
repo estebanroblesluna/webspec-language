@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation RandomStringModel : Model
+@implementation RandomStringModel : GeneratorModel
 {
 }
 
@@ -23,7 +23,6 @@
 {
 	[super init];
 	
-	[self addProperty: @"Name" value: @""];
 	[self addProperty: @"Min length" value: @""];
 	[self addProperty: @"Max length" value: @""];
 	
