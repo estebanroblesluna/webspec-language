@@ -23,22 +23,45 @@
 	
 	CPColor _backgroundColor;
 	CPColor _foregroundColor;
+
+	boolean _selectable;
+	boolean _moveable;
+	boolean _editable;
 	
 	Model _model;
 	bool _selected;
-} 
+}
+
+- (void) globalToLocal: (CPPoint) aPoint
+{
+	var current = self;
+	var offset = CGPointMake(0, 0);
+	while (current != nil && ![current isKindOfClass:[Drawing class]]) {
+		var frameOrigin = [current frameOrigin];
+		offset = CGPointMake(offset.x - frameOrigin.x, offset.y - frameOrigin.y);
+		current = [current superview];
+	}
+	
+	var result = CGPointMake(aPoint.x + offset.x, aPoint.y + offset.y);
+	return result;
+}
 
 - (id) initWithFrame: (CGRect) aFrame 
 { 
 	self = [super initWithFrame:aFrame];
 	if (self) {
-		
 		handles = [CPMutableArray array];
 		_inConnections = [CPMutableArray array];
 		_outConnections = [CPMutableArray array];
-		_selected = false;
+
 		_backgroundColor = [CPColor blackColor];
 		_foregroundColor = _backgroundColor;
+
+		_selectable = true;
+		_moveable = true;
+		_editable = true;
+		
+		_selected = false;
 		
 		[self setPostsFrameChangedNotifications: YES]; 
 		return self;
@@ -85,8 +108,6 @@
 	}
 }
 
-
-
 - (void) addInConnection: (id) aConnection
 {
 	[_inConnections addObject: aConnection];
@@ -119,17 +140,32 @@
 
 - (bool) isSelectable
 { 
-	return false;
-}
-
-- (bool) isEditable
-{ 
-	return false;
+	return _selectable;
 }
 
 - (bool) isMoveable
 { 
-	return false;
+	return _moveable;
+}
+
+- (bool) isEditable
+{ 
+	return _editable;
+}
+
+- (void) selectable: (boolean) aValue
+{
+	_selectable = aValue;
+}
+
+- (void) moveable: (boolean) aValue
+{
+	_moveable = aValue;
+}
+
+- (void) editable: (boolean) aValue
+{
+	_editable = aValue;
 }
 
 - (bool) isHandle
@@ -316,6 +352,27 @@
 
 - (void) model: aModel
 {
+	if (_model != nil) {
+		[[CPNotificationCenter defaultCenter] 
+			removeObserver: self 
+			name: ModelPropertyChangedNotification 
+			object: _model];
+		
+	}
+
 	_model = aModel;
+
+	if (_model != nil) {
+		[[CPNotificationCenter defaultCenter] 
+			addObserver: self 
+			selector: @selector(modelChanged) 
+			name: ModelPropertyChangedNotification 
+			object: _model];
+	}
+}
+
+- (void) modelChanged
+{
+	
 }
 @end

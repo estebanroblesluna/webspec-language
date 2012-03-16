@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation UniformDistributionModel : Model
+@implementation UniformDistributionModel : GeneratorModel
 {
 }
 
@@ -23,7 +23,6 @@
 {
 	[super init];
 	
-	[self addProperty: @"Name" value: @""];
 	[self addProperty: @"Min number" value: @""];
 	[self addProperty: @"Max number" value: @""];
 	

@@ -15,18 +15,13 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation OneOfManyArraysModel : GeneratorModel
+@implementation ContainerFigure : RectangleFigure 
 {
 }
 
-- (id) init
+- (void) addWidget:(Widget) aWidget
 {
-	[super init];
-	
-	[self addProperty: @"Arrays" value: @""];
-	
-	return self;
+	[self addSubview: aWidget];
 }
+
 @end
-
-

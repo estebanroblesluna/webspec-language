@@ -15,12 +15,18 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation ListOfContainerFigure : WidgetFigure 
+@implementation ListOfContainerFigure : ContainerFigure 
 {
 }
 
-+ (id) iconURL
-{
-	return @"Resources/ListOfContainer.gif"
+- (id) initWithFrame: (CGRect) aFrame
+{ 
+	self = [super initWithFrame:aFrame];
+	if (self) {
+		[self model: [ListOfContainerModel new]];
+		_backgroundColor = [CPColor whiteColor];
+		_foregroundColor = [CPColor redColor];
+		return self;
+	}
 }
 @end

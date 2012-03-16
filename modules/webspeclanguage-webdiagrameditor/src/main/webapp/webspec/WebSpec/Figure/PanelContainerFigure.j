@@ -15,12 +15,23 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation PanelContainerFigure : WidgetFigure 
+@implementation PanelContainerFigure : ContainerFigure 
 {
 }
 
-+ (id) iconURL
+- (id) initWithFrame: (CGRect) aFrame
+{ 
+	self = [super initWithFrame:aFrame];
+	if (self) {
+		[self model: [PanelContainerModel new]];
+		_backgroundColor = [CPColor whiteColor];
+		_foregroundColor = [CPColor blueColor];
+		return self;
+	}
+}
+
+- (void) hideBorder
 {
-	return @"Resources/PanelContainer.gif"
+	_foregroundColor = [CPColor whiteColor];
 }
 @end

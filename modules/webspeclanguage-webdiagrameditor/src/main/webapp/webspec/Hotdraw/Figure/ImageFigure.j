@@ -19,6 +19,7 @@
 {
 	CPTextField _textField;
 	id _offset;
+	boolean _showBorder;
 }
 
 + (ImageFigure) initializeWithImage: (id) stringResource x: (id) anX y: (id) anY
@@ -41,11 +42,17 @@
 		var icon = [[CPImage alloc]
 		            initWithContentsOfFile: stringResource];
 		_offset = anOffset;
+		_showBorder = true;
 		
 		[icon setDelegate: self];
 
 		return self;
 	}
+}
+
+- (void) showBorder: (boolean) aValue
+{
+	_showBorder = aValue;
 }
 
 - (void) imageDidLoad: (CPImage) image
@@ -62,29 +69,21 @@
 	[self invalidate];
 }
 
-- (CPColor)borderColor
+- (CPColor) borderColor
 { 
 	return [CPColor colorWithHexString: @"#EAEAEA"];
 }
 
-- (bool) isSelectable
-{ 
-	return true;
-}
-
-- (bool) isMoveable
-{ 
-	return true;
-}
-
 - (void)drawRect:(CGRect)rect on: (id)context
 {
-        CGContextSetFillColor(context, [CPColor whiteColor]); 
-        CGContextFillRect(context, [self bounds]); 
+	CGContextSetFillColor(context, [CPColor whiteColor]); 
+    CGContextFillRect(context, [self bounds]); 
 
+	if (_showBorder) {
 		CGContextSetLineWidth(context, 0.25);
-        CGContextSetFillColor(context, [self borderColor]); 
-        CGContextSetStrokeColor(context, [self borderColor]); 
-        CGContextStrokeRect(context, [self bounds]);
+	    CGContextSetFillColor(context, [self borderColor]); 
+	    CGContextSetStrokeColor(context, [self borderColor]); 
+	    CGContextStrokeRect(context, [self bounds]);
+	}
 }
 @end

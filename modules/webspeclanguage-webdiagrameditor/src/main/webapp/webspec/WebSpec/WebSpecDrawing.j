@@ -33,4 +33,23 @@
 		return nil;
 	}
 }
+
+- (id) widgetContainerOf: (Figure) aFigure
+{
+	var current = aFigure;
+	while (current != nil 
+ 			&& ![current isKindOfClass:[PanelContainerFigure class]] 
+			&& ![current isKindOfClass:[ListOfContainerFigure class]] 
+			&& ![current isKindOfClass:[InteractionFigure class]] 
+			&& ![current isKindOfClass:[Drawing class]]) 
+	{
+		current = [current superview];
+	}
+	
+	if ([current isKindOfClass:[Drawing class]]) {
+		return nil;
+	} else {
+		return current;
+	}
+}
 @end

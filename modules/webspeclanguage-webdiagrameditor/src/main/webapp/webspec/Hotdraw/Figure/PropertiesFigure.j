@@ -26,7 +26,7 @@
 
 + (PropertiesFigure) newAt: (CGPoint) aPoint drawing: (Drawing) aDrawing
 {
-	var frame = CGRectMake(aPoint.x, aPoint.y, 400, 75);
+	var frame = CGRectMake(aPoint.x, aPoint.y, 700, 100);
 	var figure = [[self alloc] initWithFrame: frame drawing: aDrawing];
 	return figure;
 }
@@ -44,7 +44,7 @@
 			name: DrawingSelectionChangedNotification 
 			object: _drawing];
 			
-		var scrollFrame = CGRectMake(5, 0, 395, 75);
+		var scrollFrame = CGRectMake(5, 0, 695, 100);
 		var scrollView = [[CPScrollView alloc] initWithFrame: scrollFrame];
 		[scrollView setAutohidesScrollers: YES];
 		_tableView = [[CPTableView alloc] initWithFrame: CGRectMakeZero()];
@@ -54,13 +54,13 @@
 
 		_nameColumn = [[CPTableColumn alloc] initWithIdentifier:@"nameColumn"];
 		[[_nameColumn headerView] setStringValue:@"Name"];
-		[_nameColumn setMinWidth: 100];
+		[_nameColumn setMinWidth: 200];
 		[_nameColumn setEditable: NO];
 		[_tableView addTableColumn: _nameColumn];
 
 		_valueColumn = [[CPTableColumn alloc] initWithIdentifier:@"valueColumn"];
 		[[_valueColumn headerView] setStringValue:@"Value"];
-		[_valueColumn setMinWidth: 100];
+		[_valueColumn setMinWidth: 400];
 		[_valueColumn setEditable: YES];
 		[_tableView addTableColumn: _valueColumn];
 

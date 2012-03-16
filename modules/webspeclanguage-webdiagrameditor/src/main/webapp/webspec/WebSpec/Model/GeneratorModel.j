@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation OneOfManyArraysModel : GeneratorModel
+@implementation GeneratorModel : Model
 {
 }
 
@@ -23,7 +23,7 @@
 {
 	[super init];
 	
-	[self addProperty: @"Arrays" value: @""];
+	[self addProperty: @"Name" value: @"Generator"];
 	
 	return self;
 }
