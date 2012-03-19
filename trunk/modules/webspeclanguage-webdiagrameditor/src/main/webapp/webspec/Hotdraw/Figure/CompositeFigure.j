@@ -19,12 +19,19 @@
 {
 }
 
-- (void)drawRect:(CGRect)rect 
+- (void) addFigure: (Figure) aFigure
 {
-	/**
-    var context = [[CPGraphicsContext currentContext] graphicsPort];
-	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FF0000"]);
-	CGContextFillRect(context, rect);
-	*/
+	[super addSubview: aFigure];
 }
+
+- (void) addSubview: (id) aView
+{
+	[CPException raise: "invalid method" reason:"Use addFigure instead"];
+}
+
+- (void) clearFigures
+{
+	[self setSubviews: [CPMutableArray array]];
+}
+
 @end

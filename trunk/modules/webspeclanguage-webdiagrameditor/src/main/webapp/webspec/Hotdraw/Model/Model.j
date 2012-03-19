@@ -70,8 +70,8 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 {
 	var property = [_propertiesByName objectForKey: aName];
 	[property value: aValue];
-	CPLog.info([property name]);
-	CPLog.info(aValue);
+	//CPLog.info([property name]);
+	//CPLog.info(aValue);
 	[[CPNotificationCenter defaultCenter] 
 		postNotificationName: ModelPropertyChangedNotification 
 		object: self];
@@ -81,8 +81,8 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 {
 	var property = [_properties objectAtIndex: anIndex];
 	[property value: aValue];
-	CPLog.info([property name]);
-	CPLog.info(aValue);
+	//CPLog.info([property name]);
+	//CPLog.info(aValue);
 	[[CPNotificationCenter defaultCenter] 
 		postNotificationName: ModelPropertyChangedNotification 
 		object: self];

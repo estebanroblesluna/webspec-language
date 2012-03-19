@@ -46,6 +46,41 @@
 	return CGRectMake(minX, minY, width, height);
 }
 
++ (CGRect) computeFrameForViews: (CPArray) views
+{
+	var firstPoint = [[views objectAtIndex: 0] frame].origin;
+
+	var minX = firstPoint.x;
+	var maxX = minX;
+	var minY = firstPoint.y;
+	var maxY = minY;
+	
+	for (var i = 1; i < [views count]; i++) { 
+	    var point = [[views objectAtIndex: i] frame].origin;
+	
+		minX = MIN(minX, point.x);
+		maxX = MAX(maxX, point.x);
+		minY = MIN(minY, point.y);
+		maxY = MAX(maxY, point.y);
+
+		var size = [[views objectAtIndex: i] frame].size;
+	    var point2 = CGPointMake(point.x + size.width, point.y + size.height);
+	
+		minX = MIN(minX, point2.x);
+		maxX = MAX(maxX, point2.x);
+		minY = MIN(minY, point2.y);
+		maxY = MAX(maxY, point2.y);
+	}
+	
+	var width = ABS(maxX - minX);
+	var height = ABS(maxY - minY);
+	
+	width = MAX(width, 1);
+	height = MAX(height, 1);
+	
+	return CGRectMake(minX, minY, width, height);
+}
+
 + (CGPoint) intersectionOf: (CGPoint) p1 with: (CGPoint) p2 with: (CGPoint) p3 with: (CGPoint) p4
 {
 	var Ax = p1.x;

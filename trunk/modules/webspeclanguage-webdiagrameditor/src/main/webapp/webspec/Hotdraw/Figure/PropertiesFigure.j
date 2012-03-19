@@ -24,10 +24,14 @@
 	CPTableView _tableView;
 }
 
++ (CPRect) defaultFrame
+{
+	return CGRectMake(10, 450, 700, 100);
+}
+
 + (PropertiesFigure) newAt: (CGPoint) aPoint drawing: (Drawing) aDrawing
 {
-	var frame = CGRectMake(aPoint.x, aPoint.y, 700, 100);
-	var figure = [[self alloc] initWithFrame: frame drawing: aDrawing];
+	var figure = [[self new] initWithFrame: [self defaultFrame] drawing: aDrawing];
 	return figure;
 }
 
@@ -70,6 +74,10 @@
 	    [_tableView setDelegate: self];
 
 	    [self addSubview: scrollView];
+		[scrollView setAutoresizingMask: CPViewWidthSizable];
+
+		_selectable = true;
+		_moveable = true;
 	
 		return self;
 	}
@@ -152,11 +160,6 @@
 
 - (void) reloadData {
 	[_tableView reloadData];	
-}
-
-- (bool) isMoveable
-{ 
-	return true;
 }
 
 - (void)drawRect:(CGRect)rect on: (id)context

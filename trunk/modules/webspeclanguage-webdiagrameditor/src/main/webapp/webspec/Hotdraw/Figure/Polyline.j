@@ -46,8 +46,8 @@ var CachedNotificationCenter    = nil;
 
 - (Handle) addNewHandle: (int) anIndex
 {
-	var newHandle = [[Handle alloc] 
-		initWithTarget: self 
+	var newHandle = [Handle 
+		target: self 
 		getSelector: @selector(pointAt:) 
 		setSelector: @selector(pointAt:put:)
 		extraArgument: anIndex];
@@ -57,13 +57,14 @@ var CachedNotificationCenter    = nil;
 
 - (Handle) addCreateHandle: (int) anIndex
 {
-	var createHandle = [[Handle alloc] 
-		initWithTarget: self 
+	var createHandle = [Handle 
+		target: self 
 		getSelector: @selector(insertionPointAt:) 
 		setSelector: @selector(createPointAt:put:)
 		extraArgument: anIndex];
 		
 	[createHandle displayColor: [CPColor redColor]];
+	
 	return createHandle;
 }
 
@@ -126,8 +127,8 @@ var CachedNotificationCenter    = nil;
 	
 	var diagram = [self superview];
 	
-	[diagram addSubview: newCreateHandleBefore];
-	[diagram addSubview: newCreateHandleAfter];
+	[diagram addFigure: newCreateHandleBefore];
+	[diagram addFigure: newCreateHandleAfter];
 	
 	[self recomputeFrame];
 	//if (CPRectContainsPoint([self frame], aPoint)) {

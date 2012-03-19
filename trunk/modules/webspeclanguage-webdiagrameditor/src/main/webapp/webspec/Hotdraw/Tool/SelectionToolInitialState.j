@@ -15,21 +15,32 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation PanelContainerFigure : ContainerFigure 
+@implementation SelectionToolInitialState : ToolState
 {
 }
 
-- (id) init
++ (id) tool: (StateMachineTool) aTool
+{
+	return [[self new] initWithTool: aTool];
+}
+
+- (id) initWithTool: (StateMachineTool) aTool
 { 
-	[super init];
-	[self model: [PanelContainerModel new]];
-	_backgroundColor = [CPColor whiteColor];
-	_foregroundColor = [CPColor blueColor];
+	[super initWithTool: aTool];
+	[aTool clearSelection];
 	return self;
 }
 
-- (void) hideBorder
+- (void) mouseDown: (CPEvent) anEvent	 
 {
-	_foregroundColor = [CPColor whiteColor];
+	var point = [anEvent locationInWindow];
+	var figureUnderPoint = [[_tool drawing] figureAt: point];
+	figureUnderPoint = [_tool selectableFigure: figureUnderPoint];
+	//CPLog.debug(figureUnderPoint);
+
+	if (figureUnderPoint != nil) {
+		[_tool select: figureUnderPoint];
+		[self transitionTo: [SelectedState tool: _tool initialDragPoint: point]];
+	}
 }
 @end

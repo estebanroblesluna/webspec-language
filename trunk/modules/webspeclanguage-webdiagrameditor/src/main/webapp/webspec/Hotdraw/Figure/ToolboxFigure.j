@@ -25,7 +25,7 @@
 
 + (ToolboxFigure) initializeWith: (Drawing) aDrawing at: (CPPoint) aPoint
 {
-	var figure = [[self alloc] initializeWith: aDrawing at: aPoint];
+	var figure = [[self new] initializeWith: aDrawing at: aPoint];
 	return figure;
 }
 
@@ -37,6 +37,8 @@
 		_drawing = aDrawing;
 		_firstColumn = true;
 		_currentY = 15;
+		_selectable = true;
+		_moveable = true;
 		_buttonsMapping = [CPDictionary dictionary];
 		[self addDefaultTools];
 		return self;
@@ -45,9 +47,9 @@
 
 - (void) addDefaultTools
 {
-	[self addTool: [[SelectionTool alloc] initWithDrawing: _drawing] withTitle: @"Selection" image: @""];
-	[self addTool: [[CreateImageTool alloc] initWithDrawing: _drawing] withTitle: @"Image" image: @""];
-	[self addTool: [[CreateLabelTool alloc] initWithDrawing: _drawing] withTitle: @"Label" image: @""];
+	[self addTool: [SelectionTool drawing: _drawing] withTitle: @"Selection" image: @""];
+	[self addTool: [CreateImageTool drawing: _drawing] withTitle: @"Image" image: @""];
+	[self addTool: [CreateLabelTool drawing: _drawing] withTitle: @"Label" image: @""];
 }
 
 - (void) addSeparator
@@ -55,7 +57,6 @@
 	if (!_firstColumn) {
 		_currentY = _currentY + 25;
 	}
-	//_currentY = _currentY + 3;
 	_firstColumn = true;
 }
 
@@ -76,7 +77,7 @@
 	var icon = [[CPImage alloc]
 	            initWithContentsOfFile: url];
 	[button setImage: icon];
-	[button setButtonType: CPToggleButton];
+	[button setButtonType: CPOnOffButton];
 	[button setBordered: YES];
 	[button setBezelStyle: CPRegularSquareBezelStyle];
 	[button setFrameSize: CGSizeMake(buttonWidth, buttonHeight)];
@@ -103,19 +104,17 @@
 	[_drawing tool: tool];
 }
 
-- (void)drawRect:(CGRect)rect on: (id)context
+- (void) drawRect:(CGRect)rect on: (id)context
 {
     CGContextSetFillColor(context, [CPColor lightGrayColor]); 
     CGContextFillRect(context, [self bounds]); 
 }
 
-- (bool) isSelectable
-{ 
-	return true;
-}
-
-- (bool) isMoveable
-{ 
-	return true;
+- (void) sizeToFit
+{
+	var frame = [GeometryUtils computeFrameForViews: [self subviews]];
+	frame.origin.y = frame.origin.y - 15;
+	frame.size.height = frame.size.height + 15;
+	[self setFrame: frame];
 }
 @end

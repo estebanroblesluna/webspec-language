@@ -21,6 +21,7 @@
 
 - (id) init
 { 
+	[super init];
 	[self model: [TextFieldModel new]];
 	return self;
 }

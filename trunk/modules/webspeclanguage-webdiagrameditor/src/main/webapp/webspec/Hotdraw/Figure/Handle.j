@@ -24,20 +24,27 @@
 	CPColor _displayColor;
 } 
 
-- (id)initWithTarget: (id) aTargetFigure selector: (CPString) aStringSelector
++ (id) target: (id) aTargetFigure selector: (CPString) aStringSelector
 {
-	 return [self initWithTarget: aTargetFigure selector: aStringSelector extraArgument: nil]
+	 return [self target: aTargetFigure selector: aStringSelector extraArgument: nil];
 }
 
-- (id)initWithTarget: (id) aTargetFigure selector: (CPString) aStringSelector extraArgument: (id) extraArgument
++ (id) target: (id) aTargetFigure selector: (CPString) aStringSelector extraArgument: (id) extraArgument
 { 
 	var getSelector = CPSelectorFromString(aStringSelector);
 	var setSelector = CPSelectorFromString([aStringSelector stringByAppendingString: @":"]);
-	return [self initWithTarget: aTargetFigure getSelector: getSelector setSelector: setSelector extraArgument: extraArgument];
+	return [self target: aTargetFigure getSelector: getSelector setSelector: setSelector extraArgument: extraArgument];
 }
 
-- (id)initWithTarget: (id) aTargetFigure getSelector: (SEL) getSelector setSelector: (SEL) setSelector extraArgument: (id) extraArgument
++ (id) target: (id) aTargetFigure getSelector: (SEL) getSelector setSelector: (SEL) setSelector extraArgument: (id) extraArgument
+{
+	return [[self alloc] initWithTarget: aTargetFigure getSelector: getSelector setSelector: setSelector extraArgument: extraArgument];
+}
+
+- (id) initWithTarget: (id) aTargetFigure getSelector: (SEL) getSelector setSelector: (SEL) setSelector extraArgument: (id) extraArgument
 { 
+	[super init];
+	
 	_targetFigure = aTargetFigure;
 	_getSelector = getSelector;
 	_setSelector = setSelector;
@@ -51,7 +58,8 @@
 		object: _targetFigure];
 	
 	var point = [self getPoint];
-	//CPLog.debug(point);
+	//CPLog.debug(point.x);
+	//CPLog.debug(point.y);
 	self = [super initWithFrame: CGRectMake(point.x - 4, point.y - 4, 8, 8)];
 	//CPLog.debug(self);
 	

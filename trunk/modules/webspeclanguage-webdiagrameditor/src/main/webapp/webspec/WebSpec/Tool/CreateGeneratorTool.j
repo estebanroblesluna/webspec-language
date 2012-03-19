@@ -36,7 +36,7 @@
 {
 	var generatorFigure = [_figureClass newAt: aPoint];
 	[generatorFigure checkModelFeature: @"Name"];
-	[aDrawing addSubview: generatorFigure];
+	[aDrawing addFigure: generatorFigure];
 	
 	[generatorFigure switchToEditMode];
 	[self activateSelectionTool];

@@ -26,6 +26,7 @@
 
 - (id) init
 { 
+	[super init];
 	[self model: [RandomStringModel new]];
 	return self;
 }

@@ -21,14 +21,6 @@
 	CPPoint _point;	
 }
 
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	self = [super initWithDrawing: aDrawing];
-	if (self) {
-		return self;
-	}
-}
-
 - (void) createFigureAt: (id) aPoint on: (id) aDrawing
 {
 	_editableLabel = [CPCancelableTextField 
@@ -49,7 +41,7 @@
 		name: CPControlTextDidEndEditingNotification 
 		object: _editableLabel];
 		
-	[aDrawing addSubview: _editableLabel];
+	[aDrawing addFigure: _editableLabel];
 	[[aDrawing window] makeFirstResponder: _editableLabel];
 }
 
@@ -71,7 +63,7 @@
 {
 	var url = [_editableLabel objectValue];
 	var image = [ImageFigure initializeWithImage: url x: _point.x y: _point.y offset: 3];
-	[[self drawing] addSubview: image];
+	[[self drawing] addFigure: image];
 	[self cancelEditing];
 	[self activateSelectionTool];
 }

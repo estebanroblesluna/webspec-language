@@ -15,53 +15,64 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
+@implementation ToolState : CPObject
 {
-	Drawing _drawing;
+	StateMachineTool _tool;
 }
 
-+ (id) drawing: (Drawing) aDrawing
++ (id) tool: (StateMachineTool) aTool
 {
-	return [[self new] initWithDrawing: aDrawing];
+	return [[self new] initWithTool: aTool];
 }
 
-- (id) initWithDrawing: (Drawing) aDrawing 
+- (id) initWithTool: (StateMachineTool) aTool
 { 
-	_drawing = aDrawing;
-	return self;
+	self = [super init];
+	if (self) {
+		_tool = aTool;
+		return self;
+	}
 }
 
-- (Drawing) drawing	 
+- (void) transitionTo: (ToolState) aNewState
 {
-	return _drawing;
+	[_tool setState: aNewState];
 }
 
 - (void) activateSelectionTool
 {
-	[_drawing tool: [SelectionTool drawing: _drawing ]];
+	[_tool activateSelectionTool];
 }
 
-- (void) release
+- (void) transitionToInitialState
 {
+	[self transitionTo: [_tool initialState]];
 }
 
 - (void) mouseDown:(CPEvent) anEvent	 
 {
+	[self transitionToInitialState];
 }
 
 - (void) mouseDragged:(CPEvent) anEvent
 {
+	[self transitionToInitialState];
 }
 
 - (void) mouseUp:(CPEvent) anEvent
 {
+	[self transitionToInitialState];
 }
 
 - (void) keyUp: (CPEvent) anEvent
 {
+	CPLog.debug(anEvent);
+	[self transitionToInitialState];
 }
 
 - (void) keyDown: (CPEvent) anEvent
 {
+	CPLog.debug(anEvent);
+	[self transitionToInitialState];
 }
 @end

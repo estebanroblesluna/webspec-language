@@ -22,7 +22,7 @@
 - (void) createFigureAt: (id) aPoint on: (id) aDrawing
 {
 	var interaction = [InteractionFigure newAt: aPoint];
-	[aDrawing addSubview: interaction];
+	[aDrawing addFigure: interaction];
 	
 	[interaction switchToEditMode];
 	[self activateSelectionTool];

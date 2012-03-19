@@ -23,12 +23,16 @@
 @import "Util/GeometryUtils.j"
 @import "Util/HandleMagnet.j"
 
-@import "Core/Drawing.j"
+@import "Figure/Figure.j"
+@import "Figure/CompositeFigure.j"
 
 @import "Model/Model.j"
 @import "Model/Property.j"
 
-@import "Figure/Figure.j"
+@import "Core/Grid.j"
+@import "Core/Drawing.j"
+@import "Core/DrawingModel.j"
+
 @import "Figure/Handle.j"
 @import "Figure/CompositeFigure.j"
 @import "Figure/Polyline.j"
@@ -40,7 +44,15 @@
 @import "Figure/IconLabelFigure.j"
 @import "Figure/RectangleFigure.j"
 
+@import "Tool/ToolState.j"
+@import "Tool/SelectionToolInitialState.j"
+@import "Tool/SelectedState.j"
+@import "Tool/MoveFiguresState.j"
+@import "Tool/MoveHandleState.j"
+
+
 @import "Tool/Tool.j"
+@import "Tool/StateMachineTool.j"
 @import "Tool/SelectionTool.j"
 @import "Tool/AbstractCreateFigureTool.j"
 @import "Tool/CreateImageTool.j"

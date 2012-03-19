@@ -21,6 +21,7 @@
 
 - (id) init
 { 
+	[super init];
 	[self model: [ListBoxModel new]];
 	return self;
 }

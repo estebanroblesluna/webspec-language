@@ -23,7 +23,7 @@
 {
 	[super init];
 	
-	[self addProperty: @"Name" value: @""];
+	[self addProperty: @"Name" value: @"widget"];
 	[self addProperty: @"Location" value: @""];
 	
 	return self;
