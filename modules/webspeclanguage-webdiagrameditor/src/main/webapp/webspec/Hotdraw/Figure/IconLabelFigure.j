@@ -36,8 +36,8 @@
 	if (self) {
 		_iconUrl = iconUrl;
 		
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"middleLeft"]];
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"middleRight"]];
+		[handles addObject: [Handle target: self selector: @"middleLeft"]];
+		[handles addObject: [Handle target: self selector: @"middleRight"]];
 
 		//DRAW WIDGET NAME
 		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
@@ -45,7 +45,6 @@
 		[label setTextColor:[CPColor blackColor]];
 		[label sizeToFit];
 		[label setFrameOrigin: CGPointMake(22, 4)];
-		//[label setFrameSize: CGSizeMake(100, 16)];
 		[self addSubview: label];
 		_label = label;
 

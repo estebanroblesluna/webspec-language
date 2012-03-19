@@ -15,21 +15,20 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation PanelContainerFigure : ContainerFigure 
+@implementation DrawingModel : Model
 {
 }
 
 - (id) init
-{ 
-	[super init];
-	[self model: [PanelContainerModel new]];
-	_backgroundColor = [CPColor whiteColor];
-	_foregroundColor = [CPColor blueColor];
-	return self;
-}
-
-- (void) hideBorder
 {
-	_foregroundColor = [CPColor whiteColor];
+	[super init];
+	
+	[self addProperty: @"Name" value: @""];
+	[self addProperty: @"Show grid?" value: YES];
+	[self addProperty: @"Grid size" value: 20];
+	[self addProperty: @"Snap to grid?" value: NO];
+	[self addProperty: @"Floating toolboxes?" value: YES];
+	
+	return self;
 }
 @end

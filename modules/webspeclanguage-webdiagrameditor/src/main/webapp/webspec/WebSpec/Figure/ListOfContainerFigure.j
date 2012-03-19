@@ -19,14 +19,12 @@
 {
 }
 
-- (id) initWithFrame: (CGRect) aFrame
+- (id) init
 { 
-	self = [super initWithFrame:aFrame];
-	if (self) {
-		[self model: [ListOfContainerModel new]];
-		_backgroundColor = [CPColor whiteColor];
-		_foregroundColor = [CPColor redColor];
-		return self;
-	}
+	[super init];
+	[self model: [ListOfContainerModel new]];
+	_backgroundColor = [CPColor whiteColor];
+	_foregroundColor = [CPColor redColor];
+	return self;
 }
 @end

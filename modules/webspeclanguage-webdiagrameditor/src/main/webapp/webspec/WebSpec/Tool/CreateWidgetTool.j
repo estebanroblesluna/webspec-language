@@ -37,15 +37,12 @@
 	var figure = [aDrawing figureAt: aPoint];
 	var widgetContainer = [aDrawing widgetContainerOf: figure];
 	if (widgetContainer != nil) {
+		[self activateSelectionTool];
 		var widgetContainerOrigin = [widgetContainer globalToLocal: aPoint];
-		//var widgetContainerOrigin = [widgetContainer frameOrigin];
-		//TODO corregir translacion
-		//aPoint = CGPointMake(aPoint.x - widgetContainerOrigin.x - 4, aPoint.y - widgetContainerOrigin.y - 32);
 		var widget = [_figureClass newAt: widgetContainerOrigin];
 		[widget checkModelFeature: @"Name"];
 		[widgetContainer addWidget: widget];
 		[widget switchToEditMode];
-		[self activateSelectionTool];
 	}
 }
 @end

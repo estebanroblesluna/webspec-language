@@ -32,43 +32,36 @@
 	bool _selected;
 }
 
-- (void) globalToLocal: (CPPoint) aPoint
++ (Figure) frame: (CGRect) aFrame
 {
-	var current = self;
-	var offset = CGPointMake(0, 0);
-	while (current != nil && ![current isKindOfClass:[Drawing class]]) {
-		var frameOrigin = [current frameOrigin];
-		offset = CGPointMake(offset.x - frameOrigin.x, offset.y - frameOrigin.y);
-		current = [current superview];
-	}
-	
-	var result = CGPointMake(aPoint.x + offset.x, aPoint.y + offset.y);
-	return result;
+	var figure = [self new];
+	[figure initWithFrame: aFrame];
+	return figure;
 }
 
-- (id) initWithFrame: (CGRect) aFrame 
+- (id) init
 { 
-	self = [super initWithFrame:aFrame];
-	if (self) {
-		handles = [CPMutableArray array];
-		_inConnections = [CPMutableArray array];
-		_outConnections = [CPMutableArray array];
+	[super init];
+	
+	handles = [CPMutableArray array];
+	_inConnections = [CPMutableArray array];
+	_outConnections = [CPMutableArray array];
 
-		_backgroundColor = [CPColor blackColor];
-		_foregroundColor = _backgroundColor;
+	_backgroundColor = [CPColor blackColor];
+	_foregroundColor = _backgroundColor;
 
-		_selectable = true;
-		_moveable = true;
-		_editable = true;
+	_selectable = true;
+	_moveable = true;
+	_editable = true;
 		
-		_selected = false;
+	_selected = false;
 		
-		[self setPostsFrameChangedNotifications: YES]; 
-		return self;
-	}
+	[self setPostsFrameChangedNotifications: YES]; 
+	
+	return self;
 } 
 
-- (void) figureAt: (CPPoint) aPoint
+- (id) figureAt: (CPPoint) aPoint
 {
 	//check our figures if any of them return a not nil result
 	var figures = [self subviews];
@@ -78,7 +71,7 @@
 	var translatedPoint = CGPointMake(aPoint.x - origin.x, aPoint.y - origin.y);
 	
 	//check the sub figures
-	for (var i = 0; i < [figures count]; i++) { 
+	for (var i = [figures count] - 1; i >= 0 ; i--) { 
 	    var figure = [figures objectAtIndex: i];
 		var result;
 		if ([figure respondsToSelector: @selector(figureAt:)]) {
@@ -94,7 +87,7 @@
 			return result;
 		}
 	}
-	
+
 	return [self primFigureAt: aPoint];
 }
 
@@ -108,6 +101,20 @@
 	}
 }
 
+- (void) globalToLocal: (CPPoint) aPoint
+{
+	var current = self;
+	var offset = CGPointMake(0, 0);
+	while (current != nil && ![current isKindOfClass:[Drawing class]]) {
+		var frameOrigin = [current frameOrigin];
+		offset = CGPointMake(offset.x - frameOrigin.x, offset.y - frameOrigin.y);
+		current = [current superview];
+	}
+	
+	var result = CGPointMake(aPoint.x + offset.x, aPoint.y + offset.y);
+	return result;
+}
+
 - (void) addInConnection: (id) aConnection
 {
 	[_inConnections addObject: aConnection];
@@ -118,9 +125,11 @@
 	[_outConnections addObject: aConnection];
 }
 
-- (void) translatedBy: (CGPoint) aPoint
+- (void) moveTo: (CGPoint) aPoint
 {
-	[self setFrameOrigin: aPoint];
+	if (_moveable) {
+		[self setFrameOrigin: aPoint];
+	}
 }
 
 - (id) handleAt: (int) anIndex
@@ -189,7 +198,8 @@
 	var container = [self superview];
 	for (var i = 0; i < [handles count]; i++) { 
 	    var handle = [handles objectAtIndex:i];
-		[container addSubview: handle];
+		//CPLog.info(handle);
+		[container addFigure: handle];
 		//CPLog.info(handle);
 	}
 }
@@ -215,8 +225,8 @@
 
 - (void)drawRect:(CGRect)rect 
 { 
-        var context = [[CPGraphicsContext currentContext] graphicsPort];
-		[self drawRect: rect on: context];
+    var context = [[CPGraphicsContext currentContext] graphicsPort];
+	[self drawRect: rect on: context];
 }
 
 - (void)drawRect:(CGRect)rect on: (id)context

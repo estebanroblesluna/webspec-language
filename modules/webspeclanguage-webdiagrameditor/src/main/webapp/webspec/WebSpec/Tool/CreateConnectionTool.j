@@ -47,7 +47,7 @@
 
 		var connection = [[Connection alloc] initWithPoints: points];
 		[connection recomputeFrame];
-		[_drawing addSubview: connection];
+		[_drawing addFigure: connection];
 
 		_connection = connection;
 		_initialInteraction = interaction;
@@ -78,8 +78,8 @@
 			[labelFigure model: model];
 			[labelFigure checkModelFeature: @"Name"];
 			
-			[_drawing addSubview: connectionFigure];
-			[_drawing addSubview: labelFigure];
+			[_drawing addFigure: connectionFigure];
+			[_drawing addFigure: labelFigure];
 
 			[labelFigure switchToEditMode];
 		}

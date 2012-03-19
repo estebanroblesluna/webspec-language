@@ -43,29 +43,28 @@
 
 - (void)initializeWebSpecDrawing:(id) contentView window: (id) theWindow
 {
-	var drawing = [[WebSpecDrawing alloc] initWithFrame: [contentView bounds]];
-	[drawing showGrid: YES];
-	[drawing gridSize: 20];
-	[drawing snapToGrid: YES];
+	var drawing = [WebSpecDrawing frame: [contentView bounds]];
 
-	var toolBox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(20,20)];
-	[drawing addSubview: toolBox];
+	var toolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(20,20)];
+	[drawing toolbox: toolbox];
 	
 	var properties = [PropertiesFigure newAt: CGPointMake(20,400) drawing: drawing];
-	[drawing addSubview: properties];
+	[drawing properties: properties];
+	
+	[drawing setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
 
 	[contentView addSubview: drawing];
 }
 
 - (void)initializeGenericDrawing:(id) contentView
 {
-	var drawing = [[Drawing alloc] initWithFrame: [contentView bounds]];
+	var drawing = [Drawing frame: [contentView bounds]];
 	[drawing showGrid: YES];
 	[drawing gridSize: 20];
 	[drawing snapToGrid: YES];
 	
 	var toolBox = [ToolboxFigure initializeWith: drawing at: CGPointMake(10,10)];
-	[drawing addSubview: toolBox];
+	[drawing addFigure: toolBox];
 
 	[contentView addSubview: drawing];
 }

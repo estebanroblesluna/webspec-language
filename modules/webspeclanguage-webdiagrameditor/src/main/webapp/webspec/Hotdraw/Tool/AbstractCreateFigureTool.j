@@ -19,14 +19,6 @@
 {
 }
 
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	self = [super initWithDrawing: aDrawing];
-	if (self) {
-		return self;
-	}
-}
-
 - (void) mouseDown: (CPEvent) anEvent	 
 {
 	var point = [anEvent locationInWindow];

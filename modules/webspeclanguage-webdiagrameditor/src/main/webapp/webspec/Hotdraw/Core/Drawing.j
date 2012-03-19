@@ -17,51 +17,66 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Drawing : CPView 
+@implementation Drawing : CompositeFigure 
 {
 	Tool _currentTool;
-	int _gridSize;
-	bool _showGrid;
-	CPColor _gridColor;
-	bool _snapToGrid;
 	id _selectedFigure;
+	Figure _backgroundLayer;
+	ToolboxFigure _toolbox;
+	PropertiesFigure _properties;
 } 
 
-- (id) initWithFrame: (CGRect) aFrame 
-{ 
-	self = [super initWithFrame:aFrame];
-	if (self) {
-		_currentTool = [[SelectionTool alloc] initWithDrawing: self];
-		_gridSize = 20;
-		_selectedFigure = nil;
-		_showGrid = false;
-		_snapToGrid = false;
-		_gridColor = [CPColor colorWithHexString: @"F7F0F3"];
-		return self;
-	}
-} 
-
-- (void) drawRect: (CGRect) rect 
+- (id) init
 {
-    var context = [[CPGraphicsContext currentContext] graphicsPort];
-	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FEFEFE"]);
-	CGContextFillRect(context, rect);
+	[super init];
+
+	_currentTool = [SelectionTool drawing: self];
+	_selectedFigure = nil;
+	_selectable = false;
+	_moveable = false;
+	_editable = false;
+	[self model: [DrawingModel new]];
 	
-	if (_showGrid) {
-		CGContextSetLineWidth(context, 0.25);
-		for (var p = 0; p <= 3000 ; p = p + _gridSize) {
-			[self drawGridLineX: p y: 0 x: p y: 3000 context: context];
-			[self drawGridLineX: 0 y: p x: 3000 y: p context: context];
-		} 
-	}
+	return self;
 }
 
-- (void)drawGridLineX: (int) x1 y: (int) y1 x: (int) x2 y: (int) y2 context: context
+- (id) initWithFrame: (CGRect) aFrame
 {
-	CGContextMoveToPoint(context, x1, y1);
-	CGContextAddLineToPoint(context, x2, y2);
-	CGContextSetStrokeColor(context, _gridColor);
-    CGContextStrokePath(context);
+	[super initWithFrame: aFrame];
+	_backgroundLayer = [CompositeFigure frame: aFrame];
+	[_backgroundLayer selectable: NO];
+	[_backgroundLayer moveable: NO];
+	[_backgroundLayer setAutoresizingMask: CPViewHeightSizable | CPViewWidthSizable];
+	[self addFigure: _backgroundLayer];
+	[self computeBackgroundLayer];
+	return self;
+}
+
+- (void) toolbox: (ToolboxFigure) aToolbox
+{
+	_toolbox = aToolbox;
+	[self addFigure: _toolbox];
+}
+
+- (void) properties: (PropertiesFigure) aProperties
+{
+	_properties = aProperties;
+	[self addFigure: _properties];
+}
+
+- (void) computeBackgroundLayer
+{
+	[_backgroundLayer clearFigures];
+	
+	var frame = CGRectMake(0, 0, 1600, 1600);
+	var grid = [Grid frame: frame showGrid: [self showGrid] gridSize: [self gridSize]];
+	[_backgroundLayer addFigure: grid];
+}
+
+- (void) select
+{
+	[super select];
+	[[self window] makeFirstResponder: self];
 }
 
 - (Drawing) drawing
@@ -69,36 +84,24 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 	return self;
 }
 
-- (void) clearFigures
+- (bool) showGrid
 {
-	[self setSubviews: [CPMutableArray array]];
+	return [[[self model] propertyValue: @"Show grid?"] boolValue];
 }
 
-- (void) showGrid:(bool)aBoolean 
+- (bool) snapToGrid
 {
-	_showGrid = aBoolean;
-	[self setNeedsDisplay: YES];
+	return [[[self model] propertyValue: @"Snap to grid?"] boolValue];
 }
 
-- (void) snapToGrid:(bool)aBoolean 
+- (bool) floatingToolboxes
 {
-	_snapToGrid = aBoolean;
+	return [[[self model] propertyValue: @"Floating toolboxes?"] boolValue];
 }
 
--(bool)snapToGrid
+- (int) gridSize
 {
-	return _snapToGrid;
-}
-
-- (void)gridSize
-{
-	return _gridSize;
-}
-
-- (void)gridSize:(int)gridSize 
-{
-	_gridSize = gridSize;
-	[self setNeedsDisplay: YES];
+	return [[[self model] propertyValue: @"Grid size"] intValue];
 }
 
 - (void) mouseDown:(CPEvent) anEvent	 
@@ -116,34 +119,21 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 	[_currentTool mouseUp: anEvent];
 }
 
-- (BOOL)acceptsFirstResponder 
+- (BOOL) acceptsFirstResponder 
 {
     return YES;
 }
 
 - (void) keyUp: (CPEvent) anEvent
 {
+	//CPLog.debug(anEvent);
 	[_currentTool keyUp: anEvent];
 }
 
 - (void) keyDown: (CPEvent) anEvent
 {
+	//CPLog.debug(anEvent);
 	[_currentTool keyDown: anEvent];
-}
-
-- (id) figureAt:(CPPoint)aPoint
-{
-	var subviews = [self subviews];
-	
-	for (var i = [subviews count] -1; i >= 0 ; i--) { 
-	    var figure = [subviews objectAtIndex:i];
-		var containedFigure = [figure figureAt: aPoint];
-		if (containedFigure != nil) {
-			return containedFigure;
-		}
-	}
-	
-	return nil;
 }
 
 - (void) unselectAll
@@ -157,6 +147,7 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 
 - (void) tool: (Tool) aTool
 {
+	[_currentTool release];
 	_currentTool = aTool;
 }
 
@@ -173,4 +164,46 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 		object: self];
 }
 
+- (void) modelChanged
+{
+	[self computeBackgroundLayer];
+	
+	var floatingToolboxes = [self floatingToolboxes];
+	var drawingFrame = [self frame];
+
+	if (_toolbox != nil) {
+		[_toolbox selectable: floatingToolboxes];
+		[_toolbox moveable: floatingToolboxes];
+
+		if (!floatingToolboxes) {
+			var frame = [_toolbox frame];
+			var newFrame = CGRectMake(0, 0, frame.size.width, drawingFrame.size.height);
+			[_toolbox setFrame: newFrame];
+			[_toolbox setAutoresizingMask: CPViewHeightSizable];
+		} else {
+			[_toolbox sizeToFit];
+		}
+	}
+
+	if (_properties != nil) {
+		[_properties selectable: floatingToolboxes];
+		[_properties moveable: floatingToolboxes];
+		
+		if (!floatingToolboxes) {
+			var leftOffset;
+			if (_toolbox != nil) {
+				leftOffset = [_toolbox frame].size.width;
+			} else {
+				leftOffset = 0;
+			}
+			
+			var frame = [_properties frame];
+			var newFrame = CGRectMake(leftOffset, drawingFrame.size.height - frame.size.height, drawingFrame.size.width, frame.size.height);
+			[_properties setFrame: newFrame];
+			[_properties setAutoresizingMask: CPViewMinYMargin | CPViewWidthSizable];
+		} else {
+			[_properties setFrame: [PropertiesFigure defaultFrame]];
+		}
+	}
+}
 @end

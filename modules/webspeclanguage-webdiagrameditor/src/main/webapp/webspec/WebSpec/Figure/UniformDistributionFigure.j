@@ -26,6 +26,7 @@
 
 - (id) init
 { 
+	[super init];
 	[self model: [UniformDistributionModel new]];
 	return self;
 }

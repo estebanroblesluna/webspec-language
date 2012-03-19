@@ -15,74 +15,53 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation SelectionTool : Tool
+@implementation SelectionTool : StateMachineTool
 {
 	CPMutableArray _selectedFigures;
-	CPMutableArray _moveableFigures;
-	CPMutableArray _pushedMoveableFigures;
 	CPDictionary _initialPositions;
 	CGPoint _initialDragPoint;
 }
 
-- (id) initWithDrawing: (Drawing) aDrawing 
+- (id) init
 { 
-	self = [super initWithDrawing: aDrawing];
-	if (self) {
-		_selectedFigures = [CPMutableArray array];
-		_moveableFigures = [CPMutableArray array];
-		_pushedMoveableFigures = [CPMutableArray array];
-		_initialPositions = [CPDictionary dictionary];
-		return self;
-	}
+	[super init];
+
+	_selectedFigures = [CPMutableArray array];
+	_initialPositions = [CPDictionary dictionary];
+	//[self setState: [SelectionToolInitialState tool: self]];
+
+	return self;
 }
 
-- (void) mouseDown: (CPEvent) anEvent	 
+- (id) initialState
 {
-	var point = [anEvent locationInWindow];
-	var figureUnderPoint = [_drawing figureAt: point];
-	
-	if (figureUnderPoint == nil) {
-		//if no element clear selection
-		[self clearSelection];
-	} else {
-		//if it is a handle and only 1 figure selected then allow moving the handle only
-		if ([figureUnderPoint isHandle] && [_selectedFigures count] == 1) {
-			[_pushedMoveableFigures addObjectsFromArray: _moveableFigures];
-			[_moveableFigures removeAllObjects];
-			[_moveableFigures addObject: figureUnderPoint];
-			[_initialPositions setObject: [figureUnderPoint frameOrigin] forKey: figureUnderPoint];
-		} else {
-			//check parent figures till you find one selectable
-			while (figureUnderPoint != _drawing && ![figureUnderPoint isSelectable]) {
-				figureUnderPoint = [figureUnderPoint superview];
-			}
-			
-			if ([figureUnderPoint isSelectable] && !([_selectedFigures containsObject: figureUnderPoint])) {
-				//if the element is selectable select it and add in case of ctrl
-				[figureUnderPoint select];
+	return [SelectionToolInitialState tool: self];
+}
 
-				if (([anEvent modifierFlags] & (CPControlKeyMask | CPCommandKeyMask)) == 0) {
-					//clear the selection
-					[self clearSelection];
-				}
+- (CPMutableArray) selectedFigures
+{
+	return _selectedFigures;
+}
 
-				[_selectedFigures addObject: figureUnderPoint];
+- (void) select: (Figure) aFigure
+{
+	[_selectedFigures addObject: aFigure];
+	[aFigure select];
+	[_drawing selectedFigure: aFigure];
+	[_initialPositions setObject: [aFigure frameOrigin] forKey: aFigure];
+}
 
-				if ([_selectedFigures count] == 1) {
-					[_drawing selectedFigure: figureUnderPoint];	
-				} else {
-					[_drawing selectedFigure: nil];
-				}
-			}
+- (CPPoint) initialPositionOf: (Figure) aFigure
+{
+	return [_initialPositions objectForKey: aFigure];
+}
 
-			if ([figureUnderPoint isMoveable] && !([_moveableFigures containsObject: figureUnderPoint])) {
-				[_moveableFigures addObject: figureUnderPoint];
-				[_initialPositions setObject: [figureUnderPoint frameOrigin] forKey: figureUnderPoint];
-			}			
-		}
+- (void) updateInitialPoints
+{
+	for (var i = 0; i < [_selectedFigures count]; i++) { 
+	    var selectedFigure = [_selectedFigures objectAtIndex:i];
+		[_initialPositions setObject: [selectedFigure frameOrigin] forKey: selectedFigure];
 	}
-	
-	_initialDragPoint = point;
 }
 
 - (void) clearSelection
@@ -92,55 +71,33 @@
 		[selectedFigure unselect];
 	}
 	[_selectedFigures removeAllObjects];
-	[_moveableFigures removeAllObjects];
 	[_initialPositions removeAllObjects];
 	[_drawing selectedFigure: nil];
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (void) release
 {
-	if ([_moveableFigures count] > 0) {
-    	var newLocation = [anEvent locationInWindow];
-		var dragXOffset = newLocation.x - _initialDragPoint.x;
-		var dragYOffset = newLocation.y - _initialDragPoint.y;
-		
-		//move each moveable figure
-		for (var i = 0; i < [_moveableFigures count]; i++) { 
-		    var moveableFigure = [_moveableFigures objectAtIndex:i];
-			var initialFigurePosition = [_initialPositions objectForKey: moveableFigure];
-
-			var newOrigin = CGPointMake(initialFigurePosition.x + dragXOffset, initialFigurePosition.y + dragYOffset);
-			if ([_drawing snapToGrid]) {
-				var gridSize = [_drawing gridSize];
-				newOrigin = CGPointMake(ROUND(newOrigin.x / gridSize) * gridSize, ROUND(newOrigin.y / gridSize) * gridSize);
-			}
-	    	[moveableFigure translatedBy: newOrigin];
-		}
-	}
+	[self clearSelection];
 }
 
-- (void) mouseUp:(CPEvent) anEvent
+- (Figure) selectableFigure: (Figure) aFigure
 {
-	_initialDragPoint = nil;
-	
-	//if moving a handle
-	if ([_moveableFigures count] == 1 && [[_moveableFigures objectAtIndex: 0] isHandle]) {
-		var handle = [_moveableFigures objectAtIndex: 0];
-		[_moveableFigures removeAllObjects];
-		[_moveableFigures addObjectsFromArray: _pushedMoveableFigures];
-		[_pushedMoveableFigures removeAllObjects];
-		[_initialPositions removeObjectForKey: handle];
+	while (aFigure != _drawing && ![aFigure isSelectable]) {
+		aFigure = [aFigure superview];
 	}
 	
-	//update the initial points
-	for (var i = 0; i < [_moveableFigures count]; i++) { 
-	    var moveableFigure = [_moveableFigures objectAtIndex:i];
-		[_initialPositions setObject: [moveableFigure frameOrigin] forKey: moveableFigure];
-	}
+	return aFigure;
+}
+
+- (void) keyDown: (CPEvent) anEvent
+{
 }
 
 - (void) keyUp: (CPEvent) anEvent
 {
+	//CPLog.debug("Selection tool");
+	//CPLog.debug([_selectedFigures count]);
+	
 	if (([anEvent keyCode] == CPKeyCodes.F2) && ([_selectedFigures count] == 1)) {
 		var currentFigure = [_selectedFigures objectAtIndex: 0];
 		if ([currentFigure isEditable]) {

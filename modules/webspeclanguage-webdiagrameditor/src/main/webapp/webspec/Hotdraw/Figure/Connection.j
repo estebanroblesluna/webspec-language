@@ -28,7 +28,7 @@
 
 + (Connection) source: (Figure) aSourceFigure target: (Figure) aTargetFigure
 {
-	return [[self alloc] initWithSource: aSourceFigure target: aTargetFigure];
+	return [[self new] initWithSource: aSourceFigure target: aTargetFigure];
 }
 
 - (id) initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure

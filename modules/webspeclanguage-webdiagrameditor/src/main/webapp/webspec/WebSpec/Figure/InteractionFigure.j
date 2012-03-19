@@ -31,7 +31,7 @@
 + (Interaction) newAt: (CGPoint) aPoint name: (String) aName
 {
 	var frame = CGRectMake(aPoint.x, aPoint.y, 150, 100);
-	var interaction = [[self alloc] initWithFrame: frame];
+	var interaction = [[self new] initWithFrame: frame];
 	[interaction name: aName];
 	return interaction;
 }
@@ -42,16 +42,16 @@
 	if (self) {
 		[self model: [InteractionModel new]];
 
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topLeft"]];
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topMiddle"]];
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"topRight"]];
+		[handles addObject: [Handle target: self selector: @"topLeft"]];
+		[handles addObject: [Handle target: self selector: @"topMiddle"]];
+		[handles addObject: [Handle target: self selector: @"topRight"]];
 
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"middleLeft"]];
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"middleRight"]];
+		[handles addObject: [Handle target: self selector: @"middleLeft"]];
+		[handles addObject: [Handle target: self selector: @"middleRight"]];
 
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"bottomLeft"]];
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"bottomMiddle"]];
-		handles = [handles arrayByAddingObject: [[Handle alloc] initWithTarget: self selector: @"bottomRight"]];
+		[handles addObject: [Handle target: self selector: @"bottomLeft"]];
+		[handles addObject: [Handle target: self selector: @"bottomMiddle"]];
+		[handles addObject: [Handle target: self selector: @"bottomRight"]];
 		
 		_titleWidget = [IconLabelFigure newAt: CGPointMake(2, 2) iconUrl: @"Resources/Interaction.gif"];
 		[_titleWidget model: [self model]];
@@ -70,7 +70,6 @@
 		[self addSubview: _invariantFigure];
 		
 		//WIDGET CONTAINER
-		//_widgetContainer = [[CompositeFigure alloc] initWithFrame: ];
 		var widgetContainerFrame = CGRectMake(2, 28, [self frameSize].width - 4, [self frameSize].height - 31);
 		var widgetContainerOrigin = widgetContainerFrame.origin;
 		_widgetContainer = [PanelContainerFigure newAt: widgetContainerOrigin];
@@ -139,7 +138,7 @@
 
 - (void) addWidget:(Widget) aWidget
 {
-	[_widgetContainer addSubview: aWidget];
+	[_widgetContainer addFigure: aWidget];
 }
 
 - (void) switchToEditMode

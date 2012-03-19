@@ -31,16 +31,16 @@
 	self = [super initWithFrame:aFrame];
 	if (self) {
 		
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"topLeft"]];
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"topMiddle"]];
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"topRight"]];
+		[handles addObject: [Handle target: self selector: @"topLeft"]];
+		[handles addObject: [Handle target: self selector: @"topMiddle"]];
+		[handles addObject: [Handle target: self selector: @"topRight"]];
 
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"middleLeft"]];
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"middleRight"]];
+		[handles addObject: [Handle target: self selector: @"middleLeft"]];
+		[handles addObject: [Handle target: self selector: @"middleRight"]];
 
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"bottomLeft"]];
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"bottomMiddle"]];
-		[handles addObject: [[Handle alloc] initWithTarget: self selector: @"bottomRight"]];
+		[handles addObject: [Handle target: self selector: @"bottomLeft"]];
+		[handles addObject: [Handle target: self selector: @"bottomMiddle"]];
+		[handles addObject: [Handle target: self selector: @"bottomRight"]];
 
 		return self;
 	}

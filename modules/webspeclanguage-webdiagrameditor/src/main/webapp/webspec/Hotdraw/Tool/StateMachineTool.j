@@ -15,21 +15,51 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation PanelContainerFigure : ContainerFigure 
+@implementation StateMachineTool : Tool
 {
+	ToolState _state;
 }
 
 - (id) init
 { 
 	[super init];
-	[self model: [PanelContainerModel new]];
-	_backgroundColor = [CPColor whiteColor];
-	_foregroundColor = [CPColor blueColor];
+	[self setState: [self initialState]];
 	return self;
 }
 
-- (void) hideBorder
+- (id) initialState
 {
-	_foregroundColor = [CPColor whiteColor];
+	return nil;
+}
+
+- (void) setState: (ToolState) aNewState
+{
+	_state = aNewState;
+	//CPLog.debug(aNewState);
+}
+
+- (void) mouseDown:(CPEvent) anEvent	 
+{
+	[_state mouseDown: anEvent];
+}
+
+- (void) mouseDragged:(CPEvent) anEvent
+{
+	[_state mouseDragged: anEvent];
+}
+
+- (void) mouseUp:(CPEvent) anEvent
+{
+	[_state mouseUp: anEvent];
+}
+
+- (void) keyUp: (CPEvent) anEvent
+{
+	[_state keyUp: anEvent];
+}
+
+- (void) keyDown: (CPEvent) anEvent
+{
+	[_state keyDown: anEvent];
 }
 @end

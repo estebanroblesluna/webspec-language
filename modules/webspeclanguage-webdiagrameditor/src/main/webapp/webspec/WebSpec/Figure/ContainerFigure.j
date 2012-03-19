@@ -19,9 +19,13 @@
 {
 }
 
-- (void) addWidget:(Widget) aWidget
+- (void) addWidget: (Widget) aWidget
 {
 	[self addSubview: aWidget];
 }
 
+- (void) addFigure: (Widget) aWidget
+{
+	[self addWidget: aWidget];
+}
 @end
