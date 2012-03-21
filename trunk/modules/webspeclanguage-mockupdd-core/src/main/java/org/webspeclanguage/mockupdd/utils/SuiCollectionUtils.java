@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class SuiCollectionUtils {
 

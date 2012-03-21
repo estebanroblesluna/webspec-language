@@ -48,7 +48,7 @@ import org.webspeclanguage.mockupdd.utils.TagIndexer;
 
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class SuiSpecsInferenceState {
 

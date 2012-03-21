@@ -15,7 +15,7 @@ package org.webspeclanguage.mockupdd.utils;
 import java.util.List;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public interface MultiListMap<K, V> {
 

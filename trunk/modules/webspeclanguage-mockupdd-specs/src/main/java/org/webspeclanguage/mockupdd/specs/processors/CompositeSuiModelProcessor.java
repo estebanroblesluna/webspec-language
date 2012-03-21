@@ -18,7 +18,7 @@ import java.util.List;
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class CompositeSuiModelProcessor extends SuiModelProcessor {
 

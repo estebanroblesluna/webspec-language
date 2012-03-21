@@ -28,7 +28,7 @@ import org.webspeclanguage.mockupdd.utils.SuiCollectionUtils;
 import org.webspeclanguage.mockupdd.utils.SuiCollectionUtils.Indexer;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class NavigationSpecInferer extends SuiModelProcessor {
 

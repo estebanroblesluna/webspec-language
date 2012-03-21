@@ -16,7 +16,7 @@ import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public abstract class SuiModelProcessor {
 

@@ -36,7 +36,7 @@ import org.webspeclanguage.mockupdd.translator.processors.WidgetRegistering;
 
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class SuiTranslatorConfig {
 

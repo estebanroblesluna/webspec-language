@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class MultiArrayListHashMap<K, V> implements MultiListMap<K, V> {
 

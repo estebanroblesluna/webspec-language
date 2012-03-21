@@ -27,7 +27,7 @@ import org.webspeclanguage.mockupdd.sui.model.tags.Tag;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class TagIndexer {
 

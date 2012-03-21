@@ -13,7 +13,7 @@
 package org.webspeclanguage.mockupdd.sui.model.tags.content;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public interface TagParameterValueContentVisitor<T> {
 

@@ -26,7 +26,7 @@ import org.webspeclanguage.mockupdd.sui.model.tags.content.TagParameterValueCont
 import org.webspeclanguage.mockupdd.sui.model.tags.content.TagParameterValueContentParser;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class TagParameterValueContentParserImpl implements TagParameterValueContentParser {
 
