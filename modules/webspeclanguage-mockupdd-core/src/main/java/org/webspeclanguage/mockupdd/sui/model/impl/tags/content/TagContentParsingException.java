@@ -13,7 +13,7 @@
 package org.webspeclanguage.mockupdd.sui.model.impl.tags.content;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class TagContentParsingException extends Exception {
 

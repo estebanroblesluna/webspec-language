@@ -18,7 +18,7 @@ import org.webspeclanguage.mockupdd.sui.model.tags.content.DataPathTagParameterV
 import org.webspeclanguage.mockupdd.sui.model.tags.content.TagParameterValueContent;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class TagParameterValueContentParserImplTestCase extends SuiTestCase {
 

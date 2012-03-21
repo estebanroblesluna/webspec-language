@@ -15,7 +15,7 @@ package org.webspeclanguage.mockupdd.sui.model.tags.content;
 import org.webspeclanguage.mockupdd.sui.model.impl.tags.content.TagContentParsingException;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public interface TagParameterValueContentParser {
   

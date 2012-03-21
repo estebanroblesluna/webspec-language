@@ -17,7 +17,7 @@ package org.webspeclanguage.mockupdd.sui.model;
  * Represents a {@link Widget} capable of showing and/or handling one or more
  * instances of a class
  * 
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public interface DataBoundWidget extends Widget {
 

@@ -16,7 +16,7 @@ import org.webspeclanguage.mockupdd.sui.model.SuiModelElement;
 
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class SuiModelProcessingError {
 

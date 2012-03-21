@@ -16,7 +16,7 @@ import org.webspeclanguage.mockupdd.sui.model.tags.content.SimpleTagParameterVal
 import org.webspeclanguage.mockupdd.sui.model.tags.content.TagParameterValueContentVisitor;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class SimpleTagParameterValueContentImpl implements SimpleTagParameterValueContent {
 

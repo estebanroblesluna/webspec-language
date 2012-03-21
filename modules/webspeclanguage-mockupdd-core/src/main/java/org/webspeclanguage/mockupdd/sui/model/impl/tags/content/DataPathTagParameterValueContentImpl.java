@@ -22,7 +22,7 @@ import org.webspeclanguage.mockupdd.sui.model.tags.content.TagParameterValueCont
 import org.webspeclanguage.mockupdd.sui.model.tags.content.TagParameterValueContentVisitor;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class DataPathTagParameterValueContentImpl implements DataPathTagParameterValueContent {
 

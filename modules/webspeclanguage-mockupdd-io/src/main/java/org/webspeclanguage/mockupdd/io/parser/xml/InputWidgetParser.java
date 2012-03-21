@@ -20,7 +20,7 @@ import org.webspeclanguage.mockupdd.sui.model.InputWidget;
 
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class InputWidgetParser implements SuiParser<Element, SuiParserContext> {
 

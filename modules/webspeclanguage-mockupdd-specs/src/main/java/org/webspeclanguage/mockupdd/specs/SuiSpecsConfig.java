@@ -19,7 +19,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.impl.HypertextSpecFactoryImp
 
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class SuiSpecsConfig {
 

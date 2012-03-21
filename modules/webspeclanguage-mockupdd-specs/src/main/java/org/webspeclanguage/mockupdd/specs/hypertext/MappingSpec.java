@@ -19,7 +19,7 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
 /**
  * Represents an abstract data mapping to a underlying {@link Widget}
  * 
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public interface MappingSpec<W extends Widget> {
 

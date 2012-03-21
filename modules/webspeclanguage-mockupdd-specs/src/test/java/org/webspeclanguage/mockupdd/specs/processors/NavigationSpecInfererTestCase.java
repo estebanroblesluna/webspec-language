@@ -23,7 +23,7 @@ import org.webspeclanguage.mockupdd.sui.model.SuiTestCase;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class NavigationSpecInfererTestCase extends SuiTestCase {
 

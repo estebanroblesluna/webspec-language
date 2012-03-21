@@ -40,7 +40,7 @@ import org.webspeclanguage.mockupdd.utils.DefaultSuiVisitor;
 import org.webspeclanguage.mockupdd.utils.SuiUtil;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class ClassAndAttributeSpecInferer extends SuiModelProcessor {
 

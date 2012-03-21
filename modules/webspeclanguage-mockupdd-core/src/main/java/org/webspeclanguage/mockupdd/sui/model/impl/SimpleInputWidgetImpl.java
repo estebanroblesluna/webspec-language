@@ -17,7 +17,7 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.utils.SuiVisitor;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public abstract class SimpleInputWidgetImpl extends SimpleWidgetImpl {
 

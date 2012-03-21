@@ -21,7 +21,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.impl.HypertextSpecFactoryImp
 import org.webspeclanguage.mockupdd.sui.model.SuiTestCase;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 @Ignore
 public class SuiSpecsTestCase extends SuiTestCase {

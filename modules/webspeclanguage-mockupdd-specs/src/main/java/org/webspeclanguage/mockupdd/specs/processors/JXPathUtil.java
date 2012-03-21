@@ -23,7 +23,7 @@ import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.Pointer;
 
 /**
- * @author José Matías Rivero
+ * @author Jose Matias Rivero
  */
 public class JXPathUtil {
 
