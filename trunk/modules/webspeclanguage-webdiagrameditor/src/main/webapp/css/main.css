@@ -1,0 +1,15 @@
+.webspecEditor {
+  margin: 0;
+  madding: 0;
+  width: 80%;
+  height: 90%;
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  border-top-style: solid !important;
+  border-top-color: #111111 !important;
+  border-top-width: 1px !important;
+  border-left-style: solid !important;
+  border-left-color: #111111 !important;
+  border-left-width: 1px !important;
+}
