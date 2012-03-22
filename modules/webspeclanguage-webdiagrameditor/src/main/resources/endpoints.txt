@@ -1,0 +1,18 @@
+GET  /projects
+POST /projects
+GET  /projects/{id}
+POST /projects/{id}
+GET  /projects/{id}/user-stories
+POST /projects/{id}/user-stories
+GET  /projects/{id}/user-stories/{id}
+POST /projects/{id}/user-stories/{id}
+GET  /projects/{id}/mockups
+POST /projects/{id}/mockups
+GET  /projects/{id}/mockups/{id}
+POST /projects/{id}/mockups/{id}
+GET  /projects/{id}/webspec-diagrams
+POST /projects/{id}/webspec-diagrams
+GET  /projects/{id}/webspec-diagrams/{id}
+POST /projects/{id}/webspec-diagrams/{id}
+
+
