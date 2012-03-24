@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+  xsi:schemaLocation="
+          http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/security  http://www.springframework.org/schema/security/spring-security-3.0.xsd
+          http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+          http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+          http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+          ">
+
+
+  <bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+    <property name="connectionFactories">
+      <list>
+        <bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+          <constructor-arg value="${facebook.clientId}" />
+          <constructor-arg value="${facebook.clientSecret}" />
+        </bean>
+        <bean class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+          <constructor-arg value="${twitter.clientId}" />
+          <constructor-arg value="${twitter.clientSecret}" />
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="connectionSignUp" class="org.webspeclanguage.social.ConnectionSignUpImpl">
+    <constructor-arg index="0" ref="repository" />
+  </bean>
+
+  <bean id="signInAdapter" class="org.webspeclanguage.social.SignInAndRegisterAdapterImpl">
+    <constructor-arg index="0" ref="repository" />
+    <constructor-arg index="1" ref="userService" />
+    <constructor-arg index="2" value="${application.url}" />
+  </bean>
+</beans>
