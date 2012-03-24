@@ -11,25 +11,19 @@
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
           ">
 
-  <tx:annotation-driven/>
-
-  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="locations">
-      <list>
-        <value>classpath:sensitiveApp.properties</value>
-        <value>classpath:app.properties</value>
-      </list>
-    </property>
+  <bean id="repository" class="com.common.repository.Repository">
+    <constructor-arg index="0" ref="sessionFactory" />
+  </bean>
+  
+  <bean id="userService" class="com.common.service.UserServiceImpl">
+    <constructor-arg index="0" ref="repository" />
   </bean>
 
-  <import resource="datasource.xml" />
-  <import resource="hibernate.xml" />
-  <import resource="applicationContext-social.xml" />
-  <import resource="applicationContext-security.xml" />
-  <import resource="basic-services.xml" />
+  <bean id="registrationService" class="com.common.service.RegistrationService">
+    <constructor-arg index="0" ref="repository" />
+  </bean>
   
-  
-  <import resource="webspec/security.xml" />
-  <import resource="webspec/social.xml" />
-  <import resource="webspec/applicationContext.xml" />
+  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
 </beans>

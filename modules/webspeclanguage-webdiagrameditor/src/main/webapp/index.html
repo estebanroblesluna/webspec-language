@@ -6,6 +6,25 @@
     </head>
 
     <body>
-        <iframe src="webspec/index.html" class="webspecEditor"></iframe>
+        <div id="wrapper">
+            <div id="content">
+    
+                <div class="socialLoginPanel">
+                    <form name="facebookForm" action="signin/facebook" method="POST">
+                        <img class="clickable" onclick="javascript:document.forms['facebookForm'].submit();" src="image/facebook.png" width="64" height="64" alt=Sign Up with Facebook">
+                    </form>
+                    <form name="twitterForm" action="signin/twitter" method="POST">
+                        <img class="clickable" onclick="javascript:document.forms['twitterForm'].submit();" src="image/twitter.png" width="64" height="64" alt=Sign Up with Twitter">
+                    </form>
+                    <form name="linkedinForm" action="signin/linkedin" method="POST">
+                        <img class="disable" src="image/linkedin.png" width="64" height="64" alt=Sign Up with LinkedIn">
+                    </form>
+                    <form name="googlePlusForm" action="signin/googlePlus" method="POST">
+                        <img class="disable" src="image/google-plus.png" width="64" height="64" alt=Sign Up with Google+">
+                    </form>
+                </div>
+
+            </div>
+        </div>
     </body>
 </html>
