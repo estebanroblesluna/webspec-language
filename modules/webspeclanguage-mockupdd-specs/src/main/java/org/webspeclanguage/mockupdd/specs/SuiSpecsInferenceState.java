@@ -72,6 +72,7 @@ public class SuiSpecsInferenceState {
   private Map<Widget, ClassMappingSpec<CompositeWidget>> classMappingSpecsByWidget;
   private Map<SimpleWidget, AttributeMappingSpec> attributeMappingSpecsByWidget;
   private Map<TriggerWidget, SaveActionSpec> saveActionSpecsByWidget;
+  private Map<TriggerWidget, DeleteActionSpec> deleteActionSpecsByWidget;
 
   public SuiSpecsInferenceState(SuiModel model) {
     super();
@@ -83,6 +84,7 @@ public class SuiSpecsInferenceState {
     this.classMappingSpecsByWidget = new HashMap<Widget, ClassMappingSpec<CompositeWidget>>();
     this.attributeMappingSpecsByWidget = new HashMap<SimpleWidget, AttributeMappingSpec>();
     this.saveActionSpecsByWidget = new HashMap<TriggerWidget, SaveActionSpec>();
+    this.deleteActionSpecsByWidget = new HashMap<TriggerWidget, DeleteActionSpec>();
   }
 
   public Page getPageByWidget(Widget widget){
@@ -264,6 +266,11 @@ public class SuiSpecsInferenceState {
   public void addSaveActionSpec(TriggerWidget triggerWidget, SaveActionSpec saveActionSpec) {
 	  this.saveActionSpecsByWidget.put(triggerWidget, saveActionSpec);
 	  this.saveActionSpecs.add(saveActionSpec);
+  }
+
+  public void addDeleteActionSpec(TriggerWidget triggerWidget, DeleteActionSpec deleteActionSpec) {
+    this.deleteActionSpecsByWidget.put(triggerWidget, deleteActionSpec);
+    this.deleteActionSpecs.add(deleteActionSpec);
   }
 
 }

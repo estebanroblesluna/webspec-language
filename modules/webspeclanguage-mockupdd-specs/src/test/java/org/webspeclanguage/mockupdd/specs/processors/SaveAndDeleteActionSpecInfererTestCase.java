@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.SaveActionSpec;
 import org.webspeclanguage.mockupdd.sui.model.Button;
@@ -32,14 +33,14 @@ import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 /**
  * @author Jose Matias Rivero
  */
-public class SaveActionSpecInfererTestCase extends SuiSpecsTestCase {
+public class SaveAndDeleteActionSpecInfererTestCase extends SuiSpecsTestCase {
 
-  SaveActionSpecInferer inferer;
+  SaveAndDeleteActionSpecInferer inferer;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.inferer = new SaveActionSpecInferer();
+    this.inferer = new SaveAndDeleteActionSpecInferer();
   }
 
   @Test
@@ -60,6 +61,8 @@ public class SaveActionSpecInfererTestCase extends SuiSpecsTestCase {
 
     this.getSuiConfig().createTagApplication(b1, "Data", "Save", "Class1");
     this.getSuiConfig().createTagApplication(b2, "Data", "Save", "panel2:Class2");
+    this.getSuiConfig().createTagApplication(b1, "Data", "Delete", "Class1");
+    this.getSuiConfig().createTagApplication(b2, "Data", "Delete", "panel2:Class2");
     
     SuiSpecsInferenceState suiSpecs = new SuiSpecsInferenceState(model);
 
@@ -80,6 +83,14 @@ public class SaveActionSpecInfererTestCase extends SuiSpecsTestCase {
     Collection<ClassMappingSpec> originalSpecs = new HashSet<ClassMappingSpec>(Arrays.asList(panel1ClassMapping, panel2ClassMapping));
     for (SaveActionSpec saveActionSpec : suiSpecs.getSaveActionSpecs()) {
       originalSpecs.remove(saveActionSpec.getSpec());
+    }
+    assertEquals(0, originalSpecs.size());
+    
+    assertEquals(0, suiSpecs.getErrors().size());
+    assertEquals(2, suiSpecs.getDeleteActionSpecs().size());
+    originalSpecs = new HashSet<ClassMappingSpec>(Arrays.asList(panel1ClassMapping, panel2ClassMapping));
+    for (DeleteActionSpec deleteActionSpec : suiSpecs.getDeleteActionSpecs()) {
+      originalSpecs.remove(deleteActionSpec.getSpec());
     }
     assertEquals(0, originalSpecs.size());
   }

@@ -76,7 +76,9 @@ public class SuiDefaultConfig {
                       Arrays.asList(new TagParameter[]{}),
                       SelectionWidget.class), 
               this.getFactory().createTag("Transfer", 
-                      Arrays.asList(this.getFactory().createTagParameter("types")),
+                      Arrays.asList(
+                              this.getFactory().createTagParameter("sourceWidgetId"),
+                              this.getFactory().createTagParameter("destWidgetId")),
                       TriggerWidget.class),
               this.getFactory().createTag("Action", 
                       Arrays.asList(this.getFactory().createTagParameter("actionDescription")),
