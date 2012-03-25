@@ -18,6 +18,7 @@ import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 import org.webspeclanguage.mockupdd.specs.hypertext.NavigationSpec;
 import org.webspeclanguage.mockupdd.sui.model.Button;
 import org.webspeclanguage.mockupdd.sui.model.Page;
+import org.webspeclanguage.mockupdd.sui.model.Panel;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.sui.model.SuiTestCase;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
@@ -36,26 +37,34 @@ public class NavigationSpecInfererTestCase extends SuiTestCase {
   }
 
   public void testLinkSpecInference() throws TagApplicationException {
-    Page p = this.getFactory().createPage("page1", 0, 0, 0, 0, "page1", "page1");
-    Page p2 = this.getFactory().createPage("page2", 0, 0, 0, 0, "page2", "page2");
+    Page page1 = this.getFactory().createPage("page1", 0, 0, 0, 0, "page1", "page1");
+    Page page2 = this.getFactory().createPage("page2", 0, 0, 0, 0, "page2", "page2");
     Button b = this.getFactory().createButton("button1", 0, 0, 0, 0, "Button");
-    p2.addChild(b);
+    page2.addChild(b);
+    Panel panel1 = this.getFactory().createPanel("panel1", 0, 0, 0, 0, "page1");
+    page1.addChild(panel1);
+    Panel panel2 = this.getFactory().createPanel("panel2", 0, 0, 0, 0, "page2");
+    page2.addChild(panel2);
 
     SuiModel model = this.getFactory().createSuiModel();
-    model.addPage(p);
-    model.addPage(p2);
+    model.addPage(page1);
+    model.addPage(page2);
 
-    this.getSuiConfig().createTagApplication(p, "Nav", "Node", "Page1");
+    this.getSuiConfig().createTagApplication(page1, "Nav", "Node", "Page1");
     this.getSuiConfig().createTagApplication(b, "Nav", "Link", "Page1");
+    this.getSuiConfig().createTagApplication(b, "Nav", "Transfer", "panel2", "panel1");
 
     SuiSpecsInferenceState suiSpecs = new SuiSpecsInferenceState(model);
     this.linkSpecInferer.process(suiSpecs);
 
-    List<NavigationSpec> navSpecs = suiSpecs.getNavigationSpecsForPage(p2);
+    List<NavigationSpec> navSpecs = suiSpecs.getNavigationSpecsForPage(page2);
     assertEquals(1, navSpecs.size());
     NavigationSpec navSpec = navSpecs.iterator().next();
     assertSame(b, navSpec.getTrigger());
-    assertSame(p, navSpec.getTo());
+    assertSame(page1, navSpec.getTo());
+    assertEquals(1, navSpec.getTransfers().size());
+    assertSame(panel2, navSpec.getTransfers().iterator().next().getFrom());
+    assertSame(panel1, navSpec.getTransfers().iterator().next().getTo());
     assertEquals(0, suiSpecs.getErrors().size());
   }
 
