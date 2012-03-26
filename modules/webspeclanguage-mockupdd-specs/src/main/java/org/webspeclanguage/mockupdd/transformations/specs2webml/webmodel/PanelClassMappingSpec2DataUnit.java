@@ -46,7 +46,8 @@ public class PanelClassMappingSpec2DataUnit implements Spec2ContentUnit{
     public void transform(){
       WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
       WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-      EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(this.getSpec().getClassSpec().getName());    
+      EntityDecorator entityDecorator = this.getHypertextSpec2WebMLWebModel().getDataSpecs2WebMLDataModel().getEntity(
+    		  																								this.getSpec().getClassSpec().getName());    
       this.setDataUnit(webFactory.createDataUnit(this.getSpec().getWidget().getWidgetId(), entityDecorator));
       this.getHypertextSpec2WebMLWebModel().addContentUnitToPage(this.getSpec().getWidget(),this.getContentUnit());
     }

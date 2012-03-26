@@ -48,49 +48,49 @@ public class EntryUnit extends ContentUnit {
 		visitor.visit(this);
 	}
 	public void createFields(){
-	  WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
-    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
-    if(this.getEntity() != null){
-      Iterator<String> iteratorAttributes = this.getEntity().getAttributes().keySet().iterator();
-      while(iteratorAttributes.hasNext()){
-        String keyAttribute = (String)iteratorAttributes.next();
-        AttributeDecorator attribute = this.getEntity().getAttributes().get(keyAttribute);
-        this.addField(webFactory.createNormalField(attribute));
-      }
-    }
+		WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
+		WebModelFactory webFactory = webModelFacade.getWebModelFactory();
+		if(this.getEntity() != null){
+			Iterator<String> iteratorAttributes = this.getEntity().getAttributes().keySet().iterator();
+			while(iteratorAttributes.hasNext()){
+				String keyAttribute = (String)iteratorAttributes.next();
+				AttributeDecorator attribute = this.getEntity().getAttributes().get(keyAttribute);
+				this.addField(webFactory.createNormalField(attribute));
+			}
+		}
 	}
-  public Map<String,Parameter> getInputParameters() {
-    Map<String,Parameter> inputParameters = new HashMap<String,Parameter>();
-    
-    Iterator<String> iteratorFields = this.getFields().keySet().iterator();
-    
-    while(iteratorFields.hasNext()){
-      String key = (String)iteratorFields.next();
-      List<Parameter> parameterList = this.getFields().get(key).getInputParameters();
-      
-      Iterator<Parameter> parameterIterator = parameterList.iterator();
-      while(parameterIterator.hasNext()){
-        Parameter parameter = parameterIterator.next();
-        inputParameters.put(parameter.getName(),parameter);
-      }
-    }
-    return inputParameters;  
-  }
-  public Map<String,Parameter> getOutputParameters() {
-    Map<String,Parameter> outputParameters = new HashMap<String,Parameter>();
-    
-    Iterator<String> iteratorFields = this.getFields().keySet().iterator();
-    
-    while(iteratorFields.hasNext()){
-      String key = (String)iteratorFields.next();
-      List<Parameter> parameterList = this.getFields().get(key).getOutputParameters();
-      
-      Iterator<Parameter> parameterIterator = parameterList.iterator();
-      while(parameterIterator.hasNext()){
-        Parameter parameter = (Parameter)parameterIterator.next();     
-        outputParameters.put(parameter.getName(),parameter);
-      }
-    }
-    return outputParameters;  
-  }
+	public Map<String,Parameter> getInputParameters() {
+		Map<String,Parameter> inputParameters = new HashMap<String,Parameter>();
+
+		Iterator<String> iteratorFields = this.getFields().keySet().iterator();
+
+		while(iteratorFields.hasNext()){
+			String key = (String)iteratorFields.next();
+			List<Parameter> parameterList = this.getFields().get(key).getInputParameters();
+
+			Iterator<Parameter> parameterIterator = parameterList.iterator();
+			while(parameterIterator.hasNext()){
+				Parameter parameter = parameterIterator.next();
+				inputParameters.put(parameter.getName(),parameter);
+			}
+		}
+		return inputParameters;  
+	}
+	public Map<String,Parameter> getOutputParameters() {
+		Map<String,Parameter> outputParameters = new HashMap<String,Parameter>();
+
+		Iterator<String> iteratorFields = this.getFields().keySet().iterator();
+
+		while(iteratorFields.hasNext()){
+			String key = (String)iteratorFields.next();
+			List<Parameter> parameterList = this.getFields().get(key).getOutputParameters();
+
+			Iterator<Parameter> parameterIterator = parameterList.iterator();
+			while(parameterIterator.hasNext()){
+				Parameter parameter = (Parameter)parameterIterator.next();     
+				outputParameters.put(parameter.getName(),parameter);
+			}
+		}
+		return outputParameters;  
+	}
 }

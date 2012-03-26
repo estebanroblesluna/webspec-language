@@ -35,4 +35,5 @@ public class ComboBoxImpl extends SimpleInputWidgetImpl implements ComboBox {
   public Widget copyConcreteWidget() {
     return new ComboBoxImpl(this.getWidgetId(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
   }
+ 
 }

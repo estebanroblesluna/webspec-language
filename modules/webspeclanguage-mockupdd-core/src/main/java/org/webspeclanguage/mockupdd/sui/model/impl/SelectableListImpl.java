@@ -51,4 +51,5 @@ public class SelectableListImpl extends SimpleInputWidgetImpl implements Selecta
   public Widget copyConcreteWidget() {
     return new SelectableListImpl(this.getWidgetId(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.getMultipleSelection());
   }
+  
 }

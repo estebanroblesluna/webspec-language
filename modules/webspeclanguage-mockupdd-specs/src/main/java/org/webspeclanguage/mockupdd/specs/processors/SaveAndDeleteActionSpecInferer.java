@@ -20,6 +20,7 @@ import org.webspeclanguage.mockupdd.specs.SuiSpecsConfig;
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplication;
@@ -76,7 +77,7 @@ public class SaveAndDeleteActionSpecInferer extends SuiModelProcessor {
     }
 
     private Void createSpecFromMapping(TagParameterValueContent valueContent, CompositeWidget sourceWidget) {
-      ClassMappingSpec<CompositeWidget> cms = specs.getClassMappingSpecForWidget(sourceWidget);
+      ClassMappingSpec<CompositeWidget> cms = specs.getCWClassMappingSpecForWidget(sourceWidget);
       if (cms == null) {
         specs.addError(new SuiModelProcessingError(SaveAndDeleteActionSpecInferer.this, this.currentTagApplication.getWidget(), "Source widget \""
                 + valueContent.getTextualRepresentation() + "\" not mapped"));

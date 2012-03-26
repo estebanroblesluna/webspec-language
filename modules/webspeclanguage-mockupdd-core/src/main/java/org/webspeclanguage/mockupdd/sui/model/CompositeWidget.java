@@ -13,7 +13,6 @@
 package org.webspeclanguage.mockupdd.sui.model;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.webspeclanguage.mockupdd.sui.model.layout.Layout;
 

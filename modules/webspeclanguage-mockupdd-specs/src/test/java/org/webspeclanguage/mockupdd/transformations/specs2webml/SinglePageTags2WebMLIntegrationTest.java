@@ -14,6 +14,8 @@ package org.webspeclanguage.mockupdd.transformations.specs2webml;
 
 import org.junit.Test;
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
+import org.webspeclanguage.mockupdd.specs.data.impl.DataSpecFacade;
+import org.webspeclanguage.mockupdd.specs.data.impl.DataSpecFactoryImpl;
 import org.webspeclanguage.mockupdd.specs.processors.ClassAndAttributeSpecInferer;
 import org.webspeclanguage.mockupdd.specs.processors.CompositeSuiModelProcessor;
 import org.webspeclanguage.mockupdd.specs.processors.NavigationSpecInferer;
@@ -61,8 +63,16 @@ public class SinglePageTags2WebMLIntegrationTest extends SuiTestCase {
     this.processor.process(specs);
     assertEquals(0, specs.getErrors().size());
     
+    DataSpecFacade dsf = DataSpecFacade.getDataSpecFacade();
+    
+    DataSpecFactoryImpl dsfact = (DataSpecFactoryImpl) dsf.getDataSpecFactory();
+    
+    
+    assertEquals(1, dsfact.getClassSpecs().size());
+    
     DataSpecs2WebMLDataModel d = this.dmTransformationFacade.transformData(specs);
-    assertEquals(1, d.getDataModel().getEntitys().keySet().size());
+    /*assertEquals(false, d.getClassSpec2Entitys().isEmpty());
+    assertEquals(1, d.getDataModel().getEntitys().keySet().size());*/
     
     /*
      * There should be

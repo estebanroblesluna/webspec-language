@@ -16,7 +16,6 @@ package org.webspeclanguage.mockupdd.specs.hypertext.impl;
 import org.webspeclanguage.mockupdd.specs.data.AttributeSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
-import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 

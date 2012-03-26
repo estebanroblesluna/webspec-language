@@ -34,4 +34,5 @@ public class ListImpl extends SimpleWidgetImpl implements org.webspeclanguage.mo
   public Widget copyConcreteWidget() {
     return new ListImpl(this.getWidgetId(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
   }
+  
 }

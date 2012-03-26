@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.sui.model.layout.Layout;
 
@@ -27,7 +28,7 @@ import org.webspeclanguage.mockupdd.sui.model.layout.Layout;
  * 
  * @author Jose Matias Rivero
  */
-public abstract class CompositeWidgetImpl extends WidgetImpl implements CompositeWidget {
+public abstract class CompositeWidgetImpl extends WidgetImpl implements CompositeWidget, DataBoundWidget{
 
   private Collection<Widget> widgets;
   private Layout layout;
