@@ -64,18 +64,18 @@ public class Link implements WebModelElement{
 	public void setName(String name) {
 		this.name = name;
 	}
-  public void accept(WebModelVisitor visitor) {
-  }
-  public LinkElement getFrom() {
-    return from;
-  }
-  public void setFrom(LinkElement from) {
-    this.from = from;
-  }
-  public LinkElement getTo() {
-    return to;
-  }
-  public void setTo(LinkElement to) {
-    this.to = to;
-  }
+	public void accept(WebModelVisitor visitor) {
+	}
+	public LinkElement getFrom() {
+		return from;
+	}
+	public void setFrom(LinkElement from) {
+		this.from = from;
+	}
+	public LinkElement getTo() {
+		return to;
+	}
+	public void setTo(LinkElement to) {
+		this.to = to;
+	}
 }

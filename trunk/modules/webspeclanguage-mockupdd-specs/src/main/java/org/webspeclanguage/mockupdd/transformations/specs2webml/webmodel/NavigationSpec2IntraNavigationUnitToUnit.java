@@ -5,14 +5,15 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.links.TransportLink;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.ContentUnit;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
+import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 
 public class NavigationSpec2IntraNavigationUnitToUnit {
 
-	private ClassMappingSpec classMappingSpec;
+	private ClassMappingSpec<CompositeWidget> classMappingSpec;
 	private TransportLink link;
 	private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;	
 	
-	public NavigationSpec2IntraNavigationUnitToUnit(ClassMappingSpec classMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+	public NavigationSpec2IntraNavigationUnitToUnit(ClassMappingSpec<CompositeWidget> classMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
 		super();
 		this.classMappingSpec = classMappingSpec;
 		this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
@@ -25,12 +26,12 @@ public class NavigationSpec2IntraNavigationUnitToUnit {
 	    ContentUnit toCU = this.getHypertextSpec2WebMLWebModel().findContentUnit(this.getClassMappingSpec().getWidget().getParent());	   
 		this.setLink(webFactory.createTransportLink(fromCU.getName() + "to" + toCU.getName(), true, fromCU, toCU));		
 	}
-
-	public ClassMappingSpec getClassMappingSpec() {
+	
+	public ClassMappingSpec<CompositeWidget> getClassMappingSpec() {
 		return classMappingSpec;
 	}
 
-	public void setClassMappingSpec(ClassMappingSpec classMappingSpec) {
+	public void setClassMappingSpec(ClassMappingSpec<CompositeWidget> classMappingSpec) {
 		this.classMappingSpec = classMappingSpec;
 	}
 

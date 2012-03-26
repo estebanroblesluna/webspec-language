@@ -79,12 +79,12 @@ public class ClassAndAttributeSpecInfererTestCase extends SuiTestCase {
     assertEquals("attr", class2.getAssociations().iterator().next().getAssociationName());
     assertSame(class3, class2.getAssociations().iterator().next().getDestinationClass());
     
-    assertNotNull(suiSpecs.getClassMappingSpecForWidget(panel1));
-    assertSame(class1, suiSpecs.getClassMappingSpecForWidget(panel1).getClassSpec());
-    assertSame(panel1, suiSpecs.getClassMappingSpecForWidget(panel1).getWidget());
-    assertNotNull(suiSpecs.getClassMappingSpecForWidget(panel2));
-    assertSame(class3, suiSpecs.getClassMappingSpecForWidget(panel2).getClassSpec());
-    assertSame(panel2, suiSpecs.getClassMappingSpecForWidget(panel2).getWidget());
+    assertNotNull(suiSpecs.getCWClassMappingSpecForWidget(panel1));
+    assertSame(class1, suiSpecs.getCWClassMappingSpecForWidget(panel1).getClassSpec());
+    assertSame(panel1, suiSpecs.getCWClassMappingSpecForWidget(panel1).getWidget());
+    assertNotNull(suiSpecs.getCWClassMappingSpecForWidget(panel2));
+    assertSame(class3, suiSpecs.getCWClassMappingSpecForWidget(panel2).getClassSpec());
+    assertSame(panel2, suiSpecs.getCWClassMappingSpecForWidget(panel2).getWidget());
     
     assertNotNull(suiSpecs.getAttributeMappingSpecForWidget(l));
     assertEquals("attrib1", suiSpecs.getAttributeMappingSpecForWidget(l).getAttributeSpec().getName());

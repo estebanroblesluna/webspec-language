@@ -9,6 +9,7 @@ import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelFactory;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.ContentUnit;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.OperationUnit;
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
+import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.DeleteActionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.HypertextSpecFactory;
 import org.webspeclanguage.mockupdd.specs.hypertext.InputPanelSpec;
@@ -20,9 +21,10 @@ import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.impl.HypertextSpecFacade;
 import org.webspeclanguage.mockupdd.specs.hypertext.impl.HypertextSpecFactoryImpl;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
-import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
+import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
+import org.webspeclanguage.mockupdd.sui.model.ComboBox;
 
 public class HypertextSpec2WebMLWebModel {
 	
@@ -57,6 +59,9 @@ public class HypertextSpec2WebMLWebModel {
 		this.setDataSpecs2WebMLDataModel(dataSpecs2WebMLDataModel);
 	}
 
+//<<<<<<<<<<<<<<--------------------TRANSFORMATION METHODS------------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>
+
+	
 	public void transform() {
 		this.setWebModel(this.createWebModel());
 		this.transformPage();
@@ -105,33 +110,13 @@ public class HypertextSpec2WebMLWebModel {
 
 	public void transformUnit2UnitNavigationSpec() {
 
-		for(PanelClassMappingSpec classMappingSpec: this.getSuiSpecsInferenceState().getPanelClassMappingSpecs()){
-			if (classMappingSpec.getDataSource() != null) {
-				this.getNavigationSpec2IntraNavigationUnitToUnitList().add(this.getWebModelTransformationFactory()
-						.transformNavigationSpec2IntraNavigationUnitToUnit(classMappingSpec,this));
+		for(ClassMappingSpec<CompositeWidget> classMappingSpec: this.getSuiSpecsInferenceState().getClassMappingCompositeSpecs()){
+			if(classMappingSpec.getDataSource() != null){
+				this.getNavigationSpec2IntraNavigationUnitToUnitList().add(
+						this.getWebModelTransformationFactory().transformNavigationSpec2IntraNavigationUnitToUnit(classMappingSpec, this));
 			}
 		}
-		for(RepetitionClassMappingSpec classMappingSpec:  this.getSuiSpecsInferenceState().getRepetitionClassMappingSpecs()){
-			if (classMappingSpec.getDataSource() != null) {
-				this.getNavigationSpec2IntraNavigationUnitToUnitList().add(this.getWebModelTransformationFactory()
-						.transformNavigationSpec2IntraNavigationUnitToUnit(classMappingSpec,this));
-			}
-		}
-
-		for(SelectableRepetitionSpec classMappingSpec: this.getSuiSpecsInferenceState().getSelectableRepetitionSpecs()){
-			if (classMappingSpec.getDataSource() != null) {
-				this.getNavigationSpec2IntraNavigationUnitToUnitList().add(this.getWebModelTransformationFactory()
-						.transformNavigationSpec2IntraNavigationUnitToUnit(classMappingSpec,this));
-			}
-		}
-
-		for(InputPanelSpec classMappingSpec: this.getSuiSpecsInferenceState().getInputPanelSpecs()){
-			if (classMappingSpec.getDataSource() != null) {
-				this.getNavigationSpec2IntraNavigationUnitToUnitList().add(this.getWebModelTransformationFactory()
-						.transformNavigationSpec2IntraNavigationUnitToUnit(classMappingSpec,this));
-			}
-		}
-			
+		
 	}
 
 	public void transformSeletableRepetitionSpec(){				
@@ -179,6 +164,9 @@ public class HypertextSpec2WebMLWebModel {
 							.transformSaveActionSpec2CreateUnit(saveActionSpec,this));
 		}
 	}
+	
+	
+//<<<<<<<<<<<<<<--------------------ACCESORS METHODS------------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>
 
 	public void setHypertextSpecFactory(HypertextSpecFactoryImpl hypertextSpecFactory) {
 		this.hypertextSpecFactory = hypertextSpecFactory;
@@ -325,6 +313,32 @@ public class HypertextSpec2WebMLWebModel {
 		return webModel;
 	}
 
+	public void setWebModelFacade(WebModelFacade webModelFacade) {
+		this.webModelFacade = webModelFacade;
+	}
+
+	public WebModelFacade getWebModelFacade() {
+		return webModelFacade;
+	}
+
+	public void setWebModelFactory(WebModelFactory webModelFactory) {
+		this.webModelFactory = webModelFactory;
+	}
+
+	public WebModelFactory getWebModelFactory() {
+		return webModelFactory;
+	}
+
+	public void setSpecs2CompositeUnits(java.util.List<Spec2ContentUnit> specs2CompositeUnits) {
+		this.specs2CompositeUnits = specs2CompositeUnits;
+	}
+
+	public java.util.List<Spec2ContentUnit> getSpecs2CompositeUnits() {
+		return specs2CompositeUnits;
+	}
+		
+//<<<<<<<<<<<<<<--------------------TRANSFORMATION COMPLEMENTARY METHODS ------------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>
+	
 	public org.webspeclanguage.mockupdd.codegen.webml.webmodel.Page getPage(org.webspeclanguage.mockupdd.sui.model.Page to) {
 
 		org.webspeclanguage.mockupdd.codegen.webml.webmodel.Page webMLPage = null;
@@ -357,7 +371,7 @@ public class HypertextSpec2WebMLWebModel {
 		this.getWebModelFactory().createNormalLink(contentUnit.getName() + "to" + operationUnit.getName(), true, contentUnit, operationUnit);
 	}
 		
-	public ContentUnit findContentUnit(CompositeWidget widget) {
+	public ContentUnit findContentUnit(DataBoundWidget widget) {
 		ContentUnit contentUnit = null;
 		for(Spec2ContentUnit cUnit: this.getSpecs2CompositeUnits()){
 			if(cUnit.getSpec().getWidget().equals(widget)){
@@ -389,10 +403,19 @@ public class HypertextSpec2WebMLWebModel {
 		this.getSpecs2CompositeUnits().add(transformRepetitionClassMappingSpec2IndexUnit);
 	}
 
-	private void addInputPanelSpec2EntryUnit(
-			InputPanelSpec2EntryUnit transformInputPanelSpec2EntryUnit) {
+	private void addInputPanelSpec2EntryUnit(InputPanelSpec2EntryUnit transformInputPanelSpec2EntryUnit) {
+		
 		this.getInputPanelSpec2EntryUnits().add(transformInputPanelSpec2EntryUnit);
 		this.getSpecs2CompositeUnits().add(transformInputPanelSpec2EntryUnit);
+		
+		for(Widget sw : transformInputPanelSpec2EntryUnit.getSpec().getWidget().getWidgets()){
+			if(sw.getClass().isAssignableFrom(DataBoundWidget.class)){
+				ClassMappingSpec cmp = this.getSuiSpecsInferenceState().getCWClassMappingSpecForWidget((CompositeWidget)sw);
+				if(cmp != null){
+					
+				}
+			}
+		}
 		
 	}
 
@@ -402,28 +425,5 @@ public class HypertextSpec2WebMLWebModel {
 		this.getSpecs2CompositeUnits().add(transformPanelClassMappingSpec2DataUnit);		
 	}
 	
-	public void setWebModelFacade(WebModelFacade webModelFacade) {
-		this.webModelFacade = webModelFacade;
-	}
-
-	public WebModelFacade getWebModelFacade() {
-		return webModelFacade;
-	}
-
-	public void setWebModelFactory(WebModelFactory webModelFactory) {
-		this.webModelFactory = webModelFactory;
-	}
-
-	public WebModelFactory getWebModelFactory() {
-		return webModelFactory;
-	}
-
-	public void setSpecs2CompositeUnits(java.util.List<Spec2ContentUnit> specs2CompositeUnits) {
-		this.specs2CompositeUnits = specs2CompositeUnits;
-	}
-
-	public java.util.List<Spec2ContentUnit> getSpecs2CompositeUnits() {
-		return specs2CompositeUnits;
-	}
 
 }

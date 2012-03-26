@@ -37,6 +37,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.WidgetActionsSpec;
 import org.webspeclanguage.mockupdd.specs.processors.SuiModelProcessingError;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
@@ -44,6 +45,7 @@ import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.utils.MultiArrayListHashMap;
 import org.webspeclanguage.mockupdd.utils.MultiListMap;
+import org.webspeclanguage.mockupdd.utils.SuiUtil;
 import org.webspeclanguage.mockupdd.utils.TagIndexer;
 
 
@@ -69,7 +71,9 @@ public class SuiSpecsInferenceState {
   private List<SaveActionSpec> saveActionSpecs = new ArrayList<SaveActionSpec>();
   private List<SelectableRepetitionSpec> selectableRepetitionSpecs = new ArrayList<SelectableRepetitionSpec>();
   private List<WidgetActionsSpec> widgetActionsSpecs = new ArrayList<WidgetActionsSpec>();
-  private Map<Widget, ClassMappingSpec<CompositeWidget>> classMappingSpecsByWidget;
+  private List<ClassMappingSpec<CompositeWidget>> classMappingCompositeSpecs = new ArrayList<ClassMappingSpec<CompositeWidget>>();
+  private List<ClassMappingSpec<DataBoundWidget>> classMappingSpecs = new ArrayList<ClassMappingSpec<DataBoundWidget>>();
+  private Map<Widget, ClassMappingSpec<CompositeWidget>> cwClassMappingSpecsByWidget;
   private Map<SimpleWidget, AttributeMappingSpec> attributeMappingSpecsByWidget;
   private Map<TriggerWidget, SaveActionSpec> saveActionSpecsByWidget;
   private Map<TriggerWidget, DeleteActionSpec> deleteActionSpecsByWidget;
@@ -81,7 +85,7 @@ public class SuiSpecsInferenceState {
     this.errors = new ArrayList<SuiModelProcessingError>();
     this.navigationSpecsPerPage = new MultiArrayListHashMap<Page, NavigationSpec>();
     this.classSpecsByName = new HashMap<String, ClassSpec>();
-    this.classMappingSpecsByWidget = new HashMap<Widget, ClassMappingSpec<CompositeWidget>>();
+    this.cwClassMappingSpecsByWidget = new HashMap<Widget, ClassMappingSpec<CompositeWidget>>();
     this.attributeMappingSpecsByWidget = new HashMap<SimpleWidget, AttributeMappingSpec>();
     this.saveActionSpecsByWidget = new HashMap<TriggerWidget, SaveActionSpec>();
     this.deleteActionSpecsByWidget = new HashMap<TriggerWidget, DeleteActionSpec>();
@@ -147,15 +151,24 @@ public class SuiSpecsInferenceState {
     return this.model;
   }
 
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public void addClassMappingSpec(ClassMappingSpec mapping) {
     Validate.notNull(mapping);
     
-    this.classMappingSpecsByWidget.put(mapping.getWidget(), mapping);
+    if(SuiUtil.isComposite(mapping.getWidget())){
+        this.cwClassMappingSpecsByWidget.put(mapping.getWidget(), (ClassMappingSpec<CompositeWidget>)mapping);
+        this.getClassMappingCompositeSpecs().add((ClassMappingSpec<CompositeWidget>)mapping);
+    }
+    
+    this.getClassMappingSpecs().add((ClassMappingSpec<DataBoundWidget>)mapping);
   }
   
   public ClassMappingSpec<CompositeWidget> getClassMappingSpecForWidget(CompositeWidget w) {
-    return this.classMappingSpecsByWidget.get(w);
+	    return this.cwClassMappingSpecsByWidget.get(w);
+  }
+  
+  public ClassMappingSpec<CompositeWidget> getCWClassMappingSpecForWidget(CompositeWidget w) {
+    return this.cwClassMappingSpecsByWidget.get(w);
   }
 
   public void addAttributeMappingSpec(AttributeMappingSpec ams) {
@@ -268,9 +281,26 @@ public class SuiSpecsInferenceState {
 	  this.saveActionSpecs.add(saveActionSpec);
   }
 
+  public void setClassMappingCompisteSpecs(List<ClassMappingSpec<CompositeWidget>> classMappingSpecs) {
+	this.classMappingCompositeSpecs = classMappingSpecs;
+  }
+
+  public List<ClassMappingSpec<CompositeWidget>> getClassMappingCompositeSpecs() {
+	return classMappingCompositeSpecs;
+  }
+
+  public void setClassMappingSpecs(List<ClassMappingSpec<DataBoundWidget>> classMappingSpecs) {
+	this.classMappingSpecs = classMappingSpecs;
+  }
+
   public void addDeleteActionSpec(TriggerWidget triggerWidget, DeleteActionSpec deleteActionSpec) {
     this.deleteActionSpecsByWidget.put(triggerWidget, deleteActionSpec);
     this.deleteActionSpecs.add(deleteActionSpec);
   }
+
+  public List<ClassMappingSpec<DataBoundWidget>> getClassMappingSpecs() {
+	return classMappingSpecs;
+  }
+
 
 }
