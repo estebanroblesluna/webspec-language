@@ -64,7 +64,8 @@ public class DataSpecs2WebMLDataModel {
 	}
 
 	private void transformClass() {
-		for (ClassSpec cs : getDataSpecFactory().getClassSpecs()){
+				
+		for (ClassSpec cs : this.getSuiSpecsInferenceState().getClassSpecs()){
 			this.getClassSpec2Entitys().add(getDMTFactory().transformClassSpec2Entity(cs));
 		}	
 	}

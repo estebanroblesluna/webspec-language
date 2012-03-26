@@ -63,16 +63,12 @@ public class SinglePageTags2WebMLIntegrationTest extends SuiTestCase {
     this.processor.process(specs);
     assertEquals(0, specs.getErrors().size());
     
-    DataSpecFacade dsf = DataSpecFacade.getDataSpecFacade();
-    
-    DataSpecFactoryImpl dsfact = (DataSpecFactoryImpl) dsf.getDataSpecFactory();
-    
-    
-    assertEquals(1, dsfact.getClassSpecs().size());
-    
+       
     DataSpecs2WebMLDataModel d = this.dmTransformationFacade.transformData(specs);
-    /*assertEquals(false, d.getClassSpec2Entitys().isEmpty());
-    assertEquals(1, d.getDataModel().getEntitys().keySet().size());*/
+    
+    assertEquals(1, d.getDataModel().getEntitys().keySet().size());
+    d.getDataModel().getEntitys().clear();
+    
     
     /*
      * There should be
@@ -102,8 +98,8 @@ public class SinglePageTags2WebMLIntegrationTest extends SuiTestCase {
     this.processor.process(specs);
     assertEquals(0, specs.getErrors().size());
     
-    DataSpecs2WebMLDataModel d = this.dmTransformationFacade.transformData(specs);
-    assertEquals(1, d.getDataModel().getEntitys().keySet().size());
+    DataSpecs2WebMLDataModel d2 = this.dmTransformationFacade.transformData(specs);
+    assertEquals(1, d2.getDataModel().getEntitys().keySet().size());
     
     /*
      * There should be
