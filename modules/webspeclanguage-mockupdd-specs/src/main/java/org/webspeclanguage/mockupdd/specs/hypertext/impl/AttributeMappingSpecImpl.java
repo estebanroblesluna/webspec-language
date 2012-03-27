@@ -41,7 +41,7 @@ public class AttributeMappingSpecImpl implements AttributeMappingSpec {
     return widget;
   }
 
-  private void setWidget(SimpleWidget widget) {
+  public void setWidget(SimpleWidget widget) {
     this.widget = widget;
   }
 

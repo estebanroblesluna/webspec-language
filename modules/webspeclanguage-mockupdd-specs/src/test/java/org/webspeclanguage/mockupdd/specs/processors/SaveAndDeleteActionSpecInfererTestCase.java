@@ -69,12 +69,12 @@ public class SaveAndDeleteActionSpecInfererTestCase extends SuiSpecsTestCase {
     ClassSpec class1Spec = this.dataSpecFactory.createClassSpec("Class1");
     suiSpecs.addClassSpec(class1Spec);
     PanelClassMappingSpec panel1ClassMapping = this.hypertextFactory.createPanelClassMappingSpec(panel1, class1Spec);
-    suiSpecs.addClassMappingSpec(panel1ClassMapping);
+    suiSpecs.addPanelClassMappingSpec(panel1ClassMapping);
     
     ClassSpec class2Spec = this.dataSpecFactory.createClassSpec("Class2");
     suiSpecs.addClassSpec(class2Spec);
     PanelClassMappingSpec panel2ClassMapping = this.hypertextFactory.createPanelClassMappingSpec(panel2, class2Spec);
-    suiSpecs.addClassMappingSpec(panel2ClassMapping);
+    suiSpecs.addPanelClassMappingSpec(panel2ClassMapping);
 
     this.inferer.process(suiSpecs);
     

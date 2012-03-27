@@ -40,7 +40,7 @@ public interface HypertextSpecFactory {
   
   <W extends CompositeWidget> DissociateActionSpec createDissociateActionSpec(ClassMappingSpec<W> type1, ClassMappingSpec<W> type2);
   
-  InputPanelSpec createInputPanelSpec(Panel panel, ClassSpec classSpec, List<InputWidget> inputs);
+  InputPanelSpec createInputPanelSpec(Panel panel, ClassSpec classSpec);
   
   NavigationSpec createNavigationSpec(Page to, TriggerWidget trigger, List<ActionSpec> actions, List<ObjectTransferSpec> transfers);
   

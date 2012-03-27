@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
+import org.webspeclanguage.mockupdd.sui.model.InputWidget;
 import org.webspeclanguage.mockupdd.sui.model.SuiModelElement;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 
@@ -30,6 +31,9 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
  * MockSpec model or its components, avoiding pollution of language interfaces and 
  * 
  * @author Jose Matias Rivero
+ */
+/**
+ * @author José Matías Rivero
  */
 public final class SuiUtil {
 
@@ -483,6 +487,27 @@ public final class SuiUtil {
     }
     return new Rectangle(leftBorder.getMinValue() - 1, rightBorder.getMaxValue() + 1, 
             topBorder.getMinValue() - 1, bottomBorder.getMaxValue() + 1);
+  }
+
+  /**
+   * Returns <code>true</code> if the composite widget contains one or more
+   * input widgets within their children 
+   */
+  public static boolean hasInputWidgets(CompositeWidget widget) {
+    for (Widget w : SuiUtil.getAllWidgetsRecursively(widget)) {
+      if (SuiUtil.isInputWidget(w)) {
+        return true;
+      }
+    }
+    return false;
+  }
+   
+  /**
+   * Returns <code>true</code> if the widget is an input one 
+   * (i.e. facilitates any mechanism for data input) 
+   */
+  public static boolean isInputWidget(Widget w) {
+    return SuiUtil.widgetIsKindOf(w, InputWidget.class);
   }
 
 }

@@ -13,17 +13,10 @@
 
 package org.webspeclanguage.mockupdd.specs.hypertext;
 
-import java.util.List;
-
-import org.webspeclanguage.mockupdd.sui.model.InputWidget;
 
 /**
  * @author Franco Giacosa
  */
 public interface InputPanelSpec extends PanelClassMappingSpec {
-
-  public abstract List<InputWidget> getInputs();
-
-  public abstract void setInputs(List<InputWidget> inputs);
 
 }

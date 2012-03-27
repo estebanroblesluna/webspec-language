@@ -70,8 +70,8 @@ public class HypertextSpecFactoryImpl implements HypertextSpecFactory {
     return dissociateActionSpec;
   }
 
-  public InputPanelSpec createInputPanelSpec(Panel panel, ClassSpec classSpec, List<InputWidget> inputs) {
-    InputPanelSpec inputPanelSpec = new InputPanelSpecImpl(panel, classSpec, inputs);
+  public InputPanelSpec createInputPanelSpec(Panel panel, ClassSpec classSpec) {
+    InputPanelSpec inputPanelSpec = new InputPanelSpecImpl(panel, classSpec);
     return inputPanelSpec;
   }
 
