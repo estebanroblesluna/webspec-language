@@ -26,6 +26,8 @@ import org.webspeclanguage.mockupdd.specs.data.MaximumCardinality;
 import org.webspeclanguage.mockupdd.specs.hypertext.AttributeMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.ClassMappingSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.MappingSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.PanelClassMappingSpec;
+import org.webspeclanguage.mockupdd.specs.hypertext.RepetitionClassMappingSpec;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
 import org.webspeclanguage.mockupdd.sui.model.Panel;
 import org.webspeclanguage.mockupdd.sui.model.Repetition;
@@ -144,13 +146,19 @@ public class ClassAndAttributeSpecInferer extends SuiModelProcessor {
       this.currentTagApplication = ta;
     }
 
-    @SuppressWarnings({ "unchecked" })
     @Override
     public ClassSpec visitSimpleTagParameterValueContent(SimpleTagParameterValueContent valueContent) {
       ClassSpec cs = createOrGetClassSpec(this.state, valueContent.getTextualRepresentation());
-      createSpecVisitor.setCurrentClassSpec(
-              createOrGetClassSpec(this.state, valueContent.getTextualRepresentation()));
-      this.state.addClassMappingSpec(this.currentTagApplication.getWidget().accept(createSpecVisitor));
+      if (SuiUtil.hasInputWidgets((CompositeWidget) this.currentTagApplication.getWidget()) &&
+              SuiUtil.widgetIsKindOf(this.currentTagApplication.getWidget(), Panel.class)) {
+        this.state.addInputPanelSpec(SuiSpecsConfig.getInstance().getHypertextSpecFactory().createInputPanelSpec(
+                (Panel) this.currentTagApplication.getWidget(), cs));
+      } else {
+        createSpecVisitor.setCurrentClassSpec(cs);
+        createSpecVisitor.setState(this.state);
+        this.currentTagApplication.getWidget().accept(createSpecVisitor);
+      }
+      
       return cs;
     }
 
@@ -159,8 +167,9 @@ public class ClassAndAttributeSpecInferer extends SuiModelProcessor {
     public ClassSpec visitDataPathTagParameterValueContent(DataPathTagParameterValueContent valueContent) {
       ClassSpec cs = this.visitDataPathNode(valueContent.getRootNode());
       createSpecVisitor.setCurrentClassSpec(cs);
+      createSpecVisitor.setState(this.state);
       ClassMappingSpec classMappingSpec = this.currentTagApplication.getWidget().accept(createSpecVisitor);
-      this.state.addClassMappingSpec(this.currentTagApplication.getWidget().accept(createSpecVisitor));
+      this.currentTagApplication.getWidget().accept(createSpecVisitor);
       setDataSourceIfPresent(valueContent, classMappingSpec, this.currentTagApplication, this.state);
       return cs;
     }
@@ -259,17 +268,26 @@ public class ClassAndAttributeSpecInferer extends SuiModelProcessor {
   private class CreateSpecVisitor extends DefaultSuiVisitor<ClassMappingSpec> {
 
     private ClassSpec currentClassSpec;
+    private SuiSpecsInferenceState state;
     
     @Override
     public ClassMappingSpec visitPanel(Panel panel) {
-      return SuiSpecsConfig.getInstance().getHypertextSpecFactory().createPanelClassMappingSpec(
+      PanelClassMappingSpec cs = SuiSpecsConfig.getInstance().getHypertextSpecFactory().createPanelClassMappingSpec(
               panel, this.currentClassSpec);
+      this.state.addPanelClassMappingSpec(cs);
+      return cs;
+    }
+
+    public void setState(SuiSpecsInferenceState state) {
+      this.state = state;
     }
 
     @Override
     public ClassMappingSpec visitRepetition(Repetition repetition) {
-      return SuiSpecsConfig.getInstance().getHypertextSpecFactory().createRepetitionClassMappingSpec(
+      RepetitionClassMappingSpec cs = SuiSpecsConfig.getInstance().getHypertextSpecFactory().createRepetitionClassMappingSpec(
               repetition, this.currentClassSpec);
+      this.state.addRepetitionClassMappingSpec(cs);
+      return cs;
     }
 
     @Override

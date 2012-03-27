@@ -27,6 +27,12 @@ public interface MappingSpec<W extends Widget> {
    * @return The widget being mapped
    */
   W getWidget();
+  
+  
+  /**
+   * Sets the widget being mapped
+   */
+  void setWidget(W widget);
 
   /**
    * @return The Widget from which instance is taken (if defined)

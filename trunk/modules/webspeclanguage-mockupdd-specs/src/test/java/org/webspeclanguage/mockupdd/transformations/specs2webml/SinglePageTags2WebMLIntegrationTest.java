@@ -43,7 +43,7 @@ public class SinglePageTags2WebMLIntegrationTest extends SuiTestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    this.processor = new CompositeSuiModelProcessor(new NavigationSpecInferer(), new ClassAndAttributeSpecInferer(), new SaveAndDeleteActionSpecInferer());
+    this.processor = new CompositeSuiModelProcessor(new ClassAndAttributeSpecInferer(), new NavigationSpecInferer(), new SaveAndDeleteActionSpecInferer());
     this.dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
   }
   

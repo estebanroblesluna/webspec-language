@@ -13,14 +13,13 @@
 
 package org.webspeclanguage.mockupdd.sui.model;
 
-
 /**
  * @author Franco Giacosa
  */
-public interface InputWidget {
+public interface InputWidget extends Widget {
 
   String getSampleData();
-  
+
   void setSampleData(String sampleData);
-  
+
 }

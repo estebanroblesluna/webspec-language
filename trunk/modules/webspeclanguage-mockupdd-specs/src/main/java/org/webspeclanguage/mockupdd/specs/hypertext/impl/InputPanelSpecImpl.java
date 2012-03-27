@@ -24,20 +24,8 @@ import java.util.List;
  */
 public class InputPanelSpecImpl extends PanelClassMappingSpecImpl implements InputPanelSpec {
   
-    private List<InputWidget> inputs;
-
-    public InputPanelSpecImpl(Panel panel, ClassSpec classSpec, List<InputWidget> inputs) {
+    public InputPanelSpecImpl(Panel panel, ClassSpec classSpec) {
       super(panel, classSpec);
-      this.setInputs(inputs);
-    }
-        
-    public List<InputWidget> getInputs() {
-      return inputs;
-    }
-
-    
-    public void setInputs(List<InputWidget> inputs) {
-      this.inputs = inputs;
     }
   
 }

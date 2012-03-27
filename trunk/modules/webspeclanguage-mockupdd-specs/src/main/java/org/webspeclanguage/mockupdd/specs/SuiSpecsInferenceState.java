@@ -72,12 +72,15 @@ public class SuiSpecsInferenceState {
   private List<SelectableRepetitionSpec> selectableRepetitionSpecs = new ArrayList<SelectableRepetitionSpec>();
   private List<WidgetActionsSpec> widgetActionsSpecs = new ArrayList<WidgetActionsSpec>();
   private List<ClassMappingSpec<CompositeWidget>> classMappingCompositeSpecs = new ArrayList<ClassMappingSpec<CompositeWidget>>();
-  private List<ClassMappingSpec<DataBoundWidget>> classMappingSpecs = new ArrayList<ClassMappingSpec<DataBoundWidget>>();
-  private Map<Widget, ClassMappingSpec<CompositeWidget>> cwClassMappingSpecsByWidget;
+  @SuppressWarnings("rawtypes")
+  private List<ClassMappingSpec> classMappingSpecs = new ArrayList<ClassMappingSpec>();
+  @SuppressWarnings("rawtypes")
+  private Map<Widget, ClassMappingSpec> cwClassMappingSpecsByWidget;
   private Map<SimpleWidget, AttributeMappingSpec> attributeMappingSpecsByWidget;
   private Map<TriggerWidget, SaveActionSpec> saveActionSpecsByWidget;
   private Map<TriggerWidget, DeleteActionSpec> deleteActionSpecsByWidget;
 
+  @SuppressWarnings("rawtypes")
   public SuiSpecsInferenceState(SuiModel model) {
     super();
     this.model = model;
@@ -85,7 +88,7 @@ public class SuiSpecsInferenceState {
     this.errors = new ArrayList<SuiModelProcessingError>();
     this.navigationSpecsPerPage = new MultiArrayListHashMap<Page, NavigationSpec>();
     this.classSpecsByName = new HashMap<String, ClassSpec>();
-    this.cwClassMappingSpecsByWidget = new HashMap<Widget, ClassMappingSpec<CompositeWidget>>();
+    this.cwClassMappingSpecsByWidget = new HashMap<Widget, ClassMappingSpec>();
     this.attributeMappingSpecsByWidget = new HashMap<SimpleWidget, AttributeMappingSpec>();
     this.saveActionSpecsByWidget = new HashMap<TriggerWidget, SaveActionSpec>();
     this.deleteActionSpecsByWidget = new HashMap<TriggerWidget, DeleteActionSpec>();
@@ -151,16 +154,21 @@ public class SuiSpecsInferenceState {
     return this.model;
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  public void addClassMappingSpec(ClassMappingSpec mapping) {
-    Validate.notNull(mapping);
-    
-    if(SuiUtil.isComposite(mapping.getWidget())){
-        this.cwClassMappingSpecsByWidget.put(mapping.getWidget(), (ClassMappingSpec<CompositeWidget>)mapping);
-        this.getClassMappingCompositeSpecs().add((ClassMappingSpec<CompositeWidget>)mapping);
-    }
-    
-    this.getClassMappingSpecs().add((ClassMappingSpec<DataBoundWidget>)mapping);
+//  @SuppressWarnings({ "rawtypes", "unchecked" })
+//  public void addClassMappingSpec(ClassMappingSpec mapping) {
+//    Validate.notNull(mapping);
+//    if (SuiUtil.isComposite(mapping.getWidget())){
+//        this.cwClassMappingSpecsByWidget.put(mapping.getWidget(), (ClassMappingSpec<CompositeWidget>)mapping);
+//        this.getClassMappingCompositeSpecs().add((ClassMappingSpec<CompositeWidget>)mapping);
+//    }
+//    this.getClassMappingSpecs().add((ClassMappingSpec<DataBoundWidget>)mapping);
+//  }
+  
+  public void addInputPanelSpec(InputPanelSpec cs) {
+    Validate.notNull(cs);
+    this.inputPanelSpecs.add(cs);
+    this.cwClassMappingSpecsByWidget.put(cs.getWidget(), cs);
+    this.getClassMappingSpecs().add(cs);
   }
   
   public ClassMappingSpec<CompositeWidget> getClassMappingSpecForWidget(CompositeWidget w) {
@@ -289,7 +297,8 @@ public class SuiSpecsInferenceState {
 	return classMappingCompositeSpecs;
   }
 
-  public void setClassMappingSpecs(List<ClassMappingSpec<DataBoundWidget>> classMappingSpecs) {
+  @SuppressWarnings("rawtypes")
+  public void setClassMappingSpecs(List<ClassMappingSpec> classMappingSpecs) {
 	this.classMappingSpecs = classMappingSpecs;
   }
 
@@ -298,8 +307,23 @@ public class SuiSpecsInferenceState {
     this.deleteActionSpecs.add(deleteActionSpec);
   }
 
-  public List<ClassMappingSpec<DataBoundWidget>> getClassMappingSpecs() {
+  @SuppressWarnings("rawtypes")
+  public List<ClassMappingSpec> getClassMappingSpecs() {
 	return classMappingSpecs;
+  }
+
+  public void addPanelClassMappingSpec(PanelClassMappingSpec cs) {
+    Validate.notNull(cs);
+    this.panelClassMappingSpecs.add(cs);
+    this.cwClassMappingSpecsByWidget.put(cs.getWidget(), cs);
+    this.getClassMappingSpecs().add(cs);
+  }
+
+  public void addRepetitionClassMappingSpec(RepetitionClassMappingSpec cs) {
+    Validate.notNull(cs);
+    this.repetitionClassMappingSpecs.add(cs);
+    this.cwClassMappingSpecsByWidget.put(cs.getWidget(), cs);
+    this.getClassMappingSpecs().add(cs);
   }
 
 
