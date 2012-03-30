@@ -18,4 +18,14 @@
 @implementation CheckBoxModel : WidgetModel
 {
 }
+
+- (id) init
+{
+	[super init];
+	
+	// MOCKUP PROPERTIES
+	[self addProperty: @"Checked" value: @"true"];
+	
+	return self;
+}
 @end

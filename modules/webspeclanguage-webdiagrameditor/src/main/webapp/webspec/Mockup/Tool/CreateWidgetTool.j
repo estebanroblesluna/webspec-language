@@ -45,7 +45,9 @@
 		[widget switchToEditMode];
 	} else {
 	    [self activateSelectionTool];
-	    [aDrawing addFigure: [_figureClass newAt: aPoint]];    
+	    var widget = [_figureClass newAt: aPoint];
+	    [aDrawing addFigure: widget];
+	    [widget switchToEditMode];
 	}
 }
 @end

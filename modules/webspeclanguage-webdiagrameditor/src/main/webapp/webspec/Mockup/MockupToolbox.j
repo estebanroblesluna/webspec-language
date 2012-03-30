@@ -32,8 +32,12 @@
 	//[self addSeparator];
 	
 	[self addTool: [CreateWidgetTool drawing: _drawing figure: [ButtonFigure class]] withTitle: @"Widget" image: @"Resources/Button.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [LabelFigure class]] withTitle: @"Label" image: @"Resources/Label.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [CheckBoxFigure class]] withTitle: @"CheckBox" image: @"Resources/CheckBox.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [RadioButtonFigure class]] withTitle: @"RadioButton" image: @"Resources/RadioButton.gif"];
+	[self addTool: [CreateWidgetTool drawing: _drawing figure: [TextFieldFigure class]] withTitle: @"TextField" image: @"Resources/TextField.gif"];
 	
 	//[self addSeparator];
 }
-
+                                               
 @end
