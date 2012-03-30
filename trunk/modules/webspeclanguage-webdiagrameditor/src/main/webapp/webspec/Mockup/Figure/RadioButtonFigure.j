@@ -15,12 +15,12 @@
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation ButtonFigure : MockupFigure 
+@implementation RadioButtonFigure : MockupFigure 
 { 
 	CPTextField _label;
 } 
 
-+ (ButtonFigure) newAt: (CGPoint) aPoint
++ (RadioButtonFigure) newAt: (CGPoint) aPoint
 {
 	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
 	var widget = [[self new] initWithFrame: frame];
@@ -32,14 +32,14 @@
 	self = [super initWithFrame: aFrame andModelFeature: @"Name"];
 	if (self) {
 		
-		[self addAllHandles];
-		
+		[self addLeftRightHandles];
+
 		//DRAW WIDGET NAME
 		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"Button"];
+		[label setStringValue: @"RadioButton"];
 		[label setTextColor:[CPColor blackColor]];
 		[label sizeToFit];
-		[label setFrameOrigin: CGPointMake(0, 0)];
+		[label setFrameOrigin: CGPointMake(30, 0)];
 		[self addSubview: label];
 		_label = label;
 	
@@ -49,15 +49,21 @@
 
 - (void) drawRect:(CGRect)rect on: (id)context
 {
-	//DRAW RECTANGLE AND LABEL
-        var radius = 10.0;
+	
+	//DRAW BACKGROUND
         CGContextSetFillColor(context, [CPColor whiteColor]); 
-        CGContextFillRoundedRectangleInRect(context, [self bounds], radius, YES, YES, YES, YES); 
-        CGContextSetFillColor(context, [self borderColor]); 
-        CGContextSetLineWidth(context, 3);
-        CGContextSetStrokeColor(context, [self borderColor]);
-        CGContextStrokeRoundedRectangleInRect(context, [self bounds], radius, YES, YES, YES, YES);
-        [_label setCenter: CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2)];
+        CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
+        
+        //DRAW
+	CGContextSetStrokeColor(context, [self borderColor]);
+	CGContextSetFillColor(context, [self borderColor]);
+	CGContextSetLineWidth(context, 2);
+	CGContextStrokeEllipseInRect(context, CGRectMake(5, 5, 15, 15));
+	
+	// DRAW MARK
+	CGContextFillEllipseInRect(context, CGRectMake(8, 8, 9, 9));
+        
+        [_label setBounds: CGRectMake(0, 0, rect.size.width - 30, rect.size.height)];
 }
 
 - (CPTextField) getEditableLabel

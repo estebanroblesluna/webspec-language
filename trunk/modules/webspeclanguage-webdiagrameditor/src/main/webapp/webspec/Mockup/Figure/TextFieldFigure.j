@@ -15,12 +15,12 @@
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation ButtonFigure : MockupFigure 
+@implementation TextFieldFigure : MockupFigure 
 { 
 	CPTextField _label;
 } 
 
-+ (ButtonFigure) newAt: (CGPoint) aPoint
++ (TextFieldFigure) newAt: (CGPoint) aPoint
 {
 	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
 	var widget = [[self new] initWithFrame: frame];
@@ -33,13 +33,13 @@
 	if (self) {
 		
 		[self addAllHandles];
-		
+
 		//DRAW WIDGET NAME
 		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"Button"];
+		[label setStringValue: @"TextField"];
 		[label setTextColor:[CPColor blackColor]];
 		[label sizeToFit];
-		[label setFrameOrigin: CGPointMake(0, 0)];
+		[label setFrameOrigin: CGPointMake(7, 3)];
 		[self addSubview: label];
 		_label = label;
 	
@@ -49,15 +49,17 @@
 
 - (void) drawRect:(CGRect)rect on: (id)context
 {
-	//DRAW RECTANGLE AND LABEL
-        var radius = 10.0;
+	
+	//DRAW BACKGROUND
         CGContextSetFillColor(context, [CPColor whiteColor]); 
-        CGContextFillRoundedRectangleInRect(context, [self bounds], radius, YES, YES, YES, YES); 
-        CGContextSetFillColor(context, [self borderColor]); 
-        CGContextSetLineWidth(context, 3);
-        CGContextSetStrokeColor(context, [self borderColor]);
-        CGContextStrokeRoundedRectangleInRect(context, [self bounds], radius, YES, YES, YES, YES);
-        [_label setCenter: CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2)];
+        CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
+        
+        //DRAW TEXTBOX
+	CGContextSetStrokeColor(context, [self borderColor]);
+	CGContextSetLineWidth(context, 3);
+	CGContextStrokeRect(context, [self bounds]);
+        
+        [_label setBounds: CGRectMake(0, 0, rect.size.width - 7, rect.size.height - 3)];
 }
 
 - (CPTextField) getEditableLabel
