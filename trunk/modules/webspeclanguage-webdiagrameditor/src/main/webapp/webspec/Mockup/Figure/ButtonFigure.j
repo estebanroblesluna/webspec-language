@@ -15,34 +15,20 @@
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation ButtonFigure : MockupFigure 
+@implementation ButtonFigure : LabeledFigure 
 { 
-	CPTextField _label;
-} 
-
-+ (ButtonFigure) newAt: (CGPoint) aPoint
-{
-	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
-	var widget = [[self new] initWithFrame: frame];
-	return widget;
 }
 
 - (id) initWithFrame: (CGRect) aFrame
 { 
-	self = [super initWithFrame: aFrame andModelFeature: @"Name"];
+	self = [self 
+	    initWithFrame: aFrame 
+	    model: [ButtonModel new]
+	    modelFeature: @"Name" 
+	    labelValue: "Button" 
+	    labelLocation: CGPointMake(0, 0)];	    
 	if (self) {
-		
 		[self addAllHandles];
-		
-		//DRAW WIDGET NAME
-		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"Button"];
-		[label setTextColor:[CPColor blackColor]];
-		[label sizeToFit];
-		[label setFrameOrigin: CGPointMake(0, 0)];
-		[self addSubview: label];
-		_label = label;
-	
 		return self;
 	}
 }
@@ -57,12 +43,7 @@
         CGContextSetLineWidth(context, 3);
         CGContextSetStrokeColor(context, [self borderColor]);
         CGContextStrokeRoundedRectangleInRect(context, [self bounds], radius, YES, YES, YES, YES);
-        [_label setCenter: CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2)];
-}
-
-- (CPTextField) getEditableLabel
-{
-	return _label;	
+        [[self label] setCenter: CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2)];
 }
 
 @end

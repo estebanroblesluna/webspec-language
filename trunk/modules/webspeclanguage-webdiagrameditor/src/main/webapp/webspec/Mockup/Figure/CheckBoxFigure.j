@@ -15,68 +15,47 @@
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation CheckBoxFigure : MockupFigure 
+@implementation CheckBoxFigure : LabeledFigure 
 { 
-	CPTextField _label;
 } 
-
-+ (CheckBoxFigure) newAt: (CGPoint) aPoint
-{
-	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
-	var widget = [[self new] initWithFrame: frame];
-	[widget setChecked: NO];
-	return widget;
-}
 
 - (id) initWithFrame: (CGRect) aFrame
 { 
-	self = [super initWithFrame: aFrame andModelFeature: @"Name"];
+	self = [self 
+	    initWithFrame: aFrame 
+	    model: [CheckBoxModel new]
+	    modelFeature: @"Name" 
+	    labelValue: "CheckBox" 
+	    labelLocation: CGPointMake(30, 0)];	    
 	if (self) {
-		
 		[self addLeftRightHandles];
-
-		//DRAW WIDGET NAME
-		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"CheckBox"];
-		[label setTextColor:[CPColor blackColor]];
-		[label sizeToFit];
-		[label setFrameOrigin: CGPointMake(30, 0)];
-		[self addSubview: label];
-		_label = label;
-	
 		return self;
 	}
 }
 
 - (void) drawRect:(CGRect)rect on: (id)context
 {
-	
-	//DRAW CHECKBOX BACKGROUND
-        CGContextSetFillColor(context, [CPColor whiteColor]); 
-        CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
-        
-        //DRAW CHECKBOX
-	CGContextSetStrokeColor(context, [self borderColor]);
-	CGContextSetLineWidth(context, 2);
-        CGContextStrokeRect(context, CGRectMake(5, 5, 15, 15), YES, YES, YES, YES);
+    //DRAW BACKGROUND
+    CGContextSetFillColor(context, [CPColor whiteColor]); 
+    CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
+    
+    //DRAW CHECKBOX
+    CGContextSetStrokeColor(context, [self borderColor]);
+    CGContextSetLineWidth(context, 2);
+    CGContextStrokeRect(context, CGRectMake(5, 5, 15, 15), YES, YES, YES, YES);
 
-        //DRAW MARK
-        if ([self checked]) {
-		CGContextBeginPath(context);
-		CGContextMoveToPoint(context, 10, 10);
-		CGContextAddLineToPoint(context, 15, 15);
-		CGContextAddLineToPoint(context, 25, 0);
-		CGContextSetStrokeColor(context, [self borderColor]);
-		CGContextSetLineWidth(context, 2);
-		CGContextStrokePath(context);
-	}
-        [_label setBounds: CGRectMake(0, 0, rect.size.width - 30, rect.size.height)];
+    //DRAW MARK
+    if ([self checked]) {
+        CGContextBeginPath(context);
+        CGContextMoveToPoint(context, 10, 10);
+        CGContextAddLineToPoint(context, 15, 15);
+        CGContextAddLineToPoint(context, 25, 0);
+        CGContextSetStrokeColor(context, [self borderColor]);
+        CGContextSetLineWidth(context, 2);
+        CGContextStrokePath(context);
+    }
+    [[self label] setBounds: CGRectMake(0, 0, rect.size.width - 30, rect.size.height)];
         
-}
-
-- (CPTextField) getEditableLabel
-{
-	return _label;	
 }
 
 - (BOOL) checked
@@ -84,7 +63,7 @@
 	return [[[self model] propertyValue: @"Checked"] boolValue];	
 }
 
-- (void) setChecked: (BOOL) checked
+- (void) checked: (BOOL) checked
 {
 	return [[self model] propertyValue: @"Checked" be: checked];	
 }

@@ -20,9 +20,10 @@
 	id _modelFeature;
 } 
 
-- (void) initWithFrame: aFrame andModelFeature: aModelFeature
+- (void) initWithFrame: aFrame model: aModel modelFeature: aModelFeature
 {
 	[super initWithFrame: aFrame];
+	[self model: aModel]
 	[self checkModelFeature: aModelFeature];
 	return self;
 }
@@ -86,6 +87,7 @@
 {
 	var value = [self value];
 	[self setLabelValue: value];
+	[self setNeedsDisplay: YES];
 }
 
 - (void) setLabelValue: (String) aValue

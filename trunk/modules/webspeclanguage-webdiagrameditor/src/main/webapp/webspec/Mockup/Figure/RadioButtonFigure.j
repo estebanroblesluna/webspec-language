@@ -15,34 +15,20 @@
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation RadioButtonFigure : MockupFigure 
-{ 
-	CPTextField _label;
-} 
-
-+ (RadioButtonFigure) newAt: (CGPoint) aPoint
+@implementation RadioButtonFigure : LabeledFigure 
 {
-	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
-	var widget = [[self new] initWithFrame: frame];
-	return widget;
 }
 
 - (id) initWithFrame: (CGRect) aFrame
 { 
-	self = [super initWithFrame: aFrame andModelFeature: @"Name"];
+	self = [self 
+	    initWithFrame: aFrame 
+	    model: [RadioButtonModel new]
+	    modelFeature: @"Name" 
+	    labelValue: "RadioButton" 
+	    labelLocation: CGPointMake(30, 0)];	    
 	if (self) {
-		
 		[self addLeftRightHandles];
-
-		//DRAW WIDGET NAME
-		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"RadioButton"];
-		[label setTextColor:[CPColor blackColor]];
-		[label sizeToFit];
-		[label setFrameOrigin: CGPointMake(30, 0)];
-		[self addSubview: label];
-		_label = label;
-	
 		return self;
 	}
 }
@@ -51,24 +37,31 @@
 {
 	
 	//DRAW BACKGROUND
-        CGContextSetFillColor(context, [CPColor whiteColor]); 
-        CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
+    CGContextSetFillColor(context, [CPColor whiteColor]); 
+    CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
         
-        //DRAW
+    //DRAW RADIO
 	CGContextSetStrokeColor(context, [self borderColor]);
 	CGContextSetFillColor(context, [self borderColor]);
 	CGContextSetLineWidth(context, 2);
 	CGContextStrokeEllipseInRect(context, CGRectMake(5, 5, 15, 15));
 	
 	// DRAW MARK
-	CGContextFillEllipseInRect(context, CGRectMake(8, 8, 9, 9));
+	if ([self checked]) {
+	    CGContextFillEllipseInRect(context, CGRectMake(8, 8, 9, 9));
+	}
         
-        [_label setBounds: CGRectMake(0, 0, rect.size.width - 30, rect.size.height)];
+    [[self label] setBounds: CGRectMake(0, 0, rect.size.width - 30, rect.size.height)];
 }
 
-- (CPTextField) getEditableLabel
+- (BOOL) checked
 {
-	return _label;	
+	return [[[self model] propertyValue: @"Checked"] boolValue];	
+}
+
+- (void) checked: (BOOL) checked
+{
+	return [[self model] propertyValue: @"Checked" be: checked];	
 }
 
 @end
