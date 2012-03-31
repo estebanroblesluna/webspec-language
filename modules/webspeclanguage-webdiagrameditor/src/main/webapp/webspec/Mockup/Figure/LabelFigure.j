@@ -15,34 +15,20 @@
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation LabelFigure : MockupFigure 
-{ 
-	CPTextField _label;
-} 
-
-+ (LabelFigure) newAt: (CGPoint) aPoint
+@implementation LabelFigure : LabeledFigure 
 {
-	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
-	var widget = [[self new] initWithFrame: frame];
-	return widget;
 }
 
 - (id) initWithFrame: (CGRect) aFrame
 { 
-	self = [super initWithFrame: aFrame andModelFeature: @"Name"];
+	self = [self 
+	    initWithFrame: aFrame
+	    model: [LabelModel new]
+	    modelFeature: @"Name" 
+	    labelValue: "Label" 
+	    labelLocation: CGPointMake(0, 0)];	    
 	if (self) {
-		
 		[self addLeftRightHandles];
-
-		//DRAW WIDGET NAME
-		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"Label"];
-		[label setTextColor:[CPColor blackColor]];
-		[label sizeToFit];
-		[label setFrameOrigin: CGPointMake(0, 0)];
-		[self addSubview: label];
-		_label = label;
-	
 		return self;
 	}
 }
@@ -52,12 +38,7 @@
 	//DRAW BACKGROUND
         CGContextSetFillColor(context, [CPColor whiteColor]); 
         CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
-        [_label setBounds: CGRectMake(0, 0, rect.size.width, rect.size.height)];
-}
-
-- (CPTextField) getEditableLabel
-{
-	return _label;	
+        [[self label] setBounds: CGRectMake(0, 0, rect.size.width, rect.size.height)];
 }
 
 @end

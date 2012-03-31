@@ -19,8 +19,13 @@
 
 @import "../WebSpec/Model/WidgetModel.j"
 @import "../WebSpec/Model/ButtonModel.j"
+@import "../WebSpec/Model/CheckBoxModel.j"
+@import "../WebSpec/Model/RadioButtonModel.j"
+@import "../WebSpec/Model/TextFieldModel.j"
+@import "../WebSpec/Model/LabelModel.j"
 
 @import "Figure/MockupFigure.j"
+@import "Figure/LabeledFigure.j"
 @import "Figure/ButtonFigure.j"
 @import "Figure/LabelFigure.j"
 @import "Figure/CheckBoxFigure.j"

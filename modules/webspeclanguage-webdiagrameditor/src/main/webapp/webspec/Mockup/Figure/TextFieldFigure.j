@@ -15,34 +15,20 @@
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation TextFieldFigure : MockupFigure 
-{ 
-	CPTextField _label;
-} 
-
-+ (TextFieldFigure) newAt: (CGPoint) aPoint
+@implementation TextFieldFigure : LabeledFigure 
 {
-	var frame = CGRectMake(aPoint.x, aPoint.y, 100, 25);
-	var widget = [[self new] initWithFrame: frame];
-	return widget;
 }
 
 - (id) initWithFrame: (CGRect) aFrame
 { 
-	self = [super initWithFrame: aFrame andModelFeature: @"Name"];
+	self = [self 
+	    initWithFrame: aFrame 
+	    model: [TextFieldModel new]
+	    modelFeature: @"Name" 
+	    labelValue: "TextField" 
+	    labelLocation: CGPointMake(7, 3)];	    
 	if (self) {
-		
-		[self addAllHandles];
-
-		//DRAW WIDGET NAME
-		var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-		[label setStringValue: @"TextField"];
-		[label setTextColor:[CPColor blackColor]];
-		[label sizeToFit];
-		[label setFrameOrigin: CGPointMake(7, 3)];
-		[self addSubview: label];
-		_label = label;
-	
+		[self addLeftRightHandles];
 		return self;
 	}
 }
@@ -51,20 +37,15 @@
 {
 	
 	//DRAW BACKGROUND
-        CGContextSetFillColor(context, [CPColor whiteColor]); 
-        CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
+    CGContextSetFillColor(context, [CPColor whiteColor]); 
+    CGContextFillRect(context, [self bounds], YES, YES, YES, YES); 
         
-        //DRAW TEXTBOX
+    //DRAW TEXTBOX
 	CGContextSetStrokeColor(context, [self borderColor]);
 	CGContextSetLineWidth(context, 3);
 	CGContextStrokeRect(context, [self bounds]);
         
-        [_label setBounds: CGRectMake(0, 0, rect.size.width - 7, rect.size.height - 3)];
-}
-
-- (CPTextField) getEditableLabel
-{
-	return _label;	
+    [[self label] setBounds: CGRectMake(0, 0, rect.size.width - 7, rect.size.height - 3)];
 }
 
 @end
