@@ -8,6 +8,7 @@
 
 @import <Foundation/Foundation.j>
 @import <AppKit/AppKit.j>
+@import <CupDraw/CupDraw.j>
 
 @import "AppController.j"
 
