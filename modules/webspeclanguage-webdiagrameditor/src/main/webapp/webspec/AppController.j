@@ -14,7 +14,8 @@
 
 @import <Foundation/CPObject.j>
 @import <Foundation/Foundation.j>
-@import "Hotdraw/Hotdraw.j"
+@import <CupDraw/CupDraw.j>
+
 @import "WebSpec/WebSpec.j"
 
 
