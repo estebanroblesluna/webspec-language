@@ -23,6 +23,7 @@ import java.util.*;
 public interface LinkElement {
 
   String getId();
+  String getName();
   void addLink(Link link);
   Map<String, Parameter> getInputParameters();
   Map<String,Parameter> getOutputParameters();

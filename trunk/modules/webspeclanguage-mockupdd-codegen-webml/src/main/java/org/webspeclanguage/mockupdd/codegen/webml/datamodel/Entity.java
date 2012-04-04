@@ -34,11 +34,11 @@ public class Entity implements DataModelElement{
 		this.attributes = attributes;
 	}
 	public void addAttribute(Attribute at){
-	  this.getAttributes().put(at.getId(), at);
+		this.getAttributes().put(at.getId(), at);
 	}
 	public void addRelationship(Relationship rel){
-    this.getRelationships().put(rel.getId(), rel);
-  }
+		this.getRelationships().put(rel.getId(), rel);
+	}
 	public String getName() {
 		return name;
 	}
