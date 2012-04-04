@@ -27,9 +27,9 @@ public class SelectableRepetitionSpec2MultiChoiceIU implements Spec2ContentUnit{
 
   private SelectableRepetitionSpec selectableRepetitionSpec;
   private MultiChoiceIndexUnit multiChoiceIndexUnit;
-  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+  private HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel;
   
-  public SelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public SelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
     super();
     this.setSelectableRepetitionSpec(selectableRepetitionSpec);
     this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
@@ -59,11 +59,11 @@ public class SelectableRepetitionSpec2MultiChoiceIU implements Spec2ContentUnit{
     this.selectableRepetitionSpec = selectableRepetitionSpec;
   }
 
-  public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public void setHypertextSpec2WebMLWebModel(HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
   }
 
-  public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+  public HypertextSpecs2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 	return hypertextSpec2WebMLWebModel;
   }
 

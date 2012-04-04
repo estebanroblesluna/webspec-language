@@ -11,9 +11,9 @@ public class NavigationSpec2IntraNavigationUnitToUnit {
 
 	private ClassMappingSpec<CompositeWidget> classMappingSpec;
 	private TransportLink link;
-	private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;	
+	private HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel;	
 	
-	public NavigationSpec2IntraNavigationUnitToUnit(ClassMappingSpec<CompositeWidget> classMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+	public NavigationSpec2IntraNavigationUnitToUnit(ClassMappingSpec<CompositeWidget> classMappingSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 		super();
 		this.classMappingSpec = classMappingSpec;
 		this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
@@ -23,7 +23,7 @@ public class NavigationSpec2IntraNavigationUnitToUnit {
 		WebModelFacade webModelFacade = WebModelFacade.getWebModelFacade();
 	    WebModelFactory webFactory = webModelFacade.getWebModelFactory();
 	    ContentUnit fromCU = this.getHypertextSpec2WebMLWebModel().findContentUnit((this.getClassMappingSpec().getDataSource()));
-	    ContentUnit toCU = this.getHypertextSpec2WebMLWebModel().findContentUnit(this.getClassMappingSpec().getWidget().getParent());	   
+	    ContentUnit toCU = this.getHypertextSpec2WebMLWebModel().findContentUnit(this.getClassMappingSpec().getWidget());	   
 		this.setLink(webFactory.createTransportLink(fromCU.getName() + "to" + toCU.getName(), true, fromCU, toCU));		
 	}
 	
@@ -44,11 +44,11 @@ public class NavigationSpec2IntraNavigationUnitToUnit {
 	}
 
 	public void setHypertextSpec2WebMLWebModel(
-			HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+			HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 		this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
 	}
 
-	public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+	public HypertextSpecs2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 		return hypertextSpec2WebMLWebModel;
 	}
 }

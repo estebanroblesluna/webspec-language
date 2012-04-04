@@ -26,7 +26,7 @@ import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
 import org.webspeclanguage.mockupdd.sui.model.ComboBox;
 
-public class HypertextSpec2WebMLWebModel {
+public class HypertextSpecs2WebMLWebModel {
 	
 	private DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel;
 	private HypertextSpecFacade hypertextSpecFacade = HypertextSpecFacade
@@ -54,7 +54,7 @@ public class HypertextSpec2WebMLWebModel {
 	private java.util.List<NavigationSpec2NavigationPUnitToPUnit> navigationSpec2NavigationPUnitToPUnitList = new ArrayList<NavigationSpec2NavigationPUnitToPUnit>();
 	private WebModel webModel;
 	
-	public HypertextSpec2WebMLWebModel(SuiSpecsInferenceState suiSpecsInferenceState,DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel) {
+	public HypertextSpecs2WebMLWebModel(SuiSpecsInferenceState suiSpecsInferenceState,DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel) {
 		this.setSuiSpecsInferenceState(suiSpecsInferenceState);
 		this.setDataSpecs2WebMLDataModel(dataSpecs2WebMLDataModel);
 	}
@@ -109,14 +109,13 @@ public class HypertextSpec2WebMLWebModel {
 	}
 
 	public void transformUnit2UnitNavigationSpec() {
-
-		for(ClassMappingSpec<CompositeWidget> classMappingSpec: this.getSuiSpecsInferenceState().getClassMappingCompositeSpecs()){
+	
+		for(ClassMappingSpec<CompositeWidget> classMappingSpec: this.getSuiSpecsInferenceState().getClassMappingSpecs()){
 			if(classMappingSpec.getDataSource() != null){
 				this.getNavigationSpec2IntraNavigationUnitToUnitList().add(
 						this.getWebModelTransformationFactory().transformNavigationSpec2IntraNavigationUnitToUnit(classMappingSpec, this));
 			}
 		}
-		
 	}
 
 	public void transformSeletableRepetitionSpec(){				
@@ -337,7 +336,7 @@ public class HypertextSpec2WebMLWebModel {
 		return specs2CompositeUnits;
 	}
 		
-//<<<<<<<<<<<<<<--------------------TRANSFORMATION COMPLEMENTARY METHODS ------------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<--------------------TRANSFORMATION UTIL METHODS ------------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>
 	
 	public org.webspeclanguage.mockupdd.codegen.webml.webmodel.Page getPage(org.webspeclanguage.mockupdd.sui.model.Page to) {
 

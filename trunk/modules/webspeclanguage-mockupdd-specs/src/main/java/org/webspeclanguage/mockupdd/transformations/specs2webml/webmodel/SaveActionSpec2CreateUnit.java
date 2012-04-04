@@ -28,9 +28,9 @@ public class SaveActionSpec2CreateUnit {
   
   private SaveActionSpec saveActionSpec;
   private CreateUnit createUnit;
-  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+  private HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel;
   
-  public SaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
+  public SaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel){
     super();
     this.setSaveActionSpec(saveActionSpec);
     this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
@@ -60,11 +60,11 @@ public class SaveActionSpec2CreateUnit {
     this.createUnit = createUnit;
   }
 
-  public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public void setHypertextSpec2WebMLWebModel(HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
   }
 
-  public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+  public HypertextSpecs2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 	return hypertextSpec2WebMLWebModel;
   }
 }

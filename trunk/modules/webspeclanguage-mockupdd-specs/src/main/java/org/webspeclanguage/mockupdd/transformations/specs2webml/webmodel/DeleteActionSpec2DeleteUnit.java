@@ -27,8 +27,8 @@ public class DeleteActionSpec2DeleteUnit {
 
   private DeleteActionSpec deleteActionSpec;
   private DeleteUnit deleteUnit;
-  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
-  public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  private HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel;
+  public DeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
     super();
     this.deleteActionSpec = deleteActionSpec;
     this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
@@ -59,11 +59,11 @@ public class DeleteActionSpec2DeleteUnit {
     this.deleteUnit = deleteUnit;
   }
 
-public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+public void setHypertextSpec2WebMLWebModel(HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
 }
 
-public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+public HypertextSpecs2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 	return hypertextSpec2WebMLWebModel;
 }
 }

@@ -48,9 +48,11 @@ public final class DMTransformationFacade {
 	  this.getDataSpecsTransformations().add(dataSpecs2WebMLDataModel);
 	  return dataSpecs2WebMLDataModel;
   }
+  
   public void setDataSpecsTransformations(List<DataSpecs2WebMLDataModel> dataSpecsTransformations) {
 	this.dataSpecsTransformations = dataSpecsTransformations;
   }
+  
   public List<DataSpecs2WebMLDataModel> getDataSpecsTransformations() {
 	return dataSpecsTransformations;
   }

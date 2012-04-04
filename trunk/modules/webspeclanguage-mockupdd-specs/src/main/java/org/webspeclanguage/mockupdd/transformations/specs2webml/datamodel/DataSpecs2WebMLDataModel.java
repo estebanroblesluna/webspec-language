@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModel;
-import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Entity;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFacade;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.DataModelFactory;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Entity;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.EntityDecorator;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Relationship;
 import org.webspeclanguage.mockupdd.codegen.webml.datamodel.RelationshipDecorator;
-import org.webspeclanguage.mockupdd.specs.SuiSpecsConfig;
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
 import org.webspeclanguage.mockupdd.specs.data.AssociationSpec;
 import org.webspeclanguage.mockupdd.specs.data.ClassSpec;

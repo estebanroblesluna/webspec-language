@@ -49,12 +49,13 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
     return attributeTypeSpec2Type;
   }
 
-  public ClassSpec2Entity transformClassSpec2Entity(ClassSpec classSpec) {
-    
+  public ClassSpec2Entity transformClassSpec2Entity(ClassSpec classSpec) {	  
     List<AttributeSpec2Attribute> attributeSpec2Attributes = new ArrayList<AttributeSpec2Attribute>();
     for(AttributeSpec atts : classSpec.getAttributes()){
     	attributeSpec2Attributes.add(this.transformAttributeSpec2Attribute(atts));      
     }
+    
+    
     //we add the Entity OID
     attributeSpec2Attributes.add(this.transformAttributeSpec2Attribute(new AttributeSpecImpl("OID", AttributeTypeSpec.INTEGER)));
     
@@ -63,9 +64,7 @@ public class DMTransformationFactoryImpl implements DMTransformationFactory {
     for(AttributeSpec2Attribute as2a : classSpec2Entity.getAttributeSpec2Attributes()){
     	AttributeDecorator attribute = as2a.getAttribute();
     	classSpec2Entity.getEntity().addAttribute(attribute);
-    }
-    
-    
+    }    
     return classSpec2Entity;    
   }
 

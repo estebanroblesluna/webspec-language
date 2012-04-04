@@ -27,8 +27,8 @@ public class InputPanelSpec2EntryUnit implements Spec2ContentUnit{
   
   private InputPanelSpec inputPanelSpec;
   private EntryUnit entryUnit;
-  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
-  public InputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  private HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel;
+  public InputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
     super();
     this.setInputPanelSpec(inputPanelSpec);
     this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
@@ -59,11 +59,11 @@ public class InputPanelSpec2EntryUnit implements Spec2ContentUnit{
     this.entryUnit = entryUnit;
   }
 
-public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+public void setHypertextSpec2WebMLWebModel(HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
 }
 
-public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+public HypertextSpecs2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 	return hypertextSpec2WebMLWebModel;
 }
   

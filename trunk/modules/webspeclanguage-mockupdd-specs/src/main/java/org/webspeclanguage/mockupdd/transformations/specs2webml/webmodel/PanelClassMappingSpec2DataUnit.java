@@ -27,9 +27,9 @@ public class PanelClassMappingSpec2DataUnit implements Spec2ContentUnit{
   
     private DataUnit dataUnit; 
     private PanelClassMappingSpec panel;
-    private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
+    private HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel;
 
-    public PanelClassMappingSpec2DataUnit(PanelClassMappingSpec panel, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
+    public PanelClassMappingSpec2DataUnit(PanelClassMappingSpec panel, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel){
       super();
       this.setPanel(panel);
       this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
@@ -61,11 +61,11 @@ public class PanelClassMappingSpec2DataUnit implements Spec2ContentUnit{
     }
 
 	public void setHypertextSpec2WebMLWebModel(
-			HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+			HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 		this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
 	}
 
-	public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+	public HypertextSpecs2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 		return hypertextSpec2WebMLWebModel;
 	}
 

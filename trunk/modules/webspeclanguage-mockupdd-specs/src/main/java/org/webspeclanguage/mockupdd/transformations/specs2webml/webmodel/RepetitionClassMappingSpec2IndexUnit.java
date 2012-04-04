@@ -27,8 +27,8 @@ public class RepetitionClassMappingSpec2IndexUnit implements Spec2ContentUnit {
   
   private RepetitionClassMappingSpec repetition;
   private IndexUnit indexUnit;
-  private HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel;
-  public RepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetition, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
+  private HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel;
+  public RepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetition, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel){
     super();
     this.setRepetition(repetition);
     this.setHypertextSpec2WebMLWebModel(hypertextSpec2WebMLWebModel);
@@ -59,11 +59,11 @@ public class RepetitionClassMappingSpec2IndexUnit implements Spec2ContentUnit {
     this.indexUnit = indexUnit;
   }
 
-public void setHypertextSpec2WebMLWebModel(HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+public void setHypertextSpec2WebMLWebModel(HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 	this.hypertextSpec2WebMLWebModel = hypertextSpec2WebMLWebModel;
 }
 
-public HypertextSpec2WebMLWebModel getHypertextSpec2WebMLWebModel() {
+public HypertextSpecs2WebMLWebModel getHypertextSpec2WebMLWebModel() {
 	return hypertextSpec2WebMLWebModel;
 }
 

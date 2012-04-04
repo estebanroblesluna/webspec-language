@@ -37,7 +37,6 @@ import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
 import org.webspeclanguage.mockupdd.specs.hypertext.WidgetActionsSpec;
 import org.webspeclanguage.mockupdd.specs.processors.SuiModelProcessingError;
 import org.webspeclanguage.mockupdd.sui.model.CompositeWidget;
-import org.webspeclanguage.mockupdd.sui.model.DataBoundWidget;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.SimpleWidget;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
@@ -45,7 +44,6 @@ import org.webspeclanguage.mockupdd.sui.model.TriggerWidget;
 import org.webspeclanguage.mockupdd.sui.model.Widget;
 import org.webspeclanguage.mockupdd.utils.MultiArrayListHashMap;
 import org.webspeclanguage.mockupdd.utils.MultiListMap;
-import org.webspeclanguage.mockupdd.utils.SuiUtil;
 import org.webspeclanguage.mockupdd.utils.TagIndexer;
 
 
