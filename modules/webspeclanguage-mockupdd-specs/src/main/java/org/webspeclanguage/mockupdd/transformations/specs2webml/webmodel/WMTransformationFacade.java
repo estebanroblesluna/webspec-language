@@ -26,7 +26,7 @@ public final class WMTransformationFacade {
 
 	private WMTransformationFactory wmTransformationFactory;
 	private static WMTransformationFacade wmTransformationFacade;
-	private List<HypertextSpec2WebMLWebModel> hypertextSpecsTransformations = new ArrayList<HypertextSpec2WebMLWebModel>();
+	private List<HypertextSpecs2WebMLWebModel> hypertextSpecsTransformations = new ArrayList<HypertextSpecs2WebMLWebModel>();
 
 	private WMTransformationFacade() {
 		wmTransformationFactory = new WMTransformationFactoryImpl();
@@ -43,22 +43,20 @@ public final class WMTransformationFacade {
 		return wmTransformationFactory;
 	}
 
-	public HypertextSpec2WebMLWebModel transformHypertext(
-			SuiSpecsInferenceState suiSpecsInferenceState,DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel) {
-		HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel = new HypertextSpec2WebMLWebModel(
-				suiSpecsInferenceState,dataSpecs2WebMLDataModel);
+	public HypertextSpecs2WebMLWebModel transformHypertext(SuiSpecsInferenceState suiSpecsInferenceState,DataSpecs2WebMLDataModel dataSpecs2WebMLDataModel) {
+		
+		HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel = new HypertextSpecs2WebMLWebModel(suiSpecsInferenceState,dataSpecs2WebMLDataModel);
 		hypertextSpec2WebMLWebModel.transform();
-		this.getHypertextSpecsTransformations()
-				.add(hypertextSpec2WebMLWebModel);
+		this.getHypertextSpecsTransformations().add(hypertextSpec2WebMLWebModel);
 		return hypertextSpec2WebMLWebModel;
 	}
 
 	public void setHypertextSpecsTransformations(
-			List<HypertextSpec2WebMLWebModel> hypertextSpecsTransformations) {
+			List<HypertextSpecs2WebMLWebModel> hypertextSpecsTransformations) {
 		this.hypertextSpecsTransformations = hypertextSpecsTransformations;
 	}
 
-	public List<HypertextSpec2WebMLWebModel> getHypertextSpecsTransformations() {
+	public List<HypertextSpecs2WebMLWebModel> getHypertextSpecsTransformations() {
 		return hypertextSpecsTransformations;
 	}
 

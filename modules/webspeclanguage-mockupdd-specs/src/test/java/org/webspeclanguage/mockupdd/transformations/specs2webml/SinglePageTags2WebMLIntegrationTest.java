@@ -13,24 +13,25 @@
 package org.webspeclanguage.mockupdd.transformations.specs2webml;
 
 import org.junit.Test;
+import org.webspeclanguage.mockupdd.codegen.webml.datamodel.Entity;
+import org.webspeclanguage.mockupdd.codegen.webml.webmodel.unit.DataUnit;
 import org.webspeclanguage.mockupdd.specs.SuiSpecsInferenceState;
-import org.webspeclanguage.mockupdd.specs.data.impl.DataSpecFacade;
-import org.webspeclanguage.mockupdd.specs.data.impl.DataSpecFactoryImpl;
 import org.webspeclanguage.mockupdd.specs.processors.ClassAndAttributeSpecInferer;
 import org.webspeclanguage.mockupdd.specs.processors.CompositeSuiModelProcessor;
 import org.webspeclanguage.mockupdd.specs.processors.NavigationSpecInferer;
 import org.webspeclanguage.mockupdd.specs.processors.SaveAndDeleteActionSpecInferer;
 import org.webspeclanguage.mockupdd.specs.processors.SuiModelProcessor;
-import org.webspeclanguage.mockupdd.sui.model.Button;
 import org.webspeclanguage.mockupdd.sui.model.Label;
 import org.webspeclanguage.mockupdd.sui.model.Page;
 import org.webspeclanguage.mockupdd.sui.model.Panel;
 import org.webspeclanguage.mockupdd.sui.model.SuiModel;
 import org.webspeclanguage.mockupdd.sui.model.SuiTestCase;
-import org.webspeclanguage.mockupdd.sui.model.TextBox;
 import org.webspeclanguage.mockupdd.sui.model.tags.TagApplicationException;
 import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DMTransformationFacade;
 import org.webspeclanguage.mockupdd.transformations.specs2webml.datamodel.DataSpecs2WebMLDataModel;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel.HypertextSpecs2WebMLWebModel;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel.SUIPage2Page;
+import org.webspeclanguage.mockupdd.transformations.specs2webml.webmodel.WMTransformationFacade;
 
 /**
  * @author Jose Matias Rivero
@@ -39,12 +40,14 @@ public class SinglePageTags2WebMLIntegrationTest extends SuiTestCase {
 
   SuiModelProcessor processor;
   DMTransformationFacade dmTransformationFacade;
+  WMTransformationFacade wmTransformationFacade;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     this.processor = new CompositeSuiModelProcessor(new ClassAndAttributeSpecInferer(), new NavigationSpecInferer(), new SaveAndDeleteActionSpecInferer());
     this.dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
+    this.wmTransformationFacade = WMTransformationFacade.getWMTransformationFacade();
   }
   
   @Test
@@ -59,15 +62,35 @@ public class SinglePageTags2WebMLIntegrationTest extends SuiTestCase {
     this.getSuiConfig().createTagApplication(panel, "Data", "Data", "Class1");
     this.getSuiConfig().createTagApplication(label1, "Data", "Data", "Class1.attribute");
     
+
     SuiSpecsInferenceState specs = new SuiSpecsInferenceState(model);
     this.processor.process(specs);
-    assertEquals(0, specs.getErrors().size());
-    
-       
+    assertEquals(0, specs.getErrors().size());     
+   
     DataSpecs2WebMLDataModel d = this.dmTransformationFacade.transformData(specs);
     
     assertEquals(1, d.getDataModel().getEntitys().keySet().size());
-    d.getDataModel().getEntitys().clear();
+    
+    Entity ent1 = (Entity)d.getDataModel().getEntitys().values().toArray()[0];
+    
+    assertEquals("Class1", ent1.getName()); 
+    
+    assertEquals(2, ent1.getAttributes().size());
+    
+    HypertextSpecs2WebMLWebModel h = this.wmTransformationFacade.transformHypertext(specs, d);
+      
+    assertEquals(1, h.getSuiPage2Pages().size());
+    
+    assertEquals(1, h.getPanelClassMapping2DataUnits().size());
+    
+    SUIPage2Page suiPage2Page = (SUIPage2Page) h.getSuiPage2Pages().toArray()[0];
+
+    assertEquals("page1" , suiPage2Page.getWebmlPage().getName());
+    
+    DataUnit dataUnit = (DataUnit) suiPage2Page.getWebmlPage().getContentUnits().values().toArray()[0];
+    
+    assertEquals("panel1", dataUnit.getName());
+    
     
     
     /*
@@ -79,36 +102,6 @@ public class SinglePageTags2WebMLIntegrationTest extends SuiTestCase {
     
   }
   
-  @Test
-  public void testEntryUnitAndEntityGeneration() throws TagApplicationException {
-    Page p1 = this.getFactory().createPage("page1", 0, 0, 0, 0, "page1", "page1");
-    Panel panel = this.getFactory().createPanel("panel1", 0, 0, 0, 0, "page1");
-    p1.addChild(panel);
-    TextBox textBox = this.getFactory().createTextBox("tb1", 0, 0, 0 , 0);
-    panel.addChild(textBox);
-    Button button = this.getFactory().createButton("button", 0, 0, 0, 0, "Save");
-    panel.addChild(button);
-    SuiModel model = this.getFactory().createSuiModel();
-    model.addPage(p1);
-    this.getSuiConfig().createTagApplication(panel, "Data", "Data", "Class1");
-    this.getSuiConfig().createTagApplication(textBox, "Data", "Data", "Class1.attribute");
-    this.getSuiConfig().createTagApplication(button, "Data", "Save", "Class1");
-    
-    SuiSpecsInferenceState specs = new SuiSpecsInferenceState(model);
-    this.processor.process(specs);
-    assertEquals(0, specs.getErrors().size());
-    
-    DataSpecs2WebMLDataModel d2 = this.dmTransformationFacade.transformData(specs);
-    assertEquals(1, d2.getDataModel().getEntitys().keySet().size());
-    
-    /*
-     * There should be
-     * - 1 WebML Entity called "Class1", with an attribute called "attribute"
-     * - 1 WebML Page
-     * - 1 WebML EntryUnit associated to "Class1" entity
-     * - 1 WebML Link to the page itself, with an intermediate create/update operation
-     */
-    
-  }
+  
   
 }

@@ -28,7 +28,7 @@ import org.webspeclanguage.mockupdd.specs.hypertext.SelectableRepetitionSpec;
  */
 public class WMTransformationFactoryImpl implements WMTransformationFactory {
 
-  public NavigationSpec2NavigationPUnitToPUnit transformNavigationSpec2NavigationPUnitToPUnit(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
+  public NavigationSpec2NavigationPUnitToPUnit transformNavigationSpec2NavigationPUnitToPUnit(NavigationSpec navigationSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel){
 	  
 	  NavigationSpec2NavigationPUnitToPUnit navigationSpec2NavigationPUnitToPUnit = 
 		  new NavigationSpec2NavigationPUnitToPUnit(navigationSpec,hypertextSpec2WebMLWebModel);
@@ -36,14 +36,14 @@ public class WMTransformationFactoryImpl implements WMTransformationFactory {
 	  return navigationSpec2NavigationPUnitToPUnit;
   }
   
-  public NavigationSpec2IntraNavigationUnitToUnit transformNavigationSpec2IntraNavigationUnitToUnit(ClassMappingSpec classMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public NavigationSpec2IntraNavigationUnitToUnit transformNavigationSpec2IntraNavigationUnitToUnit(ClassMappingSpec classMappingSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 	  
 	  NavigationSpec2IntraNavigationUnitToUnit navigationSpec2IntraNavigationUnitToUnit = 
 		  new NavigationSpec2IntraNavigationUnitToUnit(classMappingSpec,hypertextSpec2WebMLWebModel);
 	  navigationSpec2IntraNavigationUnitToUnit.transform();
 	  return navigationSpec2IntraNavigationUnitToUnit;	  
   }
-  public NavigationSpec2NavigationPageToPage transformNavigationSpec2NavigationPageToPage(NavigationSpec navigationSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel){
+  public NavigationSpec2NavigationPageToPage transformNavigationSpec2NavigationPageToPage(NavigationSpec navigationSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel){
 	  
 	  NavigationSpec2NavigationPageToPage navigationSpec2NavigationPageToPage = 
 		  new NavigationSpec2NavigationPageToPage(navigationSpec,hypertextSpec2WebMLWebModel);
@@ -51,49 +51,49 @@ public class WMTransformationFactoryImpl implements WMTransformationFactory {
 	  return navigationSpec2NavigationPageToPage;	  
   }
 	
-  public RepetitionClassMappingSpec2IndexUnit transformRepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetitionClassMappingSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public RepetitionClassMappingSpec2IndexUnit transformRepetitionClassMappingSpec2IndexUnit(RepetitionClassMappingSpec repetitionClassMappingSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
     RepetitionClassMappingSpec2IndexUnit suiRepetition2IndexUnit = new RepetitionClassMappingSpec2IndexUnit(repetitionClassMappingSpec,hypertextSpec2WebMLWebModel);
     suiRepetition2IndexUnit.transform();
     return suiRepetition2IndexUnit;   
   }
 
-  public PanelClassMappingSpec2DataUnit transformPanelClassMappingSpec2DataUnit(PanelClassMappingSpec suiPanel, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public PanelClassMappingSpec2DataUnit transformPanelClassMappingSpec2DataUnit(PanelClassMappingSpec suiPanel, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 
     PanelClassMappingSpec2DataUnit suiPanel2DataUnit = new PanelClassMappingSpec2DataUnit(suiPanel,hypertextSpec2WebMLWebModel);
     suiPanel2DataUnit.transform();
     return suiPanel2DataUnit;
   }
 
-  public SUIPage2Page transformSUIPage2Page(org.webspeclanguage.mockupdd.sui.model.Page suiPage, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public SUIPage2Page transformSUIPage2Page(org.webspeclanguage.mockupdd.sui.model.Page suiPage, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
     SUIPage2Page suiPage2Page = new SUIPage2Page(suiPage,hypertextSpec2WebMLWebModel);
     suiPage2Page.transform();
     return suiPage2Page;
   }
 
-  public SaveActionSpec2CreateUnit transformSaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public SaveActionSpec2CreateUnit transformSaveActionSpec2CreateUnit(SaveActionSpec saveActionSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
     SaveActionSpec2CreateUnit saveActionSpec2CreateUnit = new SaveActionSpec2CreateUnit(saveActionSpec,hypertextSpec2WebMLWebModel);
     saveActionSpec2CreateUnit.transform();
     return saveActionSpec2CreateUnit;
   }
 
-  public DeleteActionSpec2DeleteUnit transformDeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public DeleteActionSpec2DeleteUnit transformDeleteActionSpec2DeleteUnit(DeleteActionSpec deleteActionSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
 
     DeleteActionSpec2DeleteUnit deleteActionSpec2DeleteUnit = new DeleteActionSpec2DeleteUnit(deleteActionSpec,hypertextSpec2WebMLWebModel);
     deleteActionSpec2DeleteUnit.transform();
     return deleteActionSpec2DeleteUnit;
   }
   
-  public InputPanelSpec2EntryUnit transformInputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public InputPanelSpec2EntryUnit transformInputPanelSpec2EntryUnit(InputPanelSpec inputPanelSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
     InputPanelSpec2EntryUnit suiInputPanel2EntryUnit = new InputPanelSpec2EntryUnit(inputPanelSpec,hypertextSpec2WebMLWebModel);
     suiInputPanel2EntryUnit.transform();
     return suiInputPanel2EntryUnit;
   }
   
-  public SelectableRepetitionSpec2MultiChoiceIU transformSelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec, HypertextSpec2WebMLWebModel hypertextSpec2WebMLWebModel) {
+  public SelectableRepetitionSpec2MultiChoiceIU transformSelectableRepetitionSpec2MultiChoiceIU(SelectableRepetitionSpec selectableRepetitionSpec, HypertextSpecs2WebMLWebModel hypertextSpec2WebMLWebModel) {
     
     SelectableRepetitionSpec2MultiChoiceIU selectableRepetitionSpec2MultiChoiceIU = new SelectableRepetitionSpec2MultiChoiceIU(selectableRepetitionSpec,hypertextSpec2WebMLWebModel);
     selectableRepetitionSpec2MultiChoiceIU.transform();
