@@ -126,10 +126,20 @@
 
 - (void) setFrameOrigin: (CGPoint) aPoint
 {
+	//CPLog.info(@"setFrameOrigin");
 	if (_extraArgument == nil) {
 		[_targetFigure performSelector: _setSelector withObject: aPoint];
 	} else {
 		[_targetFigure performSelector: _setSelector withObject: _extraArgument withObject: aPoint];
+	}
+}
+
+- (void) moveTo: (CGPoint) aPoint
+{
+	//CPLog.info(@"moveTo");
+	//CPLog.info([_targetFigure isEditable]);
+	if ([_targetFigure isEditable]) {
+		[super moveTo: aPoint];
 	}
 }
 

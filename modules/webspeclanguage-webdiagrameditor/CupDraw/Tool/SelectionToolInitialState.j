@@ -27,7 +27,6 @@
 - (id) initWithTool: (StateMachineTool) aTool
 { 
 	[super initWithTool: aTool];
-	[aTool clearSelection];
 	return self;
 }
 
@@ -36,11 +35,13 @@
 	var point = [anEvent locationInWindow];
 	var figureUnderPoint = [[_tool drawing] figureAt: point];
 	figureUnderPoint = [_tool selectableFigure: figureUnderPoint];
-	//CPLog.debug(figureUnderPoint);
 
-	if (figureUnderPoint != nil) {
+	if (figureUnderPoint != nil && (figureUnderPoint != [_tool drawing])) {
 		[_tool select: figureUnderPoint];
 		[self transitionTo: [SelectedState tool: _tool initialDragPoint: point]];
+	} else {
+		[_tool clearSelection];
+		[self transitionTo: [MarqueeSelectionState tool: _tool initialDragPoint: point]];
 	}
 }
 @end

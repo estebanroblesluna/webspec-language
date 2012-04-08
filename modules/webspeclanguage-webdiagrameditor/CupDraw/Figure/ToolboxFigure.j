@@ -62,6 +62,37 @@
 
 - (void) addTool: (Tool) aTool withTitle: (id) aTitle image: (id) url
 {
+	var button = [self 
+		addButtonWithTitle: aTitle 
+		image: url
+		action: @selector(selectTool:)];
+	[_buttonsMapping setObject: aTool forKey: button];
+}
+
+- (void) selectTool: (CPButton) aButton
+{
+	var tool = [_buttonsMapping objectForKey: aButton];
+	[_drawing tool: tool];
+}
+
+- (void) addCommand: (Command) aCommand withTitle: (id) aTitle image: (id) url
+{
+	var button = [self 
+		addButtonWithTitle: aTitle 
+		image: url 
+		action: @selector(selectCommand:)];
+	[_buttonsMapping setObject: aCommand forKey: button];
+}
+
+- (void) selectCommand: (CPButton) aButton
+{
+	var commandClass = [_buttonsMapping objectForKey: aButton];
+	var command = [commandClass drawing: _drawing];
+	[command execute];
+}
+
+- (CPButton) addButtonWithTitle: (id) aTitle image: (id) url action: (SEL) aSelector
+{
 	var buttonWidth = 30;
 	var buttonHeight = 25;
 	var button = [CPButton buttonWithTitle: @""];
@@ -81,14 +112,11 @@
 	[button setBordered: YES];
 	[button setBezelStyle: CPRegularSquareBezelStyle];
 	[button setFrameSize: CGSizeMake(buttonWidth, buttonHeight)];
+	[button setTarget: self];
+	[button setAction: aSelector];
 
 	[self addSubview: button];
 
-	[button setTarget: self];
-	[button setAction: @selector(selectTool:)];
-
-	[_buttonsMapping setObject: aTool forKey: button];
-	
 	if (!_firstColumn) {
 		_currentY = _currentY + buttonHeight;
 	}
@@ -96,12 +124,7 @@
 	[self setFrameSize: newSize];
 	
 	_firstColumn = !_firstColumn;
-}
-
-- (void) selectTool: (CPButton) aButton
-{
-	var tool = [_buttonsMapping objectForKey: aButton];
-	[_drawing tool: tool];
+	return button;
 }
 
 - (void) drawRect:(CGRect)rect on: (id)context

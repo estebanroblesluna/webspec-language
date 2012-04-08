@@ -15,58 +15,32 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
-{
-	Drawing _drawing;
-}
-
-+ (id) drawing: (Drawing) aDrawing
-{
-	return [[self new] initWithDrawing: aDrawing];
-}
-
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	_drawing = aDrawing;
-	return self;
-}
-
-- (Drawing) drawing	 
-{
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	var tool = [SelectionTool drawing: _drawing];
-	[_drawing tool: tool];
-}
-
-- (void) activate
+@implementation AlignRightCommand : Command
 {
 }
 
-- (void) release
+- (void) undo
 {
 }
 
-- (void) mouseDown:(CPEvent) anEvent	 
+- (void) execute
 {
-}
+	var tool = [_drawing tool];
+	var selectedFigures = [tool selectedFigures];
+	
+	if ([selectedFigures count] > 1) {
+	    var referenceFigure = [selectedFigures objectAtIndex: 0];
+		var x = [referenceFigure topRight].x;
+		
+		for (var i = 1; i < [selectedFigures count]; i++) { 
+		    var figure = [selectedFigures objectAtIndex: i];
+		    var oldFrameOrigin = [figure frameOrigin];
+		    var frameSize = [figure frameSize];
+			var newPosition = CGPointMake(x - frameSize.width, oldFrameOrigin.y);
+			[figure moveTo: newPosition];
+		}
 
-- (void) mouseDragged:(CPEvent) anEvent
-{
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
+		[tool updateInitialPoints];
+	}
 }
 @end

@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
+@implementation Command : CPObject
 {
 	Drawing _drawing;
 }
@@ -31,42 +31,11 @@
 	return self;
 }
 
-- (Drawing) drawing	 
-{
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	var tool = [SelectionTool drawing: _drawing];
-	[_drawing tool: tool];
-}
-
-- (void) activate
+- (void) undo
 {
 }
 
-- (void) release
-{
-}
-
-- (void) mouseDown:(CPEvent) anEvent	 
-{
-}
-
-- (void) mouseDragged:(CPEvent) anEvent
-{
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
+- (void) execute
 {
 }
 @end

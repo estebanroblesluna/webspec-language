@@ -24,6 +24,12 @@
 	[super addSubview: aFigure];
 }
 
+
+- (void) removeFigure: (Figure) aFigure
+{
+	[aFigure removeFromSuperview];
+}
+
 - (void) addSubview: (id) aView
 {
 	[CPException raise: "invalid method" reason:"Use addFigure instead"];
@@ -32,6 +38,26 @@
 - (void) clearFigures
 {
 	[self setSubviews: [CPMutableArray array]];
+}
+
+- (id) figures
+{
+	var figures = [CPMutableArray array];
+	[figures addObjectsFromArray: [self subviews]];
+	return figures;
+}
+
+- (CPArray) figuresIn: (id) rect
+{
+	var result = [CPMutableArray array];
+	var figures = [self subviews];
+	for (var i = 0; i < [figures count]; i++) { 
+		var figure = [figures objectAtIndex:i];
+		if (CGRectContainsRect(rect, [figure frame])) {
+			[result addObject: figure];
+		}
+	}
+	return result;
 }
 
 @end

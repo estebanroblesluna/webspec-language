@@ -45,10 +45,20 @@
 
 - (void) select: (Figure) aFigure
 {
-	[_selectedFigures addObject: aFigure];
-	[aFigure select];
-	[_drawing selectedFigure: aFigure];
-	[_initialPositions setObject: [aFigure frameOrigin] forKey: aFigure];
+	if (![_selectedFigures containsObjectIdenticalTo: aFigure]) {
+		[_selectedFigures addObject: aFigure];
+		[aFigure select];
+		[_drawing selectedFigure: aFigure];
+		[_initialPositions setObject: [aFigure frameOrigin] forKey: aFigure];
+	}
+}
+
+- (void) unselect: (Figure) aFigure
+{
+	[_selectedFigures removeObject: aFigure];
+	[aFigure unselect];
+	[_drawing selectedFigure: nil];
+	[_initialPositions removeObjectForKey: aFigure];
 }
 
 - (CPPoint) initialPositionOf: (Figure) aFigure
