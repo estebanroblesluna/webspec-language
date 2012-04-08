@@ -46,12 +46,14 @@
 @import "PropertiesFigure.j"
 @import "IconLabelFigure.j"
 @import "RectangleFigure.j"
+@import "GroupFigure.j"
 
 @import "ToolState.j"
 @import "SelectionToolInitialState.j"
 @import "SelectedState.j"
 @import "MoveFiguresState.j"
 @import "MoveHandleState.j"
+@import "MarqueeSelectionState.j"
 
 @import "Tool.j"
 @import "StateMachineTool.j"
@@ -59,6 +61,22 @@
 @import "AbstractCreateFigureTool.j"
 @import "CreateImageTool.j"
 @import "CreateLabelTool.j"
+
+@import "Command.j"
+@import "GroupCommand.j"
+@import "UngroupCommand.j"
+@import "LockCommand.j"
+@import "UnlockCommand.j"
+@import "BringToFrontCommand.j"
+@import "SendToBackCommand.j"
+@import "BringForwardCommand.j"
+@import "SendBackwardCommand.j"
+@import "AlignLeftCommand.j"
+@import "AlignRightCommand.j"
+@import "AlignCenterCommand.j"
+@import "AlignTopCommand.j"
+@import "AlignBottomCommand.j"
+@import "AlignMiddleCommand.j"
 
 @import "EditorDelegate.j"
 

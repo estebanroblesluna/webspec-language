@@ -63,6 +63,16 @@
 
 - (id) figureAt: (CPPoint) aPoint
 {
+	var figureInSubfigures = [self primSubfiguresAt: aPoint];
+	if (figureInSubfigures != nil) {
+		return figureInSubfigures;
+	}
+
+	//otherwise check our frame
+	return [self primFigureAt: aPoint];
+}
+
+- (id) primSubfiguresAt: (CPPoint) aPoint {
 	//check our figures if any of them return a not nil result
 	var figures = [self subviews];
 	
@@ -87,12 +97,9 @@
 			return result;
 		}
 	}
-
-	return [self primFigureAt: aPoint];
 }
 
-- (id) primFigureAt: (CPPoint) aPoint {	
-	//otherwise check our frame
+- (id) primFigureAt: (CPPoint) aPoint {
 	var frame = [self frame];
 	if (CPRectContainsPoint(frame, aPoint)) {
 		return self;
@@ -129,6 +136,15 @@
 {
 	if (_moveable) {
 		[self setFrameOrigin: aPoint];
+	}
+}
+
+- (void) translateBy: (CGPoint) aPoint
+{
+	if (_moveable) {
+		var frameOrigin = [self frameOrigin];
+		var newFrameOrigin = CGPointMake(frameOrigin.x + aPoint.x, frameOrigin.y + aPoint.y);
+		[self setFrameOrigin: newFrameOrigin];
 	}
 }
 
@@ -350,9 +366,19 @@
 	return _backgroundColor;
 }
 
+- (void) backgroundColor: (CPColor) aColor
+{
+	_backgroundColor = aColor;
+}
+
 - (id) foregroundColor
 {
 	return _foregroundColor;
+}
+
+- (void) foregroundColor: (CPColor) aColor
+{
+	_foregroundColor = aColor;
 }
 
 - (id) model

@@ -79,6 +79,7 @@ var frameworkTask = framework (productName, function(frameworkTask)
 
 	var list = new FileList(
 	   '*.j',
+	   'Command/*.j',
 	   'Core/*.j',
 	   'Extension/*.j',
 	   'Figure/*.j',

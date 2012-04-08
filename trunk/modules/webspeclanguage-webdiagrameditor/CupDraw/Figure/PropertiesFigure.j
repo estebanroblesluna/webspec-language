@@ -31,7 +31,8 @@
 
 + (PropertiesFigure) newAt: (CGPoint) aPoint drawing: (Drawing) aDrawing
 {
-	var figure = [[self new] initWithFrame: [self defaultFrame] drawing: aDrawing];
+	var frame = CGRectMake(aPoint.x, aPoint.y, 700, 100);
+	var figure = [[self new] initWithFrame: frame drawing: aDrawing];
 	return figure;
 }
 

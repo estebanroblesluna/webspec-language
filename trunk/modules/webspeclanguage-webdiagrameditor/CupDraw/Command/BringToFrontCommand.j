@@ -15,58 +15,29 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
-{
-	Drawing _drawing;
-}
-
-+ (id) drawing: (Drawing) aDrawing
-{
-	return [[self new] initWithDrawing: aDrawing];
-}
-
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	_drawing = aDrawing;
-	return self;
-}
-
-- (Drawing) drawing	 
-{
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	var tool = [SelectionTool drawing: _drawing];
-	[_drawing tool: tool];
-}
-
-- (void) activate
+@implementation BringToFrontCommand : Command
 {
 }
 
-- (void) release
+- (void) undo
 {
 }
 
-- (void) mouseDown:(CPEvent) anEvent	 
+- (void) execute
 {
-}
+	var tool = [_drawing tool];
+	var selectedFigures = [tool selectedFigures];
+	
+	if ([selectedFigures count] == 1) {
+		var subviews = [_drawing subviews];
 
-- (void) mouseDragged:(CPEvent) anEvent
-{
-}
+	    var figure = [selectedFigures objectAtIndex: 0];
+		var insertIndex = [subviews count] - 1;
+	    var otherFigure = [subviews objectAtIndex: insertIndex];
 
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
+		[tool unselect: figure];
+		[_drawing addSubview: figure positioned: CPWindowAbove relativeTo: otherFigure];
+		[tool select: figure];
+	}
 }
 @end

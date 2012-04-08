@@ -145,10 +145,16 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 	}
 }
 
+- (Tool) tool
+{
+	return _currentTool;
+}
+
 - (void) tool: (Tool) aTool
 {
 	[_currentTool release];
 	_currentTool = aTool;
+	[_currentTool activate];
 }
 
 - (id) selectedFigure

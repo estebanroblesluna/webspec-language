@@ -15,58 +15,29 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
-{
-	Drawing _drawing;
-}
-
-+ (id) drawing: (Drawing) aDrawing
-{
-	return [[self new] initWithDrawing: aDrawing];
-}
-
-- (id) initWithDrawing: (Drawing) aDrawing 
-{ 
-	_drawing = aDrawing;
-	return self;
-}
-
-- (Drawing) drawing	 
-{
-	return _drawing;
-}
-
-- (void) activateSelectionTool
-{
-	var tool = [SelectionTool drawing: _drawing];
-	[_drawing tool: tool];
-}
-
-- (void) activate
+@implementation UngroupCommand : Command
 {
 }
 
-- (void) release
+- (void) undo
 {
 }
 
-- (void) mouseDown:(CPEvent) anEvent	 
+- (void) execute
 {
-}
-
-- (void) mouseDragged:(CPEvent) anEvent
-{
-}
-
-- (void) mouseUp:(CPEvent) anEvent
-{
-}
-
-- (void) keyUp: (CPEvent) anEvent
-{
-}
-
-- (void) keyDown: (CPEvent) anEvent
-{
+	var tool = [_drawing tool];
+	var selectedFigures = [tool selectedFigures];
+	
+	if ([selectedFigures count] == 1) {
+		var figure = [selectedFigures objectAtIndex: 0];
+		//check groupfigure class
+		var ungroupedFigures = [figure figures];
+		[tool unselect: figure];
+		[figure ungroup];
+		for (var i = 0; i < [ungroupedFigures count]; i++) { 
+		    var ungroupedFigure = [ungroupedFigures objectAtIndex: i];
+			[tool select: ungroupedFigure];
+		}
+	}
 }
 @end
