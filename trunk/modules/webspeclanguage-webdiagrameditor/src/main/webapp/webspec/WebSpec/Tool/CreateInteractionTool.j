@@ -21,6 +21,7 @@
 
 - (void) createFigureAt: (id) aPoint on: (id) aDrawing
 {
+	//CPLog.debug("Selection tool");
 	var interaction = [InteractionFigure newAt: aPoint];
 	[aDrawing addFigure: interaction];
 	

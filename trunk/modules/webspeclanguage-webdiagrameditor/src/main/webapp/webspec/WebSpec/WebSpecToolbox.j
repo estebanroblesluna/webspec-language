@@ -58,6 +58,27 @@
 	[self addTool: [CreateGeneratorTool drawing: _drawing figure: [OneOfManyArraysFigure class]] withTitle: @"One of many arrays" image: @"Resources/OneOfArray.gif"];
 	[self addTool: [CreateGeneratorTool drawing: _drawing figure: [RandomStringFigure class]] withTitle: @"Random string" image: @"Resources/StringGenerator.gif"];
 	[self addTool: [CreateGeneratorTool drawing: _drawing figure: [UniformDistributionFigure class]] withTitle: @"Uniform distribution of numbers" image: @"Resources/UniformNumberDistribution.gif"];
+
+	[self addSeparator];
+
+	[self addCommand: [GroupCommand class] withTitle: @"Group" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addCommand: [UngroupCommand class] withTitle: @"Ungroup" image: @"Resources/UniformNumberDistribution.gif"];
+
+	[self addCommand: [LockCommand class] withTitle: @"Lock" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addCommand: [UnlockCommand class] withTitle: @"Unlock" image: @"Resources/UniformNumberDistribution.gif"];
+
+	[self addCommand: [BringToFrontCommand class] withTitle: @"Bring to front" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addCommand: [SendToBackCommand class] withTitle: @"Send to back" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/UniformNumberDistribution.gif"];
+
+	[self addCommand: [AlignLeftCommand class] withTitle: @"Align left" image: @"Resources/AlignLeft.gif"];
+	[self addCommand: [AlignCenterCommand class] withTitle: @"Align center" image: @"Resources/AlignCenter.gif"];
+	[self addCommand: [AlignRightCommand class] withTitle: @"Align right" image: @"Resources/AlignRight.gif"];
+	[self addCommand: [AlignTopCommand class] withTitle: @"Align top" image: @"Resources/AlignTop.gif"];
+	[self addCommand: [AlignMiddleCommand class] withTitle: @"Align middle" image: @"Resources/AlignMiddle.gif"];
+	[self addCommand: [AlignBottomCommand class] withTitle: @"Align bottom" image: @"Resources/AlignBottom.gif"];
+
 }
 
 @end
