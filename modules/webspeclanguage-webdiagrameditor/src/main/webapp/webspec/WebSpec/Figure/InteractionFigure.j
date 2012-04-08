@@ -121,21 +121,6 @@
 	return [self borderColor];
 }
 
-- (bool) isSelectable
-{ 
-	return true;
-}
-
-- (bool) isMoveable
-{ 
-	return true;
-}
-
-- (bool) isEditable
-{ 
-	return true;
-}
-
 - (void) addWidget:(Widget) aWidget
 {
 	[_widgetContainer addFigure: aWidget];

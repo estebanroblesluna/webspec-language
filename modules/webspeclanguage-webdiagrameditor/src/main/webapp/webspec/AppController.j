@@ -49,7 +49,7 @@
 	var toolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(20,20)];
 	[drawing toolbox: toolbox];
 	
-	var properties = [PropertiesFigure newAt: CGPointMake(20,400) drawing: drawing];
+	var properties = [PropertiesFigure newAt: CGPointMake(20,520) drawing: drawing];
 	[drawing properties: properties];
 	
 	[drawing setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
