@@ -12,6 +12,7 @@
  */
 package org.webspeclanguage.mockupdd.specs.processors;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class SaveAndDeleteActionSpecInferer extends SuiModelProcessor {
   @Override
   public void process(SuiSpecsInferenceState specs) {
     this.specParameterVisitor = new SaveAndDeleteSpecParameterVisitor(specs);
-    Collection<TagApplication> tags = specs.getTagIndexer().getTagApplicationsFor(SuiDefaultConfig.getInstance().getTag("Data", "Save"));
+    Collection<TagApplication> tags = new ArrayList<TagApplication>(specs.getTagIndexer().getTagApplicationsFor(SuiDefaultConfig.getInstance().getTag("Data", "Save")));
     tags.addAll(specs.getTagIndexer().getTagApplicationsFor(SuiDefaultConfig.getInstance().getTag("Data", "Delete")));
     for (TagApplication saveTag : tags) {
       this.specParameterVisitor.setCurrentTagApplication(saveTag);

@@ -37,7 +37,7 @@ public class DataDelete2IndexUnitDeleteUnit extends SuiTestCase {
 
 	@Test
 	public void testEntryUnitAndEntityGeneration() throws TagApplicationException {
-		/*Page p1 = this.getFactory().createPage("page1", 0, 0, 0, 0, "page1", "page1");
+		Page p1 = this.getFactory().createPage("page1", 0, 0, 0, 0, "page1", "page1");
 		Panel panel = this.getFactory().createPanel("panel1", 0, 0, 0, 0, "page1");
 		p1.addChild(panel);
 		
@@ -51,6 +51,6 @@ public class DataDelete2IndexUnitDeleteUnit extends SuiTestCase {
 		SuiSpecsInferenceState specs = new SuiSpecsInferenceState(model);
 		this.processor.process(specs);
 		assertEquals(0, specs.getErrors().size());
-	*/
+	
 	}
 }

@@ -169,7 +169,6 @@ public class ClassAndAttributeSpecInferer extends SuiModelProcessor {
       createSpecVisitor.setCurrentClassSpec(cs);
       createSpecVisitor.setState(this.state);
       ClassMappingSpec classMappingSpec = this.currentTagApplication.getWidget().accept(createSpecVisitor);
-      this.currentTagApplication.getWidget().accept(createSpecVisitor);
       setDataSourceIfPresent(valueContent, classMappingSpec, this.currentTagApplication, this.state);
       return cs;
     }
