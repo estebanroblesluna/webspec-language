@@ -29,14 +29,14 @@ public class SinglePageIntraNavigationTest extends SuiTestCase{
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		this.processor = new CompositeSuiModelProcessor(new NavigationSpecInferer(), new ClassAndAttributeSpecInferer(), new SaveAndDeleteActionSpecInferer());
+		this.processor = new CompositeSuiModelProcessor(new ClassAndAttributeSpecInferer(), new NavigationSpecInferer(), new SaveAndDeleteActionSpecInferer());
 		this.dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
 		this.wmTransformationFacade = WMTransformationFacade.getWMTransformationFacade();
 	}
 
 	public void testLinkSpecInference() throws TagApplicationException {
 		
-		/*Page page1 = this.getFactory().createPage("page1", 0, 0, 0, 0, "page1", "page1");
+		Page page1 = this.getFactory().createPage("page1", 0, 0, 0, 0, "page1", "page1");
 
 		Panel panel1 = this.getFactory().createPanel("panel1", 0, 0, 0, 0, "page1");
 		page1.addChild(panel1);
@@ -80,7 +80,7 @@ public class SinglePageIntraNavigationTest extends SuiTestCase{
 	    NavigationSpec2IntraNavigationUnitToUnit nav = (NavigationSpec2IntraNavigationUnitToUnit) h.getNavigationSpec2IntraNavigationUnitToUnitList().toArray()[0];
 	    
 	    assertEquals(nav.getLink().getFrom().getName(), "panel1");
-	    assertEquals(nav.getLink().getTo().getName(), "panel2");*/
+	    assertEquals(nav.getLink().getTo().getName(), "panel2");
 		
 	}
 }
