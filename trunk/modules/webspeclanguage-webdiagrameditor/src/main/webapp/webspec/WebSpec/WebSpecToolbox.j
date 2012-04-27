@@ -61,16 +61,16 @@
 
 	[self addSeparator];
 
-	[self addCommand: [GroupCommand class] withTitle: @"Group" image: @"Resources/UniformNumberDistribution.gif"];
-	[self addCommand: [UngroupCommand class] withTitle: @"Ungroup" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addCommand: [GroupCommand class] withTitle: @"Group" image: @"Resources/Group.gif"];
+	[self addCommand: [UngroupCommand class] withTitle: @"Ungroup" image: @"Resources/Ungroup.gif"];
 
-	[self addCommand: [LockCommand class] withTitle: @"Lock" image: @"Resources/UniformNumberDistribution.gif"];
-	[self addCommand: [UnlockCommand class] withTitle: @"Unlock" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addCommand: [LockCommand class] withTitle: @"Lock" image: @"Resources/Lock.gif"];
+	[self addCommand: [UnlockCommand class] withTitle: @"Unlock" image: @"Resources/Unlock.gif"];
 
-	[self addCommand: [BringToFrontCommand class] withTitle: @"Bring to front" image: @"Resources/UniformNumberDistribution.gif"];
-	[self addCommand: [SendToBackCommand class] withTitle: @"Send to back" image: @"Resources/UniformNumberDistribution.gif"];
-	[self addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/UniformNumberDistribution.gif"];
-	[self addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/UniformNumberDistribution.gif"];
+	[self addCommand: [BringToFrontCommand class] withTitle: @"Bring to front" image: @"Resources/BringToFront.gif"];
+	[self addCommand: [SendToBackCommand class] withTitle: @"Send to back" image: @"Resources/SendToBack.gif"];
+	[self addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/BringForward.gif"];
+	[self addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/SendBackward.gif"];
 
 	[self addCommand: [AlignLeftCommand class] withTitle: @"Align left" image: @"Resources/AlignLeft.gif"];
 	[self addCommand: [AlignCenterCommand class] withTitle: @"Align center" image: @"Resources/AlignCenter.gif"];
