@@ -47,7 +47,7 @@ public class MultiPageTags2WebMLIntegrationTest2 extends SuiTestCase {
     super.setUp();
     this.processor = new CompositeSuiModelProcessor(new NavigationSpecInferer(), new ClassAndAttributeSpecInferer(), new SaveAndDeleteActionSpecInferer());
     this.dmTransformationFacade = DMTransformationFacade.getDMTransformationFacade();
-	this.wmTransformationFacade = WMTransformationFacade.getWMTransformationFacade();
+    this.wmTransformationFacade = WMTransformationFacade.getWMTransformationFacade();
   }
   
   public void testLinkSpecInference() throws TagApplicationException {

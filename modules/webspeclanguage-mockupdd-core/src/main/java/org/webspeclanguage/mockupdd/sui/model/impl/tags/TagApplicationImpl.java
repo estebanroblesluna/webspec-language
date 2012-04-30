@@ -101,7 +101,7 @@ public class TagApplicationImpl implements TagApplication {
   }
 
   private void checkParameterCount(Widget widget, Tag tag, List<TagParameterValue> parameterValues) throws TagApplicationException {
-    if (parameterValues.size() < tag.getParameters().size()) {
+    if (parameterValues.size() < tag.getParameters().size() && tag.isParameterStrict()) {
       throw new TagApplicationException(widget, tag, parameterValues, "Parameter provided are less than expected for tag " + tag.getName());
     }
   }

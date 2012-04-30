@@ -251,4 +251,9 @@ public class SuiFactoryImpl implements SuiFactory {
     return new DataPathNodeImpl(className);
   }
 
+  @Override
+  public Tag createTag(String tagName, java.util.List<TagParameter> tagParameters, boolean isParameterStrict, Class< ? extends Widget>... applicableOver) {
+    return new TagImpl(tagName, tagParameters, Arrays.asList(applicableOver), isParameterStrict);
+  }
+
 }

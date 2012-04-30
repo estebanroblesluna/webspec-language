@@ -38,11 +38,14 @@ public class TagParser implements SuiParser<Element, SuiParserContext> {
   }
 
   private List<TagParameterValue> buildParams(Element source, Tag tag, List<String> parsedParams, SuiParserContext parserContext) throws SuiParsingException {
-    if (tag.getParameters().size() > parsedParams.size()) {
+    if (tag.getParameters().size() > parsedParams.size() && tag.isParameterStrict()) {
       throw new SuiParsingException("Actual and formal parameters don't match for tag " + tag.getName(), source);
     }
     List<TagParameterValue> tagParameterValues = new ArrayList<TagParameterValue>();
     for (int iParsedParam = 0; iParsedParam < parsedParams.size(); iParsedParam++) {
+      if (iParsedParam >= tag.getParameters().size()) {
+        break;
+      }
       int iParam = Math.min(tag.getParameters().size() - 1, iParsedParam);
       tagParameterValues.add(parserContext.getSuiFactory().createTagParameterValue(tag.getParameters().get(iParam), parsedParams.get(iParsedParam)));
     }
