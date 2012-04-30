@@ -116,7 +116,13 @@
 - (void) propertyChanged
 {
 	var value = [self value];
+	//CPLog.info("Figure changed  " + self + " value: " + value);
 	[self setLabelValue: value];
+}
+
+- (void) update
+{
+	[self propertyChanged];
 }
 
 - (void) checkModelFeature: (id) aModelFeature

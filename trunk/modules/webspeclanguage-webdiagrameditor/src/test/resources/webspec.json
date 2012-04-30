@@ -1,0 +1,91 @@
+{
+  "figureType": "WebSpecDrawing",
+  "x": 0,
+  "y": 0,
+  "width": 1131,
+  "height": 707,
+  "model": {
+    "Name": "",
+    "Show grid?": true,
+    "Grid size": 20,
+    "Snap to grid?": false,
+    "Floating toolboxes?": true
+  },
+  "subfigures": [
+    {
+      "figureType": "InteractionFigure",
+      "x": 206,
+      "y": 76,
+      "width": 150,
+      "height": 100,
+      "model": {
+        "Name": "Home",
+        "Location": "",
+        "Invariant": ""
+      },
+      "subfigures": [
+        {
+          "figureType": "PanelContainerFigure",
+          "x": 2,
+          "y": 28,
+          "width": 146,
+          "height": 69,
+          "model": {
+            "Name": "widget",
+            "Location": ""
+          },
+          "subfigures": [
+            {
+              "figureType": "LabelFigure",
+              "x": 11,
+              "y": 4,
+              "width": 62,
+              "height": 22,
+              "model": {
+                "Name": "widget",
+                "Location": ""
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "figureType": "InteractionFigure",
+      "x": 424,
+      "y": 259,
+      "width": 150,
+      "height": 100,
+      "model": {
+        "Name": "Search",
+        "Location": "",
+        "Invariant": ""
+      },
+      "subfigures": [
+        {
+          "figureType": "PanelContainerFigure",
+          "x": 2,
+          "y": 28,
+          "width": 146,
+          "height": 69,
+          "model": {
+            "Name": "widget",
+            "Location": ""
+          }
+        }
+      ]
+    },
+    {
+      "figureType": "NavigationFigure",
+      "x": 341,
+      "y": 176,
+      "width": 98,
+      "height": 83,
+      "model": {
+        "Name": "Transition",
+        "Precondition": "",
+        "Actions": ""
+      }
+    }
+  ]
+}

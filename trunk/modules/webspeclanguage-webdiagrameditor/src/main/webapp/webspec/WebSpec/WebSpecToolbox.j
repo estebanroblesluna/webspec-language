@@ -19,6 +19,14 @@
 {
 }
 
+- (id) initializeWith: (Drawing) aDrawing at: (CPPoint) aPoint
+{
+	self = [super initializeWith: aDrawing at: aPoint];
+	if (self) {
+		return self;
+	}
+}
+
 - (void) selectTool: (CPButton) aButton
 {
 	[super selectTool: aButton];
@@ -80,5 +88,4 @@
 	[self addCommand: [AlignBottomCommand class] withTitle: @"Align bottom" image: @"Resources/AlignBottom.gif"];
 
 }
-
 @end

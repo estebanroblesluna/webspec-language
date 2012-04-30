@@ -40,7 +40,6 @@
 		[self activateSelectionTool];
 		var widgetContainerOrigin = [widgetContainer globalToLocal: aPoint];
 		var widget = [_figureClass newAt: widgetContainerOrigin];
-		[widget checkModelFeature: @"Name"];
 		[widgetContainer addWidget: widget];
 		[widget switchToEditMode];
 	}

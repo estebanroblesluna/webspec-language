@@ -19,7 +19,8 @@
 {
 	Drawing _drawing;
 	CPDictionary _buttonsMapping;
-	boolean _firstColumn;
+	int _currentColumn;
+	int _maxColumn;
 	int _currentY;
 }
 
@@ -35,29 +36,25 @@
 	self = [super initWithFrame: frame];
 	if (self) {
 		_drawing = aDrawing;
-		_firstColumn = true;
+		_currentColumn = 1;
+		_maxColumn = 2;
 		_currentY = 15;
 		_selectable = true;
 		_moveable = true;
 		_buttonsMapping = [CPDictionary dictionary];
-		[self addDefaultTools];
 		return self;
 	}
 }
 
-- (void) addDefaultTools
+- (void) columns: (int) columns
 {
-	[self addTool: [SelectionTool drawing: _drawing] withTitle: @"Selection" image: @""];
-	[self addTool: [CreateImageTool drawing: _drawing] withTitle: @"Image" image: @""];
-	[self addTool: [CreateLabelTool drawing: _drawing] withTitle: @"Label" image: @""];
+	_maxColumn = columns;
 }
 
 - (void) addSeparator
 {
-	if (!_firstColumn) {
-		_currentY = _currentY + 25;
-	}
-	_firstColumn = true;
+	_currentY = _currentY + 25;
+	_currentColumn = 1;
 }
 
 - (void) addTool: (Tool) aTool withTitle: (id) aTitle image: (id) url
@@ -98,10 +95,7 @@
 	var button = [CPButton buttonWithTitle: @""];
 
 	var y = _currentY;
-	var x = 0;
-	if (!_firstColumn) {
-		x = buttonWidth;
-	}
+	var x = (_currentColumn - 1) * buttonWidth;
 	var origin = CGPointMake(x, y);
 	[button setFrameOrigin: origin];
 
@@ -117,13 +111,17 @@
 
 	[self addSubview: button];
 
-	if (!_firstColumn) {
+	var newSize = CGSizeMake(buttonWidth * _maxColumn, _currentY + buttonHeight);
+	[self setFrameSize: newSize];
+
+	if (_currentColumn == _maxColumn) {
 		_currentY = _currentY + buttonHeight;
 	}
-	var newSize = CGSizeMake(buttonWidth * 2, _currentY + buttonHeight);
-	[self setFrameSize: newSize];
 	
-	_firstColumn = !_firstColumn;
+	_currentColumn = _currentColumn + 1;
+	if (_currentColumn > _maxColumn) {
+		_currentColumn = 1;
+	}
 	return button;
 }
 

@@ -12,6 +12,8 @@
   <mvc:resources mapping="/webspec/**" location="/webspec/" />
   <mvc:resources mapping="/image/**" location="/image/" />
   <mvc:resources mapping="/css/**" location="/css/" />
+  <mvc:resources mapping="/js/**" location="/js/" />
+  <mvc:resources mapping="/tl/**" location="/tl/" />
   <mvc:resources mapping="/*.htm" location="/" />
   <mvc:resources mapping="/*.html" location="/" />
 

@@ -54,7 +54,7 @@ public class SignInAndRegisterAdapterImpl implements SignInAdapter {
     }
 
     GrantedAuthority[] authorities = new GrantedAuthority[] { new GrantedAuthorityImpl("ROLE_USER") };
-    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userId, "", authorities));
+    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(username, "", authorities));
     return null;
   }
 

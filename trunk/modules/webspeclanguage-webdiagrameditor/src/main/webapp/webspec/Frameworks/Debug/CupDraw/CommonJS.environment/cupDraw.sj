@@ -1060,7 +1060,7 @@ class_addMethods(meta_class, [new objj_method(sel_getUid("source:target:"), func
 },["Connection","Figure","Figure"])]);
 }
 
-p;8;Figure.jt;14644;@STATIC;1.0;t;14624;{var the_class = objj_allocateClassPair(CPView, "Figure"),
+p;8;Figure.jt;14995;@STATIC;1.0;t;14975;{var the_class = objj_allocateClassPair(CPView, "Figure"),
 meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("handles"), new objj_ivar("_inConnections"), new objj_ivar("_outConnections"), new objj_ivar("_backgroundColor"), new objj_ivar("_foregroundColor"), new objj_ivar("_selectable"), new objj_ivar("_moveable"), new objj_ivar("_editable"), new objj_ivar("_model"), new objj_ivar("_selected")]);
 objj_registerClassPair(the_class);
 class_addMethods(the_class, [new objj_method(sel_getUid("init"), function $Figure__init(self, _cmd)
@@ -1216,6 +1216,10 @@ class_addMethods(the_class, [new objj_method(sel_getUid("init"), function $Figur
  objj_msgSend(self, "setNeedsDisplay:",  YES);
 }
 },["void"]), new objj_method(sel_getUid("switchToEditMode"), function $Figure__switchToEditMode(self, _cmd)
+{ with(self)
+{
+}
+},["void"]), new objj_method(sel_getUid("update"), function $Figure__update(self, _cmd)
 { with(self)
 {
 }
@@ -1418,7 +1422,14 @@ class_addMethods(meta_class, [new objj_method(sel_getUid("frame:"), function $Fi
  objj_msgSend(figure, "initWithFrame:",  aFrame);
  return figure;
 }
-},["Figure","CGRect"])]);
+},["Figure","CGRect"]), new objj_method(sel_getUid("newAt:"), function $Figure__newAt_(self, _cmd, aPoint)
+{ with(self)
+{
+ var frame = CGRectMake(aPoint.x, aPoint.y, 20, 20);
+ var figure = objj_msgSend(self, "frame:",  frame);
+ return figure;
+}
+},["Figure","CGPoint"])]);
 }
 
 p;13;GroupFigure.jt;2124;@STATIC;1.0;t;2105;{var the_class = objj_allocateClassPair(CompositeFigure, "GroupFigure"),
@@ -1587,7 +1598,7 @@ class_addMethods(meta_class, [new objj_method(sel_getUid("target:selector:"), fu
 },["id","id","SEL","SEL","id"])]);
 }
 
-p;17;IconLabelFigure.jt;4924;@STATIC;1.0;t;4905;{var the_class = objj_allocateClassPair(Figure, "IconLabelFigure"),
+p;17;IconLabelFigure.jt;5078;@STATIC;1.0;t;5059;{var the_class = objj_allocateClassPair(Figure, "IconLabelFigure"),
 meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_label"), new objj_ivar("_iconUrl"), new objj_ivar("_modelFeature"), new objj_ivar("_iconView")]);
 objj_registerClassPair(the_class);
 class_addMethods(the_class, [new objj_method(sel_getUid("initWithFrame:iconUrl:"), function $IconLabelFigure__initWithFrame_iconUrl_(self, _cmd, aFrame, iconUrl)
@@ -1661,6 +1672,11 @@ class_addMethods(the_class, [new objj_method(sel_getUid("initWithFrame:iconUrl:"
 {
  var value = objj_msgSend(self, "value");
  objj_msgSend(self, "setLabelValue:",  value);
+}
+},["void"]), new objj_method(sel_getUid("update"), function $IconLabelFigure__update(self, _cmd)
+{ with(self)
+{
+ objj_msgSend(self, "propertyChanged");
 }
 },["void"]), new objj_method(sel_getUid("checkModelFeature:"), function $IconLabelFigure__checkModelFeature_(self, _cmd, aModelFeature)
 { with(self)
@@ -2104,8 +2120,8 @@ class_addMethods(meta_class, [new objj_method(sel_getUid("newAt:"), function $Re
 },["RectangleFigure","CGPoint"])]);
 }
 
-p;15;ToolboxFigure.jt;5141;@STATIC;1.0;t;5122;{var the_class = objj_allocateClassPair(Figure, "ToolboxFigure"),
-meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_drawing"), new objj_ivar("_buttonsMapping"), new objj_ivar("_firstColumn"), new objj_ivar("_currentY")]);
+p;15;ToolboxFigure.jt;4867;@STATIC;1.0;t;4848;{var the_class = objj_allocateClassPair(Figure, "ToolboxFigure"),
+meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_drawing"), new objj_ivar("_buttonsMapping"), new objj_ivar("_currentColumn"), new objj_ivar("_maxColumn"), new objj_ivar("_currentY")]);
 objj_registerClassPair(the_class);
 class_addMethods(the_class, [new objj_method(sel_getUid("initializeWith:at:"), function $ToolboxFigure__initializeWith_at_(self, _cmd, aDrawing, aPoint)
 { with(self)
@@ -2114,29 +2130,25 @@ class_addMethods(the_class, [new objj_method(sel_getUid("initializeWith:at:"), f
  self = objj_msgSendSuper({ receiver:self, super_class:objj_getClass("ToolboxFigure").super_class }, "initWithFrame:",  frame);
  if (self) {
   _drawing = aDrawing;
-  _firstColumn = true;
+  _currentColumn = 1;
+  _maxColumn = 2;
   _currentY = 15;
   _selectable = true;
   _moveable = true;
   _buttonsMapping = objj_msgSend(CPDictionary, "dictionary");
-  objj_msgSend(self, "addDefaultTools");
   return self;
  }
 }
-},["id","Drawing","CPPoint"]), new objj_method(sel_getUid("addDefaultTools"), function $ToolboxFigure__addDefaultTools(self, _cmd)
+},["id","Drawing","CPPoint"]), new objj_method(sel_getUid("columns:"), function $ToolboxFigure__columns_(self, _cmd, columns)
 { with(self)
 {
- objj_msgSend(self, "addTool:withTitle:image:",  objj_msgSend(SelectionTool, "drawing:",  _drawing),  "Selection",  "");
- objj_msgSend(self, "addTool:withTitle:image:",  objj_msgSend(CreateImageTool, "drawing:",  _drawing),  "Image",  "");
- objj_msgSend(self, "addTool:withTitle:image:",  objj_msgSend(CreateLabelTool, "drawing:",  _drawing),  "Label",  "");
+ _maxColumn = columns;
 }
-},["void"]), new objj_method(sel_getUid("addSeparator"), function $ToolboxFigure__addSeparator(self, _cmd)
+},["void","int"]), new objj_method(sel_getUid("addSeparator"), function $ToolboxFigure__addSeparator(self, _cmd)
 { with(self)
 {
- if (!_firstColumn) {
-  _currentY = _currentY + 25;
- }
- _firstColumn = true;
+ _currentY = _currentY + 25;
+ _currentColumn = 1;
 }
 },["void"]), new objj_method(sel_getUid("addTool:withTitle:image:"), function $ToolboxFigure__addTool_withTitle_image_(self, _cmd, aTool, aTitle, url)
 { with(self)
@@ -2170,10 +2182,7 @@ class_addMethods(the_class, [new objj_method(sel_getUid("initializeWith:at:"), f
  var buttonHeight = 25;
  var button = objj_msgSend(CPButton, "buttonWithTitle:",  "");
  var y = _currentY;
- var x = 0;
- if (!_firstColumn) {
-  x = buttonWidth;
- }
+ var x = (_currentColumn - 1) * buttonWidth;
  var origin = CGPointMake(x, y);
  objj_msgSend(button, "setFrameOrigin:",  origin);
  var icon = objj_msgSend(objj_msgSend(CPImage, "alloc"), "initWithContentsOfFile:",  url);
@@ -2185,12 +2194,15 @@ class_addMethods(the_class, [new objj_method(sel_getUid("initializeWith:at:"), f
  objj_msgSend(button, "setTarget:",  self);
  objj_msgSend(button, "setAction:",  aSelector);
  objj_msgSend(self, "addSubview:",  button);
- if (!_firstColumn) {
+ var newSize = CGSizeMake(buttonWidth * _maxColumn, _currentY + buttonHeight);
+ objj_msgSend(self, "setFrameSize:",  newSize);
+ if (_currentColumn == _maxColumn) {
   _currentY = _currentY + buttonHeight;
  }
- var newSize = CGSizeMake(buttonWidth * 2, _currentY + buttonHeight);
- objj_msgSend(self, "setFrameSize:",  newSize);
- _firstColumn = !_firstColumn;
+ _currentColumn = _currentColumn + 1;
+ if (_currentColumn > _maxColumn) {
+  _currentColumn = 1;
+ }
  return button;
 }
 },["CPButton","id","id","SEL"]), new objj_method(sel_getUid("drawRect:on:"), function $ToolboxFigure__drawRect_on_(self, _cmd, rect, context)
@@ -2217,15 +2229,16 @@ class_addMethods(meta_class, [new objj_method(sel_getUid("initializeWith:at:"), 
 },["ToolboxFigure","Drawing","CPPoint"])]);
 }
 
-p;7;Model.jt;2900;@STATIC;1.0;t;2881;ModelPropertyChangedNotification = "ModelPropertyChangedNotification";
+p;7;Model.jt;3572;@STATIC;1.0;t;3553;ModelPropertyChangedNotification = "ModelPropertyChangedNotification";
 {var the_class = objj_allocateClassPair(CPObject, "Model"),
-meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_properties"), new objj_ivar("_propertiesByName")]);
+meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_properties"), new objj_ivar("_propertiesByName"), new objj_ivar("_fireNotifications")]);
 objj_registerClassPair(the_class);
 class_addMethods(the_class, [new objj_method(sel_getUid("init"), function $Model__init(self, _cmd)
 { with(self)
 {
  _properties = objj_msgSend(CPMutableArray, "array");
  _propertiesByName = objj_msgSend(CPDictionary, "dictionary");
+ _fireNotifications = YES;
  return self;
 }
 },["id"]), new objj_method(sel_getUid("addProperty:"), function $Model__addProperty_(self, _cmd, aPropertyName)
@@ -2237,11 +2250,17 @@ class_addMethods(the_class, [new objj_method(sel_getUid("init"), function $Model
 },["void","id"]), new objj_method(sel_getUid("addProperty:value:"), function $Model__addProperty_value_(self, _cmd, aPropertyName, aValue)
 { with(self)
 {
+ objj_msgSend(self, "addProperty:value:editable:",  aPropertyName,  aValue,  YES);
+}
+},["void","id","id"]), new objj_method(sel_getUid("addProperty:value:editable:"), function $Model__addProperty_value_editable_(self, _cmd, aPropertyName, aValue, anEditableValue)
+{ with(self)
+{
  var property = objj_msgSend(Property, "name:value:",  aPropertyName,  aValue);
+ objj_msgSend(property, "editable:",  anEditableValue);
  objj_msgSend(_properties, "addObject:",  property);
  objj_msgSend(_propertiesByName, "setObject:forKey:",  property,  aPropertyName);
 }
-},["void","id","id"]), new objj_method(sel_getUid("propertiesSize"), function $Model__propertiesSize(self, _cmd)
+},["void","id","id","boolean"]), new objj_method(sel_getUid("propertiesSize"), function $Model__propertiesSize(self, _cmd)
 { with(self)
 {
  return objj_msgSend(_properties, "count");
@@ -2269,26 +2288,41 @@ class_addMethods(the_class, [new objj_method(sel_getUid("init"), function $Model
 {
  var property = objj_msgSend(_propertiesByName, "objectForKey:",  aName);
  objj_msgSend(property, "value:",  aValue);
- objj_msgSend(objj_msgSend(CPNotificationCenter, "defaultCenter"), "postNotificationName:object:",  ModelPropertyChangedNotification,  self);
+ if (_fireNotifications) {
+  objj_msgSend(self, "changed");
+ }
 }
 },["void","id","id"]), new objj_method(sel_getUid("propertyValueAt:be:"), function $Model__propertyValueAt_be_(self, _cmd, anIndex, aValue)
 { with(self)
 {
  var property = objj_msgSend(_properties, "objectAtIndex:",  anIndex);
  objj_msgSend(property, "value:",  aValue);
+ if (_fireNotifications) {
+  objj_msgSend(self, "changed");
+ }
+}
+},["void","id","id"]), new objj_method(sel_getUid("changed"), function $Model__changed(self, _cmd)
+{ with(self)
+{
  objj_msgSend(objj_msgSend(CPNotificationCenter, "defaultCenter"), "postNotificationName:object:",  ModelPropertyChangedNotification,  self);
 }
-},["void","id","id"])]);
+},["void"]), new objj_method(sel_getUid("fireNotifications:"), function $Model__fireNotifications_(self, _cmd, aValue)
+{ with(self)
+{
+ _fireNotifications = aValue;
+}
+},["void","bool"])]);
 }
 
-p;10;Property.jt;1134;@STATIC;1.0;t;1115;{var the_class = objj_allocateClassPair(CPObject, "Property"),
-meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_name"), new objj_ivar("_value")]);
+p;10;Property.jt;1457;@STATIC;1.0;t;1438;{var the_class = objj_allocateClassPair(CPObject, "Property"),
+meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_name"), new objj_ivar("_value"), new objj_ivar("_editable")]);
 objj_registerClassPair(the_class);
 class_addMethods(the_class, [new objj_method(sel_getUid("initWithName:value:"), function $Property__initWithName_value_(self, _cmd, aPropertyName, aValue)
 { with(self)
 {
  _name = aPropertyName;
  _value = aValue;
+ _hidden = NO;
  return self;
 }
 },["id","id","id"]), new objj_method(sel_getUid("name"), function $Property__name(self, _cmd)
@@ -2305,6 +2339,16 @@ class_addMethods(the_class, [new objj_method(sel_getUid("initWithName:value:"), 
 { with(self)
 {
  _value = aValue;
+}
+},["void",null]), new objj_method(sel_getUid("editable"), function $Property__editable(self, _cmd)
+{ with(self)
+{
+ return _editable;
+}
+},["boolean"]), new objj_method(sel_getUid("editable:"), function $Property__editable_(self, _cmd, aValue)
+{ with(self)
+{
+ _editable = aValue;
 }
 },["void",null])]);
 class_addMethods(meta_class, [new objj_method(sel_getUid("name:value:"), function $Property__name_value_(self, _cmd, aPropertyName, aValue)
@@ -2406,7 +2450,7 @@ class_addMethods(the_class, [new objj_method(sel_getUid("createFigureAt:on:"), f
 },["void","CPNotification"])]);
 }
 
-p;23;MarqueeSelectionState.jt;2702;@STATIC;1.0;t;2683;{var the_class = objj_allocateClassPair(ToolState, "MarqueeSelectionState"),
+p;23;MarqueeSelectionState.jt;2812;@STATIC;1.0;t;2793;{var the_class = objj_allocateClassPair(ToolState, "MarqueeSelectionState"),
 meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_initialDragPoint"), new objj_ivar("_rectangleFigure")]);
 objj_registerClassPair(the_class);
 class_addMethods(the_class, [new objj_method(sel_getUid("initWithInitialDragPoint:"), function $MarqueeSelectionState__initWithInitialDragPoint_(self, _cmd, anInitialDragPoint)
@@ -2437,10 +2481,11 @@ class_addMethods(the_class, [new objj_method(sel_getUid("initWithInitialDragPoin
    var selectedFigure = objj_msgSend(figures, "objectAtIndex:",  i);
    objj_msgSend(_tool, "select:",  selectedFigure);
   }
+  objj_msgSend(self, "transitionTo:",  objj_msgSend(SelectedState, "tool:initialDragPoint:",  _tool,  nil));
  } else {
   objj_msgSend(_tool, "clearSelection");
+  objj_msgSend(self, "transitionToInitialState");
  }
- objj_msgSend(self, "transitionToInitialState");
 }
 },["void","CPEvent"]), new objj_method(sel_getUid("computeFrame:"), function $MarqueeSelectionState__computeFrame_(self, _cmd, anEvent)
 { with(self)
@@ -2551,7 +2596,7 @@ class_addMethods(meta_class, [new objj_method(sel_getUid("tool:initialDragPoint:
 },["id","StateMachineTool","CPPoint","Handle"])]);
 }
 
-p;15;SelectedState.jt;2675;@STATIC;1.0;t;2656;{var the_class = objj_allocateClassPair(ToolState, "SelectedState"),
+p;15;SelectedState.jt;2716;@STATIC;1.0;t;2697;{var the_class = objj_allocateClassPair(ToolState, "SelectedState"),
 meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_initialDragPoint")]);
 objj_registerClassPair(the_class);
 class_addMethods(the_class, [new objj_method(sel_getUid("initWithInitialDragPoint:"), function $SelectedState__initWithInitialDragPoint_(self, _cmd, anInitialDragPoint)
@@ -2569,6 +2614,7 @@ class_addMethods(the_class, [new objj_method(sel_getUid("initWithInitialDragPoin
  figureUnderPoint = objj_msgSend(_tool, "selectableFigure:",  figureUnderPoint);
  _initialDragPoint = point;
  if (figureUnderPoint == nil || figureUnderPoint == drawing) {
+  objj_msgSend(_tool, "clearSelection");
   objj_msgSend(self, "transitionToInitialState");
  } else {
   if (!objj_msgSend(figureUnderPoint, "isHandle")) {
@@ -2609,7 +2655,7 @@ class_addMethods(meta_class, [new objj_method(sel_getUid("tool:initialDragPoint:
 },["id","StateMachineTool","CPPoint"])]);
 }
 
-p;15;SelectionTool.jt;3965;@STATIC;1.0;t;3946;{var the_class = objj_allocateClassPair(StateMachineTool, "SelectionTool"),
+p;15;SelectionTool.jt;4340;@STATIC;1.0;t;4321;{var the_class = objj_allocateClassPair(StateMachineTool, "SelectionTool"),
 meta_class = the_class.isa;class_addIvars(the_class, [new objj_ivar("_selectedFigures"), new objj_ivar("_initialPositions"), new objj_ivar("_initialDragPoint")]);
 objj_registerClassPair(the_class);
 class_addMethods(the_class, [new objj_method(sel_getUid("init"), function $SelectionTool__init(self, _cmd)
@@ -2697,6 +2743,13 @@ class_addMethods(the_class, [new objj_method(sel_getUid("init"), function $Selec
   if (objj_msgSend(currentFigure, "isEditable")) {
    objj_msgSend(currentFigure, "switchToEditMode");
   }
+ }
+ if (objj_msgSend(anEvent, "keyCode") == CPKeyCodes.DELETE || objj_msgSend(anEvent, "keyCode") == CPKeyCodes.BACKSPACE) {
+  for (var i = 0; i < objj_msgSend(_selectedFigures, "count"); i++) {
+      var selectedFigure = objj_msgSend(_selectedFigures, "objectAtIndex:", i);
+   objj_msgSend(selectedFigure, "removeFromSuperview");
+  }
+  objj_msgSend(self, "clearSelection");
  }
 }
 },["void","CPEvent"])]);
