@@ -39,6 +39,13 @@
 	return figure;
 }
 
++ (Figure) newAt: (CGPoint) aPoint
+{
+	var frame = CGRectMake(aPoint.x, aPoint.y, 20, 20);
+	var figure = [self frame: frame];
+	return figure;
+}
+
 - (id) init
 { 
 	[super init];
@@ -204,6 +211,10 @@
 }
 
 - (void) switchToEditMode
+{
+}
+
+- (void) update
 {
 }
 

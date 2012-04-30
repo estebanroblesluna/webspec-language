@@ -42,6 +42,7 @@
 	_initialDragPoint = point;
 
 	if (figureUnderPoint == nil || figureUnderPoint == drawing) {
+		[_tool clearSelection];
 		[self transitionToInitialState];
 	} else {
 		if (![figureUnderPoint isHandle]) {

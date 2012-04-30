@@ -57,11 +57,11 @@
 			var selectedFigure = [figures objectAtIndex: i];
 			[_tool select: selectedFigure];
 		}
+		[self transitionTo: [SelectedState tool: _tool initialDragPoint: nil]];
 	} else {
 		[_tool clearSelection];
+		[self transitionToInitialState];
 	}
-	
-	[self transitionToInitialState];
 }
 
 - (id) computeFrame: (CPEvent) anEvent

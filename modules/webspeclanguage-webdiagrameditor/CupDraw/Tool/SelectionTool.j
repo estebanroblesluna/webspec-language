@@ -114,5 +114,14 @@
 			[currentFigure switchToEditMode];
 		}
 	}
+	
+	if ([anEvent keyCode] == CPKeyCodes.DELETE || [anEvent keyCode] == CPKeyCodes.BACKSPACE) {
+		for (var i = 0; i < [_selectedFigures count]; i++) { 
+		    var selectedFigure = [_selectedFigures objectAtIndex:i];
+			[selectedFigure removeFromSuperview];
+		}
+		
+		[self clearSelection];
+	}
 }
 @end

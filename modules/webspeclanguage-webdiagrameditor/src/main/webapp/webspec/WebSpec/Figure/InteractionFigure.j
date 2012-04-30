@@ -36,7 +36,7 @@
 	return interaction;
 }
 
-- (id) initWithFrame:(CGRect)aFrame 
+- (id) initWithFrame: (CGRect) aFrame 
 { 
 	self = [super initWithFrame:aFrame];
 	if (self) {
@@ -82,6 +82,17 @@
 		return self;
 	}
 } 
+
+- (void) update
+{
+	[self modelChanged];
+	[_titleWidget update];
+}
+
+- (void) addFigure: (Figure) aFigure
+{
+	[_widgetContainer addFigure: aFigure];
+}
 
 - (void) modelChanged
 {

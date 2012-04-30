@@ -21,6 +21,8 @@
 
 + (Widget) newAt: (CGPoint) aPoint
 {
-	return [super newAt: aPoint iconUrl: [self iconURL]];
+	var widget = [super newAt: aPoint iconUrl: [self iconURL]];
+	[widget checkModelFeature: @"Name"];
+	return widget;
 }
 @end

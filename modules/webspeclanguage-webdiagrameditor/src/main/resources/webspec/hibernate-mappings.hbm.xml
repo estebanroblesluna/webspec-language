@@ -25,4 +25,21 @@
     <property name="ip" column="ip" />
     <property name="email" column="email" />
   </class>
+  
+  <class name="org.webspeclanguage.model.Diagram" table="diagrams">
+    <id name="id" column="diagram_id" type="java.lang.Long">
+      <generator class="native" />
+    </id>
+
+    <property name="type" column="diagram_type">
+      <type name="com.common.repository.EnumWordType">
+        <param name="enumClass">org.webspeclanguage.model.DiagramType</param>
+      </type>
+    </property>
+    <property name="saveTime" column="save_time" />
+    <property name="name" column="name" />
+    <property name="jsonRepresentation" column="jsonRepresentation" />
+    
+    <many-to-one name="owner" column="owner_id" />
+  </class>
 </hibernate-mapping>

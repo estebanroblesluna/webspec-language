@@ -39,7 +39,7 @@
 @import "Model/PanelContainerModel.j"
 @import "Model/ListOfContainerModel.j"
 
-
+@import "Figure/GeneratorFigure.j"
 @import "Figure/InteractionFigure.j"
 @import "Figure/WidgetFigure.j"
 @import "Figure/ButtonFigure.j"
@@ -69,6 +69,9 @@
 @import "Tool/CreateWidgetTool.j"
 @import "Tool/CreateGeneratorTool.j"
 @import "Tool/CreateContainerTool.j"
+@import "Tool/FigureJSONSerializer.j"
+@import "Tool/DiagramLoaderCommand.j"
+
 
 @import "WebSpecToolbox.j"
 

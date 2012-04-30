@@ -19,6 +19,7 @@
 {
 	id _name;
 	id _value;
+	boolean _editable;
 }
 
 + (Property) name: (id) aPropertyName value: (id) aValue
@@ -30,6 +31,7 @@
 {
 	_name = aPropertyName;
 	_value = aValue;
+	_hidden = NO;
 	return self;
 }
 
@@ -46,5 +48,15 @@
 - (void) value: aValue
 {
 	_value = aValue;
+}
+
+- (boolean) editable
+{
+	return _editable;
+}
+
+- (void) editable: aValue
+{
+	_editable = aValue;
 }
 @end

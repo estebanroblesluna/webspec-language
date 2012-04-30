@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.common.model.User;
 import com.common.repository.Repository;
 
+@Transactional
 public class UserServiceImpl implements UserDetailsService, UserService {
 
   private Repository repository;
@@ -36,8 +37,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
   /**
    * {@inheritDoc}
    */
-  @Transactional
+  @Override
   public void addUser(User user) {
     this.repository.save(user);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public User getUser(String username) {
+    return this.repository.getUser(username);
   }
 }

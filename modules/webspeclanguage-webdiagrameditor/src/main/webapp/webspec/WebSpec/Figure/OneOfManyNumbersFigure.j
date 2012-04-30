@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation OneOfManyNumbersFigure : IconLabelFigure 
+@implementation OneOfManyNumbersFigure : GeneratorFigure 
 {
 }
 

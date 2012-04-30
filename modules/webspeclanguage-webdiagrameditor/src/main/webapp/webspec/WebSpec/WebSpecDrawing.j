@@ -18,6 +18,14 @@
  */
 @implementation WebSpecDrawing : Drawing
 {
+	id _diagramId;
+}
+
+- (id) init
+{
+	[super init];
+	_diagramId = -1;
+	return self;
 }
 
 - (Interaction) interactionOf: (Figure) aFigure
@@ -32,6 +40,16 @@
 	} else {
 		return nil;
 	}
+}
+
+- (void) diagramId: (id) aDiagramId
+{
+	_diagramId = aDiagramId;
+}
+
+- (id) diagramId
+{
+	return _diagramId;
 }
 
 - (id) widgetContainerOf: (Figure) aFigure

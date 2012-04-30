@@ -35,7 +35,6 @@
 - (void) createFigureAt: (id) aPoint on: (id) aDrawing
 {
 	var generatorFigure = [_figureClass newAt: aPoint];
-	[generatorFigure checkModelFeature: @"Name"];
 	[aDrawing addFigure: generatorFigure];
 	
 	[generatorFigure switchToEditMode];

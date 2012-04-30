@@ -21,12 +21,14 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 {
 	CPMutableArray _properties;
 	CPDictionary _propertiesByName;
+	boolean _fireNotifications;
 }
 
 - (id) init
 {
 	_properties = [CPMutableArray array];
 	_propertiesByName = [CPDictionary dictionary];
+	_fireNotifications = YES;
 	return self;
 }
 
@@ -38,7 +40,13 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 
 - (void) addProperty: (id) aPropertyName value: (id) aValue
 {
+	[self addProperty: aPropertyName value: aValue editable: YES];
+}
+
+- (void) addProperty: (id) aPropertyName value: (id) aValue editable: (boolean) anEditableValue
+{
 	var property = [Property name: aPropertyName value: aValue];
+	[property editable: anEditableValue];
 	[_properties addObject: property];
 	[_propertiesByName setObject: property forKey: aPropertyName];
 }
@@ -72,9 +80,9 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 	[property value: aValue];
 	//CPLog.info([property name]);
 	//CPLog.info(aValue);
-	[[CPNotificationCenter defaultCenter] 
-		postNotificationName: ModelPropertyChangedNotification 
-		object: self];
+	if (_fireNotifications) {
+		[self changed];
+	}
 }
 
 - (void) propertyValueAt: (id) anIndex be: (id) aValue
@@ -83,8 +91,20 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 	[property value: aValue];
 	//CPLog.info([property name]);
 	//CPLog.info(aValue);
+	if (_fireNotifications) {
+		[self changed];
+	}
+}
+
+- (void) changed
+{
 	[[CPNotificationCenter defaultCenter] 
 		postNotificationName: ModelPropertyChangedNotification 
 		object: self];
+}
+
+- (void) fireNotifications: (bool) aValue
+{
+	_fireNotifications = aValue;
 }
 @end

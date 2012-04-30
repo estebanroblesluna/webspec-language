@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>JHubBub - Subscribers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <script src="js/dust-full-0.3.0.min.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+          
+          //load nav bar template
+          $.get('tl/navBar.tl', function(data) {
+            var compiled = dust.compile(data, "navBarTemplate");
+            dust.loadSource(compiled);
+            var page = window.location.pathname;
+            var lastIndex = page.lastIndexOf('/');
+            page = page.substr(lastIndex + 1);
+            
+            var pointIndex = page.lastIndexOf('.');
+            if (pointIndex != -1) {
+              page = page.substr(0, pointIndex); 
+            }
+
+            var templateData = {};
+            templateData[page] = "true";
+
+            dust.render("navBarTemplate", templateData, function(err, out) {
+              $('#navBar').html(out);
+            });
+          });
+          
+          //load subscribers template
+          $.get('tl/subscribers.tl', function(data) {
+            var compiled = dust.compile(data, "subscribersTemplate");
+            dust.loadSource(compiled);
+          });
+                    
+          //get subscribers
+          $('#getSubscribersButton').click(function() {
+            var topic = $('#feedTopicSubscribersList').val();
+            $.ajax({
+              url: 'service/subscribers/get',
+              type: 'POST',
+              data: {
+                "topic": topic
+              },
+              cache: false,
+              success: function(response) {
+                dust.render("subscribersTemplate", response, function(err, out) {
+                  $('#subscribers').html(out);
+                });
+              }
+            });
+            
+            return false;
+          });
+          
+          //hard add subscriber
+          $('#hardAddButton').click(function() {
+            var topic = $('#feedTopic').val();
+            var subscriberEndpoint = $('#subscriberEndpoint').val();
+            
+            $.ajax({
+              url: 'service/subscribers/add',
+              type: 'POST',
+              data: {
+                "topic": topic,
+                "subscriberEndpoint": subscriberEndpoint
+              },
+              cache: false,
+              success: function(response) {
+                $('#forceSuccessMsg').fadeIn('slow', function() {
+                  $('#forceSuccessMsg').fadeOut('slow');
+                });
+              }
+            });
+            return false;
+          });
+          
+          //hard remove subscriber
+          $('#hardRemoveButton').click(function() {
+            var topic = $('#feedTopic').val();
+            var subscriberEndpoint = $('#subscriberEndpoint').val();
+            
+            $.ajax({
+              url: 'service/subscribers/remove',
+              type: 'POST',
+              data: {
+                "topic": topic,
+                "subscriberEndpoint": subscriberEndpoint
+              },
+              cache: false,
+              success: function(response) {
+                $('#forceSuccessMsg').fadeIn('slow', function() {
+                  $('#forceSuccessMsg').fadeOut('slow');
+                });
+              }
+            });
+            return false;
+          }); 
+
+          //in place subscriber
+          $('#inPlaceSubscriberEndpointButton').click(function() {
+            var url = window.location.href;
+            var lastIndex = url.lastIndexOf('/');
+            var urlPart = url.substr(0, lastIndex);
+
+            var subscriberEndpoint = urlPart + '/inPlaceSubscriber';
+            $('#subscriberEndpoint').val(subscriberEndpoint);
+            return false;
+          });           
+                   
+        });
+    </script>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+	<!-- Nav bar -->
+  <div id="navBar" class="navbar navbar-fixed-top">
+  </div>
+
+
+	<!-- Content -->
+    <div class="container">
+
+      <form class="well form-horizontal">
+        <fieldset>
+        <div class="control-group">
+          <label class="control-label">Feed:</label>&nbsp;&nbsp;
+          <input id="feedTopic" type="text" class="span3" placeholder="http://...">
+        </div>
+        <div class="control-group">
+          <label class="control-label">Subscriber endpoint:</label>&nbsp;&nbsp;
+          <input id= "subscriberEndpoint" type="text" class="span3" placeholder="http://...">&nbsp;&nbsp;<button id="inPlaceSubscriberEndpointButton" type="submit" class="btn">Set to in place subscriber</button>
+        </div>
+        <div class="form-actions">
+          <button id="hardAddButton" type="submit" class="btn btn-primary">Hard ADD subscriber!</button>
+          <button id="hardRemoveButton" type="submit" class="btn btn-primary">Hard REMOVE subscriber!</button>
+        </div>
+        </fieldset>
+
+        <div id="forceSuccessMsg" class="alert alert-success" style="display:none;">
+          Request successful!
+        </div>
+      </form>
+
+      <form class="well form-horizontal">
+        <fieldset>
+        <div class="control-group">
+          <label class="control-label">Feed:</label>&nbsp;&nbsp;
+          <input id="feedTopicSubscribersList" type="text" class="span3" placeholder="http://...">
+        </div>
+        <div class="form-actions">
+        <button id="getSubscribersButton" type="submit" class="btn btn-primary">Get subscribers</button>
+        </div>
+        </fieldset>
+        <div id="subscribers">
+        </div>
+      </form>
+      
+    </div> 
+    
+  </body>
+</html>
