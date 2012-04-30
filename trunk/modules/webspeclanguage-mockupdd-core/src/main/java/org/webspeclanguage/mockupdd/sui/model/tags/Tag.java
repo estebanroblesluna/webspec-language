@@ -34,4 +34,6 @@ public interface Tag {
 
   TagApplication applyOverWithValues(Widget w, List<String> paramValues) throws TagApplicationException;
 
+  boolean isParameterStrict();
+
 }

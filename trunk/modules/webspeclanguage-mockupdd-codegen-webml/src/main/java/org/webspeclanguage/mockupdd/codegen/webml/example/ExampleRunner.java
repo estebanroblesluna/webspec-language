@@ -29,7 +29,7 @@ public class ExampleRunner {
     WebMLWebModelExample wmexample = new WebMLWebModelExample();  
     WebModel wm = wmexample.generateWebModel(dm);
     
-    MainXmlGenerator mainXmlGenerator = new MainXmlGenerator();
+    MainXmlGenerator mainXmlGenerator = new MainXmlGenerator("src/main/java/org/webspeclanguage/mockupdd/codegen/webml/xmlgeneration/webratioprojects");
     mainXmlGenerator.mapModels(dm, wm);
     
   }

@@ -79,6 +79,7 @@ public class SuiDefaultConfig {
                       Arrays.asList(
                               this.getFactory().createTagParameter("sourceWidgetId"),
                               this.getFactory().createTagParameter("destWidgetId")),
+                      false,
                       TriggerWidget.class),
               this.getFactory().createTag("Action", 
                       Arrays.asList(this.getFactory().createTagParameter("actionDescription")),

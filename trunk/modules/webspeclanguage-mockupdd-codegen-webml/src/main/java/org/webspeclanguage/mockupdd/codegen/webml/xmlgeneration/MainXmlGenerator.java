@@ -12,6 +12,7 @@
  */
 
 package org.webspeclanguage.mockupdd.codegen.webml.xmlgeneration;
+
 import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -29,104 +30,106 @@ import org.webspeclanguage.mockupdd.codegen.webml.datamodel.*;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModel;
 import org.webspeclanguage.mockupdd.codegen.webml.webmodel.WebModelVisitor;
 
-
 /**
  * @author Franco Giacosa
  */
 public class MainXmlGenerator {
+
   private String projectName;
   private String versionFolder;
   private Logger logger = Logger.getLogger(CreatorWrapper.class);
+  private String folder;
 
-  public void mapModels(DataModel dataModel,WebModel webModel){
+  public MainXmlGenerator(String folder) {
+    super();
+    this.folder = folder;
+  }
+
+  public void mapModels(DataModel dataModel, WebModel webModel) {
     this.createVersionFolder();
-    
+
     DotProjectWritter dotProject = new DotProjectWritter(this.getVersionFolder());
     dotProject.generateDotProjectFile(this.getProjectName());
-    
+
     ModelWrWritter modelWr = new ModelWrWritter(this.getVersionFolder());
     modelWr.generateModelWrFile();
-    
+
     String modelsFolderPath = this.getVersionFolder() + "Model/";
-    File newFolder= new File(modelsFolderPath); 
+    File newFolder = new File(modelsFolderPath);
     newFolder.mkdir();
-    
+
     DataModelVisitor visitor = new DataModelWriter(modelsFolderPath);
     dataModel.accept(visitor);
-            
+
     WebModelVisitor visitor1 = new WebModelWriter(modelsFolderPath);
     webModel.accept(visitor1);
 
-
   }
-  public void createVersionFolder(){
-    String xmlVersionFile = "src/main/java/org/webspeclanguage/mockupdd/codegen/webml/xmlgeneration/webratioprojects/WebRatioXMLProjectVersion.xml";    
+
+  public void createVersionFolder() {
+    String xmlVersionFile = this.folder + "/WebRatioXMLProjectVersion.xml";
     String versionNumber = this.getVersionNumber(xmlVersionFile);
-    
-    
-    String folderPath = "src/main/java/org/webspeclanguage/mockupdd/codegen/webml/xmlgeneration/webratioprojects/XMLWebRatioProject" + versionNumber + "/";
-    File newFolder= new File(folderPath); 
+
+    String folderPath = this.folder + "/XMLWebRatioProject" + versionNumber + "/";
+    File newFolder = new File(folderPath);
     newFolder.mkdir();
-    
+
     this.setVersionFolder(folderPath);
     this.setProjectName("XMLWebRatioProject" + versionNumber);
-    
+
   }
 
-  
-  public String getVersionNumber(String xmlVersionFile){
-    
-    try
-    {  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance ( );
-       Document documento = null;
-       DocumentBuilder builder = factory.newDocumentBuilder();
-       documento = builder.parse( new File(xmlVersionFile) );
-       Node nodoRaiz = documento.getFirstChild();
-       NamedNodeMap atributos = nodoRaiz.getAttributes(  );
-       Node unAtributo = atributos.getNamedItem( "version" );
-       String versionNumber = unAtributo.getNodeValue();
-             
-       Integer intVersion = Integer.parseInt(versionNumber) + 1;
-       unAtributo.setNodeValue(intVersion.toString());
-       TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        
-       Transformer transformer = transformerFactory.newTransformer();
-        
-       DOMSource source = new DOMSource(documento);
-        
-       StreamResult result =  new StreamResult(new File(xmlVersionFile));
-       transformer.transform(source, result);
-       
-       return versionNumber;
-    }
-    catch (Exception spe)
-    {
+  public String getVersionNumber(String xmlVersionFile) {
+
+    try {
+      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      Document documento = null;
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      documento = builder.parse(new File(xmlVersionFile));
+      Node nodoRaiz = documento.getFirstChild();
+      NamedNodeMap atributos = nodoRaiz.getAttributes();
+      Node unAtributo = atributos.getNamedItem("version");
+      String versionNumber = unAtributo.getNodeValue();
+
+      Integer intVersion = Integer.parseInt(versionNumber) + 1;
+      unAtributo.setNodeValue(intVersion.toString());
+      TransformerFactory transformerFactory = TransformerFactory.newInstance();
+
+      Transformer transformer = transformerFactory.newTransformer();
+
+      DOMSource source = new DOMSource(documento);
+
+      StreamResult result = new StreamResult(new File(xmlVersionFile));
+      transformer.transform(source, result);
+
+      return versionNumber;
+    } catch (Exception spe) {
       this.getLogger().info(spe.toString());
-       return "unknow Version";
+      return "unknow Version";
     }
-        
+
   }
-  
+
   private String getProjectName() {
     return projectName;
   }
-  
+
   private void setProjectName(String projectName) {
     this.projectName = projectName;
   }
-  
+
   private String getVersionFolder() {
     return versionFolder;
   }
-  
+
   private void setVersionFolder(String versionFolder) {
     this.versionFolder = versionFolder;
   }
-  
+
   public Logger getLogger() {
     return logger;
   }
-  
+
   public void setLogger(Logger logger) {
     this.logger = logger;
   }

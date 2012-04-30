@@ -100,27 +100,29 @@ public interface SuiFactory {
 
   GridBagLayout createGridBagLayout();
 
-  Repetition createRepetition(String widgetId, Integer x, Integer y, Integer width, Integer height, Collection<Widget> widgets, Integer rows,
-          Integer columns, String containerId);
+  Repetition createRepetition(String widgetId, Integer x, Integer y, Integer width, Integer height, Collection<Widget> widgets, Integer rows, Integer columns,
+          String containerId);
 
   RepetitionAnnotation createRepetitionAnnotation(Widget widget);
-  
+
   TagSet createTagSet(String tagSetName, Tag... tags);
-  
-  Tag createTag(String tagName, java.util.List<TagParameter> tagParameters, Class<? extends Widget>... applicableOver);
-  
+
+  Tag createTag(String tagName, java.util.List<TagParameter> tagParameters, Class< ? extends Widget>... applicableOver);
+
+  Tag createTag(String tagName, java.util.List<TagParameter> tagParameters, boolean isParameterStrict, Class< ? extends Widget>... applicableOver);
+
   TagParameter createTagParameter(String parameterName);
-  
+
   TagParameterValue createTagParameterValue(TagParameter tagParameter, String value);
-  
+
   SimpleTagParameterValueContent createSimpleTagParameterValueContent(String valueContent);
-  
+
   DataPathTagParameterValueContent createDataPathTagParameterValueContent(String widgetId, DataPathNode rootNode);
-  
+
   DataPathNode createDataPathNode(String className, String accessorName);
-  
+
   DataPathNode createDataPathNode(String className);
-  
+
   TagApplication createTagApplication(Widget widget, Tag tag, java.util.List<TagParameterValue> parameterValues) throws TagApplicationException;
-  
+
 }

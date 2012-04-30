@@ -32,12 +32,19 @@ public class TagImpl implements Tag {
   private List<TagParameter> parameters;
   private Collection<Class<? extends Widget>> applicableOver;
   private TagSet tagSet;
+  private boolean parameterStrict;
   
-  public TagImpl(String name, List<TagParameter> parameters, Collection<Class< ? extends Widget>> applicableOver) {
+  public TagImpl(String name, List<TagParameter> parameters, Collection<Class< ? extends Widget>> applicableOver,
+          boolean parameterStrict) {
     super();
     this.setName(name);
     this.setParameters(parameters);
     this.setApplicableOver(applicableOver);
+    this.setParameterStrict(parameterStrict);
+  }
+  
+  public TagImpl(String name, List<TagParameter> parameters, Collection<Class< ? extends Widget>> applicableOver) {
+    this(name, parameters, applicableOver, false);
   }
 
   private void setName(String name) {
@@ -82,6 +89,15 @@ public class TagImpl implements Tag {
     TagApplicationImpl tagApplication = TagApplicationImpl.newFromTextualValues(widget, this, parameterValues);
     widget.addTagApplication(tagApplication);
     return tagApplication;
+  }
+
+  @Override
+  public boolean isParameterStrict() {
+    return this.parameterStrict;
+  }
+
+  private void setParameterStrict(boolean parameterStrict) {
+    this.parameterStrict = parameterStrict;
   }
   
 }
