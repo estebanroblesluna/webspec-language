@@ -23,6 +23,7 @@
 @import "../WebSpec/Model/RadioButtonModel.j"
 @import "../WebSpec/Model/TextFieldModel.j"
 @import "../WebSpec/Model/LabelModel.j"
+@import "../WebSpec/Model/PanelContainerModel.j"
 
 @import "Figure/MockupFigure.j"
 @import "Figure/LabeledFigure.j"
@@ -31,6 +32,9 @@
 @import "Figure/CheckBoxFigure.j"
 @import "Figure/RadioButtonFigure.j"
 @import "Figure/TextFieldFigure.j"
+@import "Figure/ContainerFigure.j"
+@import "Figure/PanelFigure.j"
+@import "Figure/WindowFigure.j"
 
 @import "MockupDrawing.j"
 
