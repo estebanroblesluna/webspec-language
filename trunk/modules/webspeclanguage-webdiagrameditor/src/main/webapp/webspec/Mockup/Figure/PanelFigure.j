@@ -12,31 +12,37 @@
  * limitations under the License.
  */
 
-
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation MockupDrawing : Drawing
+@implementation PanelFigure : ContainerFigure 
 {
+    bool _drawBorder;
 }
 
-- (id) widgetContainerOf: (Figure) aFigure
+- (id) init
+{ 
+	[super init];
+	[self model: [PanelContainerModel new]];
+	_backgroundColor = [CPColor whiteColor];
+	_foregroundColor = [CPColor blackColor];
+	_drawBorder = YES;
+	return self;
+}
+
+- (void) drawRect:(CGRect)rect on: (id)context
 {
-	var current = aFigure;
-	while (current != nil 
- 			&& ![current isKindOfClass:[PanelFigure class]] 
-			&& ![current isKindOfClass:[WindowFigure class]] 
-			//&& ![current isKindOfClass:[InteractionFigure class]] 
-			&& ![current isKindOfClass:[Drawing class]]) 
-	{
-		current = [current superview];
-	}
-	
-	if ([current isKindOfClass:[Drawing class]]) {
-		return nil;
-	} else {
-		return current;
-	}
+    CGContextSetFillColor(context, [CPColor whiteColor]); 
+    CGContextFillRect(context, rect);
+    if (_drawBorder) {
+        CGContextSetLineWidth(context, 3);
+        CGContextStrokeRect(context, rect);
+    }
+}
+
+- (void) hideBorder
+{
+    _drawBorder = NO;
 }
 
 @end

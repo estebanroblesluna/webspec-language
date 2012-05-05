@@ -12,31 +12,20 @@
  * limitations under the License.
  */
 
-
 /**
- * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
+ * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation MockupDrawing : Drawing
+@implementation ContainerFigure : RectangleFigure 
 {
 }
 
-- (id) widgetContainerOf: (Figure) aFigure
+- (void) addWidget: (Widget) aWidget
 {
-	var current = aFigure;
-	while (current != nil 
- 			&& ![current isKindOfClass:[PanelFigure class]] 
-			&& ![current isKindOfClass:[WindowFigure class]] 
-			//&& ![current isKindOfClass:[InteractionFigure class]] 
-			&& ![current isKindOfClass:[Drawing class]]) 
-	{
-		current = [current superview];
-	}
-	
-	if ([current isKindOfClass:[Drawing class]]) {
-		return nil;
-	} else {
-		return current;
-	}
+	[self addSubview: aWidget];
 }
 
+- (void) addFigure: (Widget) aWidget
+{
+	[self addWidget: aWidget];
+}
 @end
