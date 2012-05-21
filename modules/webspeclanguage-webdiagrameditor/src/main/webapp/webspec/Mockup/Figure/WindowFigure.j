@@ -15,7 +15,7 @@
 /**
  * @author "Jose Matias Rivero <jose.matias.rivero@gmail.com>"
  */
-@implementation WindowFigure : MockupFigure 
+@implementation WindowFigure : ContainerMockupFigure 
 {
     CPTextField _title;
 }
@@ -33,16 +33,7 @@
 	    initWithFrame: aFrame
         model: [PanelContainerModel new]
         modelFeature: "Name"];
-	
-	var widgetContainerFrame = CGRectMake(2, 20, [self frameSize].width - 4, [self frameSize].height - 23);
-    var widgetContainerOrigin = widgetContainerFrame.origin;
-    _widgetContainer = [PanelFigure newAt: widgetContainerOrigin];
-    [_widgetContainer setFrame: widgetContainerFrame];
-    [_widgetContainer selectable: NO];
-    [_widgetContainer hideBorder];
-    [_widgetContainer setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
-    [self addSubview: _widgetContainer];
-	
+		
 	var title = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
     [title setStringValue: "Title"];
     [title setTextColor:[CPColor blackColor]];
@@ -57,6 +48,18 @@
 	}
 }
 
+- (void) buildWidgetContainer 
+{
+    var widgetContainerFrame = CGRectMake(2, 20, [self frameSize].width - 4, [self frameSize].height - 23);
+    var widgetContainerOrigin = widgetContainerFrame.origin;
+    var widgetContainer = [PanelFigure newAt: widgetContainerOrigin];
+    [widgetContainer setFrame: widgetContainerFrame];
+    [widgetContainer selectable: NO];
+    [widgetContainer hideBorder];
+    [widgetContainer setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
+    return widgetContainer
+}
+
 - (void) drawRect:(CGRect)rect on: (id)context
 {
     CGContextSetFillColor(context, [CPColor whiteColor]); 
@@ -64,8 +67,7 @@
     CGContextSetLineWidth(context, 3);
     CGContextStrokeRect(context, rect);
     CGContextStrokeRect(context, CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, 20));
-    //[_title setCenter: CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2)];
-
+    
     CGContextSetLineWidth(context, 2);
     //DRAW CLOSE BUTTON
     CGContextBeginPath(context);
@@ -82,16 +84,6 @@
     CGContextMoveToPoint(context, rect.size.width - 32, 16);
     CGContextAddLineToPoint(context, rect.size.width - 20, 16);
     CGContextStrokePath(context);
-}
-
-- (void) addWidget: (Widget) aWidget
-{
-	[_widgetContainer addSubview: aWidget];
-}
-
-- (void) addFigure: (Widget) aWidget
-{
-	[self addWidget: aWidget];              
 }
 
 - (CPTextField) getEditableLabel
