@@ -33,6 +33,7 @@
 @import "Figure/RadioButtonFigure.j"
 @import "Figure/TextFieldFigure.j"
 @import "Figure/ContainerFigure.j"
+@import "Figure/ContainerMockupFigure.j"
 @import "Figure/PanelFigure.j"
 @import "Figure/WindowFigure.j"
 
