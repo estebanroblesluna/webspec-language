@@ -12,8 +12,13 @@
  */
 package org.webspeclanguage.userstories;
 
-import org.apache.poi.hwpf.HWPFDocument;
+import java.io.File;
+import java.util.Locale;
+import java.util.Map;
+
+import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.webspeclanguage.impl.core.Path;
+import org.webspeclanguage.userstories.cropping.CroppingInfo;
 
 /**
  * A generator of User stories from WebSpec diagrams
@@ -22,9 +27,6 @@ import org.webspeclanguage.impl.core.Path;
  */
 public interface UserStoryGenerator {
 
-  /**
-   * @param path the WebSpec path (scenario) to generate the user story
-   * @param document the document where the user story should be written
-   */
-  void generate(Path path, HWPFDocument document);
+  void generate(Path path, WordprocessingMLPackage wordprocessingMLPackage, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
+          throws Exception;
 }

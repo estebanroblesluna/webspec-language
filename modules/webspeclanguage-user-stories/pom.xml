@@ -16,7 +16,28 @@
   <name>WebSpec Language - User stories</name>
   <url>http://maven.apache.org</url>
 
+
+  <properties>
+    <spring.version>3.0.6.RELEASE</spring.version>
+  </properties>
+
   <dependencies>
+    <!-- SPRING -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>   
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${spring.version}</version>
+    </dependency>    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -38,6 +59,19 @@
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-scratchpad</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.3.1</version>
+    </dependency>
+	<dependency>
+        <groupId>org.docx4j</groupId>
+        <artifactId>docx4j</artifactId>
+    </dependency>
+	<dependency>
+	   <groupId>org.apache.xmlgraphics</groupId>
+	   <artifactId>xmlgraphics-commons</artifactId>
+	</dependency>
   </dependencies>
 
   <build>

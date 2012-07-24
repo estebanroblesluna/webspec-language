@@ -22,7 +22,7 @@ import org.webspeclanguage.impl.expression.core.Expression;
  * 
  * @author Esteban Robles Luna
  */
-public interface Transition extends PathItem {
+public interface Transition extends PathItem, NamedObject {
 
   /**
    * @return the transition source
