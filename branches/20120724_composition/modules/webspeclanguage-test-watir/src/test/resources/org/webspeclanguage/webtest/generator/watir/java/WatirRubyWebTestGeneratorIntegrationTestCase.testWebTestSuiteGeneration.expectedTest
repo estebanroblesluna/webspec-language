@@ -1,0 +1,21 @@
+require "rubygems"
+require "firewatir"
+require "test/unit"
+
+class TC_HomeNavigation < Test::Unit::TestCase
+
+	def setup
+		$browser = FireWatir::Firefox.new()
+		money = 1
+	end
+
+	def testHomeNavigation
+		message = $browser.element_by_xpath("//*[@id='searchField']").text
+		$browser.element_by_xpath("//*[@id='searchButton']").click
+	end
+
+	def testHomeNavigation2
+		message = "hi"
+	end
+
+end

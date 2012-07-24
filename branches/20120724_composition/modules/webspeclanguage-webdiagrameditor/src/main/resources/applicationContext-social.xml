@@ -1,0 +1,26 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+  xsi:schemaLocation="
+          http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/security  http://www.springframework.org/schema/security/spring-security-3.0.xsd
+          http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+          http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+          http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+          ">
+
+  <bean id="usersConnectionRepository" class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
+    <constructor-arg ref="dataSource" />
+    <constructor-arg ref="connectionFactoryLocator" />
+    <constructor-arg ref="textEncryptor" />
+    <property name="connectionSignUp" ref="connectionSignUp"/>
+  </bean>
+
+  <bean id="connectionRepository" factory-method="createConnectionRepository" factory-bean="usersConnectionRepository" scope="request">
+    <constructor-arg value="#{request.userPrincipal.name}" />
+    <aop:scoped-proxy proxy-target-class="false" />
+  </bean>
+
+  <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText" />
+</beans>

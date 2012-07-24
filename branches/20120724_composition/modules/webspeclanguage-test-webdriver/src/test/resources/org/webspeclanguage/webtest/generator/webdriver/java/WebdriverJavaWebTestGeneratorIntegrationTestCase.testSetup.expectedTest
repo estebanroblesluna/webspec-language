@@ -1,0 +1,22 @@
+package org.webspeclanguage.webtest.webdriver.test.java;
+
+import java.math.BigDecimal;
+import junit.framework.TestCase;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class HomeNavigationTestCase extends TestCase {
+
+		WebDriver driver;
+
+	public void setUp() throws Exception {
+		driver = new FirefoxDriver();
+		String message = "hi";
+	}
+
+	public void testHomeNavigation() throws Exception {
+	}
+
+}

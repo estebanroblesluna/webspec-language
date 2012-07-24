@@ -1,0 +1,36 @@
+package org.webspeclanguage.webtest.webdriver.test.java;
+
+import java.math.BigDecimal;
+import junit.framework.TestCase;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class HomeNavigationTestCase extends TestCase {
+
+		WebDriver driver;
+
+	public void setUp() throws Exception {
+		driver = new FirefoxDriver();
+	}
+
+	public void testHomeNavigation() throws Exception {
+		String message = "hi";
+		boolean isQuery = true;
+		BigDecimal money = new BigDecimal("12305");
+		money = new BigDecimal("1").add(new BigDecimal("2"));
+		money = new BigDecimal("1").subtract(new BigDecimal("2"));
+		money = new BigDecimal("1").multiply(new BigDecimal("2"));
+		money = new BigDecimal("1").divide(new BigDecimal("2"));
+		money = new BigDecimal("1").add(money);
+		isQuery = !true;
+		isQuery = true && false;
+		isQuery = true || false;
+		isQuery = (!true) || false;
+		isQuery = (true && false) && false;
+		message = "hi " + "esteban";
+		message = ("hi " + "esteban") + " how are you";
+	}
+
+}

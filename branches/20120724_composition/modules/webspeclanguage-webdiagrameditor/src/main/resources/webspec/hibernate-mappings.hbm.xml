@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field">
+
+  <class name="com.common.model.User" table="playground_users">
+    <id name="id" column="user_id" type="java.lang.Long">
+      <generator class="native" />
+    </id>
+
+    <property name="firstName" column="first_name" />
+    <property name="lastName" column="last_name" />
+    <property name="username" column="username" />
+    <property name="email" column="email" />
+  </class>
+  
+  <class name="com.common.model.Registration" table="registration">
+    <id name="id" column="registration_id" type="java.lang.Long">
+      <generator class="native" />
+    </id>
+
+    <property name="firstName" column="first_name" />
+    <property name="lastName" column="last_name" />
+    <property name="ip" column="ip" />
+    <property name="email" column="email" />
+  </class>
+  
+  <class name="org.webspeclanguage.model.Diagram" table="diagrams">
+    <id name="id" column="diagram_id" type="java.lang.Long">
+      <generator class="native" />
+    </id>
+
+    <property name="type" column="diagram_type">
+      <type name="com.common.repository.EnumWordType">
+        <param name="enumClass">org.webspeclanguage.model.DiagramType</param>
+      </type>
+    </property>
+    <property name="saveTime" column="save_time" />
+    <property name="name" column="name" />
+    <property name="jsonRepresentation" column="jsonRepresentation" />
+    
+    <many-to-one name="owner" column="owner_id" />
+  </class>
+</hibernate-mapping>

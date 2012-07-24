@@ -1,0 +1,15 @@
+package org.webspeclanguage.tests;
+
+import java.math.BigDecimal;
+import com.thoughtworks.selenium.SeleneseTestCase;
+
+public class HomeNavigationTestCase extends SeleneseTestCase {
+
+	public void setUp() throws Exception {
+		super.setUp();
+	}
+
+	public void testHomeNavigation() throws Exception {
+	}
+
+}

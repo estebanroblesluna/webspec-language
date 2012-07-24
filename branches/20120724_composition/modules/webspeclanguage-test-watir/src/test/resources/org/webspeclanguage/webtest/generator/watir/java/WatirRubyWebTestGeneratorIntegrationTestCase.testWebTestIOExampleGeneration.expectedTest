@@ -1,0 +1,20 @@
+require "rubygems"
+require "firewatir"
+require "test/unit"
+
+class TC_LoginAsUser < Test::Unit::TestCase
+
+	def setup
+		$browser = FireWatir::Firefox.new()
+		$browser.goto("http://localhost:8080")
+	end
+
+	def testLogin_Home
+		$browser.element_by_xpath("//*[@id='username']").set "esteban"
+		$browser.element_by_xpath("//*[@id='password']").set "hi"
+		$browser.element_by_xpath("//*[@id='login']").click
+		$browser.wait()
+		assert($browser.element_by_xpath("//*[@id='message']").text.eql?("Hello esteban"))
+	end
+
+end

@@ -1,0 +1,15 @@
+require "rubygems"
+require "firewatir"
+require "test/unit"
+
+class TC_HomeNavigation < Test::Unit::TestCase
+
+	def setup
+		$browser = FireWatir::Firefox.new()
+		message = "hi"
+	end
+
+	def testHomeNavigation
+	end
+
+end
