@@ -32,6 +32,7 @@ import org.webspeclanguage.impl.expression.utils.ExpressionUtils;
  */
 public abstract class TransitionImpl implements Transition {
 
+  private String name;
   private TransitionSource source;
   private TransitionTarget target;
   private Expression precondition;
@@ -40,24 +41,24 @@ public abstract class TransitionImpl implements Transition {
   protected TransitionImpl(TransitionSource source, TransitionTarget target) {
     Validate.notNull(source);
     Validate.notNull(target);
-    
+
     this.source = source;
     this.target = target;
     this.actions = new ArrayList<Action>();
-    
+
     this.source.addForwardTransition(this);
     this.target.addBackwardTransition(this);
   }
 
   public void addAction(Action action) {
     Validate.notNull(action);
-    
+
     this.getActions().add(action);
   }
 
   public void setActions(String actionsString) {
     Validate.notNull(actionsString);
-    
+
     List<Action> parsedActions = ActionParser.getActions(actionsString, this.getSource());
     for (Action action : parsedActions) {
       this.addAction(action);
@@ -89,7 +90,15 @@ public abstract class TransitionImpl implements Transition {
   }
 
   protected Diagram getDiagram() {
-    //TODO fix this
+    // TODO fix this
     return ((InteractionImpl) this.getSource()).getDiagram();
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }
