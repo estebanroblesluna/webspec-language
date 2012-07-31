@@ -20,6 +20,8 @@ import java.util.Map;
 
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.impl.core.Path;
@@ -35,6 +37,8 @@ import org.webspeclanguage.userstories.impl.WordTabularUserStoryGeneratorStrateg
  * @author cristian.cianfagna
  */
 public class UserStoryGeneratorTest {
+
+  private static ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath*:userStoriesGenerationAppContex.xml");
 
   private Map<String, CroppingInfo> getCroppingMap() {
     Map<String, CroppingInfo> map = new HashMap<String, CroppingInfo>();
@@ -52,7 +56,7 @@ public class UserStoryGeneratorTest {
 
   @Test
   public void testWordTabularStrategyGeneration() throws Exception {
-    UserStoryGenerator wordTabularUserStoryGenerator = new WordTabularUserStoryGeneratorStrategy();
+    UserStoryGenerator wordTabularUserStoryGenerator = new WordTabularUserStoryGeneratorStrategy(ctx);
     WordprocessingMLPackage wordprocessingMLPackage = WordprocessingMLPackage.createPackage();
     Diagram diagram = WebSpecFactory.getShoppingCartExample();
     List<Path> paths = PathComputer.computePaths(diagram);
@@ -68,7 +72,7 @@ public class UserStoryGeneratorTest {
 
   @Test
   public void testWordEnumerationStrategyGeneration() throws Exception {
-    UserStoryGenerator wordEnumerationUserStoryGenerator = new WordEnumerationUserStoryGeneratorStrategy();
+    UserStoryGenerator wordEnumerationUserStoryGenerator = new WordEnumerationUserStoryGeneratorStrategy(ctx);
     WordprocessingMLPackage wordprocessingMLPackage = WordprocessingMLPackage.createPackage();
     Diagram diagram = WebSpecFactory.getShoppingCartExample();
     List<Path> paths = PathComputer.computePaths(diagram);

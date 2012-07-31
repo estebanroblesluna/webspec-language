@@ -29,7 +29,6 @@ import org.docx4j.wml.P;
 import org.docx4j.wml.SectPr;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.userstories.UserStoryGenerator;
@@ -54,17 +53,16 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
   private Locale locale;
   private MessageSource messageSource;
 
-  public AbstractWordUserStoryGenerator() {
-    ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
+  public AbstractWordUserStoryGenerator(ApplicationContext applicationContext) {
     try {
-      InputStream numberingInputStream = ctx.getResource("classpath:/conf/numbering.xml").getInputStream();
+      InputStream numberingInputStream = applicationContext.getResource("classpath:/conf/numbering.xml").getInputStream();
       NumberingDefinitionsPart numberingDefinitionsPart = new NumberingDefinitionsPart();
       numberingDefinitionsPart.setJaxbElement((Numbering) XmlUtils.unmarshal(numberingInputStream));
       this.setNumberingDefinitionsPart(numberingDefinitionsPart);
     } catch (Exception e) {
       LOGGER.error(e);
     }
-    this.setMessageSource(ctx);
+    this.setMessageSource(applicationContext);
     this.setWmlFactory(WmlFactory.getInstance());
   }
 
