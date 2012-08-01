@@ -28,7 +28,6 @@ import org.docx4j.wml.STVerticalJc;
 import org.docx4j.wml.Tbl;
 import org.docx4j.wml.Tc;
 import org.docx4j.wml.Tr;
-import org.springframework.context.ApplicationContext;
 import org.webspeclanguage.api.Action;
 import org.webspeclanguage.api.Interaction;
 import org.webspeclanguage.api.Navigation;
@@ -62,8 +61,8 @@ public class WordTabularUserStoryGeneratorStrategy extends AbstractWordUserStory
   private ExplanationUserStoryVisitor explanationUserStoryVisitor;
   private MockupUserStoryVisitor mockupUserStoryVisitor;
 
-  public WordTabularUserStoryGeneratorStrategy(ApplicationContext applicationContext) {
-    super(applicationContext);
+  public WordTabularUserStoryGeneratorStrategy() {
+    super();
   }
 
   @Override

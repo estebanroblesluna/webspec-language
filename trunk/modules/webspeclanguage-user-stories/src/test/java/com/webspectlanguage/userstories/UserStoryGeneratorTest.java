@@ -26,7 +26,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.impl.core.PathComputer;
-import org.webspeclanguage.userstories.UserStoryGenerator;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
 import org.webspeclanguage.userstories.impl.WordEnumerationUserStoryGeneratorStrategy;
 import org.webspeclanguage.userstories.impl.WordTabularUserStoryGeneratorStrategy;
@@ -56,7 +55,8 @@ public class UserStoryGeneratorTest {
 
   @Test
   public void testWordTabularStrategyGeneration() throws Exception {
-    UserStoryGenerator wordTabularUserStoryGenerator = new WordTabularUserStoryGeneratorStrategy(ctx);
+    WordTabularUserStoryGeneratorStrategy wordTabularUserStoryGenerator = new WordTabularUserStoryGeneratorStrategy();
+    wordTabularUserStoryGenerator.setApplicationContext(ctx);
     WordprocessingMLPackage wordprocessingMLPackage = WordprocessingMLPackage.createPackage();
     Diagram diagram = WebSpecFactory.getShoppingCartExample();
     List<Path> paths = PathComputer.computePaths(diagram);
@@ -72,7 +72,8 @@ public class UserStoryGeneratorTest {
 
   @Test
   public void testWordEnumerationStrategyGeneration() throws Exception {
-    UserStoryGenerator wordEnumerationUserStoryGenerator = new WordEnumerationUserStoryGeneratorStrategy(ctx);
+    WordEnumerationUserStoryGeneratorStrategy wordEnumerationUserStoryGenerator = new WordEnumerationUserStoryGeneratorStrategy();
+    wordEnumerationUserStoryGenerator.setApplicationContext(ctx);
     WordprocessingMLPackage wordprocessingMLPackage = WordprocessingMLPackage.createPackage();
     Diagram diagram = WebSpecFactory.getShoppingCartExample();
     List<Path> paths = PathComputer.computePaths(diagram);

@@ -27,7 +27,9 @@ import org.docx4j.openpackaging.parts.WordprocessingML.NumberingDefinitionsPart;
 import org.docx4j.wml.Numbering;
 import org.docx4j.wml.P;
 import org.docx4j.wml.SectPr;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.MessageSource;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.impl.core.Path;
@@ -41,7 +43,7 @@ import org.webspeclanguage.userstories.factory.WmlFactory;
  * 
  * @author cristian.cianfagna
  */
-public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerator {
+public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerator, ApplicationContextAware {
 
   private final static Logger LOGGER = Logger.getLogger(AbstractWordUserStoryGenerator.class);
 
@@ -53,7 +55,11 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
   private Locale locale;
   private MessageSource messageSource;
 
-  public AbstractWordUserStoryGenerator(ApplicationContext applicationContext) {
+  public AbstractWordUserStoryGenerator() {
+    this.setWmlFactory(WmlFactory.getInstance());
+  }
+
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     try {
       InputStream numberingInputStream = applicationContext.getResource("classpath:/conf/numbering.xml").getInputStream();
       NumberingDefinitionsPart numberingDefinitionsPart = new NumberingDefinitionsPart();
@@ -63,7 +69,6 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
       LOGGER.error(e);
     }
     this.setMessageSource(applicationContext);
-    this.setWmlFactory(WmlFactory.getInstance());
   }
 
   public void generate(Path path, WordprocessingMLPackage wordprocessingMLPackage, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
