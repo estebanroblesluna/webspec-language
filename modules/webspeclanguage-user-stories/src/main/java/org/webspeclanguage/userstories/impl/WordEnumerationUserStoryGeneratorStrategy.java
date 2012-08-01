@@ -24,7 +24,6 @@ import org.docx4j.model.structure.PageSizePaper;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.wml.P;
 import org.docx4j.wml.Tc;
-import org.springframework.context.ApplicationContext;
 import org.webspeclanguage.api.Action;
 import org.webspeclanguage.api.Interaction;
 import org.webspeclanguage.api.Navigation;
@@ -57,8 +56,8 @@ public class WordEnumerationUserStoryGeneratorStrategy extends AbstractWordUserS
   private ExplanationUserStoryVisitor explanationUserStoryVisitor;
   private MockupUserStoryVisitor mockupUserStoryVisitor;
 
-  public WordEnumerationUserStoryGeneratorStrategy(ApplicationContext applicationContext) {
-    super(applicationContext);
+  public WordEnumerationUserStoryGeneratorStrategy() {
+    super();
     this.setSubsectionFontSize(Long.valueOf(PropertyUtil.getProperty("userstory.wns.page.fontsize.subsections")));
   }
 
@@ -299,7 +298,7 @@ public class WordEnumerationUserStoryGeneratorStrategy extends AbstractWordUserS
       return getWmlFactory().createP();
     }
   }
-
+ 
   private long getSubsectionFontSize() {
     return subsectionFontSize;
   }
