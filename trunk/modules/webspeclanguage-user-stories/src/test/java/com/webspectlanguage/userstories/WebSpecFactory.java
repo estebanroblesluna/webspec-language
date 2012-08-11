@@ -35,7 +35,7 @@ public class WebSpecFactory {
     diagram.addGenerator(new RandomStringGenerator("stringGenerator", 10));
 
     InteractionImpl home = new InteractionImpl("Home");
-    home.setMockupFile("/Users/macbook/workspace/mockups/HomeMockup.png");
+    home.setMockupFile(WebSpecFactory.class.getResource("HomeMockup.png").getFile());
     home.setLocation("http://shoppingcartexample.com");
 
     TextField searchText = new TextField();
@@ -47,7 +47,7 @@ public class WebSpecFactory {
     home.addWidget(button);
 
     InteractionImpl searchResults = new InteractionImpl("SearchResults");
-    searchResults.setMockupFile("/Users/macbook/workspace/mockups/SearchResults.png");
+    searchResults.setMockupFile(WebSpecFactory.class.getResource("SearchResults.png").getFile());
 
     Label productName = new Label();
     productName.setId("productName");
@@ -62,7 +62,7 @@ public class WebSpecFactory {
     searchResults.addWidget(button2);
 
     InteractionImpl shoppingCart = new InteractionImpl("ShoppingCart");
-    shoppingCart.setMockupFile("/Users/macbook/workspace/mockups/ShoppingCart.png");
+    shoppingCart.setMockupFile(WebSpecFactory.class.getResource("ShoppingCart.png").getFile());
 
     Label productName1 = new Label();
     productName1.setId("productName");
@@ -73,7 +73,7 @@ public class WebSpecFactory {
     shoppingCart.addWidget(productPrice1);
 
     InteractionImpl productDetail = new InteractionImpl("ProductDetail");
-    productDetail.setMockupFile("/Users/macbook/workspace/mockups/ProductDetail.png");
+    productDetail.setMockupFile(WebSpecFactory.class.getResource("ProductDetail.png").getFile());
 
     Label productName2 = new Label();
     productName2.setId("productName");

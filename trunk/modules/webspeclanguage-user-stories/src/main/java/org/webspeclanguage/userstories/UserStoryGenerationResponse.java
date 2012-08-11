@@ -12,20 +12,12 @@
  */
 package org.webspeclanguage.userstories;
 
-import java.io.File;
-import java.util.Locale;
-import java.util.Map;
-
-import org.webspeclanguage.api.Diagram;
-import org.webspeclanguage.userstories.cropping.CroppingInfo;
 
 /**
- * A generator of User stories from WebSpec diagrams
- * 
- * @author Esteban Robles Luna
+ * @author cristian.cianfagna
  */
-public interface UserStoryGenerator {
+public interface UserStoryGenerationResponse {
 
-  UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
-          throws Exception;
+  public void generateResourcesIn(String fullDirectory, String fileNameWithoutExtension) throws Exception;
+
 }
