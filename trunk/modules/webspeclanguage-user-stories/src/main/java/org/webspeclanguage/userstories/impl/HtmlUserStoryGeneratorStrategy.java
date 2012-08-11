@@ -33,8 +33,8 @@ import org.webspeclanguage.api.PathItemVisitor;
 import org.webspeclanguage.api.RichBehavior;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.impl.core.PathComputer;
-import org.webspeclanguage.userstories.HtmlUserStoryGenerator;
 import org.webspeclanguage.userstories.UserStoryGenerationResponse;
+import org.webspeclanguage.userstories.UserStoryGenerator;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
 import org.webspeclanguage.userstories.cropping.ImageCroppingUtil;
 import org.webspeclanguage.userstories.dto.Scenario;
@@ -51,7 +51,7 @@ import org.webspeclanguage.userstories.visitor.HtmlMockupVisitor;
  * 
  * @author cristian.cianfagna
  */
-public class HtmlUserStoryGeneratorStrategy implements HtmlUserStoryGenerator, HtmlStrategyConstants, MessageSourceAware {
+public class HtmlUserStoryGeneratorStrategy implements UserStoryGenerator, HtmlStrategyConstants, MessageSourceAware {
 
   private StringTemplateGroup htmlTemplateGroup;
   private File diagramFile;
