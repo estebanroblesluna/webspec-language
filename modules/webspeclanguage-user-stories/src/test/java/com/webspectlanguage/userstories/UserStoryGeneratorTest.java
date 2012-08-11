@@ -14,19 +14,16 @@ package com.webspectlanguage.userstories;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.FileSystemResource;
 import org.webspeclanguage.api.Diagram;
-import org.webspeclanguage.impl.core.Path;
-import org.webspeclanguage.impl.core.PathComputer;
+import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
+import org.webspeclanguage.userstories.impl.HtmlUserStoryGeneratorStrategy;
 import org.webspeclanguage.userstories.impl.WordEnumerationUserStoryGeneratorStrategy;
 import org.webspeclanguage.userstories.impl.WordTabularUserStoryGeneratorStrategy;
 
@@ -54,37 +51,34 @@ public class UserStoryGeneratorTest {
   }
 
   @Test
-  public void testWordTabularStrategyGeneration() throws Exception {
+  public void wordTabularGenerationStrategy() throws Exception {
     WordTabularUserStoryGeneratorStrategy wordTabularUserStoryGenerator = new WordTabularUserStoryGeneratorStrategy();
     wordTabularUserStoryGenerator.setApplicationContext(ctx);
-    WordprocessingMLPackage wordprocessingMLPackage = WordprocessingMLPackage.createPackage();
     Diagram diagram = WebSpecFactory.getShoppingCartExample();
-    List<Path> paths = PathComputer.computePaths(diagram);
-    File file = new FileSystemResource("shoppingCart.png").getFile().getAbsoluteFile();
-
-    for (Path path : paths) {
-      wordTabularUserStoryGenerator.generate(path, wordprocessingMLPackage, this.getCroppingMap(), file, new Locale("en", "US"));
-    }
-    // wordprocessingMLPackage.save(new
-    // java.io.File("/Users/macbook/workspace/tabularStrategy.docx"));
-    wordprocessingMLPackage.save(new java.io.File(System.getProperty("user.dir") + "/tabularStrategy.docx"));
+    File file = new File(this.getClass().getResource("shoppingCartDiagram.png").getFile());
+    UserStoryGenerationResponse response = 
+      wordTabularUserStoryGenerator.generate(diagram, this.getCroppingMap(), file, new Locale("en", "US"));
+    response.generateResourcesIn(System.getProperty("user.dir") + "/userStories-example-folder/", "WordTabularStrategy");
   }
 
   @Test
-  public void testWordEnumerationStrategyGeneration() throws Exception {
+  public void wordEnumerationGenerationStrategy() throws Exception {
     WordEnumerationUserStoryGeneratorStrategy wordEnumerationUserStoryGenerator = new WordEnumerationUserStoryGeneratorStrategy();
     wordEnumerationUserStoryGenerator.setApplicationContext(ctx);
-    WordprocessingMLPackage wordprocessingMLPackage = WordprocessingMLPackage.createPackage();
     Diagram diagram = WebSpecFactory.getShoppingCartExample();
-    List<Path> paths = PathComputer.computePaths(diagram);
-    File file = new FileSystemResource("shoppingCart.png").getFile().getAbsoluteFile();
-
-    for (Path path : paths) {
-      wordEnumerationUserStoryGenerator.generate(path, wordprocessingMLPackage, this.getCroppingMap(), file, new Locale("es", "ES"));
-    }
-    // wordprocessingMLPackage.save(new
-    // java.io.File("/Users/macbook/workspace/enumerationStrategy.docx"));
-    wordprocessingMLPackage.save(new java.io.File(System.getProperty("user.dir") + "/enumerationStrategy.docx"));
+    File file = new File(this.getClass().getResource("shoppingCartDiagram.png").getFile());
+    UserStoryGenerationResponse response = 
+      wordEnumerationUserStoryGenerator.generate(diagram, this.getCroppingMap(), file, new Locale("es", "ES"));
+    response.generateResourcesIn(System.getProperty("user.dir") + "/userStories-example-folder/", "WordEnumerationStrategy");
   }
 
+  @Test
+  public void htmlGenerationStrategy() throws Exception {
+    HtmlUserStoryGeneratorStrategy htmlUserStoryGenerator = new HtmlUserStoryGeneratorStrategy();
+    htmlUserStoryGenerator.setMessageSource(ctx);
+    Diagram diagram = WebSpecFactory.getShoppingCartExample();
+    File diagramImageFile = new File(this.getClass().getResource("shoppingCartDiagram.png").getFile());
+    UserStoryGenerationResponse response = htmlUserStoryGenerator.generate(diagram, this.getCroppingMap(), diagramImageFile, new Locale("es", "ES"));
+    response.generateResourcesIn(System.getProperty("user.dir") + "/userStories-example-folder/", "HtmlStrategy");
+  }
 }

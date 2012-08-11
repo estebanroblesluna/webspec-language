@@ -14,6 +14,7 @@ package org.webspeclanguage.userstories.impl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import org.docx4j.XmlUtils;
 import org.docx4j.model.structure.MarginsWellKnown;
 import org.docx4j.model.structure.PageDimensions;
 import org.docx4j.model.structure.PageSizePaper;
+import org.docx4j.openpackaging.exceptions.InvalidFormatException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.NumberingDefinitionsPart;
 import org.docx4j.wml.Numbering;
@@ -31,11 +33,15 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.MessageSource;
+import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.impl.core.Path;
+import org.webspeclanguage.impl.core.PathComputer;
+import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 import org.webspeclanguage.userstories.UserStoryGenerator;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
 import org.webspeclanguage.userstories.factory.WmlFactory;
+import org.webspeclanguage.userstories.response.WordGenerationResponse;
 
 /**
  * Abstract class that holds common instance variables and define the algorithm
@@ -49,7 +55,6 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
 
   private WordprocessingMLPackage wordprocessingMLPackage;
   private WmlFactory wmlFactory;
-  private NumberingDefinitionsPart numberingDefinitionsPart;
   private Map<String, CroppingInfo> croppingMap;
   private File diagramFile;
   private Locale locale;
@@ -57,6 +62,12 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
 
   public AbstractWordUserStoryGenerator() {
     this.setWmlFactory(WmlFactory.getInstance());
+    try {
+      this.setWordprocessingMLPackage(WordprocessingMLPackage.createPackage());
+    } catch (InvalidFormatException e) {
+      LOGGER.error("It is imposible to create the word processing package", e);
+      throw new RuntimeException(e);
+    }
   }
 
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -64,21 +75,25 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
       InputStream numberingInputStream = applicationContext.getResource("classpath:/conf/numbering.xml").getInputStream();
       NumberingDefinitionsPart numberingDefinitionsPart = new NumberingDefinitionsPart();
       numberingDefinitionsPart.setJaxbElement((Numbering) XmlUtils.unmarshal(numberingInputStream));
-      this.setNumberingDefinitionsPart(numberingDefinitionsPart);
+      this.getWordprocessingMLPackage().getMainDocumentPart().addTargetPart(numberingDefinitionsPart);
     } catch (Exception e) {
       LOGGER.error(e);
     }
     this.setMessageSource(applicationContext);
   }
 
-  public void generate(Path path, WordprocessingMLPackage wordprocessingMLPackage, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
+  public UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
           throws Exception {
-    this.initialize(wordprocessingMLPackage, croppingMap, diagramFile, locale);
-    this.generateHeader(path);
-    for (PathItem pathItem : path.getItems()) {
-      this.generateBody(pathItem);
+    List<Path> paths = PathComputer.computePaths(diagram);
+    for(Path path : paths) {
+      this.initialize(this.getWordprocessingMLPackage(), croppingMap, diagramFile, locale);
+      this.generateHeader(path);
+      for (PathItem pathItem : path.getItems()) {
+        this.generateBody(pathItem);
+      }
+      this.generateFooter();
     }
-    this.generateFooter();
+    return new WordGenerationResponse(this.getWordprocessingMLPackage()); 
   }
 
   // template method
@@ -99,10 +114,6 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
 
   protected void basicInitialize(WordprocessingMLPackage wordprocessingMLPackage, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
           throws Exception {
-    if (this.getWordprocessingMLPackage() == null || !this.getWordprocessingMLPackage().equals(wordprocessingMLPackage)) {
-      wordprocessingMLPackage.getMainDocumentPart().addTargetPart(this.getNumberingDefinitionsPart());
-    }
-    this.setWordprocessingMLPackage(wordprocessingMLPackage);
     this.setCroppingMap(croppingMap);
     this.setDiagramFile(diagramFile);
     this.setLocale(locale);
@@ -133,20 +144,12 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
     return this.getMessageSource().getMessage(bundleKey, new Object[] {}, this.getLocale());
   }
 
-  protected String getMessage(String bundleKey, Object[] args) {
-    return this.getMessageSource().getMessage(bundleKey, args, this.getLocale());
-  }
-
   protected WordprocessingMLPackage getWordprocessingMLPackage() {
     return wordprocessingMLPackage;
   }
 
   protected WmlFactory getWmlFactory() {
     return wmlFactory;
-  }
-
-  protected NumberingDefinitionsPart getNumberingDefinitionsPart() {
-    return numberingDefinitionsPart;
   }
 
   protected Map<String, CroppingInfo> getCroppingMap() {
@@ -171,10 +174,6 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
 
   private void setWmlFactory(WmlFactory wmlFactory) {
     this.wmlFactory = wmlFactory;
-  }
-
-  private void setNumberingDefinitionsPart(NumberingDefinitionsPart numberingDefinitionsPart) {
-    this.numberingDefinitionsPart = numberingDefinitionsPart;
   }
 
   private void setCroppingMap(Map<String, CroppingInfo> croppingMap) {

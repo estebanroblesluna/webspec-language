@@ -12,13 +12,10 @@
  */
 package org.webspeclanguage.userstories.impl;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.docx4j.model.structure.MarginsWellKnown;
 import org.docx4j.model.structure.PageSizePaper;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -28,22 +25,13 @@ import org.docx4j.wml.STVerticalJc;
 import org.docx4j.wml.Tbl;
 import org.docx4j.wml.Tc;
 import org.docx4j.wml.Tr;
-import org.webspeclanguage.api.Action;
-import org.webspeclanguage.api.Interaction;
-import org.webspeclanguage.api.Navigation;
-import org.webspeclanguage.api.OperationReference;
 import org.webspeclanguage.api.PathItem;
-import org.webspeclanguage.api.PathItemVisitor;
-import org.webspeclanguage.api.RichBehavior;
-import org.webspeclanguage.api.Transition;
-import org.webspeclanguage.impl.action.ActionVisitor;
-import org.webspeclanguage.impl.action.ExpressionAction;
-import org.webspeclanguage.impl.action.LetVariable;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
-import org.webspeclanguage.userstories.cropping.ImageCroppingUtil;
 import org.webspeclanguage.userstories.util.PropertyUtil;
-import org.webspeclanguage.userstories.visitor.WordUserStoryExpressionVisitor;
+import org.webspeclanguage.userstories.visitor.WordTabularCroppingVisitor;
+import org.webspeclanguage.userstories.visitor.WordTabularExplanationVisitor;
+import org.webspeclanguage.userstories.visitor.WordTabularMockupVisitor;
 
 /**
  * Strategy implementation that generate content in tables.
@@ -52,14 +40,13 @@ import org.webspeclanguage.userstories.visitor.WordUserStoryExpressionVisitor;
  */
 public class WordTabularUserStoryGeneratorStrategy extends AbstractWordUserStoryGenerator {
 
-  private final static Logger LOGGER = Logger.getLogger(WordTabularUserStoryGeneratorStrategy.class);
   private final static int COLUMNS = 3;
 
   private int cellWidthTwips;
   private Tbl table;
-  private CroppingUserStoryVisitor croppingUserStoryVisitor;
-  private ExplanationUserStoryVisitor explanationUserStoryVisitor;
-  private MockupUserStoryVisitor mockupUserStoryVisitor;
+  private WordTabularCroppingVisitor croppingUserStoryVisitor;
+  private WordTabularExplanationVisitor explanationUserStoryVisitor;
+  private WordTabularMockupVisitor mockupUserStoryVisitor;
 
   public WordTabularUserStoryGeneratorStrategy() {
     super();
@@ -72,9 +59,13 @@ public class WordTabularUserStoryGeneratorStrategy extends AbstractWordUserStory
     // twips for cells
     int writableWidthTwips = wordprocessingMLPackage.getDocumentModel().getSections().get(0).getPageDimensions().getWritableWidthTwips();
     this.setCellWidthTwips(new Double(Math.floor((writableWidthTwips / COLUMNS))).intValue());
-    this.setCroppingUserStoryVisitor(new CroppingUserStoryVisitor());
-    this.setExplanationUserStoryVisitor(new ExplanationUserStoryVisitor());
-    this.setMockupUserStoryVisitor(new MockupUserStoryVisitor());
+    this.setCroppingUserStoryVisitor(new WordTabularCroppingVisitor(this.getWordprocessingMLPackage(),
+            this.getWmlFactory(), this.getCroppingMap(), this.getCellWidthTwips(), this.getDiagramFile(), this.getMessageSource(),
+            this.getLocale()));
+    this.setExplanationUserStoryVisitor(
+            new WordTabularExplanationVisitor(this.getWmlFactory(), this.getMessageSource(), this.getLocale(), this.getCellWidthTwips()));
+    this.setMockupUserStoryVisitor(new WordTabularMockupVisitor(this.getWordprocessingMLPackage(), this.getWmlFactory(), this.getCellWidthTwips(),
+            this.getMessageSource(), this.getLocale()));
   }
 
   @Override
@@ -124,160 +115,6 @@ public class WordTabularUserStoryGeneratorStrategy extends AbstractWordUserStory
     this.basicGenerateFooter();
   }
 
-  private Tc getInteractionExplanation(Interaction interaction) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(this.getMessage("userstory.wts1.interaction.where"));
-    sb.append(" '");
-    sb.append(interaction.getName());
-    sb.append("' ");
-    sb.append(this.getMessage("userstory.wts1.interaction.ableto"));
-    sb.append(" ");
-    StringBuilder transitionSB;
-    Tc tc = this.getWmlFactory().createTC(this.getWmlFactory().createP(), this.getCellWidthTwips());
-    tc.getContent().add(this.getWmlFactory().createP(sb.toString()));
-    for (Transition transition : interaction.getForwardTransitions()) {
-      transitionSB = new StringBuilder();
-      transitionSB.append("'");
-      transitionSB.append(transition.getName());
-      transitionSB.append("'");
-      tc.getContent().add(getWmlFactory().createNumberingP(2, transitionSB.toString()));
-    }
-    return tc;
-  }
-
-  private Tc getNavigationExplanation(Navigation navigation) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(this.getMessage("userstory.wts1.navigation.to"));
-    sb.append(" '");
-    sb.append(navigation.getName());
-    sb.append("' ");
-    sb.append(this.getMessage("userstory.wts1.navigation.actions"));
-    sb.append(" ");
-    String actionString;
-    Tc tc = this.getWmlFactory().createTC(this.getWmlFactory().createP(), this.getCellWidthTwips());
-    tc.getContent().add(this.getWmlFactory().createP(sb.toString()));
-    for (Action action : navigation.getActions()) {
-      actionString = (String) action.accept(new ActionVisitor() {
-
-        public Object visitExpressionAction(ExpressionAction expressionAction) {
-          return getActionExplanation(expressionAction);
-        }
-        public Object visitLetVariable(LetVariable letVariable) {
-          return getActionExplanation(letVariable);
-        }
-      });
-      tc.getContent().add(getWmlFactory().createNumberingP(2, actionString));
-    }
-    return tc;
-  }
-
-  private String getActionExplanation(ExpressionAction expressionAction) {
-    return (String) expressionAction.getExpression().accept(new WordUserStoryExpressionVisitor(this.getMessageSource(), this.getLocale()));
-  }
-
-  private String getActionExplanation(LetVariable letVariable) {
-    StringBuilder sb = new StringBuilder();
-    sb.append("userstory.wts1.navigation.action.letvariable");
-    sb.append(" '");
-    sb.append(letVariable.getVariableName());
-    sb.append("' ");
-    sb.append("userstory.wts1.navigation.action.letvariable.type");
-    sb.append(" ");
-    sb.append(letVariable.getType().name());
-    return sb.toString();
-  }
-
-  /**
-   * Visitor in charges of getting each step image from diagramImage.
-   * 
-   * @author cristian.cianfagna
-   */
-  private class CroppingUserStoryVisitor implements PathItemVisitor {
-
-    public Object visitInteraction(Interaction interaction) {
-      CroppingInfo croppingInfo = getCroppingMap().get(interaction.getName());
-      return getWmlFactory().createTC(this.getP(croppingInfo), JcEnumeration.CENTER, STVerticalJc.CENTER, getCellWidthTwips());
-    }
-    public Object visitNavigation(Navigation navigation) {
-      CroppingInfo croppingInfo = getCroppingMap().get(navigation.getName());
-      return getWmlFactory().createTC(this.getP(croppingInfo), JcEnumeration.CENTER, STVerticalJc.CENTER, getCellWidthTwips());
-    }
-    public Object visitOperationReference(OperationReference operationReference) {
-      return getWmlFactory().createTC(getWmlFactory().createP(), getCellWidthTwips());
-    }
-    public Object visitRichBehavior(RichBehavior richBehavior) {
-      CroppingInfo croppingInfo = getCroppingMap().get(richBehavior.getName());
-      return getWmlFactory().createTC(this.getP(croppingInfo), getCellWidthTwips());
-    }
-    private P getP(CroppingInfo croppingInfo) {
-      ByteArrayOutputStream byteArrayOutputStream = null;
-      P p = null;
-      try {
-        byteArrayOutputStream = ImageCroppingUtil.cropImage(getDiagramFile(), croppingInfo);
-        p = getWmlFactory().getImage(getWordprocessingMLPackage(), byteArrayOutputStream);
-      } catch (Exception e) {
-        LOGGER.error(e);
-        return getWmlFactory().createP();
-      }
-      return p;
-    }
-  }
-
-  /**
-   * Visitor in charges of getting each step explanation from diagram.
-   * 
-   * @author cristian.cianfagna
-   */
-  private class ExplanationUserStoryVisitor implements PathItemVisitor {
-
-    public Object visitInteraction(Interaction interaction) {
-      return getInteractionExplanation(interaction);
-    }
-    public Object visitNavigation(Navigation navigation) {
-      return getNavigationExplanation(navigation);
-    }
-    public Object visitOperationReference(OperationReference operationReference) {
-      return getWmlFactory().createP();
-    }
-    public Object visitRichBehavior(RichBehavior richBehavior) {
-      return getWmlFactory().createP();
-    }
-  }
-
-  /**
-   * Visitor in charges of getting mockup image from interaction.
-   * 
-   * @author cristian.cianfagna
-   */
-  private class MockupUserStoryVisitor implements PathItemVisitor {
-
-    public Object visitInteraction(Interaction interaction) {
-      String mockupFilePath = interaction.getMockupFile();
-      if (StringUtils.isNotEmpty(mockupFilePath)) {
-        File mockupFile = new File(mockupFilePath);
-        if (mockupFile.exists()) {
-          try {
-            return getWmlFactory().createTC(getWmlFactory().getImage(getWordprocessingMLPackage(), mockupFile), JcEnumeration.CENTER, STVerticalJc.CENTER,
-                    getCellWidthTwips());
-          } catch (Exception e) {
-            LOGGER.error(e);
-            return getWmlFactory().createTC(getWmlFactory().createP(), getCellWidthTwips());
-          }
-        }
-      }
-      return getWmlFactory().createTC(getWmlFactory().createP(), getCellWidthTwips());
-    }
-    public Object visitNavigation(Navigation navigation) {
-      return getWmlFactory().createTC(getWmlFactory().createP(), getCellWidthTwips());
-    }
-    public Object visitOperationReference(OperationReference operationReference) {
-      return getWmlFactory().createTC(getWmlFactory().createP(), getCellWidthTwips());
-    }
-    public Object visitRichBehavior(RichBehavior richBehavior) {
-      return getWmlFactory().createTC(getWmlFactory().createP(), getCellWidthTwips());
-    }
-  }
-
   @Override
   protected boolean isLandscape() {
     return Boolean.valueOf(PropertyUtil.getProperty("userstory.wts.page.orientation.landscape"));
@@ -319,27 +156,27 @@ public class WordTabularUserStoryGeneratorStrategy extends AbstractWordUserStory
     this.table = table;
   }
 
-  private MockupUserStoryVisitor getMockupUserStoryVisitor() {
+  private WordTabularMockupVisitor getMockupUserStoryVisitor() {
     return mockupUserStoryVisitor;
   }
 
-  private void setMockupUserStoryVisitor(MockupUserStoryVisitor mockupUserStoryVisitor) {
+  private void setMockupUserStoryVisitor(WordTabularMockupVisitor mockupUserStoryVisitor) {
     this.mockupUserStoryVisitor = mockupUserStoryVisitor;
   }
 
-  private CroppingUserStoryVisitor getCroppingUserStoryVisitor() {
+  private WordTabularCroppingVisitor getCroppingUserStoryVisitor() {
     return croppingUserStoryVisitor;
   }
 
-  private void setCroppingUserStoryVisitor(CroppingUserStoryVisitor croppingUserStoryVisitor) {
+  private void setCroppingUserStoryVisitor(WordTabularCroppingVisitor croppingUserStoryVisitor) {
     this.croppingUserStoryVisitor = croppingUserStoryVisitor;
   }
 
-  private ExplanationUserStoryVisitor getExplanationUserStoryVisitor() {
+  private WordTabularExplanationVisitor getExplanationUserStoryVisitor() {
     return explanationUserStoryVisitor;
   }
 
-  private void setExplanationUserStoryVisitor(ExplanationUserStoryVisitor explanationUserStoryVisitor) {
+  private void setExplanationUserStoryVisitor(WordTabularExplanationVisitor explanationUserStoryVisitor) {
     this.explanationUserStoryVisitor = explanationUserStoryVisitor;
   }
 

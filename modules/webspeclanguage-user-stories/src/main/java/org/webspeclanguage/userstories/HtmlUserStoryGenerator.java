@@ -20,12 +20,12 @@ import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
 
 /**
- * A generator of User stories from WebSpec diagrams
+ * Html generator.
  * 
- * @author Esteban Robles Luna
+ * @author cristian.cianfagna
  */
-public interface UserStoryGenerator {
+public interface HtmlUserStoryGenerator {
+ 
+  public UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramImageFile, Locale locale) throws Exception;
 
-  UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
-          throws Exception;
 }

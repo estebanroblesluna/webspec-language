@@ -159,7 +159,7 @@ public class ImageCroppingUtil {
    *          of the original image
    * @return BufferedImage of the file read
    */
-  private static BufferedImage readImage(File inputStream) {
+  public static BufferedImage readImage(File inputStream) {
     BufferedImage img = null;
     try {
       img = ImageIO.read(inputStream);
@@ -181,7 +181,7 @@ public class ImageCroppingUtil {
    *          --> e.g. "jpg","gif","png"
    * @throws IOException
    */
-  private static void writeImage(BufferedImage img, OutputStream outputStream, String extension) throws IOException {
+  public static void writeImage(BufferedImage img, OutputStream outputStream, String extension) throws IOException {
     BufferedImage bi = img;
     ImageIO.write(bi, extension, outputStream);
   }
