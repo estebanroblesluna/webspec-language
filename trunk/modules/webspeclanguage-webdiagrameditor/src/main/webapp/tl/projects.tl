@@ -7,6 +7,7 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -15,6 +16,7 @@
             <td>{name}</td>
             <td><button type="submit" class="btn btn-mini modifyProject" projectId="{id}">Modify</button></td>
             <td><button type="submit" class="btn btn-mini getSprint" projectId="{id}">Sprints</button></td>
+            <td><button type="submit" class="btn btn-mini getWebspecDiagrams" projectId="{id}">Webspec diagrams</button></td>
             <td><button type="submit" class="btn btn-mini getMockup" projectId="{id}">Mockups</button></td>
           </tr>
           {/projects}

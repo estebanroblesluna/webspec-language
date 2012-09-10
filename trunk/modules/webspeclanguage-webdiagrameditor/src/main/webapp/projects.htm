@@ -53,6 +53,12 @@
                         window.location = "mockupsOfProject.htm?projectId=" + id;
                        });
 
+                    $('.getWebspecDiagrams').click(function(event) {
+                        var button = $(event.target);
+                        var id = button.attr('projectId');
+                        window.location = "webspecDiagramsOfProject.htm?projectId=" + id;
+                       });
+
                     $('#add').click(function(event) {
                         window.location = "addProject.htm";
                        });
