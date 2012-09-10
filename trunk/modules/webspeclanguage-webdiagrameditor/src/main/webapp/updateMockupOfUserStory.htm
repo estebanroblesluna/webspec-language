@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Playground</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+
+        <style>  body { padding-top: 60px; } </style>
+        <script src="js/dust-full-0.3.0.min.js"></script>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/jquery.url.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+        $(document).ready(function() {
+            renderNavBar();
+
+          $.get('tl/updateMockupOfUserStory.tl', function(data) {
+              var compiled = dust.compile(data, "updateMockupTemplate");
+              dust.loadSource(compiled);
+
+              var mockupId = $.url().param('mockupId');
+              var userStoryId = $.url().param('userStoryId');
+              
+              $.ajax({
+              	  url: 'service/projects/mockups/'+ mockupId +'/userStory/' +userStoryId,
+              	  type: 'GET',
+              	  cache: false,
+              	  success: function(response) {
+            	    dust.render("updateMockupTemplate", response, function(err, out) {
+                      $('#leftMenu').html(out);
+
+                      $('#saveButton').click(function(event) {
+                          var mockupId = $('#mockupId').val();
+                          var title = $('#title').val();
+                          var userStoryId = $('#userStoryId').val();
+                          
+                          $.ajax({
+                        	  url: 'service/projects/userStory/' + userStoryId +'/mockups/' + mockupId,
+                        	  type: 'POST',
+                        	  data: {
+                        	    "name": title
+                        	  },
+                        	  cache: false,
+                        	  success: function(response) {
+                                  window.location = "mockupsOfUserStory.htm?userStoryId=" + response.userStoryId;                                  
+                        	  }
+                        	});
+                          return false;
+                       });
+                    });
+              	  }
+              	});
+          });
+        });
+        </script>
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+
+<body>
+
+<!-- Nav bar -->
+<div id="navBar" class="navbar navbar-fixed-top"></div>
+
+<!-- Content -->
+<div class="container">
+<div id="leftMenu"></div>
+
+</div>
+</body>
+</html>

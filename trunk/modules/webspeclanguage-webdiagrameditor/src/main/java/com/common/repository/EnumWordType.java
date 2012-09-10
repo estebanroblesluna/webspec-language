@@ -21,7 +21,7 @@ public class EnumWordType implements UserType, ParameterizedType {
 	protected static final String IDENTIFIER_METHOD = "identifierMethod";
 	protected static final String VALUEOF_METHOD = "valueOfMethod";
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes" })
 	private Class<? extends Enum> enumClass;
 	private Class<?> identifierType;
 	private Method identifierMethod;

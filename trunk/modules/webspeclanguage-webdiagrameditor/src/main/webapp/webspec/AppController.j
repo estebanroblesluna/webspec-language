@@ -78,17 +78,17 @@
 
 	[commonToolbox addTool: [SelectionTool drawing: drawing] withTitle: @"Selection" image: @"Resources/Selection.png"];
 	[commonToolbox addCommand: [FigureJSONSerializer class] withTitle: @"Save" image: @"Resources/AlignLeft.gif"];
-	
-	[commonToolbox addCommand: [GroupCommand class] withTitle: @"Group" image: @"Resources/UniformNumberDistribution.gif"];
-	[commonToolbox addCommand: [UngroupCommand class] withTitle: @"Ungroup" image: @"Resources/UniformNumberDistribution.gif"];
 
-	[commonToolbox addCommand: [LockCommand class] withTitle: @"Lock" image: @"Resources/UniformNumberDistribution.gif"];
-	[commonToolbox addCommand: [UnlockCommand class] withTitle: @"Unlock" image: @"Resources/UniformNumberDistribution.gif"];
+    [commonToolbox addCommand: [GroupCommand class] withTitle: @"Group" image: @"Resources/Group.gif"];
+    [commonToolbox addCommand: [UngroupCommand class] withTitle: @"Ungroup" image: @"Resources/Ungroup.gif"];
 
-	[commonToolbox addCommand: [BringToFrontCommand class] withTitle: @"Bring to front" image: @"Resources/UniformNumberDistribution.gif"];
-	[commonToolbox addCommand: [SendToBackCommand class] withTitle: @"Send to back" image: @"Resources/UniformNumberDistribution.gif"];
-	[commonToolbox addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/UniformNumberDistribution.gif"];
-	[commonToolbox addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/UniformNumberDistribution.gif"];
+    [commonToolbox addCommand: [LockCommand class] withTitle: @"Lock" image: @"Resources/Lock.gif"];
+    [commonToolbox addCommand: [UnlockCommand class] withTitle: @"Unlock" image: @"Resources/Unlock.gif"];
+
+    [commonToolbox addCommand: [BringToFrontCommand class] withTitle: @"Bring to front" image: @"Resources/BringToFront.gif"];
+    [commonToolbox addCommand: [SendToBackCommand class] withTitle: @"Send to back" image: @"Resources/SendToBack.gif"];
+    [commonToolbox addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/BringForward.gif"];
+    [commonToolbox addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/SendBackward.gif"];
 
 	[drawing toolbox: commonToolbox];
 

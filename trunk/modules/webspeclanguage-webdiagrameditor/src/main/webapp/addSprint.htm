@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Playground</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+
+        <style>  body { padding-top: 60px; } </style>
+        <script src="js/dust-full-0.3.0.min.js"></script>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/jquery.url.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+        $(document).ready(function() {
+            renderNavBar();
+
+          $('#initDate').datepicker({
+                format: 'dd/mm/yyyy'
+          });
+          $('#endDate').datepicker({
+                format: 'dd/mm/yyyy'
+          });
+
+
+          $('#saveButton').click(function(event) {
+              var title = $('#title').val();
+              var initDate = $('#initDate').val();
+              var endDate = $('#endDate').val();
+              var projectId = $.url().param('projectId');
+
+            $.ajax({
+          	  url: 'service/projects/project/' + projectId +'/sprint',
+          	  type: 'POST',
+          	  data: {
+                "title": title,
+        	    "initDate" : initDate,
+  	    		"endDate": endDate
+  	    		     },
+          	  cache: false,
+          	  success: function(response) {
+                  window.location = "sprints.htm?projectId=" + response.projectId;
+          	  }
+          	});
+            return false;
+          });
+        });
+        </script>
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+
+
+<body>
+
+<!-- Nav bar -->
+<div id="navBar" class="navbar navbar-fixed-top"></div>
+
+<!-- Content -->
+<div class="container">
+<div id="leftMenu" class="leftMenu"></div>
+
+      <form class="well form-horizontal">
+        <fieldset>
+        <div class="control-group">
+          <label class="control-label">Title:</label>&nbsp;&nbsp;
+          <input id="title" type="text" >
+        </div>
+          
+        <div class="control-group">        
+          <label class="control-label">Initial date (dd/mm/yyyy):</label>&nbsp;&nbsp;
+          <input id="initDate" type="text"> 
+        </div>
+        <div class="control-group">         
+          <label class="control-label">End date (dd/mm/yyyy):</label>&nbsp;&nbsp;
+          <input id="endDate" type="text">
+        </div>
+        <div class="form-actions">
+        <button id="saveButton" class="btn btn-primary">Save</button>
+        
+        </div>
+        </fieldset>
+      </form>
+
+</div>
+</body>
+</html>

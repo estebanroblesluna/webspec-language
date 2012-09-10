@@ -50,5 +50,4 @@
     <property name="postSignInUrl" value="/main.htm" />
     <property name="signUpUrl" value="/register.htm" />
   </bean>
-
 </beans>

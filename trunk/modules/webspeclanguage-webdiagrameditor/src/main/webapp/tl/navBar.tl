@@ -8,9 +8,7 @@
           <a class="brand">Playground</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li {?projects} class="active" {/projects}>      <a href="subscribers.htm">Projects</a></li>
-              <li {?mockups} class="active" {/mockups}>            <a href="feeds.htm">Mockups</a></li>
-              <li {?main} class="active" {/main}>              <a href="main.htm">WebSpec</a></li>
+              <li {?projects} class="active" {/projects}>      <a href="projects.htm">Projects</a></li>
             </ul>
           </div>
         </div>
