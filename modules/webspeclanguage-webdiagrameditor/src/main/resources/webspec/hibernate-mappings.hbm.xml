@@ -42,4 +42,75 @@
     
     <many-to-one name="owner" column="owner_id" />
   </class>
+
+  <class name="org.webspeclanguage.model.Project" table="project">
+	<id name="id" column="project_id" type="java.lang.Long">
+		<generator class="native" />
+	</id>
+
+	<property name="name" column="name" />
+	
+	<bag name="users" table="project_user">
+		<key column="project_id"/>
+		<many-to-many column="user_id" class="com.common.model.User" />
+	</bag>
+        
+	<list name="sprints" cascade="all-delete-orphan"  >
+		<key column="parent_project_id" not-null="true"/>
+		<list-index column="idx_sprint"  />
+		<one-to-many class="org.webspeclanguage.model.Sprint" />
+	</list>
+	
+	<list name="mockups" cascade="all">
+		<key column="parent_project_id" />
+		<list-index column="idx_mockup" />
+		<one-to-many class="org.webspeclanguage.model.Mockup" />
+	</list>
+  </class>
+  
+  <class name="org.webspeclanguage.model.Sprint" table="sprint">
+	<id name="id" column="sprint_id" type="java.lang.Long">
+		<generator class="native" />
+	</id>
+
+	<property name="title" column="title" />
+	<property name="initDate" column="init_date" />
+	<property name="endDate" column="end_date" />
+	<property name="number" column="number" />
+	
+	<list name="userStories" cascade="all-delete-orphan">
+		<key column="parent_sprint_id" not-null="true"/>
+		<list-index column="idx_user_story" />
+		<one-to-many class="org.webspeclanguage.model.UserStory" />
+	</list>
+	
+	<list name="mockups" cascade="all">
+		<key column="parent_sprint_id" />
+		<list-index column="idx_mockup" />
+		<one-to-many class="org.webspeclanguage.model.Mockup" />
+	</list>
+	<many-to-one name="project" column="parent_project_id" insert="false" update="false"/>
+  </class>
+
+  <class name="org.webspeclanguage.model.UserStory" table="user_story">
+	<id name="id" column="user_story_id" type="java.lang.Long">
+		<generator class="native" />
+	</id>
+
+	<property name="title" column="title" />
+	
+	<list name="mockups" cascade="all">
+		<key column="parent_user_story_id" />
+		<list-index column="idx_mockup" />
+		<one-to-many class="org.webspeclanguage.model.Mockup" />
+	</list>
+	<many-to-one name="sprint" column="parent_sprint_id" insert="false" update="false"/>
+  </class>
+    
+  <class name="org.webspeclanguage.model.Mockup" table="mockup">
+	<id name="id" column="mockup_id" type="java.lang.Long">
+		<generator class="native" />
+	</id>
+	<property name="name" column="name" />
+  </class>  
 </hibernate-mapping>

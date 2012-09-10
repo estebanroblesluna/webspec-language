@@ -11,6 +11,11 @@
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
           ">
 
+  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  <tx:annotation-driven transaction-manager="transactionManager" />
+  
   <bean id="diagramRepository" class="org.webspeclanguage.repository.DiagramRepository">
     <constructor-arg index="0" ref="sessionFactory" />
   </bean>
@@ -22,6 +27,27 @@
   <bean id="projectRestService" class="org.webspeclanguage.web.servlet.ProjectRestService" >
     <constructor-arg index="0" ref="diagramService" />
     <constructor-arg index="1" ref="userService" />
+    <constructor-arg index="2" ref="projectService" />
   </bean>
 
+  <bean id="projectServiceTarget" class="org.webspeclanguage.service.ProjectServiceImpl">
+    <constructor-arg ref="diagramRepository" />
+  </bean>
+
+  <bean id="projectService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager">
+      <ref bean="transactionManager" />
+    </property>
+    <property name="target">
+      <ref bean="projectServiceTarget" />
+    </property>
+    <property name="proxyInterfaces" value="org.webspeclanguage.service.ProjectService" />
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">
+          PROPAGATION_REQUIRED,-java.lang.Exception
+        </prop>
+      </props>
+    </property>
+  </bean>
 </beans>

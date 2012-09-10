@@ -1,46 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Playground</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <title>Playground</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <script src="js/dust-full-0.3.0.min.js"></script>
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+
+        <style>  body { padding-top: 60px; } </style>
+        <script src="js/dust-full-0.3.0.min.js"></script>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/jquery.url.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
-          
-          //load nav bar template
-          $.get('tl/navBar.tl', function(data) {
-            var compiled = dust.compile(data, "navBarTemplate");
-            dust.loadSource(compiled);
-            var page = window.location.pathname;
-            var lastIndex = page.lastIndexOf('/');
-            page = page.substr(lastIndex + 1);
-            
-            var pointIndex = page.lastIndexOf('.');
-            if (pointIndex != -1) {
-              page = page.substr(0, pointIndex); 
-            }
-
-            var templateData = {};
-            templateData[page] = "true";
-
-            dust.render("navBarTemplate", templateData, function(err, out) {
-              $('#navBar').html(out);
-            });
-          });
+            renderNavBar();
 
           //load nav bar template
           $.get('tl/webspec.tl', function(data) {
@@ -79,9 +59,12 @@
     <div id="navBar" class="navbar navbar-fixed-top"></div>
 
     <!-- Content -->
-    <div class="container">
-      <div id="leftMenu" class="leftMenu"></div>
-      <iframe id="webspecEditor" src="webspec/index.html" class="webspecEditor"></iframe>
-    </div>
+    <div class="container grid">
+        <header class="jumbotron masthead">
+            <div class="inner">
+                <h1>Welcome to playground!</h1>
+            </div>
+        </header>
+      </div>
   </body>
 </html>

@@ -14,5 +14,4 @@ public interface DiagramService {
   List getIdsAndNamesOfDiagrams(User user, DiagramType type);
 
   Diagram getDiagram(User user, long diagramId);
-
 }

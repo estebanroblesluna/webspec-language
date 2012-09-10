@@ -28,7 +28,7 @@ public class DiagramServiceImpl implements DiagramService {
   }
   
   @Override
-  public List getIdsAndNamesOfDiagrams(User user, DiagramType type) {
+  public List<Diagram> getIdsAndNamesOfDiagrams(User user, DiagramType type) {
     return this.repository.getIdsAndNamesOfDiagrams(user, type);
   }
 
