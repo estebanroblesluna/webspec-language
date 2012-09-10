@@ -46,7 +46,7 @@
 {
 	var drawing = [WebSpecDrawing frame: [contentView bounds]];
 
-	var webspecToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(20,20)];
+	var webspecToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(20,70)];
 	[webspecToolbox columns: 3];
 
 	[webspecToolbox addTool: [CreateInteractionTool drawing: drawing] withTitle: @"Interaction" image: @"Resources/Interaction.gif"];
@@ -73,7 +73,7 @@
 	
 	[drawing toolbox: webspecToolbox];
 
-	var commonToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,20)];
+	var commonToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,70)];
 	[commonToolbox columns: 2];
 
 	[commonToolbox addTool: [SelectionTool drawing: drawing] withTitle: @"Selection" image: @"Resources/Selection.png"];
@@ -92,7 +92,7 @@
 
 	[drawing toolbox: commonToolbox];
 
-	var alignToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,200)];
+	var alignToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,270)];
 	[alignToolbox columns: 3];
 
 	[alignToolbox addCommand: [AlignLeftCommand class] withTitle: @"Align left" image: @"Resources/AlignLeft.gif"];
