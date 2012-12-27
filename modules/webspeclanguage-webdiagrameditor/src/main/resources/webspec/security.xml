@@ -15,7 +15,7 @@
     <security:intercept-url pattern="/css/*" access="permitAll" />
     <security:intercept-url pattern="/image/*" access="permitAll" />
 
-    <security:intercept-url pattern="/webspec/**" access="hasRole('ROLE_USER')" />
+<!--     <security:intercept-url pattern="/webspec/**" access="hasRole('ROLE_USER')" /> -->
 
     <security:intercept-url pattern="/**" access="permitAll" />
     
