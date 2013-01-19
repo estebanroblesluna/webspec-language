@@ -53,12 +53,12 @@ import org.webspeclanguage.impl.expression.core.WidgetReference;
  * 
  * @author cristian.cianfagna
  */
-public class WordUserStoryExpressionVisitor implements org.webspeclanguage.impl.expression.core.ExpressionVisitor {
+public class UserStoryExpressionVisitor implements org.webspeclanguage.impl.expression.core.ExpressionVisitor {
 
   private MessageSource messageSource;
   private Locale locale;
 
-  public WordUserStoryExpressionVisitor(MessageSource messageSource, Locale locale) {
+  public UserStoryExpressionVisitor(MessageSource messageSource, Locale locale) {
     this.setMessageSource(messageSource);
     this.setLocale(locale);
   }

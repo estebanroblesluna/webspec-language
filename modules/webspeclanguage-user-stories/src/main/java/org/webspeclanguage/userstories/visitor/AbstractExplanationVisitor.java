@@ -20,14 +20,18 @@ import org.webspeclanguage.api.Transition;
 import org.webspeclanguage.impl.action.ActionVisitor;
 import org.webspeclanguage.impl.action.ExpressionAction;
 import org.webspeclanguage.impl.action.LetVariable;
+import org.webspeclanguage.userstories.util.ExpressionPrettyPrinter;
 
 /**
  * @author cristian.cianfagna
  */
 public abstract class AbstractExplanationVisitor extends AbstractVisitor {
 
+  private ExpressionPrettyPrinter expressionPrettyPrinter;
+
   public AbstractExplanationVisitor(MessageSource messageSource, Locale locale) {
     super(messageSource, locale);
+    this.setExpressionPrettyPrinter(new ExpressionPrettyPrinter(messageSource, locale));
   }
 
   protected String getExplanationHeader(Interaction interaction) {
@@ -42,7 +46,7 @@ public abstract class AbstractExplanationVisitor extends AbstractVisitor {
   }
 
   protected String getExplanationHeader(Transition transition) {
-    StringBuilder sb = new StringBuilder();
+	StringBuilder sb = new StringBuilder();
     sb.append(this.getMessage("userstory.wts1.navigation.to"));
     sb.append(" '");
     sb.append(transition.getName());
@@ -52,11 +56,21 @@ public abstract class AbstractExplanationVisitor extends AbstractVisitor {
     return sb.toString();
   }
 
+  protected String getPreconditionExplanationHeader(Transition transition) {
+	StringBuilder preconditionHeader = new StringBuilder();
+	preconditionHeader.append(this.getMessage("userstory.wts1.navigation.precondition.to")).
+	append(" '").
+	append(transition.getName()).
+	append("' ").
+	append(this.getMessage("userstory.wts1.navigation.precondition.hasTo"));
+	return preconditionHeader.toString();
+  }
+
   protected ActionVisitor getActionVisitor() {
     return new ActionVisitor() {
 
       public Object visitExpressionAction(ExpressionAction expressionAction) {
-        return (String) expressionAction.getExpression().accept(new WordUserStoryExpressionVisitor(getMessageSource(), getLocale()));
+        return (String) expressionAction.getExpression().accept(new UserStoryExpressionVisitor(getMessageSource(), getLocale()));
       }
       public Object visitLetVariable(LetVariable letVariable) {
         StringBuilder sb = new StringBuilder();
@@ -71,5 +85,15 @@ public abstract class AbstractExplanationVisitor extends AbstractVisitor {
       }
     };
   }
+
+  protected ExpressionPrettyPrinter getExpressionPrettyPrinter() {
+	return expressionPrettyPrinter;
+  }
+
+  protected void setExpressionPrettyPrinter(
+		ExpressionPrettyPrinter expressionPrettyPrinter) {
+	this.expressionPrettyPrinter = expressionPrettyPrinter;
+  }
+
   
 }
