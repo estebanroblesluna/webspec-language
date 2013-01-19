@@ -16,6 +16,9 @@ import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.impl.core.DiagramImpl;
 import org.webspeclanguage.impl.core.InteractionImpl;
 import org.webspeclanguage.impl.core.NavigationImpl;
+import org.webspeclanguage.impl.expression.core.NotEqualsExpression;
+import org.webspeclanguage.impl.expression.core.StringConstant;
+import org.webspeclanguage.impl.expression.core.WidgetPropertyReference;
 import org.webspeclanguage.impl.generator.RandomStringGenerator;
 import org.webspeclanguage.impl.widget.Button;
 import org.webspeclanguage.impl.widget.Label;
@@ -89,22 +92,31 @@ public class WebSpecFactory {
 
     NavigationImpl homeTOsearchResutlsNavigationImpl = (NavigationImpl) home.navigateTo(searchResults);
     homeTOsearchResutlsNavigationImpl.setName("search");
+    homeTOsearchResutlsNavigationImpl.setPrecondition(
+    		new NotEqualsExpression(
+    				new WidgetPropertyReference(searchText, "text"),
+    				new StringConstant(""))		
+    );
     homeTOsearchResutlsNavigationImpl.setActions("type(Home.searchText, $stringGenerator$); click(Home.search)");
 
     NavigationImpl searchResultsTOproductDetailNavigationImpl = (NavigationImpl) searchResults.navigateTo(productDetail);
     searchResultsTOproductDetailNavigationImpl.setName("view product details1");
+    searchResultsTOproductDetailNavigationImpl.setPrecondition("true");
     searchResultsTOproductDetailNavigationImpl.setActions("click(SearchResults.productName)");
 
     NavigationImpl searchResultsTOshoppingCartNavigationImpl = (NavigationImpl) searchResults.navigateTo(shoppingCart);
     searchResultsTOshoppingCartNavigationImpl.setName("add to cart1");
+    searchResultsTOshoppingCartNavigationImpl.setPrecondition("true");
     searchResultsTOshoppingCartNavigationImpl.setActions("click(SearchResults.addToCart)");
 
     NavigationImpl productDetailTOshoppingCartNavigationImpl = (NavigationImpl) productDetail.navigateTo(shoppingCart);
     productDetailTOshoppingCartNavigationImpl.setName("add to cart2");
+    productDetailTOshoppingCartNavigationImpl.setPrecondition("true");
     productDetailTOshoppingCartNavigationImpl.setActions("click(ProductDetail.addToCart)");
 
     NavigationImpl shoppingCartTOproductDetailNavigationImpl = (NavigationImpl) shoppingCart.navigateTo(productDetail);
     shoppingCartTOproductDetailNavigationImpl.setName("view product details2");
+    shoppingCartTOproductDetailNavigationImpl.setPrecondition("true");
     shoppingCartTOproductDetailNavigationImpl.setActions("click(ShoppingCart.productName)");
 
     diagram.setStartingInteraction(home);

@@ -32,7 +32,7 @@ import org.webspeclanguage.api.Transition;
 public class HtmlExplanationVisitor extends AbstractExplanationVisitor {
 
   private static final String TEMPLATES = "org/webspeclanguage/userstories/impl/";
-  StringTemplateGroup htmlTemplateGroup;
+  private StringTemplateGroup htmlTemplateGroup;
 
   public HtmlExplanationVisitor(StringTemplateGroup htmlTemplateGroup, MessageSource messageSource, Locale locale) {
     super(messageSource, locale);
@@ -66,10 +66,15 @@ public class HtmlExplanationVisitor extends AbstractExplanationVisitor {
 
   private Object visitTransition(Transition transition) {
     StringBuilder sb = new StringBuilder();
+
+    sb.append(this.buildPreconditionExplanation(transition));
+
     sb.append(this.getExplanationHeader(transition));
     String actionString;
+
     StringTemplate htmlListTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "htmlList");
     List<String> listItems = new ArrayList<String>();
+
     for (Action action : transition.getActions()) {
       actionString = (String) action.accept(this.getActionVisitor());
       listItems.add(actionString);
@@ -77,6 +82,17 @@ public class HtmlExplanationVisitor extends AbstractExplanationVisitor {
     htmlListTemplate.setAttribute("listItems", listItems);
     sb.append(htmlListTemplate.toString());
     return sb.toString();
+  }
+
+  private String buildPreconditionExplanation(Transition transition) {
+    String precondition = (String) transition.getPrecondition().accept(this.getExpressionPrettyPrinter());
+    StringTemplate preconditionExpTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "preconditionExplanation");
+
+    String preconditionHeader = this.getPreconditionExplanationHeader(transition);
+
+    preconditionExpTemplate.setAttribute("preconditionHeader", preconditionHeader);
+    preconditionExpTemplate.setAttribute("precondition", precondition);
+    return preconditionExpTemplate.toString();
   }
 
   private StringTemplateGroup getHtmlTemplateGroup() {

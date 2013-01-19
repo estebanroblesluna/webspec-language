@@ -54,17 +54,7 @@ public class WordEnumerationExplanationVisitor extends AbstractWordExplanationVi
   }
 
   public Object visitNavigation(Navigation navigation) {
-    String explanationHeader = this.getExplanationHeader(navigation);
-    String navigationDiagramExplanationText = this.getMessage("userstory.wen.section.navigation.diagram.explanation", new String[] { navigation.getName() });
-    this.getWordprocessingMLPackage().getMainDocumentPart().addObject(
-            this.getWmlFactory().createNumberingP(3, 2, navigationDiagramExplanationText, true, getSubsectionFontSize()));
-    this.getWordprocessingMLPackage().getMainDocumentPart().addObject(this.getWmlFactory().createP(explanationHeader, LEFT_PADDING_1800));
-    String actionString;
-    for (Action action : navigation.getActions()) {
-      actionString = (String) action.accept(this.getActionVisitor());
-      this.getWordprocessingMLPackage().getMainDocumentPart().addObject(getWmlFactory().createNumberingP(2, 3, actionString));
-    }
-    return null;
+	  return this.visitTransition(navigation);
   }
 
   public Object visitOperationReference(OperationReference operationReference) {
@@ -72,8 +62,30 @@ public class WordEnumerationExplanationVisitor extends AbstractWordExplanationVi
   }
 
   public Object visitRichBehavior(RichBehavior richBehavior) {
-    return getWmlFactory().createP();
+	  return this.visitTransition(richBehavior);
   }
+
+  public Object visitTransition(Transition transition) {
+    String explanationHeader = this.getExplanationHeader(transition);
+    String transitionDiagramExplanationText = this.getMessage("userstory.wen.section.navigation.diagram.explanation", new String[] { transition.getName() });
+
+    this.getWordprocessingMLPackage().getMainDocumentPart().addObject(
+            this.getWmlFactory().createNumberingP(3, 2, transitionDiagramExplanationText, true, getSubsectionFontSize()));
+
+    String preconditionHeader = this.getPreconditionExplanationHeader(transition);
+    this.getWordprocessingMLPackage().getMainDocumentPart().addObject(this.getWmlFactory().createP(preconditionHeader, LEFT_PADDING_1800));
+    String actionString;
+    actionString = (String) transition.getPrecondition().accept(this.getExpressionPrettyPrinter());
+    this.getWordprocessingMLPackage().getMainDocumentPart().addObject(getWmlFactory().createNumberingP(2, 3, actionString));
+
+    this.getWordprocessingMLPackage().getMainDocumentPart().addObject(this.getWmlFactory().createP(explanationHeader, LEFT_PADDING_1800));
+    for (Action action : transition.getActions()) {
+      actionString = (String) action.accept(this.getActionVisitor());
+      this.getWordprocessingMLPackage().getMainDocumentPart().addObject(getWmlFactory().createNumberingP(2, 3, actionString));
+    }
+    return null;
+  }
+
 
   private WordprocessingMLPackage getWordprocessingMLPackage() {
     return wordprocessingMLPackage;

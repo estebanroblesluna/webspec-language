@@ -49,15 +49,7 @@ public class WordTabularExplanationVisitor extends AbstractWordExplanationVisito
   }
 
   public Object visitNavigation(Navigation navigation) {
-    String explanationHeader = this.getExplanationHeader(navigation);
-    String actionString;
-    Tc tc = this.getWmlFactory().createTC(this.getWmlFactory().createP(), this.getCellWidthTwips());
-    tc.getContent().add(this.getWmlFactory().createP(explanationHeader));
-    for (Action action : navigation.getActions()) {
-      actionString = (String) action.accept(this.getActionVisitor());
-      tc.getContent().add(getWmlFactory().createNumberingP(2, actionString));
-    }
-    return tc;
+	return this.visitTransition(navigation);
   }
 
   public Object visitOperationReference(OperationReference operationReference) {
@@ -65,7 +57,26 @@ public class WordTabularExplanationVisitor extends AbstractWordExplanationVisito
   }
 
   public Object visitRichBehavior(RichBehavior richBehavior) {
-    return getWmlFactory().createP();
+    return this.visitTransition(richBehavior);
+  }
+
+  public Object visitTransition(Transition transition) {
+    String explanationHeader = this.getExplanationHeader(transition);
+    String preconditionHeader = this.getPreconditionExplanationHeader(transition);
+    Tc tc = this.getWmlFactory().createTC(this.getWmlFactory().createP(), this.getCellWidthTwips());
+
+    String actionString;
+    actionString = (String) transition.getPrecondition().accept(this.getExpressionPrettyPrinter());
+
+    tc.getContent().add(this.getWmlFactory().createP(preconditionHeader));
+    tc.getContent().add(getWmlFactory().createNumberingP(2, actionString));
+
+    tc.getContent().add(this.getWmlFactory().createP(explanationHeader));
+    for (Action action : transition.getActions()) {
+      actionString = (String) action.accept(this.getActionVisitor());
+      tc.getContent().add(getWmlFactory().createNumberingP(2, actionString));
+    }
+    return tc;
   }
 
   private int getCellWidthTwips() {
