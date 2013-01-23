@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.Test;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
-import org.webspeclanguage.impl.expression.core.AndExpression;
 import org.webspeclanguage.impl.expression.core.EqualsExpression;
 import org.webspeclanguage.impl.expression.core.OrExpression;
 import org.webspeclanguage.impl.expression.core.StringConstant;
