@@ -54,7 +54,7 @@ import org.webspeclanguage.impl.expression.core.WidgetReference;
 /**
  * A pretty printer for expressions
  * 
- * @author Esteban Robles Luna
+ * @author cristian.cianfagna
  */
 public class ExpressionPrettyPrinter implements ExpressionVisitor {
 	
@@ -68,8 +68,9 @@ public class ExpressionPrettyPrinter implements ExpressionVisitor {
 
   public String prettyPrint(Expression expression) {
     Validate.notNull(expression);
-    
-    return (String) expression.accept(this);
+    StringBuilder sb = new StringBuilder();
+    sb.append("( ").append(expression.accept(this)).append(" )");
+    return sb.toString();
   }
   
   public Object generateForBinaryExpression(BinaryExpression expression, String operand) {
@@ -226,7 +227,7 @@ public class ExpressionPrettyPrinter implements ExpressionVisitor {
   }
 
   private String getMessage(String bundleKey) {
-	    return this.getMessageSource().getMessage(bundleKey, new Object[] {}, this.getLocale());
+    return this.getMessageSource().getMessage(bundleKey, new Object[] {}, this.getLocale());
   }
 
   private MessageSource getMessageSource() {

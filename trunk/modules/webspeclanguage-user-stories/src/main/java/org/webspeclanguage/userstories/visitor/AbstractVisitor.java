@@ -14,7 +14,6 @@ package org.webspeclanguage.userstories.visitor;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.context.MessageSource;
 import org.webspeclanguage.api.PathItemVisitor;
 
@@ -32,13 +31,11 @@ public abstract class AbstractVisitor implements PathItemVisitor {
   }
 
   protected String getMessage(String bundleKey) {
-    String message = this.getMessageSource().getMessage(bundleKey, new Object[] {}, this.getLocale());
-    return StringEscapeUtils.unescapeHtml(message);
+	return this.getMessageSource().getMessage(bundleKey, new Object[] {}, this.getLocale());
   }
 
   protected String getMessage(String bundleKey, Object[] args) {
-	String message = this.getMessageSource().getMessage(bundleKey, args, this.getLocale());
-    return StringEscapeUtils.unescapeHtml(message);
+	return this.getMessageSource().getMessage(bundleKey, args, this.getLocale());
   }
   
   protected MessageSource getMessageSource() {

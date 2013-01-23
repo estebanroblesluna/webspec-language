@@ -20,11 +20,11 @@ import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 /**
  * @author cristian.cianfagna
  */
-public class WordGenerationResponse implements UserStoryGenerationResponse {
+public class WordUserStoryGenerationResponse implements UserStoryGenerationResponse {
 
   private WordprocessingMLPackage wordprocessingMLPackage;
 
-  public WordGenerationResponse(WordprocessingMLPackage wordprocessingMLPackage) {
+  public WordUserStoryGenerationResponse(WordprocessingMLPackage wordprocessingMLPackage) {
     this.setWordprocessingMLPackage(wordprocessingMLPackage);
   }
 

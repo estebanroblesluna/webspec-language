@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
+import org.webspeclanguage.impl.expression.core.AndExpression;
 import org.webspeclanguage.impl.expression.core.EqualsExpression;
 import org.webspeclanguage.impl.expression.core.OrExpression;
 import org.webspeclanguage.impl.expression.core.StringConstant;
@@ -18,7 +19,7 @@ import org.webspeclanguage.userstories.util.ExpressionPrettyPrinter;
 public class ExpressionPrettyPrinterTest {
 	
 	@Test
-	public void print() {
+	public void printAnd() {
 		ExpressionPrettyPrinter prettyPrinter = new ExpressionPrettyPrinter(new MessageSourceMock(), new Locale("es", "ES"));
 		OrExpression and = new OrExpression(new EqualsExpression(
 				new StringConstant("A"), new StringConstant("A")
@@ -26,12 +27,14 @@ public class ExpressionPrettyPrinterTest {
 				new StringConstant("B"), new StringConstant("B")
 		));
 		System.out.println(prettyPrinter.prettyPrint(and));
-		System.out.println(StringEscapeUtils.unescapeHtml(new MessageSourceMock().getMessage("userstory.exp.pretty.printer.interaction", null, null)));
-		System.out.println(StringEscapeUtils.unescapeHtml("oraci—n"));
-		System.out.println(StringEscapeUtils.escapeHtml("oraci—n"));
-		System.out.println(StringEscapeUtils.unescapeHtml((StringEscapeUtils.escapeHtml("oraci—n"))));
 	}
 	
+	@Test
+	public void printStringConstant() {
+		ExpressionPrettyPrinter prettyPrinter = new ExpressionPrettyPrinter(new MessageSourceMock(), new Locale("es", "ES"));
+		StringConstant stringConstant = new StringConstant("A");
+		System.out.println(prettyPrinter.prettyPrint(stringConstant));
+	}
 
 	private static class MessageSourceMock implements MessageSource {
 		private Map<String, String> messages;

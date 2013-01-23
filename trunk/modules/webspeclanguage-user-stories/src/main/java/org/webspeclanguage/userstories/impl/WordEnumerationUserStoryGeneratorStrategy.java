@@ -32,7 +32,7 @@ import org.webspeclanguage.userstories.visitor.WordEnumerationMockupVisitor;
  * 
  * @author cristian.cianfagna
  */
-public class WordEnumerationUserStoryGeneratorStrategy extends AbstractWordUserStoryGenerator {
+public class WordEnumerationUserStoryGeneratorStrategy extends AbstractWordUserStoryGeneratorStrategy {
 
   private long subsectionFontSize;
   private WordEnumerationCroppingVisitor croppingUserStoryVisitor;
