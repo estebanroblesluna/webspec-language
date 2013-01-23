@@ -41,7 +41,7 @@ import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 import org.webspeclanguage.userstories.UserStoryGenerator;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
 import org.webspeclanguage.userstories.factory.WmlFactory;
-import org.webspeclanguage.userstories.response.WordGenerationResponse;
+import org.webspeclanguage.userstories.response.WordUserStoryGenerationResponse;
 
 /**
  * Abstract class that holds common instance variables and define the algorithm
@@ -49,9 +49,9 @@ import org.webspeclanguage.userstories.response.WordGenerationResponse;
  * 
  * @author cristian.cianfagna
  */
-public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerator, ApplicationContextAware {
+public abstract class AbstractWordUserStoryGeneratorStrategy implements UserStoryGenerator, ApplicationContextAware {
 
-  private final static Logger LOGGER = Logger.getLogger(AbstractWordUserStoryGenerator.class);
+  private final static Logger LOGGER = Logger.getLogger(AbstractWordUserStoryGeneratorStrategy.class);
 
   private WordprocessingMLPackage wordprocessingMLPackage;
   private WmlFactory wmlFactory;
@@ -60,7 +60,7 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
   private Locale locale;
   private MessageSource messageSource;
 
-  public AbstractWordUserStoryGenerator() {
+  public AbstractWordUserStoryGeneratorStrategy() {
     this.setWmlFactory(WmlFactory.getInstance());
     try {
       this.setWordprocessingMLPackage(WordprocessingMLPackage.createPackage());
@@ -93,7 +93,7 @@ public abstract class AbstractWordUserStoryGenerator implements UserStoryGenerat
       }
       this.generateFooter();
     }
-    return new WordGenerationResponse(this.getWordprocessingMLPackage()); 
+    return new WordUserStoryGenerationResponse(this.getWordprocessingMLPackage()); 
   }
 
   // template method

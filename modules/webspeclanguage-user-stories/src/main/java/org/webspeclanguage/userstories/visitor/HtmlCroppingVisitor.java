@@ -28,7 +28,7 @@ import org.webspeclanguage.userstories.cropping.CroppingInfo;
 import org.webspeclanguage.userstories.cropping.ImageCroppingUtil;
 import org.webspeclanguage.userstories.impl.HtmlStrategyConstants;
 import org.webspeclanguage.userstories.response.FileResource;
-import org.webspeclanguage.userstories.response.HtmlGenerationResponse.Builder;
+import org.webspeclanguage.userstories.response.HtmlUserStoryGenerationResponse.Builder;
 
 /**
  * @author cristian.cianfagna

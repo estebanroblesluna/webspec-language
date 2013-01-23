@@ -40,8 +40,8 @@ import org.webspeclanguage.userstories.cropping.ImageCroppingUtil;
 import org.webspeclanguage.userstories.dto.Scenario;
 import org.webspeclanguage.userstories.dto.ScenarioStep;
 import org.webspeclanguage.userstories.response.FileResource;
-import org.webspeclanguage.userstories.response.HtmlGenerationResponse;
-import org.webspeclanguage.userstories.response.HtmlGenerationResponse.Builder;
+import org.webspeclanguage.userstories.response.HtmlUserStoryGenerationResponse;
+import org.webspeclanguage.userstories.response.HtmlUserStoryGenerationResponse.Builder;
 import org.webspeclanguage.userstories.visitor.HtmlCroppingVisitor;
 import org.webspeclanguage.userstories.visitor.HtmlExplanationVisitor;
 import org.webspeclanguage.userstories.visitor.HtmlMockupVisitor;
@@ -60,13 +60,15 @@ public class HtmlUserStoryGeneratorStrategy implements UserStoryGenerator, HtmlS
   private Locale locale;
 
   public HtmlUserStoryGeneratorStrategy() {
-    this.setHtmlTemplateGroup(new StringTemplateGroup("userStoryGroup"));
+	StringTemplateGroup st = new StringTemplateGroup("userStoryGroup");
+	st.setFileCharEncoding("UTF-8");
+    this.setHtmlTemplateGroup(st);
   }
 
   public UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale) throws Exception {
     this.initialize(croppingMap, diagramFile, locale);
 
-    HtmlGenerationResponse.Builder htmlGenarationResponseBuilder = new HtmlGenerationResponse.Builder();
+    HtmlUserStoryGenerationResponse.Builder htmlGenarationResponseBuilder = new HtmlUserStoryGenerationResponse.Builder();
     htmlGenarationResponseBuilder.withScenariosDirectory(IMG_SCENARIOS_DIRECTORY).withIntearctionsDirectory(IMG_INTERACTIONS_DIRECTORY)
             .withNavigationsDirectory(IMG_NAVIGATIONS_DIRECTORY).withMockupsDirectory(IMG_MOCKUPS_DIRECTORY);
 

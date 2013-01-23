@@ -12,10 +12,13 @@
  */
 package org.webspeclanguage.userstories.response;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +29,7 @@ import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 /**
  * @author cristian.cianfagna
  */
-public class HtmlGenerationResponse implements UserStoryGenerationResponse {
+public class HtmlUserStoryGenerationResponse implements UserStoryGenerationResponse {
 
   private String scenariosDirectory;
   private List<FileResource> scenarios;
@@ -42,7 +45,7 @@ public class HtmlGenerationResponse implements UserStoryGenerationResponse {
   private List<File> javascriptFiles;
   private String html;
 
-  private HtmlGenerationResponse() {
+  private HtmlUserStoryGenerationResponse() {
     this.setInteractions(new ArrayList<FileResource>());
     this.setMockups(new ArrayList<FileResource>());
     this.setNavigations(new ArrayList<FileResource>());
@@ -70,12 +73,13 @@ public class HtmlGenerationResponse implements UserStoryGenerationResponse {
     this.createFileResources(fullDirectory + this.getFancyZoomResourcesDirectory(), this.getFancyZoomImageFiles());
     this.createFileResources(fullDirectory + this.getJavascriptsDirectory(), this.getJavascriptFiles());
 
-    File file = new File(
-            new StringBuilder(fullDirectory).append("/").
-            append(fileNameWithoutExtension).append(".html").toString());
-    FileOutputStream fos = new FileOutputStream(file);
-    fos.write(this.getHtml().getBytes());
-    file.createNewFile();
+    StringBuilder sb = new StringBuilder(fullDirectory).append("/").
+    	append(fileNameWithoutExtension).append(".html");
+    FileOutputStream fos = new FileOutputStream(sb.toString());
+    OutputStreamWriter osw = new OutputStreamWriter(fos, Charset.forName("UTF8"));
+    BufferedWriter bw = new BufferedWriter(osw);
+    bw.write(this.getHtml());
+    bw.close();
   }
 
   private void createFileResources(String directory, List<File> fancyZoomImageFiles) throws IOException {
@@ -201,13 +205,13 @@ public class HtmlGenerationResponse implements UserStoryGenerationResponse {
 
   public static class Builder {
 
-    private HtmlGenerationResponse htmlGenarationResponse;
+    private HtmlUserStoryGenerationResponse htmlGenarationResponse;
 
     public Builder() {
-      this.setHtmlGenarationResponse(new HtmlGenerationResponse());
+      this.setHtmlGenarationResponse(new HtmlUserStoryGenerationResponse());
     }
 
-    public HtmlGenerationResponse build() {
+    public HtmlUserStoryGenerationResponse build() {
       return this.getHtmlGenarationResponse();
     }
 
@@ -276,11 +280,11 @@ public class HtmlGenerationResponse implements UserStoryGenerationResponse {
       return this;
     }
 
-    private HtmlGenerationResponse getHtmlGenarationResponse() {
+    private HtmlUserStoryGenerationResponse getHtmlGenarationResponse() {
       return htmlGenarationResponse;
     }
 
-    private void setHtmlGenarationResponse(HtmlGenerationResponse htmlGenarationResponse) {
+    private void setHtmlGenarationResponse(HtmlUserStoryGenerationResponse htmlGenarationResponse) {
       this.htmlGenarationResponse = htmlGenarationResponse;
     }
 

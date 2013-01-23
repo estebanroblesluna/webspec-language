@@ -38,7 +38,7 @@ import org.webspeclanguage.userstories.visitor.WordTabularMockupVisitor;
  * 
  * @author cristian.cianfagna
  */
-public class WordTabularUserStoryGeneratorStrategy extends AbstractWordUserStoryGenerator {
+public class WordTabularUserStoryGeneratorStrategy extends AbstractWordUserStoryGeneratorStrategy {
 
   private final static int COLUMNS = 3;
 
