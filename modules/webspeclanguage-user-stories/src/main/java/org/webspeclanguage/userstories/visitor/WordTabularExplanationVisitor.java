@@ -45,6 +45,10 @@ public class WordTabularExplanationVisitor extends AbstractWordExplanationVisito
       actionString = this.getExplanationNextAction(transition);
       tc.getContent().add(getWmlFactory().createNumberingP(2, actionString));
     }
+    if (interaction.getForwardTransitions().isEmpty()) {
+        actionString = this.getMessage("userstory.interaction.noActions");
+        tc.getContent().add(getWmlFactory().createNumberingP(2, actionString));
+    }
     return tc;
   }
 
