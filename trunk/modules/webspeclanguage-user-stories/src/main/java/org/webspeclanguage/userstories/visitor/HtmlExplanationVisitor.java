@@ -47,6 +47,9 @@ public class HtmlExplanationVisitor extends AbstractExplanationVisitor {
     for (Transition transition : interaction.getForwardTransitions()) {
       listItems.add(transition.getName());
     }
+    if (listItems.isEmpty()) {
+    	listItems.add(this.getMessage("userstory.interaction.noActions"));
+    }
     htmlListTemplate.setAttribute("listItems", listItems);
     sb.append(htmlListTemplate.toString());
     return sb.toString();

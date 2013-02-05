@@ -50,6 +50,10 @@ public class WordEnumerationExplanationVisitor extends AbstractWordExplanationVi
       actionString = this.getExplanationNextAction(transition);
       this.getWordprocessingMLPackage().getMainDocumentPart().addObject(getWmlFactory().createNumberingP(2, 3, actionString));
     }
+    if (interaction.getForwardTransitions().isEmpty()) {
+        actionString = this.getMessage("userstory.interaction.noActions");
+        this.getWordprocessingMLPackage().getMainDocumentPart().addObject(getWmlFactory().createNumberingP(2, 3, actionString));
+    }
     return null;
   }
 
