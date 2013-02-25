@@ -32,6 +32,7 @@ public class WordEnumerationMockupVisitor extends AbstractWordMockupVisitor {
 
   private final static Logger LOGGER = Logger.getLogger(WordEnumerationMockupVisitor.class);
   private final static long LEFT_PADDING_1800 = 1800;
+  private final static long WIDTH_IN_TWIPS_4000 = 4000;
 
   private long subsectionFontSize;
 
@@ -52,7 +53,8 @@ public class WordEnumerationMockupVisitor extends AbstractWordMockupVisitor {
                   this.getWmlFactory().createNumberingP(3, 2, mockText, true, this.getSubsectionFontSize()));
 
           this.getWordprocessingMLPackage().getMainDocumentPart().addObject(
-                  this.getWmlFactory().getImage(getWordprocessingMLPackage(), mockupFile, LEFT_PADDING_1800));
+                  this.getWmlFactory().getImage(getWordprocessingMLPackage(), 
+                		  mockupFile, LEFT_PADDING_1800, WIDTH_IN_TWIPS_4000));
           this.getWordprocessingMLPackage().getMainDocumentPart().addObject(
                   this.getWmlFactory().createP());
           return null;

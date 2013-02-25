@@ -74,8 +74,8 @@ public class WordTabularCroppingVisitor extends AbstractWordCroppingVisitor {
     ByteArrayOutputStream byteArrayOutputStream = null;
     P p = null;
     try {
-      byteArrayOutputStream = ImageCroppingUtil.cropImage(getDiagramFile(), croppingInfo);
-      p = getWmlFactory().getImage(getWordprocessingMLPackage(), byteArrayOutputStream);
+      byteArrayOutputStream = ImageCroppingUtil.cropImage(this.getDiagramFile(), croppingInfo);
+      p = getWmlFactory().getImage(getWordprocessingMLPackage(), byteArrayOutputStream, this.getCellWidthTwips());
     } catch (Exception e) {
       LOGGER.error(e);
       return getWmlFactory().createP();

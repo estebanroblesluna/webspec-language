@@ -35,6 +35,7 @@ import org.webspeclanguage.userstories.factory.WmlFactory;
 public class WordEnumerationCroppingVisitor extends AbstractWordCroppingVisitor {
 
   private final static Logger LOGGER = Logger.getLogger(WordEnumerationCroppingVisitor.class);
+  private final static long WIDTH_IN_TWIPS_4000 = 4000;
 
   private long subsectionFontSize;
 
@@ -88,7 +89,7 @@ public class WordEnumerationCroppingVisitor extends AbstractWordCroppingVisitor 
     P p = null;
     try {
       byteArrayOutputStream = ImageCroppingUtil.cropImage(this.getDiagramFile(), croppingInfo);
-      p = getWmlFactory().getImage(getWordprocessingMLPackage(), byteArrayOutputStream, LEFT_PADDING_1800);
+      p = getWmlFactory().getImage(getWordprocessingMLPackage(), byteArrayOutputStream, LEFT_PADDING_1800, WIDTH_IN_TWIPS_4000);
     } catch (Exception e) {
       LOGGER.error(e);
       return getWmlFactory().createP();
