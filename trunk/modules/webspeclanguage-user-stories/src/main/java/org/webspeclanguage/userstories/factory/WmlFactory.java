@@ -164,17 +164,18 @@ public class WmlFactory {
     return pimage;
   }
 
-  public P getImage(WordprocessingMLPackage wordprocessingMLPackage, File file) throws Exception {
-    return this.getImage(wordprocessingMLPackage, file, 0);
+  public P getImage(WordprocessingMLPackage wordprocessingMLPackage, ByteArrayOutputStream byteArrayOutputStream, long widthInTwips) throws Exception {
+    return this.getBaseImage(wordprocessingMLPackage, byteArrayOutputStream.toByteArray(), 0, widthInTwips);
   }
 
-  public P getImage(WordprocessingMLPackage wordprocessingMLPackage, ByteArrayOutputStream byteArrayOutputStream) throws Exception {
-    return this.getImage(wordprocessingMLPackage, byteArrayOutputStream.toByteArray(), 0);
-  }
-
-  private P getImage(WordprocessingMLPackage wordprocessingMLPackage, byte[] bytes, long paddingLeft) throws Exception {
+  private P getBaseImage(WordprocessingMLPackage wordprocessingMLPackage, byte[] bytes, long paddingLeft, long widthInTwips) throws Exception {
     BinaryPartAbstractImage imagePart = BinaryPartAbstractImage.createImagePart(wordprocessingMLPackage, bytes);
-    Inline inline = imagePart.createImageInline(null, null, 1, 2, false);
+    Inline inline;
+    if (widthInTwips == 0) {
+    	inline = imagePart.createImageInline(null, null, 1, 2, false);
+    } else {
+    	inline = imagePart.createImageInline(null, null, 1, 2, widthInTwips, false);
+    }
 
     PPr pPr = getWmlObjectFactory().createPPr();
     PStyle pStyle = new PStyle();
@@ -200,14 +201,18 @@ public class WmlFactory {
   }
 
   public P getImage(WordprocessingMLPackage wordprocessingMLPackage, File file, long paddingLeft) throws Exception {
+	  return getImage(wordprocessingMLPackage, file, paddingLeft, 0);
+  }
+  
+  public P getImage(WordprocessingMLPackage wordprocessingMLPackage, File file, long paddingLeft, long widthInTwips) throws Exception {
     FileInputStream fis = new FileInputStream(file);
     byte diagramBytes[] = new byte[(int) file.length()];
     fis.read(diagramBytes);
-    return this.getImage(wordprocessingMLPackage, diagramBytes, paddingLeft);
+    return this.getBaseImage(wordprocessingMLPackage, diagramBytes, paddingLeft, widthInTwips);
   }
 
-  public P getImage(WordprocessingMLPackage wordprocessingMLPackage, ByteArrayOutputStream byteArrayOutputStream, long paddingLeft) throws Exception {
-    return this.getImage(wordprocessingMLPackage, byteArrayOutputStream.toByteArray(), paddingLeft);
+  public P getImage(WordprocessingMLPackage wordprocessingMLPackage, ByteArrayOutputStream byteArrayOutputStream, long paddingLeft, long widthInTwips) throws Exception {
+    return this.getBaseImage(wordprocessingMLPackage, byteArrayOutputStream.toByteArray(), paddingLeft, widthInTwips);
   }
 
   public Tc createTC(P p, STVerticalJc stVerticalJcAlignmentContent, int twips) {

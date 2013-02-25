@@ -49,7 +49,7 @@ public class WordTabularMockupVisitor extends AbstractWordMockupVisitor {
       if (mockupFile.exists()) {
         try {
           return this.getWmlFactory().createTC(
-                  this.getWmlFactory().getImage(this.getWordprocessingMLPackage(), mockupFile), 
+                  this.getWmlFactory().getImage(this.getWordprocessingMLPackage(), mockupFile, 0, this.getCellWidthTwips()), 
                   JcEnumeration.CENTER, STVerticalJc.CENTER,
                   getCellWidthTwips());
         } catch (Exception e) {
