@@ -32,4 +32,8 @@
   <import resource="webspec/security.xml" />
   <import resource="webspec/social.xml" />
   <import resource="webspec/applicationContext.xml" />
+  <import resource="webspec/applicationContext-userStories.xml" />
+  
+  <import resource="userStoriesGenerationAppContex.xml" />
+  
 </beans>

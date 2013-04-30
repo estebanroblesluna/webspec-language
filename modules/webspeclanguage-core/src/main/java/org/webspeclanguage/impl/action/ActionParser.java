@@ -16,8 +16,10 @@ import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.webspeclanguage.api.Action;
 import org.webspeclanguage.api.WidgetProvider;
 import org.webspeclanguage.impl.expression.parser.ExpressionTransformer;
@@ -45,8 +47,8 @@ public class ActionParser {
    * @return the list of actions as a result of the parsing process
    */
   public static List<Action> getActions(String input, WidgetProvider provider) {
-    if (input == null) {
-      return null;
+    if (input == null || StringUtils.isEmpty(input)) {
+      return new ArrayList<Action>();
     } else {
       return parser.parseFor(input, provider);
     }

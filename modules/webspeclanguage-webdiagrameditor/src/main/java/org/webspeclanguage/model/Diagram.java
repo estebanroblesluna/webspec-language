@@ -15,6 +15,7 @@ public class Diagram {
   private User owner;
   private String name;
   private String jsonRepresentation;
+  private byte[] imageBytes;
 
   protected Diagram() {}
   
@@ -59,5 +60,13 @@ public class Diagram {
 
   public void setJsonRepresentation(String jsonRepresentation) {
     this.jsonRepresentation = jsonRepresentation;
+  }
+
+  public byte[] getImageBytes() {
+    return imageBytes;
+  }
+
+  public void setImageBytes(byte[] imageBytes) {
+    this.imageBytes = imageBytes;
   }
 }

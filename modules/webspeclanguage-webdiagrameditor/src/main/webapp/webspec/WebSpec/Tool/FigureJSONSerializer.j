@@ -36,6 +36,7 @@
 	
 	return self;
 }
+
 - (void) execute
 {
 	var json = [self toJSON: _drawing];

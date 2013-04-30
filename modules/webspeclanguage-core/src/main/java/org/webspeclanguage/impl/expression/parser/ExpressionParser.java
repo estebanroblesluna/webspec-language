@@ -15,9 +15,9 @@ package org.webspeclanguage.impl.expression.parser;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.webspeclanguage.api.Action;
 import org.webspeclanguage.api.WidgetProvider;
 import org.webspeclanguage.impl.action.ExpressionAction;
@@ -37,6 +37,11 @@ public class ExpressionParser {
 
   public Expression parseFor(String input, WidgetProvider provider)
       throws ParsingException {
+    
+    if (StringUtils.isEmpty(input)) {
+      return null;
+    }
+    
     String modifiedInput = input.replace(Character.valueOf((char) 8232).charValue(), '\n');
     modifiedInput = modifiedInput.replaceAll("\n", "");
 

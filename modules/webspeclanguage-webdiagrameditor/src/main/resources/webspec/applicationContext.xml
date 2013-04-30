@@ -24,10 +24,18 @@
     <constructor-arg index="0" ref="diagramRepository" />
   </bean>
   
+  <bean id="userStoryService" class="org.webspeclanguage.service.UserStoryServiceImpl">
+    <constructor-arg index="0" ref="htmlGenerator" />
+    <constructor-arg index="1" ref="wordEnumerationGenerator" />
+    <constructor-arg index="2" ref="wordTabularGenerator" />
+    <constructor-arg index="3" ref="diagramService" />
+  </bean>
+  
   <bean id="projectRestService" class="org.webspeclanguage.web.servlet.ProjectRestService" >
     <constructor-arg index="0" ref="diagramService" />
     <constructor-arg index="1" ref="userService" />
     <constructor-arg index="2" ref="projectService" />
+    <constructor-arg index="3" ref="userStoryService" />
   </bean>
 
   <bean id="projectServiceTarget" class="org.webspeclanguage.service.ProjectServiceImpl">

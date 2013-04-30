@@ -39,6 +39,7 @@
     <property name="saveTime" column="save_time" />
     <property name="name" column="name" />
     <property name="jsonRepresentation" column="jsonRepresentation" />
+    <property name="imageBytes" column="imageBytes" type="binary" />
     
     <many-to-one name="owner" column="owner_id" />
   </class>

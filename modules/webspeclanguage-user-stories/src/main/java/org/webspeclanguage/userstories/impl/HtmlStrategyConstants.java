@@ -22,7 +22,7 @@ public interface HtmlStrategyConstants {
   public static final String IMG_INTERACTIONS_DIRECTORY = "img/interactions";
   public static final String IMG_NAVIGATIONS_DIRECTORY = "img/navigations";
   public static final String IMG_MOCKUPS_DIRECTORY = "img/mockups";
-  public static final String RESOURCES_DIRECTORY = "ressources";
+  public static final String RESOURCES_DIRECTORY = "resources";
   public static final String JS_DIRECTORY = "/";
 
 }
