@@ -71,7 +71,6 @@
 	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [RandomStringFigure class]] withTitle: @"Random string" image: @"Resources/StringGenerator.gif"];
 	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [UniformDistributionFigure class]] withTitle: @"Uniform distribution of numbers" image: @"Resources/UniformNumberDistribution.gif"];
 	
-	[drawing toolbox: webspecToolbox];
 
 	var commonToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,70)];
 	[commonToolbox columns: 2];
@@ -90,7 +89,6 @@
     [commonToolbox addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/BringForward.gif"];
     [commonToolbox addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/SendBackward.gif"];
 
-	[drawing toolbox: commonToolbox];
 
 	var alignToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,270)];
 	[alignToolbox columns: 3];
@@ -102,10 +100,8 @@
 	[alignToolbox addCommand: [AlignMiddleCommand class] withTitle: @"Align middle" image: @"Resources/AlignMiddle.gif"];
 	[alignToolbox addCommand: [AlignBottomCommand class] withTitle: @"Align bottom" image: @"Resources/AlignBottom.gif"];
 	
-	[drawing toolbox: alignToolbox];
 	
 	var properties = [PropertiesFigure newAt: CGPointMake(20,520) drawing: drawing];
-	[drawing properties: properties];
 	
 	[drawing setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
 
@@ -114,8 +110,17 @@
 	var sharedApplication = [CPApplication sharedApplication];
 	var namedArguments = [sharedApplication namedArguments];
 	
+	var headless = window.top.location.hash;
+    
+	if (!(headless.localeCompare("#headless")) == 0) {
+		[drawing toolbox: webspecToolbox];
+		[drawing toolbox: commonToolbox];
+		[drawing toolbox: alignToolbox];
+        [drawing properties: properties];
+	}
+
 	if ([namedArguments containsKey: "diagramId"]) {
-		var diagramId = [namedArguments objectForKey: "diagramId"];
+		var diagramId = [namedArguments objectForKey: "diagramId"];
 		[drawing diagramId: diagramId];
 		var command = [DiagramLoaderCommand drawing: drawing diagramId: diagramId];
 		[command execute];

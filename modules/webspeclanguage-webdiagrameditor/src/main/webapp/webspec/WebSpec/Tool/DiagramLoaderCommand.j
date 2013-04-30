@@ -18,6 +18,8 @@
 @implementation DiagramLoaderCommand : Command
 {
 	id _diagramId;
+	id _idMapping;
+	id _newDrawing;
 }
 
 + (id) drawing: (Drawing) aDrawing diagramId: (id) anID
@@ -35,6 +37,8 @@
 
 - (void) execute
 {
+	_idMapping = {};
+
     $.ajax({
       url: '../service/projects/diagram/' + _diagramId,
       type: 'GET',
@@ -108,8 +112,10 @@
 		result = [self parseGenerator: anObject]; //DONE
 	}
 
-	[result update];
-
+    if (result != nil) {
+	  [result update];
+    }
+    
 	return result;
 }
 
@@ -117,6 +123,9 @@
 - (id) parseDiagram: (id) anObject
 {
 	var drawing = [WebSpecDrawing new];
+	_idMapping[anObject.id] = drawing;
+	_newDrawing = drawing;
+	
 	[self fill: drawing with: anObject];
 	
 	var subfigures = [self parseSubfigures: anObject];
@@ -145,8 +154,22 @@
 - (id) parseTransition: (id) anObject
 {
 	var figureClass = CPClassFromString(anObject.figureType);
+	
+	var sourceFigureId = anObject.source;
+	var targetFigureId = anObject.target;
+	
+	var sourceFigure = _idMapping[sourceFigureId];
+	var targetFigure = _idMapping[targetFigureId];
+	
 	var transition = [figureClass source: sourceFigure target: targetFigure];
 	[self fill: transition with: anObject];
+	
+	var labelFigure = [TransitionIconLabelFigure newAt: [transition center] iconUrl: @"Resources/Navigation.gif"];
+	[labelFigure model: [transition model]];
+	[labelFigure checkModelFeature: @"Name"];
+			
+	[_newDrawing addFigure: labelFigure];
+	
 	return transition;
 }
 
@@ -181,6 +204,7 @@
 	var point = [self parseOrigin: anObject];
 	var figure = [figureClass newAt: point];
 	[self fill: figure with: anObject];
+	_idMapping[anObject.id] = figure;
 	return figure;
 }
 
@@ -220,7 +244,9 @@
 		for (var i = 0; i < [figs count]; i++) { 
 		    var jsonFigure = [figs objectAtIndex: i];
 			var figure = [self parseFigure: jsonFigure];
-			[subfigures addObject: figure];
+			if (figure != nil) {
+              [subfigures addObject: figure];
+			}
 		}
 	}
 	return subfigures;

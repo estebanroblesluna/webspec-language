@@ -18,6 +18,8 @@
 @implementation FigureJSONSerializer : Command
 {
 	CPMutableArray _whitelistClasses;
+	id _idMapping;
+	id _currentFigureId;
 }
 
 - (id) init {
@@ -38,6 +40,10 @@
 {
 	var json = [self toJSON: _drawing];
 	var diagramId = [_drawing diagramId];
+	if (diagramId == nil || diagramId == undefined) {
+	  diagramId = -1;
+	}
+	
 	//post to the server using jquery
     $.ajax({
       url: '../service/projects/saveDiagram',
@@ -54,9 +60,23 @@
 
 - (id) toJSON: (id) anObject
 {
+	_idMapping = {};
+    _currentFigureId = 0;
+
 	var json = [self basicToJSON: anObject];
 	var jsonText = JSON.stringify(json, null, 2);
 	return jsonText;
+}
+
+- (id) idOf: (id) anObject
+{
+    if (_idMapping[anObject] != undefined) {
+      return _idMapping[anObject];
+    } else {
+      _currentFigureId = _currentFigureId + 1;
+      _idMapping[anObject] = _currentFigureId;
+      return _currentFigureId;
+    }
 }
 
 - (id) basicToJSON: (id) anObject
@@ -73,6 +93,15 @@
 		rootJSON["y"]      = frame.origin.y;
 		rootJSON["width"]  = frame.size.width;
 		rootJSON["height"] = frame.size.height;
+		rootJSON["id"]     = [self idOf: anObject];
+		
+		//CONNECTION 
+        if ([anObject isKindOfClass: [Connection class]]) {
+          var source = [anObject source];
+          var target = [anObject target];
+          rootJSON["source"] = [self idOf: source];
+          rootJSON["target"] = [self idOf: target];
+        }
 
 		//MODEL
 		var model = [anObject model];
