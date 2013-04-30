@@ -1,3 +1,5 @@
-mysql -u root < common.sql
-mysql -u root < sampleData.sql
-mysql -u root < playgroundSchema.sql
+BASEDIR=$(dirname $0)
+
+mysql -u root < $BASEDIR/common.sql
+mysql -u root < $BASEDIR/sampleData.sql
+mysql -u root < $BASEDIR/playgroundSchema.sql

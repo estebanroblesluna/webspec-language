@@ -27,4 +27,14 @@
 	return self;
 }
 
+- (Figure) source
+{
+    return _sourceFigure;
+}
+
+- (Figure) target
+{
+    return _targetFigure;
+}
+
 @end

@@ -31,6 +31,16 @@
 	return [[self new] initWithSource: aSourceFigure target: aTargetFigure];
 }
 
+- (Figure) source
+{
+    return _sourceFigure;
+}
+
+- (Figure) target
+{
+    return _targetFigure;
+}
+
 - (id) initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure
 { 
 	_sourceFigure = aSourceFigure;

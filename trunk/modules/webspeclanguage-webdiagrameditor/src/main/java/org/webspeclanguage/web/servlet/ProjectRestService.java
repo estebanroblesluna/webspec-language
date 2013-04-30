@@ -738,7 +738,14 @@ public class ProjectRestService {
   @POST
   @Path("/saveDiagram")
   @Produces(MediaType.APPLICATION_JSON)
-  public String saveDiagram(@FormParam("diagramId") long diagramId, @DefaultValue("") @FormParam("diagram") String diagramAsJSON) {
+  public String saveDiagram(@DefaultValue("-1") @FormParam("diagramId") String diagramIdAsString, @DefaultValue("") @FormParam("diagram") String diagramAsJSON) {
+    long diagramId = -1;
+    try {
+      diagramId = Long.valueOf(diagramIdAsString);
+    } catch (Exception e) {
+      //ignore
+    }
+    
     User user = this.getUser();
     String name = "name";
 

@@ -2,9 +2,6 @@ package org.webspeclanguage.repository;
 
 import java.util.List;
 
-import net.sf.cglib.core.CollectionUtils;
-import net.sf.cglib.core.Predicate;
-
 import org.apache.commons.lang.Validate;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
