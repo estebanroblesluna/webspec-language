@@ -78,8 +78,10 @@ public class WordEnumerationExplanationVisitor extends AbstractWordExplanationVi
 
     String preconditionHeader = this.getPreconditionExplanationHeader(transition);
     this.getWordprocessingMLPackage().getMainDocumentPart().addObject(this.getWmlFactory().createP(preconditionHeader, LEFT_PADDING_1800));
-    String actionString;
-    actionString = (String) transition.getPrecondition().accept(this.getExpressionPrettyPrinter());
+    String actionString = "";
+    if (transition.getPrecondition() != null) {
+      actionString = (String) transition.getPrecondition().accept(this.getExpressionPrettyPrinter());
+    }
     this.getWordprocessingMLPackage().getMainDocumentPart().addObject(getWmlFactory().createNumberingP(2, 3, actionString));
 
     this.getWordprocessingMLPackage().getMainDocumentPart().addObject(this.getWmlFactory().createP(explanationHeader, LEFT_PADDING_1800));

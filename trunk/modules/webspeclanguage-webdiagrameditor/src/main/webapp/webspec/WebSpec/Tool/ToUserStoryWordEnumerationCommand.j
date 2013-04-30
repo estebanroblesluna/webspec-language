@@ -15,19 +15,12 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation InteractionModel : Model
+@implementation ToUserStoryWordEnumerationCommand : ToUserStoryCommand
 {
 }
 
-- (id) init
+- (id) output
 {
-	[super init];
-	
-	[self addProperty: @"Name" value: @"Interaction"];
-	[self addProperty: @"Location" value: @""];
-	[self addProperty: @"Invariant" value: @""];
-	[self addProperty: @"Starting" value: @"false"];
-	
-	return self;
+	return @"WORD_ENUMERATION";
 }
 @end

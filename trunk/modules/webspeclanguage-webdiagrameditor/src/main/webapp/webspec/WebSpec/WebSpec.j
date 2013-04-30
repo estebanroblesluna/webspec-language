@@ -71,7 +71,10 @@
 @import "Tool/CreateContainerTool.j"
 @import "Tool/FigureJSONSerializer.j"
 @import "Tool/DiagramLoaderCommand.j"
-
+@import "Tool/ToUserStoryCommand.j"
+@import "Tool/ToUserStoryHTMLCommand.j"
+@import "Tool/ToUserStoryWordEnumerationCommand.j"
+@import "Tool/ToUserStoryWordTabularCommand.j"
 
 @import "WebSpecToolbox.j"
 

@@ -15,19 +15,25 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation InteractionModel : Model
+@implementation ToUserStoryCommand : Command
 {
 }
 
-- (id) init
+- (id) output
 {
-	[super init];
+	return @"";
+}
+
+- (void) execute
+{
+	var diagramId = [_drawing diagramId];
+	if (diagramId == nil || diagramId == undefined) {
+	  diagramId = -1;
+	}
 	
-	[self addProperty: @"Name" value: @"Interaction"];
-	[self addProperty: @"Location" value: @""];
-	[self addProperty: @"Invariant" value: @""];
-	[self addProperty: @"Starting" value: @"false"];
+	var output = [self output];
 	
-	return self;
+	var win = window.open('../service/projects/diagram/' + diagramId + '/userStories/' + output, '_blank');
+    win.focus();
 }
 @end

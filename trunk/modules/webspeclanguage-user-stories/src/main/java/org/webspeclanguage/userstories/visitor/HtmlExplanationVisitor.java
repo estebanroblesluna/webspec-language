@@ -88,7 +88,10 @@ public class HtmlExplanationVisitor extends AbstractExplanationVisitor {
   }
 
   private String buildPreconditionExplanation(Transition transition) {
-    String precondition = (String) transition.getPrecondition().accept(this.getExpressionPrettyPrinter());
+    String precondition = "";
+    if (transition.getPrecondition() != null) {
+      precondition = (String) transition.getPrecondition().accept(this.getExpressionPrettyPrinter());
+    }
     StringTemplate preconditionExpTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "preconditionExplanation");
 
     String preconditionHeader = this.getPreconditionExplanationHeader(transition);

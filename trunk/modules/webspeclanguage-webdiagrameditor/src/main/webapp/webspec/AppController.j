@@ -71,6 +71,7 @@
 	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [RandomStringFigure class]] withTitle: @"Random string" image: @"Resources/StringGenerator.gif"];
 	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [UniformDistributionFigure class]] withTitle: @"Uniform distribution of numbers" image: @"Resources/UniformNumberDistribution.gif"];
 	
+	
 
 	var commonToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,70)];
 	[commonToolbox columns: 2];
@@ -89,8 +90,14 @@
     [commonToolbox addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/BringForward.gif"];
     [commonToolbox addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/SendBackward.gif"];
 
+	[commonToolbox addSeparator];
 
-	var alignToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,270)];
+	[commonToolbox addCommand: [ToUserStoryHTMLCommand class] withTitle: @"To HTML" image: @"Resources/AlignLeft.gif"];
+	[commonToolbox addCommand: [ToUserStoryWordEnumerationCommand class] withTitle: @"To word tabular" image: @"Resources/AlignLeft.gif"];
+	[commonToolbox addCommand: [ToUserStoryWordTabularCommand class] withTitle: @"To word enumeration" image: @"Resources/AlignLeft.gif"];
+
+
+	var alignToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,310)];
 	[alignToolbox columns: 3];
 
 	[alignToolbox addCommand: [AlignLeftCommand class] withTitle: @"Align left" image: @"Resources/AlignLeft.gif"];

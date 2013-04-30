@@ -1,5 +1,7 @@
 package org.webspeclanguage.web.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,6 +33,8 @@ import org.webspeclanguage.model.Sprint;
 import org.webspeclanguage.model.UserStory;
 import org.webspeclanguage.service.DiagramService;
 import org.webspeclanguage.service.ProjectService;
+import org.webspeclanguage.service.UserStoryOutput;
+import org.webspeclanguage.service.UserStoryServiceImpl;
 
 import com.common.model.User;
 import com.common.service.UserService;
@@ -41,16 +47,19 @@ public class ProjectRestService {
   private DiagramService diagramService;
   private UserService userService;
   private ProjectService projectService;
+  private UserStoryServiceImpl userStoryService;
   private SimpleDateFormat formatter;
 
-  public ProjectRestService(DiagramService diagramService, UserService userService, ProjectService projectService) {
+  public ProjectRestService(DiagramService diagramService, UserService userService, ProjectService projectService, UserStoryServiceImpl userStoryService) {
     Validate.notNull(diagramService);
     Validate.notNull(userService);
     Validate.notNull(projectService);
+    Validate.notNull(userStoryService);
 
     this.diagramService = diagramService;
     this.userService = userService;
     this.projectService = projectService;
+    this.userStoryService = userStoryService;
     this.formatter = new SimpleDateFormat("dd/MM/yyyy");
   }
 
@@ -769,6 +778,45 @@ public class ProjectRestService {
     User user = this.getUser();
 
     return this.diagramService.getDiagram(user, diagramId).getJsonRepresentation();
+  }
+  
+  @GET
+  @Path("/diagram/{diagramId}/userStories/{output}")
+  public Response convertTo(@DefaultValue("") @PathParam("diagramId") long diagramId, @PathParam("output") String output) {
+    User user = this.getUser();
+    
+    try {
+      UserStoryOutput userStoryOutput = UserStoryOutput.valueOf(output);
+      byte[] result = this.userStoryService.generate(user, diagramId, userStoryOutput);
+      String contentType = userStoryOutput.getContentType();
+      return Response
+              .ok(result, MediaType.valueOf(contentType))
+              .header("Content-disposition","attachment; filename=conversion." + userStoryOutput.getExtension())
+              .build();
+    } catch (Exception e) {
+      return Response.status(500).entity("Error converting to user story").build();
+    }
+  }
+  
+  @GET
+  @Path("/diagram/{diagramId}/saveImage")
+  public Response saveImage(@DefaultValue("") @PathParam("diagramId") long diagramId) {
+    User user = this.getUser();
+    
+    try {
+      File file = new File("/Users/estebanroblesluna/Documents/Editor.png");
+      byte[] contents = IOUtils.toByteArray(new FileInputStream(file));
+      
+      Diagram diagram = this.diagramService.getDiagram(user, diagramId);
+      diagram.setImageBytes(contents);
+      
+      this.diagramService.save(diagram);
+      return Response
+              .ok()
+              .build();
+    } catch (Exception e) {
+      return Response.status(500).entity("Error saving image").build();
+    }
   }
 
   @GET
