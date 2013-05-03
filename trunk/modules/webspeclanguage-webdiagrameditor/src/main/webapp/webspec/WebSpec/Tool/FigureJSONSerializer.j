@@ -55,6 +55,16 @@
       },
       cache: false,
       success: function(response) {
+        var newAlert = [[CPAlert alloc] init];
+        [newAlert setMessageText: @"Saved"];
+        [newAlert setAlertStyle: CPInformationalAlertStyle];
+        [newAlert setTitle: @"Message"];
+        [newAlert runModal];
+      },
+      error: function() {
+        var newAlert = [CPAlert alertWithError: @"Error saving"];
+        [newAlert setTitle: @"Message"];
+        [newAlert runModal];
       }
     });
 }

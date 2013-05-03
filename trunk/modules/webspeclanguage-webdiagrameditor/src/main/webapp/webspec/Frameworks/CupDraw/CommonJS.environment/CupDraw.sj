@@ -840,7 +840,7 @@ objj_msgSend(_14,"addObject:",_16);
 return _14;
 }
 })]);
-p;12;Connection.jt;3862;@STATIC;1.0;t;3843;
+p;12;Connection.jt;4050;@STATIC;1.0;t;4031;
 var _1=objj_allocateClassPair(Polyline,"Connection"),_2=_1.isa;
 class_addIvars(_1,[new objj_ivar("_sourceFigure"),new objj_ivar("_targetFigure"),new objj_ivar("_magnet1"),new objj_ivar("_magnet2"),new objj_ivar("_p1Arrow"),new objj_ivar("_p2Arrow")]);
 objj_registerClassPair(_1);
@@ -936,10 +936,18 @@ objj_msgSend(_21,"addObject:",_p2Arrow);
 var _22=objj_msgSend(GeometryUtils,"computeFrameFor:",_21);
 objj_msgSend(_1f,"setFrame:",_22);
 }
-})]);
-class_addMethods(_2,[new objj_method(sel_getUid("source:target:"),function(_23,_24,_25,_26){
+}),new objj_method(sel_getUid("source"),function(_23,_24){
 with(_23){
-return objj_msgSend(objj_msgSend(_23,"new"),"initWithSource:target:",_25,_26);
+return _sourceFigure;
+}
+}),new objj_method(sel_getUid("target"),function(_25,_26){
+with(_25){
+return _targetFigure;
+}
+})]);
+class_addMethods(_2,[new objj_method(sel_getUid("source:target:"),function(_27,_28,_29,_2a){
+with(_27){
+return objj_msgSend(objj_msgSend(_27,"new"),"initWithSource:target:",_29,_2a);
 }
 })]);
 p;8;Figure.jt;10679;@STATIC;1.0;t;10659;
