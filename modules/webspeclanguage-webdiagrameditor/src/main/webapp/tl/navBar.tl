@@ -5,7 +5,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand">Playground</a>
+          <a class="brand"><img src="image/logomini.png"></a>
           <div class="nav-collapse">
             <ul class="nav">
               <li {?projects} class="active" {/projects}>      <a href="projects.htm">Projects</a></li>
