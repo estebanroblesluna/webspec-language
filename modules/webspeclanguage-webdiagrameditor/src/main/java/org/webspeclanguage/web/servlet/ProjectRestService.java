@@ -798,7 +798,7 @@ public class ProjectRestService {
     }
   }
   
-  @GET
+  @POST
   @Path("/diagram/{diagramId}/saveImage")
   public Response saveImage(@DefaultValue("") @PathParam("diagramId") long diagramId) {
     User user = this.getUser();
@@ -818,6 +818,26 @@ public class ProjectRestService {
       return Response.status(500).entity("Error saving image").build();
     }
   }
+  
+  @GET
+  @Path("/diagram/{diagramId}/image")
+  public Response getImage(@DefaultValue("") @PathParam("diagramId") long diagramId) {
+    //TODO complete
+    return Response.ok().build();
+  }
+  
+  @GET
+  @Path("/diagram/{diagramId}/image/{x}/{y}/{width}/{height}")
+  public Response getImageClip(
+          @DefaultValue("") @PathParam("diagramId") long diagramId,
+          @PathParam("x") int x,
+          @PathParam("y") int y,
+          @PathParam("width") int width,
+          @PathParam("height") int height) {
+    //TODO complete
+    return Response.ok().build();
+  }
+  
 
   @GET
   @Path("/diagrams")
