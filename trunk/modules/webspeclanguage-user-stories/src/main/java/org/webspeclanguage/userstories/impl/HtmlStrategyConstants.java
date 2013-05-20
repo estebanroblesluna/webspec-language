@@ -17,12 +17,11 @@ package org.webspeclanguage.userstories.impl;
  */
 public interface HtmlStrategyConstants {
 
-  public static final String TEMPLATES = "org/webspeclanguage/userstories/impl/";
-  public static final String IMG_SCENARIOS_DIRECTORY = "img/scenarios";
-  public static final String IMG_INTERACTIONS_DIRECTORY = "img/interactions";
-  public static final String IMG_NAVIGATIONS_DIRECTORY = "img/navigations";
-  public static final String IMG_MOCKUPS_DIRECTORY = "img/mockups";
-  public static final String RESOURCES_DIRECTORY = "resources";
-  public static final String JS_DIRECTORY = "/";
+	public static final String TEMPLATES = "org/webspeclanguage/userstories/impl/";
+	public static final String DIAGRAM_PLACEHOLDER = "{diagramId}";
+	public static final String X_PLACEHOLDER = "{x}";
+	public static final String Y_PLACEHOLDER = "{y}";
+	public static final String WIDTH_PLACEHOLDER = "{width}";
+	public static final String HEIGHT_PLACEHOLDER = "{height}";
 
 }
