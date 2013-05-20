@@ -37,6 +37,7 @@ import org.webspeclanguage.api.Diagram;
 import org.webspeclanguage.api.PathItem;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.impl.core.PathComputer;
+import org.webspeclanguage.userstories.UserStoryGenerationParameters;
 import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 import org.webspeclanguage.userstories.UserStoryGenerator;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
@@ -82,7 +83,15 @@ public abstract class AbstractWordUserStoryGeneratorStrategy implements UserStor
     this.setMessageSource(applicationContext);
   }
 
-  public UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
+	@Override
+	public UserStoryGenerationResponse generate(
+			UserStoryGenerationParameters userStoryGenerationParameters)
+			throws Exception {
+		return this.generate(userStoryGenerationParameters.getDiagram(), userStoryGenerationParameters.getCroppingInfoMap(),
+				userStoryGenerationParameters.getDiagramFile(), userStoryGenerationParameters.getOutputLocale());
+	}
+  
+  private UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
           throws Exception {
     List<Path> paths = PathComputer.computePaths(diagram);
     for(Path path : paths) {

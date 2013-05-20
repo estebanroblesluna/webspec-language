@@ -133,5 +133,4 @@ public class WordEnumerationUserStoryGeneratorStrategy extends AbstractWordUserS
   private void setMockupUserStoryVisitor(WordEnumerationMockupVisitor mockupUserStoryVisitor) {
     this.mockupUserStoryVisitor = mockupUserStoryVisitor;
   }
-
 }

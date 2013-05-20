@@ -1,5 +1,6 @@
 package org.webspeclanguage.web.servlet;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
@@ -35,6 +36,7 @@ import org.webspeclanguage.service.DiagramService;
 import org.webspeclanguage.service.ProjectService;
 import org.webspeclanguage.service.UserStoryOutput;
 import org.webspeclanguage.service.UserStoryServiceImpl;
+import org.webspeclanguage.userstories.cropping.CroppingInfo;
 
 import com.common.model.User;
 import com.common.service.UserService;
@@ -822,8 +824,14 @@ public class ProjectRestService {
   @GET
   @Path("/diagram/{diagramId}/image")
   public Response getImage(@DefaultValue("") @PathParam("diagramId") long diagramId) {
-    //TODO complete
-    return Response.ok().build();
+	  try {
+	      File file = new File("/home/sony/Development/repositorio/webspec-language/modules/webspeclanguage-user-stories/userStories-example-folder/img/scenarios/MyBookingListDiagram.png");
+	      byte[] contents = IOUtils.toByteArray(new FileInputStream(file));
+	      return Response.ok(contents, "image/png")
+	              .build();
+	    } catch (Exception e) {
+	      return Response.status(500).entity("Error saving image").build();
+	    }
   }
   
   @GET
@@ -834,8 +842,15 @@ public class ProjectRestService {
           @PathParam("y") int y,
           @PathParam("width") int width,
           @PathParam("height") int height) {
-    //TODO complete
-    return Response.ok().build();
+	  try {
+	      File file = new File("/home/sony/Development/repositorio/webspec-language/modules/webspeclanguage-user-stories/userStories-example-folder/img/scenarios/MyBookingListDiagram.png");
+	      ByteArrayOutputStream byteArrayOutputStream = ImageCroppingUtil.cropImage(file, new CroppingInfo(x, y, width, height));
+	      Response response = Response.ok(byteArrayOutputStream.toByteArray(), "image/png")
+	              .build();
+	      return response;
+	    } catch (Exception e) {
+	      return Response.status(500).entity("Error saving image").build();
+	    }
   }
   
 

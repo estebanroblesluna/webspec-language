@@ -12,16 +12,15 @@
  */
 package org.webspeclanguage.userstories.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.webspeclanguage.api.Diagram;
@@ -33,15 +32,13 @@ import org.webspeclanguage.api.PathItemVisitor;
 import org.webspeclanguage.api.RichBehavior;
 import org.webspeclanguage.impl.core.Path;
 import org.webspeclanguage.impl.core.PathComputer;
+import org.webspeclanguage.userstories.UserStoryGenerationParameters;
 import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 import org.webspeclanguage.userstories.UserStoryGenerator;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
-import org.webspeclanguage.userstories.cropping.ImageCroppingUtil;
 import org.webspeclanguage.userstories.dto.Scenario;
 import org.webspeclanguage.userstories.dto.ScenarioStep;
-import org.webspeclanguage.userstories.response.FileResource;
 import org.webspeclanguage.userstories.response.HtmlUserStoryGenerationResponse;
-import org.webspeclanguage.userstories.response.HtmlUserStoryGenerationResponse.Builder;
 import org.webspeclanguage.userstories.visitor.HtmlCroppingVisitor;
 import org.webspeclanguage.userstories.visitor.HtmlExplanationVisitor;
 import org.webspeclanguage.userstories.visitor.HtmlMockupVisitor;
@@ -54,7 +51,6 @@ import org.webspeclanguage.userstories.visitor.HtmlMockupVisitor;
 public class HtmlUserStoryGeneratorStrategy implements UserStoryGenerator, HtmlStrategyConstants, MessageSourceAware {
 
   private StringTemplateGroup htmlTemplateGroup;
-  private File diagramFile;
   private Map<String, CroppingInfo> croppingMap;
   private MessageSource messageSource;
   private Locale locale;
@@ -65,89 +61,75 @@ public class HtmlUserStoryGeneratorStrategy implements UserStoryGenerator, HtmlS
     this.setHtmlTemplateGroup(st);
   }
 
-  public UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale) throws Exception {
-    this.initialize(croppingMap, diagramFile, locale);
+	@Override
+	public UserStoryGenerationResponse generate(
+			UserStoryGenerationParameters userStoryGenerationParameters)
+			throws Exception {
+		return this.generate(userStoryGenerationParameters.getDiagramImageServiceUrl(),
+				userStoryGenerationParameters.getCroppingServiceUrl(), userStoryGenerationParameters.getDiagramId(),
+				userStoryGenerationParameters.getDiagram(), userStoryGenerationParameters.getCroppingInfoMap(),
+				userStoryGenerationParameters.getCssFilePaths(), userStoryGenerationParameters.getJsFilePaths(), 
+				userStoryGenerationParameters.getImagesDirectory(), userStoryGenerationParameters.getOutputLocale());
+	}
 
-    HtmlUserStoryGenerationResponse.Builder htmlGenarationResponseBuilder = new HtmlUserStoryGenerationResponse.Builder();
-    htmlGenarationResponseBuilder.withScenariosDirectory(IMG_SCENARIOS_DIRECTORY).withIntearctionsDirectory(IMG_INTERACTIONS_DIRECTORY)
-            .withNavigationsDirectory(IMG_NAVIGATIONS_DIRECTORY).withMockupsDirectory(IMG_MOCKUPS_DIRECTORY);
+  private UserStoryGenerationResponse generate(String diagramImageServiceUrl, String croppingServiceUrl, String diagramId, Diagram diagram,
+  		Map<String, CroppingInfo> croppingMap,
+  		List<String> cssFiles, List<String> jsFiles, String imageDirectory,
+  		Locale locale) throws Exception {
+	  this.initialize(croppingMap, locale);
 
-    StringTemplate pageTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "page");
-    StringTemplate headTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "head");
-    StringTemplate bodyTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "body");
-    StringTemplate headerTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "header");
-    StringTemplate mainContainerTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "mainContainer");
-    StringTemplate footerTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "footer");
-    headerTemplate.setAttribute("title", this.getMessage("userstory.title"));
+	  StringTemplate pageTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "page");
+	  StringTemplate headTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "head");
+	  StringTemplate bodyTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "body");
+	  StringTemplate headerTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "header");
+	  StringTemplate mainContainerTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "mainContainer");
+	  StringTemplate footerTemplate = this.getHtmlTemplateGroup().getInstanceOf(TEMPLATES + "footer");
+	  headerTemplate.setAttribute("title", this.getMessage("userstory.title"));
 
-    List<Scenario> scenarios = new ArrayList<Scenario>();
-    Scenario scenario;
-    ScenarioStep scenarioStep = null;
+	  List<Scenario> scenarios = new ArrayList<Scenario>();
+	  Scenario scenario;
+	  ScenarioStep scenarioStep = null;
 
-    HtmlCroppingVisitor croppingUserStoryVisitor = new HtmlCroppingVisitor(htmlGenarationResponseBuilder, this.getCroppingMap(),
-            this.getDiagramFile(), this.getMessageSource(), this.getLocale());
-    HtmlExplanationVisitor explanationUserStoryVisitor = 
-      new HtmlExplanationVisitor(this.getHtmlTemplateGroup(), this.getMessageSource(), this.getLocale());
-    StepNameVisitor stepNameVisitor = new StepNameVisitor();
-    HtmlMockupVisitor mockupUserStoryVisitor = new HtmlMockupVisitor(htmlGenarationResponseBuilder,this.getMessageSource(),
-            this.getLocale());
+	  HtmlCroppingVisitor croppingUserStoryVisitor1 = new HtmlCroppingVisitor(croppingServiceUrl, diagramId, this.getCroppingMap());
+	  HtmlExplanationVisitor explanationUserStoryVisitor = 
+			  new HtmlExplanationVisitor(this.getHtmlTemplateGroup(), this.getMessageSource(), this.getLocale());
+	  StepNameVisitor stepNameVisitor = new StepNameVisitor();
+	  HtmlMockupVisitor mockupUserStoryVisitor = new HtmlMockupVisitor(this.getMessageSource(),
+        this.getLocale());
 
-    List<Path> paths = PathComputer.computePaths(diagram);
-    for (Path path : paths) {
-      scenario = this.createScenario(path, this.getDiagramFile(), htmlGenarationResponseBuilder);
-      for (PathItem pathItem : path.getItems()) {
-        scenarioStep = new ScenarioStep((String) pathItem.accept(stepNameVisitor), (String) pathItem.accept(croppingUserStoryVisitor), (String) pathItem
-                .accept(explanationUserStoryVisitor), (String) pathItem.accept(mockupUserStoryVisitor));
-        scenario.addScenarioStep(scenarioStep);
-      }
-      scenarios.add(scenario);
-    }
+	  List<Path> paths = PathComputer.computePaths(diagram);
+	  for (Path path : paths) {
+	  	// THIS IS AN EXAMPLE http://localhost:8080/service/projects/diagram/{diagramId}/image
+		  scenario = new Scenario(path.getName() + UUID.randomUUID().toString(), path.getNameUsing("&rarr;"), 
+					StringUtils.replace(diagramImageServiceUrl, 
+							DIAGRAM_PLACEHOLDER, diagramId));
 
-    pageTemplate.setAttribute("head", headTemplate);
-    bodyTemplate.setAttribute("header", headerTemplate);
-    bodyTemplate.setAttribute("mainContainer", mainContainerTemplate);
-    bodyTemplate.setAttribute("footer", footerTemplate);
-    mainContainerTemplate.setAttribute("scenarios", scenarios);
-    mainContainerTemplate.setAttribute("stepByStep", this.getMessage("userstory.stepBYstep"));
-    pageTemplate.setAttribute("body", bodyTemplate);
-    htmlGenarationResponseBuilder.withHtml(pageTemplate.toString());
-    this.addResources(htmlGenarationResponseBuilder);
-    return htmlGenarationResponseBuilder.build();
+		  for (PathItem pathItem : path.getItems()) {
+			  scenarioStep = new ScenarioStep(path.getName() + pathItem.hashCode() + UUID.randomUUID().toString(),
+			  		path.getName() + pathItem.hashCode() + UUID.randomUUID().toString(),
+			  		(String) pathItem.accept(stepNameVisitor), (String) pathItem.accept(croppingUserStoryVisitor1), (String) pathItem
+					  .accept(explanationUserStoryVisitor), (String) pathItem.accept(mockupUserStoryVisitor));
+			  scenario.addScenarioStep(scenarioStep);
+		  }
+		  scenarios.add(scenario);
+	  }
+
+	  headTemplate.setAttribute("cssFiles", cssFiles);
+	  headTemplate.setAttribute("jsFiles", jsFiles);
+	  headTemplate.setAttribute("imageDirectory", imageDirectory);
+	  pageTemplate.setAttribute("head", headTemplate);
+	  bodyTemplate.setAttribute("header", headerTemplate);
+	  bodyTemplate.setAttribute("mainContainer", mainContainerTemplate);
+	  bodyTemplate.setAttribute("footer", footerTemplate);
+	  mainContainerTemplate.setAttribute("scenarios", scenarios);
+	  mainContainerTemplate.setAttribute("stepByStep", this.getMessage("userstory.stepBYstep"));
+	  pageTemplate.setAttribute("body", bodyTemplate);
+	  
+	  return new HtmlUserStoryGenerationResponse(pageTemplate.toString());
   }
 
-  private void addResources(Builder htmlGenarationResponseBuilder) {
-    this.addJsResources(htmlGenarationResponseBuilder);
-    this.addFancyZoomImageResources(htmlGenarationResponseBuilder);
-  }
-
-  private void addFancyZoomImageResources(Builder htmlGenarationResponseBuilder) {
-    htmlGenarationResponseBuilder.withFancyZoomResourcesDirectory(RESOURCES_DIRECTORY);
-    File[] files = new File(this.getClass().getResource("resources/blank.gif").getFile()).getParentFile().listFiles();
-    for (int i = 0; i < files.length; i++) {
-      htmlGenarationResponseBuilder.addFancyZoomImageFile(files[i]);
-    }
-  }
-
-  private void addJsResources(Builder htmlGenarationResponseBuilder) {
-    htmlGenarationResponseBuilder.withJavascriptDirectory(JS_DIRECTORY);
-    htmlGenarationResponseBuilder.addJavascriptFile(new File(this.getClass().getResource("js/jquery.fancyzoom.js").getFile())).addJavascriptFile(
-            new File(this.getClass().getResource("js/jquery.fancyzoom.min.js").getFile())).addJavascriptFile(
-            new File(this.getClass().getResource("js/jquery.ifixpng.js").getFile())).addJavascriptFile(
-            new File(this.getClass().getResource("js/jquery.js").getFile())).addJavascriptFile(
-            new File(this.getClass().getResource("js/jquery.shadow.js").getFile()));
-  }
-
-  private Scenario createScenario(Path path, File diagramFile, Builder htmlGenarationResponseBuilder) throws IOException {
-    Scenario scenario = new Scenario(path.getNameUsing("&rarr;"), IMG_SCENARIOS_DIRECTORY + "/" + diagramFile.getName());
-    ByteArrayOutputStream scenarioByteArrayOutputStream = new ByteArrayOutputStream();
-    ImageCroppingUtil.writeImage(ImageCroppingUtil.readImage(diagramFile), scenarioByteArrayOutputStream, "png");
-    htmlGenarationResponseBuilder.addScenario(new FileResource("/" + diagramFile.getName(), scenarioByteArrayOutputStream));
-    return scenario;
-  }
-
-  private void initialize(Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale) {
+  private void initialize(Map<String, CroppingInfo> croppingMap, Locale locale) {
     this.setCroppingMap(croppingMap);
-    this.setDiagramFile(diagramFile);
     this.setLocale(locale);
   }
 
@@ -192,14 +174,6 @@ public class HtmlUserStoryGeneratorStrategy implements UserStoryGenerator, HtmlS
     this.croppingMap = croppingMap;
   }
 
-  private File getDiagramFile() {
-    return diagramFile;
-  }
-
-  private void setDiagramFile(File diagramFile) {
-    this.diagramFile = diagramFile;
-  }
-
   private MessageSource getMessageSource() {
     return messageSource;
   }
@@ -215,4 +189,5 @@ public class HtmlUserStoryGeneratorStrategy implements UserStoryGenerator, HtmlS
   private void setLocale(Locale locale) {
     this.locale = locale;
   }
+
 }

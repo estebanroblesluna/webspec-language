@@ -17,16 +17,20 @@ package org.webspeclanguage.userstories.dto;
  */
 public class ScenarioStep {
 
+	private String interactionORnavigationCroppedImageId;
   private String interactionORnavigationCroppedImagePath;
   private String explanation;
+  private String mockupImageId;
   private String mockupImagePath;
   private String name;
 
-  public ScenarioStep(String name, String interactionORnavigationCroppedImagePath, String explanation, String mockupImagePath) {
+  public ScenarioStep(String interactionORnavigationCroppedImageId, String mockupImageId, String name, String interactionORnavigationCroppedImagePath, String explanation, String mockupImagePath) {
     this.setExplanation(explanation);
     this.setInteractionORnavigationCroppedImagePath(interactionORnavigationCroppedImagePath);
     this.setMockupImagePath(mockupImagePath);
     this.setName(name);
+    this.setInteractionORnavigationCroppedImageId(interactionORnavigationCroppedImageId);
+    this.setMockupImageId(mockupImageId);
   }
 
   public String getInteractionORnavigationCroppedImagePath() {
@@ -60,5 +64,22 @@ public class ScenarioStep {
   private void setName(String name) {
     this.name = name;
   }
+
+	public String getInteractionORnavigationCroppedImageId() {
+		return interactionORnavigationCroppedImageId;
+	}
+
+	public void setInteractionORnavigationCroppedImageId(
+			String interactionORnavigationCroppedImageId) {
+		this.interactionORnavigationCroppedImageId = interactionORnavigationCroppedImageId;
+	}
+
+	public String getMockupImageId() {
+		return mockupImageId;
+	}
+
+	public void setMockupImageId(String mockupImageId) {
+		this.mockupImageId = mockupImageId;
+	}
 
 }

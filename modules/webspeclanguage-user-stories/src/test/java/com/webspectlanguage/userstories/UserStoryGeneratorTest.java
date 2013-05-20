@@ -13,6 +13,7 @@
 package com.webspectlanguage.userstories;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -21,11 +22,15 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.webspeclanguage.api.Diagram;
+import org.webspeclanguage.userstories.UserStoryGenerationParameters;
 import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
+import org.webspeclanguage.userstories.impl.HTMLUserStoryGenerationParameters;
 import org.webspeclanguage.userstories.impl.HtmlUserStoryGeneratorStrategy;
 import org.webspeclanguage.userstories.impl.WordEnumerationUserStoryGeneratorStrategy;
 import org.webspeclanguage.userstories.impl.WordTabularUserStoryGeneratorStrategy;
+import org.webspeclanguage.userstories.impl.WordUserStoryGenerationParameters;
+import org.webspeclanguage.userstories.response.HtmlUserStoryGenerationResponse;
 
 /**
  * Test for word's document generator strategies.
@@ -57,7 +62,8 @@ public class UserStoryGeneratorTest {
     Diagram diagram = WebSpecFactory.getShoppingCartExample();
     File file = new File(this.getClass().getResource("shoppingCartDiagram.png").getFile());
     UserStoryGenerationResponse response = 
-      wordTabularUserStoryGenerator.generate(diagram, this.getCroppingMap(), file, new Locale("en", "US"));
+      wordTabularUserStoryGenerator.generate(
+      		this.getParametersForWORDGeneration(diagram, this.getCroppingMap(), file, new Locale("en", "US")));
     response.generateResourcesIn(System.getProperty("user.dir") + "/userStories-example-folder/", "WordTabularStrategy");
   }
 
@@ -68,17 +74,36 @@ public class UserStoryGeneratorTest {
     Diagram diagram = WebSpecFactory.getShoppingCartExample();
     File file = new File(this.getClass().getResource("shoppingCartDiagram.png").getFile());
     UserStoryGenerationResponse response = 
-      wordEnumerationUserStoryGenerator.generate(diagram, this.getCroppingMap(), file, new Locale("es", "ES"));
+      wordEnumerationUserStoryGenerator.generate(
+      		this.getParametersForWORDGeneration(diagram, this.getCroppingMap(), file, new Locale("en", "US")));
     response.generateResourcesIn(System.getProperty("user.dir") + "/userStories-example-folder/", "WordEnumerationStrategy");
   }
 
   @Test
   public void htmlGenerationStrategy() throws Exception {
-    HtmlUserStoryGeneratorStrategy htmlUserStoryGenerator = new HtmlUserStoryGeneratorStrategy();
-    htmlUserStoryGenerator.setMessageSource(ctx);
-    Diagram diagram = WebSpecFactory.getShoppingCartExample();
-    File diagramImageFile = new File(this.getClass().getResource("shoppingCartDiagram.png").getFile());
-    UserStoryGenerationResponse response = htmlUserStoryGenerator.generate(diagram, this.getCroppingMap(), diagramImageFile, new Locale("es", "ES"));
-    response.generateResourcesIn(System.getProperty("user.dir") + "/userStories-example-folder/", "HtmlStrategy");
+  	HtmlUserStoryGeneratorStrategy htmlUserStoryGenerator = new HtmlUserStoryGeneratorStrategy();
+		htmlUserStoryGenerator.setMessageSource(ctx);
+		Diagram diagram = WebSpecFactory.getShoppingCartExample();
+		HtmlUserStoryGenerationResponse response = 
+				(HtmlUserStoryGenerationResponse) htmlUserStoryGenerator.generate(
+						this.getParametersForHTMLGeneration(diagram, this.getCroppingMap(), new Locale("es", "ES")));		
+		response.generateResourcesIn(System.getProperty("user.dir")
+				+ "/userStories-example-folder/", "HtmlStrategy");
   }
+
+	private UserStoryGenerationParameters getParametersForWORDGeneration(Diagram diagram, Map<String, CroppingInfo> croppingInfoMap,
+			File diagramFile, Locale outputLocale) {
+		return new WordUserStoryGenerationParameters(diagram, croppingInfoMap, diagramFile, outputLocale);
+	}
+
+	private UserStoryGenerationParameters getParametersForHTMLGeneration(Diagram diagram, Map<String, CroppingInfo> croppingInfoMap,
+			Locale outputLocale) {
+		return new HTMLUserStoryGenerationParameters(diagram, croppingInfoMap, outputLocale,
+				"http://localhost:8080/service/projects/diagram/{diagramId}/image",
+				"http://localhost:8080/service/projects/diagram/{diagramId}/image/{x}/{y}/{width}/{height}",
+				"555", Arrays.asList("css/common.css", "css/userstories.css"),
+				Arrays.asList("http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js", "js/fancyzoom.js"),
+				"/home/sony/Development/repositorio/webspec-language/modules/webspeclanguage-user-stories/userStories-example-folder/images");
+	}
+
 }

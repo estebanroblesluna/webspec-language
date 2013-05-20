@@ -21,14 +21,16 @@ import java.util.List;
  */
 public class Scenario {
 
+  private String id;
   private String description;
   private String diagramFilePath;
   private List<ScenarioStep> scenarioSteps;
 
-  public Scenario(String description, String diagramFilePath) {
+  public Scenario(String id, String description, String diagramFilePath) {
     this.setDescription(description);
     this.setDiagramFilePath(diagramFilePath);
     this.setScenarioSteps(new ArrayList<ScenarioStep>());
+    this.setId(id);
   }
 
   public void addScenarioStep(ScenarioStep scenarioStep) {
@@ -57,6 +59,14 @@ public class Scenario {
   
   private void setScenarioSteps(List<ScenarioStep> scenarioSteps) {
     this.scenarioSteps = scenarioSteps;
+  }
+
+  public String getId() {
+	return id;
+  }
+
+  private void setId(String id) {
+	this.id = id;
   }
 
 }

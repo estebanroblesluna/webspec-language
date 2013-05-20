@@ -1,20 +1,18 @@
 package org.webspeclanguage.service;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.imageio.ImageIO;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.webspeclanguage.api.Diagram;
+import org.webspeclanguage.userstories.UserStoryGenerationParameters;
 import org.webspeclanguage.userstories.UserStoryGenerationResponse;
 import org.webspeclanguage.userstories.UserStoryGenerator;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
@@ -30,12 +28,22 @@ public class UserStoryServiceImpl {
 
   private DiagramService diagramService;
   private Map<UserStoryOutput, UserStoryGenerator> userStoryMapping;
+  private String diagramImageServiceURL;
+  private String croppingServiceURL;
+  private List<String> cssPaths;
+  private List<String> jsPaths;
+  private String imagesDirectoryPath;
   
   public UserStoryServiceImpl(
           UserStoryGenerator htmlGenerator, 
           UserStoryGenerator wordEnumeration, 
           UserStoryGenerator wordTabular, 
-          DiagramService diagramService) {
+          DiagramService diagramService,
+          String diagramImageServiceURL,
+          String croppingServiceURL,
+          List<String> cssPaths,
+          List<String> jsPaths,
+          String imagesDirectoryPath) {
     
     this.userStoryMapping = new HashMap<UserStoryOutput, UserStoryGenerator>();
     this.userStoryMapping.put(UserStoryOutput.HTML, htmlGenerator);
@@ -43,6 +51,11 @@ public class UserStoryServiceImpl {
     this.userStoryMapping.put(UserStoryOutput.WORD_TABULAR, wordTabular);
     
     this.diagramService = diagramService;
+    this.diagramImageServiceURL = diagramImageServiceURL;
+    this.croppingServiceURL = croppingServiceURL;
+    this.cssPaths = cssPaths;
+    this.jsPaths = jsPaths;
+    this.imagesDirectoryPath = imagesDirectoryPath;
   }
   
   public byte[] generate(User user, long diagramId, UserStoryOutput output) throws GenerationException {
@@ -58,7 +71,11 @@ public class UserStoryServiceImpl {
       File diagramFile = File.createTempFile(diagramFilename, ".tmp");
       FileUtils.writeByteArrayToFile(diagramFile, readDiagram.getImageBytes());
       
-      UserStoryGenerationResponse response = generator.generate(diagram, croppingMap, diagramFile, new Locale("en", "US"));
+      UserStoryGenerationParameters userStoryGenerationParameters = 
+      		this.getUserStoryGenerationParameters(output, diagram, String.valueOf(diagramId),
+      				croppingMap, diagramFile, new Locale("en", "US"));
+      
+      UserStoryGenerationResponse response = generator.generate(userStoryGenerationParameters);
       
       String responseFilename = UUID.randomUUID().toString();
       File responseFile = File.createTempFile(responseFilename, ".tmp");
@@ -83,6 +100,15 @@ public class UserStoryServiceImpl {
     }
   }
 
+  private UserStoryGenerationParameters getUserStoryGenerationParameters(
+  		UserStoryOutput output, Diagram diagram,
+  		String diagramId, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale outputLocale) {
+  	
+		return new UserStoryGenerationParametersFactory(diagram, croppingMap, outputLocale,
+				diagramFile, this.diagramImageServiceURL, this.croppingServiceURL,
+				diagramId, this.cssPaths, this.jsPaths, this.imagesDirectoryPath).
+				build(output);
+	}
 
   private ParsingResult getDiagram(User user, org.webspeclanguage.model.Diagram diagram) {
     DiagramParser parser = new DiagramParser();

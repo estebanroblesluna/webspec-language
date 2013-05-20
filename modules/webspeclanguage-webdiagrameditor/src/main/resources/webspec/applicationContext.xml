@@ -29,8 +29,31 @@
     <constructor-arg index="1" ref="wordEnumerationGenerator" />
     <constructor-arg index="2" ref="wordTabularGenerator" />
     <constructor-arg index="3" ref="diagramService" />
+    <constructor-arg index="4" value="${diagramImageServiceURL}" />
+    <constructor-arg index="5" value="${croppingServiceURL}" />
+    <constructor-arg index="6" ref="cssFilePaths" />
+    <constructor-arg index="7" ref="jsFilePaths" />
+    <constructor-arg index="8" value="${imagesDirectoryPath}" />
   </bean>
   
+  <bean id="cssFilePaths" class="java.util.ArrayList">
+  	<constructor-arg>
+		<list>
+			<value>${userstoriesCSS}</value>
+			<value>${userstoriesCommonCSS}</value>
+		</list>
+  	</constructor-arg>
+  </bean>
+
+  <bean id="jsFilePaths" class="java.util.ArrayList">
+  	<constructor-arg>
+		<list>
+			<value>${userstoriesJqueryJs}</value>
+			<value>${userstoriesFancyZoomJs}</value>
+		</list>
+  	</constructor-arg>
+  </bean>
+
   <bean id="projectRestService" class="org.webspeclanguage.web.servlet.ProjectRestService" >
     <constructor-arg index="0" ref="diagramService" />
     <constructor-arg index="1" ref="userService" />

@@ -12,12 +12,6 @@
  */
 package org.webspeclanguage.userstories;
 
-import java.io.File;
-import java.util.Locale;
-import java.util.Map;
-
-import org.webspeclanguage.api.Diagram;
-import org.webspeclanguage.userstories.cropping.CroppingInfo;
 
 /**
  * A generator of User stories from WebSpec diagrams
@@ -26,6 +20,6 @@ import org.webspeclanguage.userstories.cropping.CroppingInfo;
  */
 public interface UserStoryGenerator {
 
-  UserStoryGenerationResponse generate(Diagram diagram, Map<String, CroppingInfo> croppingMap, File diagramFile, Locale locale)
-          throws Exception;
+  UserStoryGenerationResponse generate(UserStoryGenerationParameters userStoryGenerationParameters)
+      throws Exception;
 }
