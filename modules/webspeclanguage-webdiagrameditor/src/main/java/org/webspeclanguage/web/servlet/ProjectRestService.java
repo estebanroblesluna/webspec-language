@@ -16,6 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -791,10 +792,14 @@ public class ProjectRestService {
       UserStoryOutput userStoryOutput = UserStoryOutput.valueOf(output);
       byte[] result = this.userStoryService.generate(user, diagramId, userStoryOutput);
       String contentType = userStoryOutput.getContentType();
-      return Response
-              .ok(result, MediaType.valueOf(contentType))
-              .header("Content-disposition","attachment; filename=conversion." + userStoryOutput.getExtension())
-              .build();
+      ResponseBuilder builder = Response
+              .ok(result, MediaType.valueOf(contentType));
+      
+      if (userStoryOutput.isAttachment()) {
+        builder.header("Content-disposition","attachment; filename=conversion." + userStoryOutput.getExtension());
+      }
+              
+      return builder.build();
     } catch (Exception e) {
       return Response.status(500).entity("Error converting to user story").build();
     }
@@ -825,7 +830,7 @@ public class ProjectRestService {
   @Path("/diagram/{diagramId}/image")
   public Response getImage(@DefaultValue("") @PathParam("diagramId") long diagramId) {
 	  try {
-	      File file = new File("/home/sony/Development/repositorio/webspec-language/modules/webspeclanguage-user-stories/userStories-example-folder/img/scenarios/MyBookingListDiagram.png");
+	      File file = new File("/Users/estebanroblesluna/Desktop/diagrama.png");
 	      byte[] contents = IOUtils.toByteArray(new FileInputStream(file));
 	      return Response.ok(contents, "image/png")
 	              .build();
@@ -843,7 +848,7 @@ public class ProjectRestService {
           @PathParam("width") int width,
           @PathParam("height") int height) {
 	  try {
-	      File file = new File("/home/sony/Development/repositorio/webspec-language/modules/webspeclanguage-user-stories/userStories-example-folder/img/scenarios/MyBookingListDiagram.png");
+	      File file = new File("/Users/estebanroblesluna/Desktop/diagrama.png");
 	      ByteArrayOutputStream byteArrayOutputStream = ImageCroppingUtil.cropImage(file, new CroppingInfo(x, y, width, height));
 	      Response response = Response.ok(byteArrayOutputStream.toByteArray(), "image/png")
 	              .build();

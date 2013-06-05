@@ -41,6 +41,7 @@
   <bean id="connectController" class="org.springframework.social.connect.web.ConnectController">
     <constructor-arg index="0" ref="connectionFactoryLocator" />
     <constructor-arg index="1" ref="connectionRepository" />
+    <property name="applicationUrl" value="${application.url}" />
   </bean>
 
   <bean class="org.springframework.social.connect.web.ProviderSignInController">
@@ -49,5 +50,6 @@
     <constructor-arg index="2" ref="signInAdapter" />
     <property name="postSignInUrl" value="/main.htm" />
     <property name="signUpUrl" value="/register.htm" />
+    <property name="applicationUrl" value="${application.url}" />
   </bean>
 </beans>
