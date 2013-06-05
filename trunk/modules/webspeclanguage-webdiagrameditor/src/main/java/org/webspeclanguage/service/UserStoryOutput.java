@@ -11,16 +11,31 @@ public enum UserStoryOutput {
   	public UserStoryGenerationParameters getParametersForOutput(UserStoryGenerationParametersFactory userStoryGenerationParameterFactory) {
   		return userStoryGenerationParameterFactory.buildHTMLParameters();
   	}
+
+    @Override
+    public boolean isAttachment() {
+      return false;
+    }
   }, 
   WORD_TABULAR("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
   	public UserStoryGenerationParameters getParametersForOutput(UserStoryGenerationParametersFactory userStoryGenerationParameterFactory) {
   		return userStoryGenerationParameterFactory.buildWordParameters();
   	}
+
+    @Override
+    public boolean isAttachment() {
+      return true;
+    }
   }, 
   WORD_ENUMERATION("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
   	public UserStoryGenerationParameters getParametersForOutput(UserStoryGenerationParametersFactory userStoryGenerationParameterFactory) {
   		return userStoryGenerationParameterFactory.buildWordParameters();
   	}
+
+    @Override
+    public boolean isAttachment() {
+      return true;
+    }
   };
   
   private String extension;
@@ -41,4 +56,5 @@ public enum UserStoryOutput {
     return extension;
   }
 
+  public abstract boolean isAttachment();
 }
