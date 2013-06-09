@@ -92,9 +92,9 @@
 
 	[commonToolbox addSeparator];
 
-	[commonToolbox addCommand: [ToUserStoryHTMLCommand class] withTitle: @"To HTML" image: @"Resources/AlignLeft.gif"];
-	[commonToolbox addCommand: [ToUserStoryWordEnumerationCommand class] withTitle: @"To word tabular" image: @"Resources/AlignLeft.gif"];
-	[commonToolbox addCommand: [ToUserStoryWordTabularCommand class] withTitle: @"To word enumeration" image: @"Resources/AlignLeft.gif"];
+	[commonToolbox addCommand: [ToUserStoryHTMLCommand class] withTitle: @"To HTML" image: @"Resources/Html.png"];
+	[commonToolbox addCommand: [ToUserStoryWordEnumerationCommand class] withTitle: @"To word tabular" image: @"Resources/Word1.png"];
+	[commonToolbox addCommand: [ToUserStoryWordTabularCommand class] withTitle: @"To word enumeration" image: @"Resources/Word2.png"];
 
 
 	var alignToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,310)];
