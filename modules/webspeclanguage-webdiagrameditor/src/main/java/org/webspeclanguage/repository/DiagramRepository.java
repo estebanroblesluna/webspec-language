@@ -56,7 +56,7 @@ public class DiagramRepository {
   public Diagram getDiagram(User user, long diagramId) {
     return (Diagram) this.getSession()
             .createCriteria(Diagram.class)
-            .add(Restrictions.eq("owner", user))
+            //.add(Restrictions.eq("owner", user))
             .add(Restrictions.eq("id", diagramId))
             .uniqueResult();
   }

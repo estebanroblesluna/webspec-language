@@ -23,7 +23,8 @@ import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.webspeclanguage.userstories.cropping.CroppingInfo;
 
 /**
@@ -33,12 +34,12 @@ import org.webspeclanguage.userstories.cropping.CroppingInfo;
  */
 public class ImageCroppingUtil {
 
-  private final static Logger LOGGER = Logger.getLogger(ImageCroppingUtil.class);
+  private static Log LOGGER = LogFactory.getLog(ProjectRestService.class);
 
   static Rectangle clip;
 
   public static ByteArrayOutputStream cropImage(File mainImageFile, CroppingInfo croppingInfo) throws Exception {
-    //LOGGER.info("........Starting cropping.........");
+    LOGGER.info("........Starting cropping.........");
 
     BufferedImage originalImage = readImage(mainImageFile);
 
@@ -47,7 +48,7 @@ public class ImageCroppingUtil {
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     writeImage(processedImage, byteArrayOutputStream, "png");
 
-    //LOGGER.info(".......Done Cropping.........");
+    LOGGER.info(".......Done Cropping.........");
     return byteArrayOutputStream;
   }
 
@@ -61,15 +62,15 @@ public class ImageCroppingUtil {
       int w = clip.width;
       int h = clip.height;
 
-      //LOGGER.info("Crop Width " + w);
-      //LOGGER.info("Crop Height " + h);
-      //LOGGER.info("Crop Location " + "(" + clip.x + "," + clip.y + ")");
+      LOGGER.info("Crop Width " + w);
+      LOGGER.info("Crop Height " + h);
+      LOGGER.info("Crop Location " + "(" + clip.x + "," + clip.y + ")");
 
       clipped = img.getSubimage(clip.x, clip.y, w, h);
 
-      //LOGGER.info("Image Cropped. New Image Dimension: " + clipped.getWidth() + "w X " + clipped.getHeight() + "h");
+      LOGGER.info("Image Cropped. New Image Dimension: " + clipped.getWidth() + "w X " + clipped.getHeight() + "h");
     } catch (RasterFormatException rfe) {
-      //LOGGER.error("Raster format error: " + rfe.getMessage());
+      LOGGER.error("Raster format error: " + rfe.getMessage());
       return null;
     }
     return clipped;
@@ -164,9 +165,9 @@ public class ImageCroppingUtil {
     BufferedImage img = null;
     try {
       img = ImageIO.read(inputStream);
-      //LOGGER.info("Image Read. Image Dimension: " + img.getWidth() + "w X " + img.getHeight() + "h");
+      LOGGER.info("Image Read. Image Dimension: " + img.getWidth() + "w X " + img.getHeight() + "h");
     } catch (IOException e) {
-      //LOGGER.error(e);
+      LOGGER.error(e);
     }
     return img;
   }

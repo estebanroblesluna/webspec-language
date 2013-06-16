@@ -46,86 +46,85 @@
 {
 	var drawing = [WebSpecDrawing frame: [contentView bounds]];
 
-	var webspecToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(20,70)];
-	[webspecToolbox columns: 3];
-
-	[webspecToolbox addTool: [CreateInteractionTool drawing: drawing] withTitle: @"Interaction" image: @"Resources/Interaction.gif"];
-
-	[webspecToolbox addTool: [CreateConnectionTool drawing: drawing figure: [NavigationFigure class]] withTitle: @"Connection" image: @"Resources/Navigation.gif"];
-	[webspecToolbox addTool: [CreateConnectionTool drawing: drawing figure: [RichBehaviorFigure class]] withTitle: @"Connection" image: @"Resources/RichBehavior.gif"];
-
-	[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [ButtonFigure class]] withTitle: @"Widget" image: @"Resources/Button.gif"];
-	[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [CheckBoxFigure class]] withTitle: @"Widget" image: @"Resources/CheckBox.gif"];
-	[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [ComboBoxFigure class]] withTitle: @"Widget" image: @"Resources/ComboBox.gif"];
-	[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [LabelFigure class]] withTitle: @"Widget" image: @"Resources/Label.gif"];
-	[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [LinkFigure class]] withTitle: @"Widget" image: @"Resources/Link.gif"];
-	[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [ListBoxFigure class]] withTitle: @"Widget" image: @"Resources/ListBox.gif"];
-	[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [RadioButtonFigure class]] withTitle: @"Widget" image: @"Resources/RadioButton.gif"];
-	[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [TextFieldFigure class]] withTitle: @"Widget" image: @"Resources/TextField.gif"];
-	[webspecToolbox addTool: [CreateContainerTool drawing: drawing figure: [PanelContainerFigure class]] withTitle: @"Widget" image: @"Resources/PanelContainer.gif"];
-	[webspecToolbox addTool: [CreateContainerTool drawing: drawing figure: [ListOfContainerFigure class]] withTitle: @"Widget" image: @"Resources/ListOfContainer.gif"];
-
-	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [OneOfManyStringsFigure class]] withTitle: @"One of many strings" image: @"Resources/OneOfStrings.gif"];
-	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [OneOfManyNumbersFigure class]] withTitle: @"One of many numbers" image: @"Resources/OneOfNumbers.gif"];
-	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [OneOfManyArraysFigure class]] withTitle: @"One of many arrays" image: @"Resources/OneOfArray.gif"];
-	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [RandomStringFigure class]] withTitle: @"Random string" image: @"Resources/StringGenerator.gif"];
-	[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [UniformDistributionFigure class]] withTitle: @"Uniform distribution of numbers" image: @"Resources/UniformNumberDistribution.gif"];
-	
-	
-
-	var commonToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,70)];
-	[commonToolbox columns: 2];
-
-	[commonToolbox addTool: [SelectionTool drawing: drawing] withTitle: @"Selection" image: @"Resources/Selection.png"];
-	[commonToolbox addCommand: [FigureJSONSerializer class] withTitle: @"Save" image: @"Resources/Save.gif"];
-
-    [commonToolbox addCommand: [GroupCommand class] withTitle: @"Group" image: @"Resources/Group.gif"];
-    [commonToolbox addCommand: [UngroupCommand class] withTitle: @"Ungroup" image: @"Resources/Ungroup.gif"];
-
-    [commonToolbox addCommand: [LockCommand class] withTitle: @"Lock" image: @"Resources/Lock.gif"];
-    [commonToolbox addCommand: [UnlockCommand class] withTitle: @"Unlock" image: @"Resources/Unlock.gif"];
-
-    [commonToolbox addCommand: [BringToFrontCommand class] withTitle: @"Bring to front" image: @"Resources/BringToFront.gif"];
-    [commonToolbox addCommand: [SendToBackCommand class] withTitle: @"Send to back" image: @"Resources/SendToBack.gif"];
-    [commonToolbox addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/BringForward.gif"];
-    [commonToolbox addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/SendBackward.gif"];
-
-	[commonToolbox addSeparator];
-
-	[commonToolbox addCommand: [ToUserStoryHTMLCommand class] withTitle: @"To HTML" image: @"Resources/Html.png"];
-	[commonToolbox addCommand: [ToUserStoryWordEnumerationCommand class] withTitle: @"To word tabular" image: @"Resources/Word1.png"];
-	[commonToolbox addCommand: [ToUserStoryWordTabularCommand class] withTitle: @"To word enumeration" image: @"Resources/Word2.png"];
-
-
-	var alignToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,310)];
-	[alignToolbox columns: 3];
-
-	[alignToolbox addCommand: [AlignLeftCommand class] withTitle: @"Align left" image: @"Resources/AlignLeft.gif"];
-	[alignToolbox addCommand: [AlignCenterCommand class] withTitle: @"Align center" image: @"Resources/AlignCenter.gif"];
-	[alignToolbox addCommand: [AlignRightCommand class] withTitle: @"Align right" image: @"Resources/AlignRight.gif"];
-	[alignToolbox addCommand: [AlignTopCommand class] withTitle: @"Align top" image: @"Resources/AlignTop.gif"];
-	[alignToolbox addCommand: [AlignMiddleCommand class] withTitle: @"Align middle" image: @"Resources/AlignMiddle.gif"];
-	[alignToolbox addCommand: [AlignBottomCommand class] withTitle: @"Align bottom" image: @"Resources/AlignBottom.gif"];
-	
-	
-	var properties = [PropertiesFigure newAt: CGPointMake(20,520) drawing: drawing];
-	
-	[drawing setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
-
-	[contentView addSubview: drawing];
-	
 	var sharedApplication = [CPApplication sharedApplication];
 	var namedArguments = [sharedApplication namedArguments];
 	
 	var headless = window.top.location.hash;
+
+	[drawing setAutoresizingMask: CPViewWidthSizable | CPViewHeightSizable];
+	[contentView addSubview: drawing];
     
 	if (!(headless.localeCompare("#headless")) == 0) {
+		var webspecToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(20,70)];
+		[webspecToolbox columns: 3];
+	
+		[webspecToolbox addTool: [CreateInteractionTool drawing: drawing] withTitle: @"Interaction" image: @"Resources/Interaction.gif"];
+	
+		[webspecToolbox addTool: [CreateConnectionTool drawing: drawing figure: [NavigationFigure class]] withTitle: @"Connection" image: @"Resources/Navigation.gif"];
+		[webspecToolbox addTool: [CreateConnectionTool drawing: drawing figure: [RichBehaviorFigure class]] withTitle: @"Connection" image: @"Resources/RichBehavior.gif"];
+	
+		[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [ButtonFigure class]] withTitle: @"Widget" image: @"Resources/Button.gif"];
+		[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [CheckBoxFigure class]] withTitle: @"Widget" image: @"Resources/CheckBox.gif"];
+		[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [ComboBoxFigure class]] withTitle: @"Widget" image: @"Resources/ComboBox.gif"];
+		[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [LabelFigure class]] withTitle: @"Widget" image: @"Resources/Label.gif"];
+		[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [LinkFigure class]] withTitle: @"Widget" image: @"Resources/Link.gif"];
+		[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [ListBoxFigure class]] withTitle: @"Widget" image: @"Resources/ListBox.gif"];
+		[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [RadioButtonFigure class]] withTitle: @"Widget" image: @"Resources/RadioButton.gif"];
+		[webspecToolbox addTool: [CreateWidgetTool drawing: drawing figure: [TextFieldFigure class]] withTitle: @"Widget" image: @"Resources/TextField.gif"];
+		[webspecToolbox addTool: [CreateContainerTool drawing: drawing figure: [PanelContainerFigure class]] withTitle: @"Widget" image: @"Resources/PanelContainer.gif"];
+		[webspecToolbox addTool: [CreateContainerTool drawing: drawing figure: [ListOfContainerFigure class]] withTitle: @"Widget" image: @"Resources/ListOfContainer.gif"];
+	
+		[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [OneOfManyStringsFigure class]] withTitle: @"One of many strings" image: @"Resources/OneOfStrings.gif"];
+		[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [OneOfManyNumbersFigure class]] withTitle: @"One of many numbers" image: @"Resources/OneOfNumbers.gif"];
+		[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [OneOfManyArraysFigure class]] withTitle: @"One of many arrays" image: @"Resources/OneOfArray.gif"];
+		[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [RandomStringFigure class]] withTitle: @"Random string" image: @"Resources/StringGenerator.gif"];
+		[webspecToolbox addTool: [CreateGeneratorTool drawing: drawing figure: [UniformDistributionFigure class]] withTitle: @"Uniform distribution of numbers" image: @"Resources/UniformNumberDistribution.gif"];
+		
+		
+	
+		var commonToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,70)];
+		[commonToolbox columns: 2];
+	
+		[commonToolbox addTool: [SelectionTool drawing: drawing] withTitle: @"Selection" image: @"Resources/Selection.png"];
+		[commonToolbox addCommand: [FigureJSONSerializer class] withTitle: @"Save" image: @"Resources/Save.gif"];
+	
+	    [commonToolbox addCommand: [GroupCommand class] withTitle: @"Group" image: @"Resources/Group.gif"];
+	    [commonToolbox addCommand: [UngroupCommand class] withTitle: @"Ungroup" image: @"Resources/Ungroup.gif"];
+	
+	    [commonToolbox addCommand: [LockCommand class] withTitle: @"Lock" image: @"Resources/Lock.gif"];
+	    [commonToolbox addCommand: [UnlockCommand class] withTitle: @"Unlock" image: @"Resources/Unlock.gif"];
+	
+	    [commonToolbox addCommand: [BringToFrontCommand class] withTitle: @"Bring to front" image: @"Resources/BringToFront.gif"];
+	    [commonToolbox addCommand: [SendToBackCommand class] withTitle: @"Send to back" image: @"Resources/SendToBack.gif"];
+	    [commonToolbox addCommand: [BringForwardCommand class] withTitle: @"Bring forward" image: @"Resources/BringForward.gif"];
+	    [commonToolbox addCommand: [SendBackwardCommand class] withTitle: @"Send backward" image: @"Resources/SendBackward.gif"];
+	
+		[commonToolbox addSeparator];
+	
+		[commonToolbox addCommand: [ToUserStoryHTMLCommand class] withTitle: @"To HTML" image: @"Resources/Html.png"];
+		[commonToolbox addCommand: [ToUserStoryWordEnumerationCommand class] withTitle: @"To word tabular" image: @"Resources/Word1.png"];
+		[commonToolbox addCommand: [ToUserStoryWordTabularCommand class] withTitle: @"To word enumeration" image: @"Resources/Word2.png"];
+	
+	
+		var alignToolbox = [WebSpecToolbox initializeWith: drawing at: CGPointMake(800,310)];
+		[alignToolbox columns: 3];
+	
+		[alignToolbox addCommand: [AlignLeftCommand class] withTitle: @"Align left" image: @"Resources/AlignLeft.gif"];
+		[alignToolbox addCommand: [AlignCenterCommand class] withTitle: @"Align center" image: @"Resources/AlignCenter.gif"];
+		[alignToolbox addCommand: [AlignRightCommand class] withTitle: @"Align right" image: @"Resources/AlignRight.gif"];
+		[alignToolbox addCommand: [AlignTopCommand class] withTitle: @"Align top" image: @"Resources/AlignTop.gif"];
+		[alignToolbox addCommand: [AlignMiddleCommand class] withTitle: @"Align middle" image: @"Resources/AlignMiddle.gif"];
+		[alignToolbox addCommand: [AlignBottomCommand class] withTitle: @"Align bottom" image: @"Resources/AlignBottom.gif"];
+		
+		
+		var properties = [PropertiesFigure newAt: CGPointMake(20,520) drawing: drawing];
+	
 		[drawing toolbox: webspecToolbox];
 		[drawing toolbox: commonToolbox];
 		[drawing toolbox: alignToolbox];
         [drawing properties: properties];
 	}
-
+	
 	if ([namedArguments containsKey: "diagramId"]) {
 		var diagramId = [namedArguments objectForKey: "diagramId"];
 		[drawing diagramId: diagramId];
