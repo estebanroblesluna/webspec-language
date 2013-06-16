@@ -24,7 +24,7 @@
 	[super init];
 	
 	[self addProperty: @"Name" value: @""];
-	[self addProperty: @"Show grid?" value: YES];
+	[self addProperty: @"Show grid?" value: NO];
 	[self addProperty: @"Grid size" value: 20];
 	[self addProperty: @"Snap to grid?" value: NO];
 	[self addProperty: @"Floating toolboxes?" value: YES];

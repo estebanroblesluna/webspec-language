@@ -59,6 +59,7 @@
     <constructor-arg index="1" ref="userService" />
     <constructor-arg index="2" ref="projectService" />
     <constructor-arg index="3" ref="userStoryService" />
+    <constructor-arg index="4" value="${application.url}" />
   </bean>
 
   <bean id="projectServiceTarget" class="org.webspeclanguage.service.ProjectServiceImpl">

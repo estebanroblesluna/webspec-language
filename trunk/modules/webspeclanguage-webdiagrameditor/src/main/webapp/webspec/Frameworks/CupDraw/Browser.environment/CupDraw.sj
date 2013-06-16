@@ -384,7 +384,7 @@ objj_msgSend(_7,"unselect:",_9);
 }
 }
 })]);
-p;9;Drawing.jt;5623;@STATIC;1.0;t;5604;
+p;9;Drawing.jt;5658;@STATIC;1.0;t;5639;
 DrawingSelectionChangedNotification="DrawingSelectionChangedNotification";
 var _1=objj_allocateClassPair(CompositeFigure,"Drawing"),_2=_1.isa;
 class_addIvars(_1,[new objj_ivar("_currentTool"),new objj_ivar("_selectedFigure"),new objj_ivar("_backgroundLayer"),new objj_ivar("_toolbox"),new objj_ivar("_properties")]);
@@ -424,9 +424,11 @@ objj_msgSend(_b,"addFigure:",_properties);
 }),new objj_method(sel_getUid("computeBackgroundLayer"),function(_e,_f){
 with(_e){
 objj_msgSend(_backgroundLayer,"clearFigures");
+if(objj_msgSend(_e,"showGrid")){
 var _10=CGRectMake(0,0,1600,1600);
 var _11=objj_msgSend(Grid,"frame:showGrid:gridSize:",_10,objj_msgSend(_e,"showGrid"),objj_msgSend(_e,"gridSize"));
 objj_msgSend(_backgroundLayer,"addFigure:",_11);
+}
 }
 }),new objj_method(sel_getUid("select"),function(_12,_13){
 with(_12){
@@ -541,14 +543,14 @@ objj_msgSend(_properties,"setFrame:",objj_msgSend(PropertiesFigure,"defaultFrame
 }
 }
 })]);
-p;14;DrawingModel.jt;589;@STATIC;1.0;t;571;
+p;14;DrawingModel.jt;588;@STATIC;1.0;t;570;
 var _1=objj_allocateClassPair(Model,"DrawingModel"),_2=_1.isa;
 objj_registerClassPair(_1);
 class_addMethods(_1,[new objj_method(sel_getUid("init"),function(_3,_4){
 with(_3){
 objj_msgSendSuper({receiver:_3,super_class:objj_getClass("DrawingModel").super_class},"init");
 objj_msgSend(_3,"addProperty:value:","Name","");
-objj_msgSend(_3,"addProperty:value:","Show grid?",YES);
+objj_msgSend(_3,"addProperty:value:","Show grid?",NO);
 objj_msgSend(_3,"addProperty:value:","Grid size",20);
 objj_msgSend(_3,"addProperty:value:","Snap to grid?",NO);
 objj_msgSend(_3,"addProperty:value:","Floating toolboxes?",YES);
@@ -840,109 +842,109 @@ objj_msgSend(_14,"addObject:",_16);
 return _14;
 }
 })]);
-p;12;Connection.jt;4050;@STATIC;1.0;t;4031;
+p;12;Connection.jt;4065;@STATIC;1.0;t;4046;
 var _1=objj_allocateClassPair(Polyline,"Connection"),_2=_1.isa;
 class_addIvars(_1,[new objj_ivar("_sourceFigure"),new objj_ivar("_targetFigure"),new objj_ivar("_magnet1"),new objj_ivar("_magnet2"),new objj_ivar("_p1Arrow"),new objj_ivar("_p2Arrow")]);
 objj_registerClassPair(_1);
-class_addMethods(_1,[new objj_method(sel_getUid("initWithSource:target:"),function(_3,_4,_5,_6){
+class_addMethods(_1,[new objj_method(sel_getUid("source"),function(_3,_4){
 with(_3){
-_sourceFigure=_5;
-_targetFigure=_6;
-var _7=objj_msgSend(CPMutableArray,"array");
-objj_msgSend(_7,"addObject:",objj_msgSend(_sourceFigure,"center"));
-if(_sourceFigure==_targetFigure){
-var _8=objj_msgSend(_sourceFigure,"center");
-objj_msgSend(_7,"addObject:",CGPointMake(_8.x+100,_8.y));
-objj_msgSend(_7,"addObject:",CGPointMake(_8.x+100,_8.y-100));
-objj_msgSend(_7,"addObject:",CGPointMake(_8.x,_8.y-100));
+return _sourceFigure;
 }
-objj_msgSend(_7,"addObject:",objj_msgSend(_targetFigure,"center"));
-_3=objj_msgSendSuper({receiver:_3,super_class:objj_getClass("Connection").super_class},"initWithPoints:",_7);
-if(_3){
-objj_msgSend(_3,"recomputeFrame");
-_magnet1=objj_msgSend(objj_msgSend(HandleMagnet,"alloc"),"initWithHandle:source:target:",objj_msgSend(_3,"handleAt:",2),_sourceFigure,_targetFigure);
-_magnet2=objj_msgSend(objj_msgSend(HandleMagnet,"alloc"),"initWithHandle:source:target:",objj_msgSend(_3,"handleAt:",0),_targetFigure,_sourceFigure);
+}),new objj_method(sel_getUid("target"),function(_5,_6){
+with(_5){
+return _targetFigure;
+}
+}),new objj_method(sel_getUid("initWithSource:target:"),function(_7,_8,_9,_a){
+with(_7){
+_sourceFigure=_9;
+_targetFigure=_a;
+var _b=objj_msgSend(CPMutableArray,"array");
+objj_msgSend(_b,"addObject:",objj_msgSend(_sourceFigure,"center"));
+if(_sourceFigure==_targetFigure){
+var _c=objj_msgSend(_sourceFigure,"center");
+objj_msgSend(_b,"addObject:",CGPointMake(_c.x+100,_c.y));
+objj_msgSend(_b,"addObject:",CGPointMake(_c.x+100,_c.y-100));
+objj_msgSend(_b,"addObject:",CGPointMake(_c.x,_c.y-100));
+}
+objj_msgSend(_b,"addObject:",objj_msgSend(_targetFigure,"center"));
+_7=objj_msgSendSuper({receiver:_7,super_class:objj_getClass("Connection").super_class},"initWithPoints:",_b);
+if(_7){
+objj_msgSend(_7,"recomputeFrame");
+_magnet1=objj_msgSend(objj_msgSend(HandleMagnet,"alloc"),"initWithHandle:source:target:",objj_msgSend(_7,"handleAt:",2),_sourceFigure,_targetFigure);
+_magnet2=objj_msgSend(objj_msgSend(HandleMagnet,"alloc"),"initWithHandle:source:target:",objj_msgSend(_7,"handleAt:",0),_targetFigure,_sourceFigure);
 objj_msgSend(_magnet1,"updateHandleLocation:",nil);
 objj_msgSend(_magnet2,"updateHandleLocation:",nil);
-objj_msgSend(_sourceFigure,"addOutConnection:",_3);
-objj_msgSend(_targetFigure,"addInConnection:",_3);
-return _3;
+objj_msgSend(_sourceFigure,"addOutConnection:",_7);
+objj_msgSend(_targetFigure,"addInConnection:",_7);
+return _7;
 }
 }
-}),new objj_method(sel_getUid("drawRect:on:"),function(_9,_a,_b,_c){
-with(_9){
-objj_msgSendSuper({receiver:_9,super_class:objj_getClass("Connection").super_class},"drawRect:on:",_b,_c);
-var _d=objj_msgSend(_points,"objectAtIndex:",(objj_msgSend(_points,"count")-1));
-var _e=objj_msgSend(_9,"frameOrigin");
-CGContextBeginPath(_c);
-CGContextMoveToPoint(_c,_p1Arrow.x-_e.x,_p1Arrow.y-_e.y);
-CGContextAddLineToPoint(_c,_p2Arrow.x-_e.x,_p2Arrow.y-_e.y);
-CGContextAddLineToPoint(_c,_d.x-_e.x,_d.y-_e.y);
-CGContextClosePath(_c);
-CGContextSetFillColor(_c,objj_msgSend(_9,"foregroundColor"));
-CGContextFillPath(_c);
+}),new objj_method(sel_getUid("drawRect:on:"),function(_d,_e,_f,_10){
+with(_d){
+objj_msgSendSuper({receiver:_d,super_class:objj_getClass("Connection").super_class},"drawRect:on:",_f,_10);
+var _11=objj_msgSend(_points,"objectAtIndex:",(objj_msgSend(_points,"count")-1));
+var _12=objj_msgSend(_d,"frameOrigin");
+CGContextBeginPath(_10);
+CGContextMoveToPoint(_10,_p1Arrow.x-_12.x,_p1Arrow.y-_12.y);
+CGContextAddLineToPoint(_10,_p2Arrow.x-_12.x,_p2Arrow.y-_12.y);
+CGContextAddLineToPoint(_10,_11.x-_12.x,_11.y-_12.y);
+CGContextClosePath(_10);
+CGContextSetFillColor(_10,objj_msgSend(_d,"foregroundColor"));
+CGContextFillPath(_10);
 }
-}),new objj_method(sel_getUid("computeArrowPoints"),function(_f,_10){
-with(_f){
-var _11=objj_msgSend(_points,"objectAtIndex:",(objj_msgSend(_points,"count")-2));
-var _12=objj_msgSend(_points,"objectAtIndex:",(objj_msgSend(_points,"count")-1));
+}),new objj_method(sel_getUid("computeArrowPoints"),function(_13,_14){
+with(_13){
+var _15=objj_msgSend(_points,"objectAtIndex:",(objj_msgSend(_points,"count")-2));
+var _16=objj_msgSend(_points,"objectAtIndex:",(objj_msgSend(_points,"count")-1));
 var p1=nil;
 var p2=nil;
-var _13=5;
-var _14=7;
-if(_11.x==_12.x){
-if(_11.y<_12.y){
-p1=CPPointMake(_12.x-_13,_12.y-_14);
-p2=CPPointMake(_12.x+_13,_12.y-_14);
+var _17=5;
+var _18=7;
+if(_15.x==_16.x){
+if(_15.y<_16.y){
+p1=CPPointMake(_16.x-_17,_16.y-_18);
+p2=CPPointMake(_16.x+_17,_16.y-_18);
 }else{
-p1=CPPointMake(_12.x-_13,_12.y+_14);
-p2=CPPointMake(_12.x+_13,_12.y+_14);
+p1=CPPointMake(_16.x-_17,_16.y+_18);
+p2=CPPointMake(_16.x+_17,_16.y+_18);
 }
 }else{
-if(_11.y==_12.y){
-if(_11.x<_12.x){
-p1=CPPointMake(_12.x-_14,_12.y-_13);
-p2=CPPointMake(_12.x-_14,_12.y+_13);
+if(_15.y==_16.y){
+if(_15.x<_16.x){
+p1=CPPointMake(_16.x-_18,_16.y-_17);
+p2=CPPointMake(_16.x-_18,_16.y+_17);
 }else{
-p1=CPPointMake(_12.x+_14,_12.y-_13);
-p2=CPPointMake(_12.x+_14,_12.y+_13);
+p1=CPPointMake(_16.x+_18,_16.y-_17);
+p2=CPPointMake(_16.x+_18,_16.y+_17);
 }
 }else{
-var _15=CPPointMake(_12.x-_11.x,_12.y-_11.y);
-var _16=SQRT((_15.x*_15.x)+(_15.y*_15.y));
+var _19=CPPointMake(_16.x-_15.x,_16.y-_15.y);
+var _1a=SQRT((_19.x*_19.x)+(_19.y*_19.y));
 var pi=3.14159265;
-var _17=10;
-var _18=pi/8;
-var _19=_17/(2*(TAN(_18)/2)*_16);
-_19=_19/3;
-var _1a=CPPointMake(_12.x+-_19*_15.x,_12.y+-_19*_15.y);
-var _1b=CPPointMake(-_15.y,_15.x);
-var _1c=_17/(2*_16);
-var _1d=CPPointMake(_1a.x+_1c*_1b.x,_1a.y+_1c*_1b.y);
-var _1e=CPPointMake(_1a.x+-_1c*_1b.x,_1a.y+-_1c*_1b.y);
-p1=_1d;
-p2=_1e;
+var _1b=10;
+var _1c=pi/8;
+var _1d=_1b/(2*(TAN(_1c)/2)*_1a);
+_1d=_1d/3;
+var _1e=CPPointMake(_16.x+-_1d*_19.x,_16.y+-_1d*_19.y);
+var _1f=CPPointMake(-_19.y,_19.x);
+var _20=_1b/(2*_1a);
+var _21=CPPointMake(_1e.x+_20*_1f.x,_1e.y+_20*_1f.y);
+var _22=CPPointMake(_1e.x+-_20*_1f.x,_1e.y+-_20*_1f.y);
+p1=_21;
+p2=_22;
 }
 }
 _p1Arrow=p1;
 _p2Arrow=p2;
 }
-}),new objj_method(sel_getUid("recomputeFrame"),function(_1f,_20){
-with(_1f){
-objj_msgSend(_1f,"computeArrowPoints");
-var _21=objj_msgSend(CPMutableArray,"arrayWithArray:",_points);
-objj_msgSend(_21,"addObject:",_p1Arrow);
-objj_msgSend(_21,"addObject:",_p2Arrow);
-var _22=objj_msgSend(GeometryUtils,"computeFrameFor:",_21);
-objj_msgSend(_1f,"setFrame:",_22);
-}
-}),new objj_method(sel_getUid("source"),function(_23,_24){
+}),new objj_method(sel_getUid("recomputeFrame"),function(_23,_24){
 with(_23){
-return _sourceFigure;
-}
-}),new objj_method(sel_getUid("target"),function(_25,_26){
-with(_25){
-return _targetFigure;
+objj_msgSend(_23,"computeArrowPoints");
+var _25=objj_msgSend(CPMutableArray,"arrayWithArray:",_points);
+objj_msgSend(_25,"addObject:",_p1Arrow);
+objj_msgSend(_25,"addObject:",_p2Arrow);
+var _26=objj_msgSend(GeometryUtils,"computeFrameFor:",_25);
+objj_msgSend(_23,"setFrame:",_26);
 }
 })]);
 class_addMethods(_2,[new objj_method(sel_getUid("source:target:"),function(_27,_28,_29,_2a){

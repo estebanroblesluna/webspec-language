@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
@@ -52,8 +54,9 @@ public class ProjectRestService {
   private ProjectService projectService;
   private UserStoryServiceImpl userStoryService;
   private SimpleDateFormat formatter;
+  private String baseUrl;
 
-  public ProjectRestService(DiagramService diagramService, UserService userService, ProjectService projectService, UserStoryServiceImpl userStoryService) {
+  public ProjectRestService(DiagramService diagramService, UserService userService, ProjectService projectService, UserStoryServiceImpl userStoryService, String baseUrl) {
     Validate.notNull(diagramService);
     Validate.notNull(userService);
     Validate.notNull(projectService);
@@ -64,6 +67,7 @@ public class ProjectRestService {
     this.projectService = projectService;
     this.userStoryService = userStoryService;
     this.formatter = new SimpleDateFormat("dd/MM/yyyy");
+    this.baseUrl = baseUrl;
   }
 
   /**
@@ -770,6 +774,8 @@ public class ProjectRestService {
 
     diagram.setJsonRepresentation(diagramAsJSON);
     this.diagramService.save(diagram);
+    
+    this.saveImage(diagramId);
 
     return this.getJSON().toString();
   }
@@ -778,9 +784,9 @@ public class ProjectRestService {
   @Path("/diagram/{diagramId}")
   @Produces(MediaType.APPLICATION_JSON)
   public String getDiagram(@DefaultValue("") @PathParam("diagramId") long diagramId) {
-    User user = this.getUser();
+    //User user = this.getUser();
 
-    return this.diagramService.getDiagram(user, diagramId).getJsonRepresentation();
+    return this.diagramService.getDiagram(null, diagramId).getJsonRepresentation();
   }
   
   @GET
@@ -801,6 +807,7 @@ public class ProjectRestService {
               
       return builder.build();
     } catch (Exception e) {
+      log.error("Error converting user story", e);
       return Response.status(500).entity("Error converting to user story").build();
     }
   }
@@ -811,17 +818,54 @@ public class ProjectRestService {
     User user = this.getUser();
     
     try {
-      File file = new File("/Users/estebanroblesluna/Documents/Editor.png");
-      byte[] contents = IOUtils.toByteArray(new FileInputStream(file));
+      String diagramFilename = UUID.randomUUID().toString();
+      File diagramFile = File.createTempFile(diagramFilename, ".tmp");
       
-      Diagram diagram = this.diagramService.getDiagram(user, diagramId);
-      diagram.setImageBytes(contents);
+      ProcessBuilder pb = new ProcessBuilder(
+              "webkit2png",
+              "-o", 
+              diagramFile.getAbsolutePath(),
+              "-x", 
+              "1024", 
+              "768",
+              "-F",
+              "javascript",
+              "-w",
+              "8",
+              "-g",
+              "1024",
+              "768",
+              "--debug",
+              "--log=/home/ubuntu/" + diagramFile.getName() + ".log",
+              "http://localhost:8080/playground/webspec/index.html?diagramId=" + diagramId + "#headless");
       
-      this.diagramService.save(diagram);
-      return Response
-              .ok()
-              .build();
+      log.info("Writing diagram to: " + diagramFile.getAbsolutePath());
+      log.info("Using process builder: " + pb.toString());
+
+      Process process = pb.start();
+      process.waitFor();
+      
+      if (process.exitValue() == 0) {
+        log.info("Process succeed");
+
+        FileInputStream io = new FileInputStream(diagramFile);
+        byte[] contents = IOUtils.toByteArray(io);
+        IOUtils.closeQuietly(io);
+        
+        Diagram diagram = this.diagramService.getDiagram(user, diagramId);
+        diagram.setImageBytes(contents);
+        
+        this.diagramService.save(diagram);
+        return Response
+                .ok()
+                .build();
+      } else {
+        log.error("Error generating file");
+        return Response.status(500).entity("Error generating image. Exit code " + process.exitValue()).build();
+      }
+      
     } catch (Exception e) {
+      log.error(e);
       return Response.status(500).entity("Error saving image").build();
     }
   }
@@ -830,11 +874,20 @@ public class ProjectRestService {
   @Path("/diagram/{diagramId}/image")
   public Response getImage(@DefaultValue("") @PathParam("diagramId") long diagramId) {
 	  try {
-	      File file = new File("/Users/estebanroblesluna/Desktop/diagrama.png");
-	      byte[] contents = IOUtils.toByteArray(new FileInputStream(file));
+	    User user = this.getUser();
+
+      Diagram diagram = this.diagramService.getDiagram(user, diagramId);
+
+      String diagramFilename = UUID.randomUUID().toString();
+      File diagramFile = File.createTempFile(diagramFilename, ".tmp");
+      File lastDiagram = new File("/home/ubuntu/lastDiagram.png");
+      FileUtils.writeByteArrayToFile(diagramFile, diagram.getImageBytes());
+      FileUtils.writeByteArrayToFile(lastDiagram, diagram.getImageBytes());
+	      byte[] contents = IOUtils.toByteArray(new FileInputStream(diagramFile));
 	      return Response.ok(contents, "image/png")
 	              .build();
 	    } catch (Exception e) {
+	      log.error(e);
 	      return Response.status(500).entity("Error saving image").build();
 	    }
   }
@@ -848,13 +901,22 @@ public class ProjectRestService {
           @PathParam("width") int width,
           @PathParam("height") int height) {
 	  try {
-	      File file = new File("/Users/estebanroblesluna/Desktop/diagrama.png");
-	      ByteArrayOutputStream byteArrayOutputStream = ImageCroppingUtil.cropImage(file, new CroppingInfo(x, y, width, height));
+	    User user = this.getUser();
+
+      Diagram diagram = this.diagramService.getDiagram(user, diagramId);
+
+      String diagramFilename = UUID.randomUUID().toString();
+      File diagramFile = File.createTempFile(diagramFilename, ".tmp");
+      FileUtils.writeByteArrayToFile(diagramFile, diagram.getImageBytes());
+
+	    
+	      ByteArrayOutputStream byteArrayOutputStream = ImageCroppingUtil.cropImage(diagramFile, new CroppingInfo(x, y, width, height));
 	      Response response = Response.ok(byteArrayOutputStream.toByteArray(), "image/png")
 	              .build();
 	      return response;
 	    } catch (Exception e) {
-	      return Response.status(500).entity("Error saving image").build();
+	      log.error(e);
+	      return Response.status(500).entity("Error getting image clip").build();
 	    }
   }
   
