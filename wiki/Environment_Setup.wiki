@@ -56,3 +56,10 @@ If you are in Windows, you can help use creating that script or run the sqls loc
 
 ===2.4 Test===
 Verify that the schema playground has been created
+
+==3. Checkout the SVN==
+
+You can checkout the code in read only mode by running the following command from the command line
+{{{
+svn checkout http://webspec-language.googlecode.com/svn/trunk/ webspec-language-read-only
+}}}
