@@ -38,6 +38,7 @@ and you will obtain something like this:
 }}}
 
 ==2. MySql==
+Configure a Mysql instance if you don't have one
 
 ===2.1 Download===
 Download Mysql 5.5.27 for your OS.
@@ -49,9 +50,9 @@ Configure a user with name "root" and password "".
 If you are in linux you can run the schema creation script that will create the DB for you. The script is located in: /modules/webspeclanguage-webdiagrameditor/config/schema/recreateSchema.sh
 
 If you are in Windows, you can help use creating that script or run the sqls located in /modules/webspeclanguage-webdiagrameditor/config/schema/ in the following order:
-* common.sql
-* sampleData.sql
-* playgroundSchema.sql
+  * common.sql
+  * sampleData.sql
+  * playgroundSchema.sql
 
 ===2.4 Test===
 Verify that the schema playground has been created
