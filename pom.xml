@@ -117,27 +117,33 @@
     </dependencies>
   </dependencyManagement>
 
-  <modules>
-    <module>modules/webspeclanguage-core</module>
-    <module>modules/webspeclanguage-simulation</module>
-    <module>modules/webspeclanguage-user-stories</module>
-    <module>modules/webspeclanguage-test</module>
-    <module>modules/webspeclanguage-test-selenium</module>
-    <module>modules/webspeclanguage-test-watir</module>
-    <module>modules/webspeclanguage-test-webdriver</module>
-    <module>modules/webspeclanguage-selenium-extension</module> 
-    <module>modules/webspeclanguage-webdiagrameditor</module>
-    <module>modules/webspeclanguage-io</module>
-    <module>modules/webspeclanguage-plugin</module>
-    
-    <module>modules/webspeclanguage-mockupdd-core</module>
-    <module>modules/webspeclanguage-mockupdd-codegen</module>
-    <module>modules/webspeclanguage-mockupdd-codegen-webml</module>
-    <module>modules/webspeclanguage-mockupdd-io</module>
-    <module>modules/webspeclanguage-mockupdd-translators</module>
-    <module>modules/webspeclanguage-mockupdd-specs</module>
-    
-    <!-- <module>modules/webspeclanguage-webapp</module> -->
-  </modules>
-
+  <profiles>
+    <profile>
+      <id>webspec</id>
+      <modules>
+        <module>modules/webspeclanguage-core</module>
+        <module>modules/webspeclanguage-simulation</module>
+        <module>modules/webspeclanguage-user-stories</module>
+        <module>modules/webspeclanguage-test</module>
+        <module>modules/webspeclanguage-test-selenium</module>
+        <module>modules/webspeclanguage-test-watir</module>
+        <module>modules/webspeclanguage-test-webdriver</module>
+        <module>modules/webspeclanguage-selenium-extension</module>
+        <module>modules/webspeclanguage-webdiagrameditor</module>
+        <module>modules/webspeclanguage-io</module>
+        <module>modules/webspeclanguage-plugin</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>mockupdd</id>
+      <modules>
+        <module>modules/webspeclanguage-mockupdd-core</module>
+        <module>modules/webspeclanguage-mockupdd-codegen</module>
+        <module>modules/webspeclanguage-mockupdd-codegen-webml</module>
+        <module>modules/webspeclanguage-mockupdd-io</module>
+        <module>modules/webspeclanguage-mockupdd-translators</module>
+        <module>modules/webspeclanguage-mockupdd-specs</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>
