@@ -57,7 +57,7 @@ public class ActionParserTestCase extends TestCase {
   }
   
   public void testParsingNull() throws ParsingException {
-    assertNull(this.basicParse(null));
+    assertEquals(0, this.basicParse(null).size());    
   }
 
   private List<Action> basicParse(String string) throws ParsingException {
