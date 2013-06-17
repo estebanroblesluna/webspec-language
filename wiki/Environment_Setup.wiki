@@ -63,3 +63,15 @@ You can checkout the code in read only mode by running the following command fro
 {{{
 svn checkout http://webspec-language.googlecode.com/svn/trunk/ webspec-language-read-only
 }}}
+
+==4. Test everything is fine from the command line==
+
+{{{
+mvn clean install -Pwebspec
+}}}
+
+==5. Setup Eclipse IDE==
+
+{{{
+mvn eclipse:eclipse
+}}}
