@@ -36,3 +36,22 @@ and you will obtain something like this:
 > Java version: 1.7.0_21
 > Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/jre
 }}}
+
+==2. MySql==
+
+===2.1 Download===
+Download Mysql 5.5.27 for your OS.
+
+===2.2 Configuration===
+Configure a user with name "root" and password "".
+
+===2.3 Schema creation===
+If you are in linux you can run the schema creation script that will create the DB for you. The script is located in: /modules/webspeclanguage-webdiagrameditor/config/schema/recreateSchema.sh
+
+If you are in Windows, you can help use creating that script or run the sqls located in /modules/webspeclanguage-webdiagrameditor/config/schema/ in the following order:
+* common.sql
+* sampleData.sql
+* playgroundSchema.sql
+
+===2.4 Test===
+Verify that the schema playground has been created
