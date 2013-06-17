@@ -66,12 +66,25 @@ svn checkout http://webspec-language.googlecode.com/svn/trunk/ webspec-language-
 
 ==4. Test everything is fine from the command line==
 
+Run the following command from the trunk directory
+
 {{{
 mvn clean install -Pwebspec
 }}}
 
+It should build successfully
+
 ==5. Setup Eclipse IDE==
 
+Run the following command from the trunk directory
+
 {{{
-mvn eclipse:eclipse
+mvn eclipse:eclipse -Pwebspec
 }}}
+
+It should build successfully
+
+Then in Eclipse go to the menu and:
+  # Import -> Existing projects into workspace
+  # Select the /modules directory
+  # Import
