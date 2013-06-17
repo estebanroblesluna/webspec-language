@@ -1,0 +1,29 @@
+# Maven
+
+The first time is to setup Maven in your box. 
+
+  # So please download Maven 2 from http://maven.apache.org/. You can use this link which is the latest Maven 2 version today: http://apache.dattatec.com/maven/maven-2/2.2.1/binaries/apache-maven-2.2.1-bin.zip
+
+  # Unzip the zip file and move it to a directory you are going to use. For example, in linux I would move it to /usr/local/maven
+
+  # Add /usr/local/maven/bin to the PATH variable.
+
+In Linux/Mac you can export do it by running 
+export PATH=$PATH:/usr/local/maven/bin
+I recommend to add it to your ~/.bashrc 
+
+In Windows you can do something similar by running from the command line
+
+set PATH=%PATH%;C:\maven\bin
+
+I also recommend you to add it to your user path variables through My computer
+
+  # To test that Maven is working run from the command line:
+
+mvn -version
+
+and you will obtain something like this:
+
+> Apache Maven 2.2.1 (r801777; 2009-08-06 16:16:01-0300)
+> Java version: 1.7.0_21
+> Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/jre
