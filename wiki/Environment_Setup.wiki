@@ -88,3 +88,24 @@ Then in Eclipse go to the menu and:
   # Import -> Existing projects into workspace
   # Select the /modules directory
   # Import
+
+==6. Run the editor in debug mode (Eclipse)==
+
+Once you import all the projects from step 5 you can run the editor in debug mode by
+  # Search for the app.properties file and make sure env=DEV
+  # In the menu Run -> External tools -> External tools configuration
+    # Program ->  New (Right click)
+    # In the main tab set the location to your mvn location (in linux it could be /usr/local/maven/bin/mvn)
+    # Working directory: ${workspace_loc:/webspeclanguage-webdiagrameditor}
+    # Arguments jetty:run
+    # In the environment tab click in the button new for a new variable
+    # Name: MAVEN_OPTS
+    # Value: -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n
+    # Then click in Apply and then Run
+  # In the menu Run -> Debug configuration
+    # Remote Java application ->  New (Right click)
+    # Project: webspeclanguage-webdiagrameditor
+    # Port: 4000
+    # Then click in Apply and then Debug
+
+The editor should be running in http://localhost:9090/playground/index.html and requires Facebook or twitter authentication 
