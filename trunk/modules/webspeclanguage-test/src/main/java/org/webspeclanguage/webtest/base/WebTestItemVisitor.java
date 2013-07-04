@@ -12,9 +12,11 @@
  */
 package org.webspeclanguage.webtest.base;
 
+import org.webspeclanguage.webtest.action.WebClick;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;
+import org.webspeclanguage.webtest.action.WebType;
 import org.webspeclanguage.webtest.action.WebWaitPageToLoad;
 import org.webspeclanguage.webtest.assertion.WebAssertExpression;
 import org.webspeclanguage.webtest.assertion.WebAssertTitle;
@@ -73,4 +75,20 @@ public interface WebTestItemVisitor {
    * @return the result of visiting the item
    */
   Object visitWebWaitPageToLoad(WebWaitPageToLoad webWaitPageToLoad);
+
+  /**
+   * Visits a {@link WebClick}
+   * 
+   * @param webClick the item to visit
+   * @return the result of visiting the item
+   */
+  Object visitWebClick(WebClick webClick);
+
+  /**
+   * Visits a {@link WebType}
+   * 
+   * @param webType the item to visit
+   * @return the result of visiting the item
+   */
+  Object visitWebType(WebType webType);
 }

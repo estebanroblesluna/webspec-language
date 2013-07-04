@@ -17,9 +17,11 @@ import junit.framework.TestCase;
 import org.webspeclanguage.impl.expression.core.BooleanConstant;
 import org.webspeclanguage.impl.expression.core.ExpressionType;
 import org.webspeclanguage.impl.expression.core.StringConstant;
+import org.webspeclanguage.webtest.action.WebClick;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;
+import org.webspeclanguage.webtest.action.WebType;
 import org.webspeclanguage.webtest.action.WebWaitPageToLoad;
 import org.webspeclanguage.webtest.assertion.WebAssertExpression;
 import org.webspeclanguage.webtest.assertion.WebAssertTitle;
@@ -87,6 +89,14 @@ public class WebTestItemVisitorTestCase extends TestCase implements
 
   public Object visitWebWaitPageToLoad(WebWaitPageToLoad webWaitPageToLoad) {
     this.doAssert(webWaitPageToLoad, "visitWebWaitPageToLoad");
+    return null;
+  }
+
+  public Object visitWebClick(WebClick webClick) {
+    return null;
+  }
+
+  public Object visitWebType(WebType webType) {
     return null;
   }
 }
