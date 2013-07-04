@@ -30,6 +30,7 @@ import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;
 import org.webspeclanguage.webtest.action.WebWaitPageToLoad;
+import org.webspeclanguage.webtest.action.generator.WebTestGenerator;
 import org.webspeclanguage.webtest.assertion.WebAssertExpression;
 import org.webspeclanguage.webtest.assertion.WebAssertTitle;
 import org.webspeclanguage.webtest.base.SimpleWebTest;
@@ -83,6 +84,11 @@ public class WebSpec2WebTestTransformationTestCase extends TestCase {
     this.test = new SimpleWebTest("name");
   }
 
+  public void testGenerator() {
+    assertNotNull(WebTestGenerator.generateSimpleTest("simple1"));
+    assertNotNull(WebTestGenerator.generateWebTestSuite());
+  }
+  
   public void testGenerateFirstInteraction() {
     this.starting.setInvariant("start.label = \"Home\"");
 

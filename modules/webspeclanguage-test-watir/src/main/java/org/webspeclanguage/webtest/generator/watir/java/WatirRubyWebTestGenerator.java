@@ -17,9 +17,11 @@ import java.util.Map;
 
 import org.webspeclanguage.impl.expression.core.Expression;
 import org.webspeclanguage.impl.expression.core.ExpressionType;
+import org.webspeclanguage.webtest.action.WebClick;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;
+import org.webspeclanguage.webtest.action.WebType;
 import org.webspeclanguage.webtest.action.WebWaitPageToLoad;
 import org.webspeclanguage.webtest.assertion.WebAssertExpression;
 import org.webspeclanguage.webtest.assertion.WebAssertTitle;
@@ -218,6 +220,23 @@ public class WatirRubyWebTestGenerator implements WebTestGenerator {
 
     public Object visitWebWaitPageToLoad(WebWaitPageToLoad webWaitPageToLoad) {
       String statement = BROWSER_OBJ + "wait()";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+
+    public Object visitWebClick(WebClick webClick) {
+      //TODO verify
+      String expressionAsString = generateStatementFor(webClick.getExpression());
+      String statement = BROWSER_OBJ + "click(" + "\"" + expressionAsString + "\"" + ")";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+
+    public Object visitWebType(WebType webType) {
+      //TODO verify
+      String field = generateStatementFor(webType.getWidgetLocation());
+      String value = generateStatementFor(webType.getValue());
+      String statement = BROWSER_OBJ + "type(" + "\"" + field + "\"," + "\"" + value + "\"" + ")";
       classBuilder.addStatementAndNewLine(statement);
       return null;
     }

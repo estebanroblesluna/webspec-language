@@ -20,9 +20,11 @@ import java.util.Map;
 
 import org.webspeclanguage.impl.expression.core.Expression;
 import org.webspeclanguage.impl.expression.core.ExpressionType;
+import org.webspeclanguage.webtest.action.WebClick;
 import org.webspeclanguage.webtest.action.WebCreateVariableFromExpression;
 import org.webspeclanguage.webtest.action.WebExpression;
 import org.webspeclanguage.webtest.action.WebOpenUrl;
+import org.webspeclanguage.webtest.action.WebType;
 import org.webspeclanguage.webtest.action.WebWaitPageToLoad;
 import org.webspeclanguage.webtest.assertion.WebAssertExpression;
 import org.webspeclanguage.webtest.assertion.WebAssertTitle;
@@ -264,6 +266,20 @@ public class SeleniumJavaWebTestGenerator implements WebTestGenerator {
     
     public Object visitWebWaitPageToLoad(WebWaitPageToLoad webWaitPageToLoad) {
       String statement = stopPolicy.generateStopStatement() + ";";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+
+    public Object visitWebClick(WebClick webClick) {
+      String statement = "selenium.click(" + "\"" + generateStatementFor(webClick.getExpression()) + "\"" + ");";
+      classBuilder.addStatementAndNewLine(statement);
+      return null;
+    }
+
+    public Object visitWebType(WebType webType) {
+      String statement = "selenium.type(" + "\"" 
+              + generateStatementFor(webType.getWidgetLocation()) + "\"," + "\"" 
+              + generateStatementFor(webType.getValue()) + "\"" + ");";
       classBuilder.addStatementAndNewLine(statement);
       return null;
     }
